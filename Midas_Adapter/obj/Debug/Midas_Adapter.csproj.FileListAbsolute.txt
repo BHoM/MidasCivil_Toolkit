@@ -1,0 +1,7 @@
+C:\BuroHappoldEngineeringGit\Midas_Toolkit\Build\Midas_Adapter.dll.config
+C:\BuroHappoldEngineeringGit\Midas_Toolkit\Build\Midas_Adapter.XML
+C:\BuroHappoldEngineeringGit\Midas_Toolkit\Build\Midas_Adapter.dll
+C:\BuroHappoldEngineeringGit\Midas_Toolkit\Build\Midas_Adapter.pdb
+C:\BuroHappoldEngineeringGit\Midas_Toolkit\Midas_Adapter\obj\Debug\Midas_Adapter.dll
+C:\BuroHappoldEngineeringGit\Midas_Toolkit\Midas_Adapter\obj\Debug\Midas_Adapter.pdb
+C:\BuroHappoldEngineeringGit\Midas_Toolkit\Midas_Adapter\obj\Debug\Midas_Adapter.csprojResolveAssemblyReference.cache
