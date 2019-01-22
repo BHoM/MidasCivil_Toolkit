@@ -1,5 +1,0 @@
-C:\BuroHappoldEngineeringGit\Midas_Toolkit\Midas_Test\bin\Debug\Midas_Test.exe.config
-C:\BuroHappoldEngineeringGit\Midas_Toolkit\Midas_Test\bin\Debug\Midas_Test.exe
-C:\BuroHappoldEngineeringGit\Midas_Toolkit\Midas_Test\bin\Debug\Midas_Test.pdb
-C:\BuroHappoldEngineeringGit\Midas_Toolkit\Midas_Test\obj\Debug\Midas_Test.exe
-C:\BuroHappoldEngineeringGit\Midas_Toolkit\Midas_Test\obj\Debug\Midas_Test.pdb
