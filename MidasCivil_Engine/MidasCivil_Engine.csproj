@@ -85,6 +85,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Convert\PrivateHelpers\" />
     <Folder Include="Convert\ToMidasCivil\Loads\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

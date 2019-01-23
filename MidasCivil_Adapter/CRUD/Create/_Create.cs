@@ -26,47 +26,5 @@ namespace BH.Adapter.MidasCivil
             return success;
 
         }
-
-        /***************************************************/
-        /**** Private methods                           ****/
-        /***************************************************/
-
-        /***************************************************/
-
-        /***************************************************/
-
-        private bool CreateCollection(IEnumerable<ISectionProperty> sectionProperties)
-        {
-            //Code for creating a collection of section properties in the software
-
-            foreach (ISectionProperty sectionProperty in sectionProperties)
-            {
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
-                object secPropId = sectionProperty.CustomData[AdapterId];
-                //If also the default implmentation for the DependencyTypes is used,
-                //one can from here get the id's of the subobjects by calling (cast into applicable type used by the software): 
-                object materialId = sectionProperty.Material.CustomData[AdapterId];
-            }
-
-            throw new NotImplementedException();
-        }
-
-        /***************************************************/
-
-        private bool CreateCollection(IEnumerable<Material> materials)
-        {
-            //Code for creating a collection of materials in the software
-
-            foreach (Material material in materials)
-            {
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
-                object materialId = material.CustomData[AdapterId];
-            }
-
-            throw new NotImplementedException();
-        }
-
-
-        /***************************************************/
     }
 }
