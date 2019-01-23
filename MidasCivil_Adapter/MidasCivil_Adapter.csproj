@@ -48,6 +48,10 @@
     <Reference Include="Geometry_oM">
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
     </Reference>
+    <Reference Include="MidasCivil_Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Build\MidasCivil_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
       <Private>False</Private>
@@ -65,13 +69,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CRUD\Create\Elements\Element.cs" />
+    <Compile Include="CRUD\Create\Elements\Node.cs" />
+    <Compile Include="CRUD\Create\Loads\ConcentratedLoad.cs" />
+    <Compile Include="CRUD\Create\Loads\SelfWeight.cs" />
     <Compile Include="CRUD\PrivateHelpers\CleanString.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetSectionText.cs" />
     <Compile Include="CRUD\Create\_Create.cs" />
     <Compile Include="CRUD\Delete\_Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
     <Compile Include="CRUD\Read\Elements\Bars.cs" />
+    <Compile Include="CRUD\Read\Elements\FEMeshes.cs" />
     <Compile Include="CRUD\Read\Elements\Nodes.cs" />
+    <Compile Include="CRUD\Read\Loads\BarPointLoads.cs" />
+    <Compile Include="CRUD\Read\Loads\BarTemperatureLoads.cs" />
+    <Compile Include="CRUD\Read\Loads\BarUniformlyDistributedLoad.cs" />
+    <Compile Include="CRUD\Read\Loads\BarVaryingDistributedLoads.cs" />
+    <Compile Include="CRUD\Read\Loads\GravityLoads.cs" />
+    <Compile Include="CRUD\Read\Loads\LoadCombinations.cs" />
+    <Compile Include="CRUD\Read\Loads\Loadcases.cs" />
+    <Compile Include="CRUD\Read\Loads\PointForces.cs" />
+    <Compile Include="CRUD\Read\Properties\6DOFConstraints.cs" />
+    <Compile Include="CRUD\Read\Properties\Materials.cs" />
+    <Compile Include="CRUD\Read\Properties\SectionProperties.cs" />
+    <Compile Include="CRUD\Read\Properties\Tags.cs" />
     <Compile Include="CRUD\Read\_Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="Adapter\MidasCivilAdapter.cs" />
@@ -80,13 +101,8 @@
     <Compile Include="Types\DependencyTypes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MidasCivil_Engine\MidasCivil_Engine.csproj">
-      <Project>{5e10ac78-dcb1-4cd8-bba5-5d33fdffaf8b}</Project>
-      <Name>MidasCivil_Engine</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <Folder Include="CRUD\Create\Properties\" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

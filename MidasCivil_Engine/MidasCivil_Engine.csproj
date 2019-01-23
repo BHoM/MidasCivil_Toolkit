@@ -34,6 +34,10 @@
       <HintPath>..\..\BHoM\Build\BHoM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Common_oM, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHoM\Build\Common_oM.dll</HintPath>
+    </Reference>
     <Reference Include="Geometry_oM, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
@@ -57,11 +61,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\AdapterId.cs" />
-    <Compile Include="Convert\ToBHoM.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\FEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Node.cs" />
-    <Compile Include="Convert\ToMidasCivil.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\Loadcase.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\BarPointLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\BarTemperatureLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\BarUniformlyDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\BarVaryingDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\GravityLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\LoadCombination.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\PointForce.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\Constraint6DOF.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\Materials.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\SectionProperty.cs" />
+    <Compile Include="Convert\ToBHoM\ToBHoM.cs" />
+    <Compile Include="Convert\ToMidasCivil\Elements\Element.cs" />
+    <Compile Include="Convert\ToMidasCivil\Elements\Node.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\Material.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\SectionProperty.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\Support.cs" />
+    <Compile Include="Convert\ToMidasCivil\ToMidasCivil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Convert\ToMidasCivil\Loads\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

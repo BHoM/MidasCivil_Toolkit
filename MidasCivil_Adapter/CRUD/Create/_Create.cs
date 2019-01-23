@@ -23,7 +23,7 @@ namespace BH.Adapter.MidasCivil
 
             //UpdateViews()             //If there exists a command for updating the views is the software call it now:
 
-            return success;             //Finally return if the creation was successful or not
+            return success;
 
         }
 
@@ -31,40 +31,7 @@ namespace BH.Adapter.MidasCivil
         /**** Private methods                           ****/
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<Bar> bars)
-        {
-            //Code for creating a collection of bars in the software
-
-
-            foreach (Bar bar in bars)
-            {
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
-                object barId = bar.CustomData[AdapterId];
-                //If also the default implmentation for the DependencyTypes is used,
-                //one can from here get the id's of the subobjects by calling (cast into applicable type used by the software): 
-                object startNodeId = bar.StartNode.CustomData[AdapterId];
-                object endNodeId = bar.EndNode.CustomData[AdapterId];
-                object SecPropId = bar.SectionProperty.CustomData[AdapterId];
-            }
-
-
-            throw new NotImplementedException();
-        }
-
         /***************************************************/
-
-        private bool CreateCollection(IEnumerable<Node> nodes)
-        {
-            //Code for creating a collection of nodes in the software
-
-            foreach (Node node in nodes)
-            {
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
-                object nodeId = node.CustomData[AdapterId];
-            }
-
-            throw new NotImplementedException();
-        }
 
         /***************************************************/
 
