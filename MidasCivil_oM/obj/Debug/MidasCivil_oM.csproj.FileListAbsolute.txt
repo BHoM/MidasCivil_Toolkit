@@ -3,3 +3,8 @@ C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_oM\bin\Debug\Mid
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_oM\obj\Debug\MidasCivil_oM.csprojResolveAssemblyReference.cache
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_oM\obj\Debug\MidasCivil_oM.dll
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_oM\obj\Debug\MidasCivil_oM.pdb
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_oM\bin\Debug\MidasCivil_oM.dll
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_oM\bin\Debug\MidasCivil_oM.pdb
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_oM\obj\Debug\MidasCivil_oM.csprojResolveAssemblyReference.cache
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_oM\obj\Debug\MidasCivil_oM.dll
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_oM\obj\Debug\MidasCivil_oM.pdb

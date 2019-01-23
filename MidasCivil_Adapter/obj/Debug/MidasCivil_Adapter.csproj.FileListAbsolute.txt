@@ -3,3 +3,8 @@ C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\Build\MidasCivil_Adapter.dl
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\Build\MidasCivil_Adapter.pdb
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_Adapter\obj\Debug\MidasCivil_Adapter.dll
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_Adapter\obj\Debug\MidasCivil_Adapter.pdb
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\Build\MidasCivil_Adapter.dll
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\Build\MidasCivil_Adapter.pdb
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_Adapter\obj\Debug\MidasCivil_Adapter.csprojResolveAssemblyReference.cache
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_Adapter\obj\Debug\MidasCivil_Adapter.dll
+C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_Adapter\obj\Debug\MidasCivil_Adapter.pdb

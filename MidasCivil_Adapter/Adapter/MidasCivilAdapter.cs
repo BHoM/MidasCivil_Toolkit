@@ -16,7 +16,7 @@ namespace BH.Adapter.MidasCivil
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
         public MidasCivilAdapter(string filePath, bool active = false)
         {
-            AdapterId = "MidasCivil_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
+            AdapterId = "Midas_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
             if (active)
             {
                 if (string.IsNullOrWhiteSpace(filePath))

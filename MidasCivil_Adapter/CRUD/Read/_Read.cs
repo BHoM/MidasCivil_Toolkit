@@ -35,16 +35,6 @@ namespace BH.Adapter.MidasCivil
         /**** Private specific read methods             ****/
         /***************************************************/
 
-        //The List<string> in the methods below can be changed to a list of any type of identification more suitable for the toolkit
-
-        private List<Bar> ReadBars(List<string> ids = null)
-        {
-            //Implement code for reading bars
-            throw new NotImplementedException();
-        }
-
-        /***************************************/
-
         /***************************************/
 
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)

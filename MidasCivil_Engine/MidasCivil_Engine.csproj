@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Convert\AdapterId.cs" />
     <Compile Include="Convert\ToBHoM.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Node.cs" />
     <Compile Include="Convert\ToMidasCivil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
