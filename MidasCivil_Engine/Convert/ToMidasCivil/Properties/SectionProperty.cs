@@ -5,7 +5,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCMaterial(this ISectionProperty sectionProperty)
+        public static string ToMCSectionProperty(this ISectionProperty sectionProperty)
         {
             throw new NotImplementedException();
         }
