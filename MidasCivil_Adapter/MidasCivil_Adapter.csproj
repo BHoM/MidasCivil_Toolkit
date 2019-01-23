@@ -70,6 +70,7 @@
     <Compile Include="CRUD\Create\_Create.cs" />
     <Compile Include="CRUD\Delete\_Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
+    <Compile Include="CRUD\Read\Elements\Bars.cs" />
     <Compile Include="CRUD\Read\Elements\Nodes.cs" />
     <Compile Include="CRUD\Read\_Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
