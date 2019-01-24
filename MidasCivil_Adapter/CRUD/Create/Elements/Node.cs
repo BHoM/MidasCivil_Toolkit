@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 
 
@@ -9,13 +8,14 @@ namespace BH.Adapter.MidasCivil
     {
         private bool CreateCollection(IEnumerable<Node> nodes)
         {
-            //Code for creating a collection of nodes in the software
+            string path = CreateSectionText("NODE");
 
             foreach (Node node in nodes)
             {
-                Engine.MidasCivil.Convert.ToMCNode(node);
+                Engine.MidasCivil.Convert.ToMCNode(node, path);
             }
-            throw new NotImplementedException();
+
+            return true;
         }
     }
 }

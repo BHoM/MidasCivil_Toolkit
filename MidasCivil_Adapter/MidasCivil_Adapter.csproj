@@ -75,6 +75,8 @@
     <Compile Include="CRUD\Create\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
     <Compile Include="CRUD\PrivateHelpers\CleanString.cs" />
+    <Compile Include="CRUD\PrivateHelpers\CreateSectionText.cs" />
+    <Compile Include="CRUD\PrivateHelpers\ExistsSection.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetSectionText.cs" />
     <Compile Include="CRUD\Create\_Create.cs" />
     <Compile Include="CRUD\Delete\_Delete.cs" />

@@ -9,7 +9,7 @@ namespace BH.Adapter.MidasCivil
         {
             List<Node> bhomNodes = new List<Node>();
 
-            List<string> nodesText = GetSectionText(midasText, "*NODE");
+            List<string> nodesText = GetSectionText("*NODE");
 
             foreach (string node in nodesText)
             {

@@ -18,7 +18,7 @@ namespace BH.Engine.MidasCivil
                     Z = double.Parse(delimitted[3])}
                 );
 
-            bhomNode.CustomData["Midas_id"] = delimitted[0];
+            bhomNode.CustomData[AdapterId] = delimitted[0];
 
             return bhomNode;
         }

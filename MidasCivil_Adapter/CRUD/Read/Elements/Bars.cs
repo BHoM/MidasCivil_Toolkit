@@ -10,7 +10,7 @@ namespace BH.Adapter.MidasCivil
         {
             List<Bar> bhomBars = new List<Bar>();
 
-            List<string> elementsText = GetSectionText(midasText, "*ELEMENT");
+            List<string> elementsText = GetSectionText("*ELEMENT");
             List<string> barText = elementsText.Where(x => x.Contains("BEAM")).ToList();
 
             IEnumerable<Node> bhomNodesList = ReadNodes();

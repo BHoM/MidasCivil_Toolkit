@@ -19,8 +19,13 @@ namespace BH.Adapter.MidasCivil
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
-            success = CreateCollection(objects as dynamic);
-
+            if(objects.Count() > 0)
+            {
+                if(objects.First() is Node)
+                {
+                    success = CreateCollection(objects as IEnumerable<Node>);
+                }
+            }
             //UpdateViews()             //If there exists a command for updating the views is the software call it now:
 
             return success;
