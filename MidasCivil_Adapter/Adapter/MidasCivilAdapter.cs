@@ -16,9 +16,17 @@ namespace BH.Adapter.MidasCivil
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
         public MidasCivilAdapter(string filePath, bool active = false)
         {
-            AdapterId = "Midas_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
+            
             if (active)
             {
+                AdapterId = "MidasCivil_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
+
+                Config.SeparateProperties = true;   //Set to true to push dependant properties of objects before the main objects are being pushed. Example: push nodes before pushing bars
+                Config.MergeWithComparer = true;    //Set to true to use EqualityComparers to merge objects. Example: merge nodes in the same location
+                Config.ProcessInMemory = false;     //Set to false to to update objects in the toolkit during the push
+                Config.CloneBeforePush = true;      //Set to true to clone the objects before they are being pushed through the software. Required if any modifications at all, as adding a software ID is done to the objects
+                Config.UseAdapterId = true;         //Tag objects with a software specific id in the CustomData. Requires the NextIndex method to be overridden and implemented
+
                 if (string.IsNullOrWhiteSpace(filePath))
                 {
                     throw new ArgumentException("No file path given");
@@ -30,7 +38,7 @@ namespace BH.Adapter.MidasCivil
                 else
                 {
                     System.Diagnostics.Process.Start(filePath);
-                    string directory = Path.GetDirectoryName(filePath);
+                    directory = Path.GetDirectoryName(filePath);
                     string fileName = Path.GetFileNameWithoutExtension(filePath);
                     string txtFile = directory + "\\" + fileName + ".txt";
                     string mctFile = directory + "\\" + fileName + ".mct";
@@ -44,13 +52,6 @@ namespace BH.Adapter.MidasCivil
                         midasText = File.ReadAllLines(mctFile).ToList();
                     }
                 }
-
-                Config.SeparateProperties = true;   //Set to true to push dependant properties of objects before the main objects are being pushed. Example: push nodes before pushing bars
-                Config.MergeWithComparer = true;    //Set to true to use EqualityComparers to merge objects. Example: merge nodes in the same location
-                Config.ProcessInMemory = false;     //Set to false to to update objects in the toolkit during the push
-                Config.CloneBeforePush = true;      //Set to true to clone the objects before they are being pushed through the software. Required if any modifications at all, as adding a software ID is done to the objects
-                Config.UseAdapterId = true;         //Tag objects with a software specific id in the CustomData. Requires the NextIndex method to be overridden and implemented
-
             }
         }
 
@@ -61,6 +62,7 @@ namespace BH.Adapter.MidasCivil
 
         public List<string> midasText;
         public string directory;
+        private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
 
         /***************************************************/
         /**** Private  Fields                           ****/
@@ -71,7 +73,5 @@ namespace BH.Adapter.MidasCivil
         //private SoftwareComLink m_softwareNameCom;
 
         /***************************************************/
-
-
     }
 }

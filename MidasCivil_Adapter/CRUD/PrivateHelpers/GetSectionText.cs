@@ -5,7 +5,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public List<string> GetSectionText(List<string> midasText, string section)
+        public List<string> GetSectionText(string section)
         {
             List<int> sectionIndexes = midasText.Select((value, index) => new { value, index })
                 .Where(x => x.ToString().Contains("*"))
@@ -24,7 +24,7 @@ namespace BH.Adapter.MidasCivil
             }
 
             CleanString(ref sectionText);
-
+            
             return sectionText;
         }
     }
