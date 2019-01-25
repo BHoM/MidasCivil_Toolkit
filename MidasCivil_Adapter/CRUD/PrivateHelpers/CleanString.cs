@@ -8,12 +8,11 @@ namespace BH.Adapter.MidasCivil
         {
             List<string> cleanString = new List<string>();
 
-            foreach (string text in sectionText)
+            foreach(string text in sectionText)
             {
                 if (!(text.Contains(";")) && !(text.Contains("*")) && !(string.IsNullOrEmpty(text)))
                 {
-
-                    cleanString.Add(text.Replace(" ",""));
+                    cleanString.Add(text);
                 }
             }
 

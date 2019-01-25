@@ -5,6 +5,6 @@ C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_Engine\obj\Debug\MidasC
 C:\Users\cself\Documents\GitHub\Midas_Toolkit\MidasCivil_Engine\obj\Debug\MidasCivil_Engine.pdb
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\Build\MidasCivil_Engine.dll
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\Build\MidasCivil_Engine.pdb
-C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_Engine\obj\Debug\MidasCivil_Engine.csprojResolveAssemblyReference.cache
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_Engine\obj\Debug\MidasCivil_Engine.dll
 C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_Engine\obj\Debug\MidasCivil_Engine.pdb
+C:\Users\pnugent\Documents\GitHub\MidasCivil_Toolkit\MidasCivil_Engine\obj\Debug\MidasCivil_Engine.csprojResolveAssemblyReference.cache
