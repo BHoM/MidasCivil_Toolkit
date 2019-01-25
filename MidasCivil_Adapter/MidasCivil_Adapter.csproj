@@ -74,6 +74,7 @@
     <Compile Include="CRUD\Create\Properties\Materials.cs" />
     <Compile Include="CRUD\Create\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
+    <Compile Include="CRUD\PrivateHelpers\RangeBySplit.cs" />
     <Compile Include="CRUD\PrivateHelpers\CleanString.cs" />
     <Compile Include="CRUD\PrivateHelpers\CreateSectionText.cs" />
     <Compile Include="CRUD\PrivateHelpers\ExistsSection.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="CRUD\Create\_Create.cs" />
     <Compile Include="CRUD\Delete\_Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
+    <Compile Include="CRUD\PrivateHelpers\GetPropertyAssignments.cs" />
     <Compile Include="CRUD\Read\Elements\Bars.cs" />
     <Compile Include="CRUD\Read\Elements\FEMeshes.cs" />
     <Compile Include="CRUD\Read\Elements\Nodes.cs" />

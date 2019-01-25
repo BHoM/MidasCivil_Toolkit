@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using BH.oM.Common.Materials;
+﻿using System.Collections.Generic;
+using BH.oM.Structure.Properties.Constraint;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private bool CreateCollection(IEnumerable<Material> materials)
+        private bool CreateCollection(IEnumerable<Constraint6DOF> supports)
         {
             //Code for creating a collection of nodes in the software
 
-            foreach (Material material in materials)
+            foreach (Constraint6DOF constraint6DOF in supports)
             {
-                Engine.MidasCivil.Convert.ToMCMaterial(material);
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
+                Engine.MidasCivil.Convert.ToMCSupport(constraint6DOF);
             }
-            throw new NotImplementedException();
+
+            return true;
         }
     }
 }
