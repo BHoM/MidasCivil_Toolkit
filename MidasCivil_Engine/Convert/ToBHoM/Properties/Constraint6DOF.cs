@@ -56,7 +56,7 @@ namespace BH.Engine.MidasCivil
                         else
                         {
                             double spring = double.Parse(delimitted[i]);
-                            if (spring == 1E+016)
+                            if (spring == 1E+016 || spring == 100000)
                             {
                                 fixity.Add(true);
                                 stiffness.Add(0);

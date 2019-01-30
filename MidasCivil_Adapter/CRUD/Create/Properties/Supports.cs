@@ -7,13 +7,26 @@ namespace BH.Adapter.MidasCivil
     {
         private bool CreateCollection(IEnumerable<Constraint6DOF> supports)
         {
-            //Code for creating a collection of nodes in the software
+            string boundaryGroupPath = CreateSectionText("BNDR-GROUP");
+            string supportPath = CreateSectionText("CONSTRAINT");
+            string springPath = CreateSectionText("SPRING");
 
             foreach (Constraint6DOF constraint6DOF in supports)
             {
-                Engine.MidasCivil.Convert.ToMCSupport(constraint6DOF);
+                Engine.MidasCivil.Convert.ToMCBoundaryGroup(constraint6DOF, boundaryGroupPath);
             }
 
+            foreach (Constraint6DOF constraint6DOF in supports)
+            {
+                if (GetStiffnessVectorModulus(constraint6DOF) > 0)
+                {
+                    Engine.MidasCivil.Convert.ToMCSpring(constraint6DOF, springPath);
+                }
+                else
+                {
+                    Engine.MidasCivil.Convert.ToMCSupport(constraint6DOF, supportPath);
+                }
+            }
             return true;
         }
     }

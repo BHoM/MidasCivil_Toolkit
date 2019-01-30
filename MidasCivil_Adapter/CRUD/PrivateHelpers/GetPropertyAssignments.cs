@@ -26,25 +26,8 @@ namespace BH.Adapter.MidasCivil
                         ToList();
                 }
 
+                List<int> propertyAssignment = GetAssignmentsAsList(geometryAssignments);
 
-                List<int> propertyAssignment = new List<int>();
-
-                foreach (string geometryAssignment in geometryAssignments)
-                {
-                    if (geometryAssignment.Contains("by"))
-                    {
-                        propertyAssignment.AddRange(RangeBySplit(geometryAssignment, "to", "by"));
-                    }
-                    else if (geometryAssignment.Contains("to"))
-                    {
-                        propertyAssignment.AddRange(RangeBySplit(geometryAssignment, "to"));
-                    }
-                    else
-                    {
-                        int assignment = System.Convert.ToInt32(geometryAssignment);
-                        propertyAssignment.Add(assignment);
-                    }
-                }
                 propertyAssignments.Add(namePrefix + "_" + (i+1), propertyAssignment);
             }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using BH.oM.Structure.Elements;
 namespace BH.Engine.MidasCivil
 {
@@ -17,7 +16,6 @@ namespace BH.Engine.MidasCivil
                 );
                 nodeText.Close();
             }
-
         }
     }
 }

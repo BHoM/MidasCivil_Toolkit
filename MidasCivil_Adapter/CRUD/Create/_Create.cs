@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties.Section;
+using BH.oM.Structure.Properties.Constraint;
 using BH.oM.Common.Materials;
 
 namespace BH.Adapter.MidasCivil
@@ -24,6 +24,10 @@ namespace BH.Adapter.MidasCivil
                 if(objects.First() is Node)
                 {
                     success = CreateCollection(objects as IEnumerable<Node>);
+                }
+                if (objects.First() is Constraint6DOF)
+                {
+                    success = CreateCollection(objects as IEnumerable<Constraint6DOF>);
                 }
             }
             //UpdateViews()             //If there exists a command for updating the views is the software call it now:
