@@ -11,7 +11,6 @@ namespace BH.Adapter.MidasCivil
             string[] splitStringTo = text.Split(new[] { split }, StringSplitOptions.RemoveEmptyEntries);
             int start = System.Convert.ToInt32(splitStringTo[0]);
             int end = System.Convert.ToInt32(splitStringTo[1]);
-
             List<int> range = new List<int>(Enumerable.Range(start, end - start + 1));
 
             return range;

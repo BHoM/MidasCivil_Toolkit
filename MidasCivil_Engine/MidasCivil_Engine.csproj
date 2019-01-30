@@ -67,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\AdapterId.cs" />
+    <Compile Include="Convert\PrivateHelpers\CheckSupportedDOFType.cs" />
+    <Compile Include="Convert\PrivateHelpers\GetSpringStiffness.cs" />
+    <Compile Include="Convert\PrivateHelpers\SupportToString.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\FEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Node.cs" />
@@ -84,14 +87,15 @@
     <Compile Include="Convert\ToBHoM\ToBHoM.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\Element.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\Node.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\BoundaryGroup.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\Material.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\SectionProperty.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\Spring.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\Support.cs" />
     <Compile Include="Convert\ToMidasCivil\ToMidasCivil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Convert\PrivateHelpers\" />
     <Folder Include="Convert\ToMidasCivil\Loads\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

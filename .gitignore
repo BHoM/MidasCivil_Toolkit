@@ -6,6 +6,10 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.dll
+*.pdb
+*.suo
+*.cache
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -240,5 +244,8 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-Build/MidasCivil_Engine.dll
-Build/MidasCivil_Engine.pdb
+*.dll
+.vs/MidasCivil_Toolkit/v14/.suo
+*.pdb
+*.cache
+*.cache
