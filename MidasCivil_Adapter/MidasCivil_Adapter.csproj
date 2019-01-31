@@ -79,6 +79,7 @@
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
     <Compile Include="CRUD\PrivateHelpers\CreateAssignmentString.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetAssignments.cs" />
+    <Compile Include="CRUD\PrivateHelpers\GetSectionName.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetStiffnessVectorModulus.cs" />
     <Compile Include="CRUD\PrivateHelpers\Modulus.cs" />
     <Compile Include="CRUD\PrivateHelpers\PropertyAssignment.cs" />
@@ -91,6 +92,8 @@
     <Compile Include="CRUD\Delete\_Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetPropertyAssignments.cs" />
+    <Compile Include="CRUD\PrivateHelpers\SetSectionText.cs" />
+    <Compile Include="CRUD\PrivateHelpers\WriteSectionText.cs" />
     <Compile Include="CRUD\Read\Elements\Bars.cs" />
     <Compile Include="CRUD\Read\Elements\FEMeshes.cs" />
     <Compile Include="CRUD\Read\Elements\Nodes.cs" />
