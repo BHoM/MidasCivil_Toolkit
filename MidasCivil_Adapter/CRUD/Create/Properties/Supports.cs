@@ -7,9 +7,9 @@ namespace BH.Adapter.MidasCivil
     {
         private bool CreateCollection(IEnumerable<Constraint6DOF> supports)
         {
-            string boundaryGroupPath = CreateSectionText("BNDR-GROUP");
-            string supportPath = CreateSectionText("CONSTRAINT");
-            string springPath = CreateSectionText("SPRING");
+            string boundaryGroupPath = CreateSectionFile("BNDR-GROUP");
+            string supportPath = CreateSectionFile("CONSTRAINT");
+            string springPath = CreateSectionFile("SPRING");
 
             foreach (Constraint6DOF constraint6DOF in supports)
             {

@@ -8,7 +8,7 @@ namespace BH.Adapter.MidasCivil
     {
         private bool CreateCollection(IEnumerable<Node> nodes)
         {
-            string path = CreateSectionText("NODE");
+            string path = CreateSectionFile("NODE");
 
             foreach (Node node in nodes)
             {

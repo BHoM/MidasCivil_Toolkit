@@ -8,7 +8,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private string CreateSectionText(string section)
+        private string CreateSectionFile(string section)
         {
             string path = directory + "\\" + section + ".txt";
 

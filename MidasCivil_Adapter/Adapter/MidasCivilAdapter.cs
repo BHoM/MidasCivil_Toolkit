@@ -46,10 +46,12 @@ namespace BH.Adapter.MidasCivil
                     if (File.Exists(txtFile))
                     {
                         midasText = File.ReadAllLines(txtFile).ToList();
+                        SetSectionText();
                     }
                     else if (File.Exists(mctFile))
                     {
                         midasText = File.ReadAllLines(mctFile).ToList();
+                        SetSectionText();
                     }
                 }
             }
