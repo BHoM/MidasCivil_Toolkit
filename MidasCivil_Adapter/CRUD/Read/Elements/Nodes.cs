@@ -12,15 +12,15 @@ namespace BH.Adapter.MidasCivil
         {
             List<Node> bhomNodes = new List<Node>();
 
-            List<string> nodesText = GetSectionText("*NODE");
-            List<string> supportText = GetSectionText("*CONSTRAINT");
-            List<string> springText = GetSectionText("*SPRING");
+            List<string> nodesText = GetSectionText("NODE");
+            List<string> supportText = GetSectionText("CONSTRAINT");
+            List<string> springText = GetSectionText("SPRING");
 
             List<Constraint6DOF> supportsList = Read6DOFConstraints();
             Dictionary<string, Constraint6DOF> supports = supportsList.ToDictionary(x => x.Name.ToString());
 
-            Dictionary<string, List<int>> supportAssignments = GetPropertyAssignments("*CONSTRAINT","Support");
-            Dictionary<string, List<int>> springAssignments = GetPropertyAssignments("*SPRING", "Spring");
+            Dictionary<string, List<int>> supportAssignments = GetPropertyAssignments("CONSTRAINT","Support");
+            Dictionary<string, List<int>> springAssignments = GetPropertyAssignments("SPRING", "Spring");
 
             foreach (string node in nodesText)
             {
