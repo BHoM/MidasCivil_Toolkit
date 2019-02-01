@@ -1,8 +1,6 @@
-﻿using System;
+﻿using BH.oM.Structure.Elements;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -14,7 +12,11 @@ namespace BH.Adapter.MidasCivil
 
         protected override int Delete(Type type, IEnumerable<object> ids)
         {
-            //Insert code here to enable deletion of specific types of objects with specific ids
+            int success = 0;
+
+            if (type == typeof(Node))
+                success = DeleteNodes(ids);
+
             return 0;
         }
 
