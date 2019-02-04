@@ -15,7 +15,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> stringIndex = ids.Cast<string>().ToList();
 
-                List<int> indicies = stringIndex.Select(int.Parse).ToList();
+                List<int> indices = stringIndex.Select(int.Parse).ToList();
 
                 string path = directory + "\\" + "NODE" + ".txt";
 
@@ -36,7 +36,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                foreach (int index in indicies)
+                foreach (int index in indices)
                 {
                     if (nodeIndexes.Contains(index))
                     {

@@ -16,6 +16,8 @@ namespace BH.Adapter.MidasCivil
 
             if (type == typeof(Node))
                 success = DeleteNodes(ids);
+            if (type == typeof(Bar))
+                success = DeleteElements(ids);
 
             return 0;
         }

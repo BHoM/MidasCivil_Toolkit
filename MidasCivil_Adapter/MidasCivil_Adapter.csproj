@@ -77,6 +77,7 @@
     <Compile Include="CRUD\Create\Properties\Materials.cs" />
     <Compile Include="CRUD\Create\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
+    <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
     <Compile Include="CRUD\PrivateHelpers\CreateAssignmentString.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetAssignments.cs" />
