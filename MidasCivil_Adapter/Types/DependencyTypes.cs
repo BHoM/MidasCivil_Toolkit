@@ -47,7 +47,8 @@ namespace BH.Adapter.MidasCivil
         private static Dictionary<Type, List<Type>> m_DependencyTypes = new Dictionary<Type, List<Type>>
         {
             {typeof(Node), new List<Type> { typeof(Constraint6DOF)} },
-            { typeof(Bar), new List<Type> { typeof(Node) } },
+            {typeof(Bar), new List<Type> { typeof(Node) } },
+            {typeof(FEMesh), new List<Type> { typeof(Node) } },
             {typeof(ISectionProperty), new List<Type> { typeof(Material) } },
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
             {typeof(MeshFace), new List<Type> { typeof(ISurfaceProperty), typeof(Node) } },
