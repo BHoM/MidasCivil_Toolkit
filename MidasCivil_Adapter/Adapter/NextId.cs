@@ -70,6 +70,21 @@ namespace BH.Adapter.MidasCivil
                     }
 
                 }
+
+                if (type == typeof(FEMesh))
+                {
+                    string section = "ELEMENT";
+
+                    if (ExistsSection(section))
+                    {
+                        index = GetMaxElementID() + 1;
+                    }
+                    else
+                    {
+                        index = 1;
+                    }
+
+                }
             }
 
             m_indexDict[type] = index;
