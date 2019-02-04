@@ -53,6 +53,22 @@ namespace BH.Adapter.MidasCivil
                     {
                         index = 1;
                     }
+
+                }
+
+                if (type == typeof(Bar))
+                {
+                    string section = "ELEMENT";
+
+                    if (ExistsSection(section))
+                    {
+                        index = GetMaxElementID() + 1;
+                    }
+                    else
+                    {
+                        index = 1;
+                    }
+
                 }
             }
 
