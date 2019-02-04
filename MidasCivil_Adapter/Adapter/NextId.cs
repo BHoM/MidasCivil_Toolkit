@@ -35,10 +35,14 @@ namespace BH.Adapter.MidasCivil
                     if (ExistsSection(section))
                     {
                         List<Node> nodes = ReadNodes();
+                        List<int> nodeID = new List<int>();
+                        nodes.ForEach(x => nodeID.Add(Convert.ToInt32(x.CustomData[AdapterId].ToString())));
+                        nodeID.Sort();
+                        nodeID.Reverse();
+
                         if (!(nodes == null))
                         {
-                            nodes.Reverse();
-                            index = Convert.ToInt32(nodes[0].CustomData[AdapterId]) + 1;
+                            index = nodeID[0] + 1;
                         }
                         else
                         {
