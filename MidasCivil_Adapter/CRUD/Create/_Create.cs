@@ -33,6 +33,10 @@ namespace BH.Adapter.MidasCivil
                 {
                     success = CreateCollection(objects as IEnumerable<Bar>);
                 }
+                if (objects.First() is FEMesh)
+                {
+                    success = CreateCollection(objects as IEnumerable<FEMesh>);
+                }
             }
             //UpdateViews()             //If there exists a command for updating the views is the software call it now:
 

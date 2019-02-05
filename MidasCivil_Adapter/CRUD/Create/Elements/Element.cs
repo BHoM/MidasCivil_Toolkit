@@ -17,5 +17,17 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        private bool CreateCollection(IEnumerable<FEMesh> meshes)
+        {
+            string path = CreateSectionFile("ELEMENT");
+
+            foreach (FEMesh mesh in meshes)
+            {
+                Engine.MidasCivil.Convert.ToMCElement(mesh, path);
+            }
+
+            return true;
+        }
     }
 }
