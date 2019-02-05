@@ -17,17 +17,17 @@ namespace BH.Engine.MidasCivil
             Node n4 = null;
             FEMesh bhomFEMesh;
 
-            bhomNodes.TryGetValue(delimitted[4], out n1);
-            bhomNodes.TryGetValue(delimitted[5], out n2);
-            bhomNodes.TryGetValue(delimitted[6], out n3);
+            bhomNodes.TryGetValue(delimitted[4].Replace(" ", ""), out n1);
+            bhomNodes.TryGetValue(delimitted[5].Replace(" ", ""), out n2);
+            bhomNodes.TryGetValue(delimitted[6].Replace(" ", ""), out n3);
 
             Point p1 = Engine.Structure.Query.Position(n1);
             Point p2 = Engine.Structure.Query.Position(n2);
             Point p3 = Engine.Structure.Query.Position(n3);
 
-            if (System.Convert.ToInt32(delimitted[7])!=0)
+            if (System.Convert.ToInt32(delimitted[7].Replace(" ", "")) !=0)
             {
-                bhomNodes.TryGetValue(delimitted[7], out n4);
+                bhomNodes.TryGetValue(delimitted[7].Replace(" ", ""), out n4);
                 Point p4 = Engine.Structure.Query.Position(n4);
                 List<Point> meshPoints = new List<Point> { p1, p2, p3, p4 };
                 List<Face> meshFace = new List<Face> { Geometry.Create.Face(1, 2, 3, 4) };
@@ -42,7 +42,7 @@ namespace BH.Engine.MidasCivil
                 bhomFEMesh = Structure.Create.FEMesh(bhomMesh);
             }
 
-            bhomFEMesh.CustomData[AdapterId] = delimitted[0];
+            bhomFEMesh.CustomData[AdapterId] = delimitted[0].Replace(" ", "");
 
             return bhomFEMesh;
         }

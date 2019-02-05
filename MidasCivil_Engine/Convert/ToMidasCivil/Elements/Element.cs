@@ -11,9 +11,9 @@ namespace BH.Engine.MidasCivil
         {
             using (StreamWriter elementText = File.AppendText(path))
             {
-                elementText.WriteLine(bar.CustomData[AdapterId].ToString() + ", BEAM, 1, 1, " +
-                                      bar.StartNode.CustomData[AdapterId].ToString() + ", " +
-                                      bar.EndNode.CustomData[AdapterId].ToString() + ", 0, 0");
+                elementText.WriteLine(bar.CustomData[AdapterId].ToString() + ",BEAM,1,1," +
+                                      bar.StartNode.CustomData[AdapterId].ToString() + "," +
+                                      bar.EndNode.CustomData[AdapterId].ToString() + ",0,0");
                 elementText.Close();
             }
            
