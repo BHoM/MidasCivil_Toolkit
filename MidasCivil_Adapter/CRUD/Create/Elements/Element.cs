@@ -8,14 +8,26 @@ namespace BH.Adapter.MidasCivil
     {
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
-            //Code for creating a collection of nodes in the software
+            string path = CreateSectionFile("ELEMENT");
 
             foreach (Bar bar in bars)
             {
-                Engine.MidasCivil.Convert.ToMCElement(bar);
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
+                Engine.MidasCivil.Convert.ToMCElement(bar,path);
             }
-            throw new NotImplementedException();
+
+            return true;
+        }
+
+        private bool CreateCollection(IEnumerable<FEMesh> meshes)
+        {
+            string path = CreateSectionFile("ELEMENT");
+
+            foreach (FEMesh mesh in meshes)
+            {
+                Engine.MidasCivil.Convert.ToMCElement(mesh, path);
+            }
+
+            return true;
         }
     }
 }

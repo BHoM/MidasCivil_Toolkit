@@ -23,7 +23,7 @@ namespace BH.Adapter.MidasCivil
             else
             {
                 List<string> readSection = File.ReadAllLines(path).ToList();
-                if(!(readSection.Contains("*"+section)))
+                if(!(readSection[0].Contains("*"+section)))
                 {
                     using (StreamWriter sectionText = File.CreateText(path))
                     {

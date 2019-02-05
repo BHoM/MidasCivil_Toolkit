@@ -8,25 +8,14 @@ namespace BH.Adapter.MidasCivil
     {
         public List<string> GetSectionText(string section)
         {
-            //List<int> sectionIndexes = midasText.Select((value, index) => new { value, index })
-            //    .Where(x => x.ToString().Contains("*"))
-            //    .Select(x => x.index)
-            //    .ToList();
+            string path = directory + "\\" + section + ".txt";
+            List<string> sectionText = new List<string>();
 
-            //int nodeStart = -1;
-
-            List<string> sectionText = File.ReadAllLines(directory + "\\" + section + ".txt").ToList();
-
-            //if (midasText.Any(section.Contains))
-            //{
-            //    nodeStart = midasText.IndexOf(
-            //        midasText.FirstOrDefault(x => x.Contains(section)));
-            //    int nodeEnd = sectionIndexes[sectionIndexes.IndexOf(nodeStart) + 1];
-            //    sectionText = midasText.GetRange(nodeStart, nodeEnd - nodeStart);
-            //}
-
-            CleanString(ref sectionText);
-            
+            if (File.Exists(path))
+            {
+                sectionText = File.ReadAllLines(path).ToList();
+                CleanString(ref sectionText);
+            }
             return sectionText;
         }
     }

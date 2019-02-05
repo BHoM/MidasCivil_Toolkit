@@ -13,43 +13,45 @@ namespace BH.Adapter.MidasCivil
 
             if (ids != null)
             {
-                List<string> stringIndex = ids.Cast<string>().ToList();
-
-                List<int> indicies = stringIndex.Select(int.Parse).ToList();
-
                 string path = directory + "\\" + "NODE" + ".txt";
 
-                List<string> nodes = File.ReadAllLines(path).ToList();
-
-                List<int> nodeIndexes = new List<int>();
-                foreach (string node in nodes)
+                if(File.Exists(path))
                 {
-                    if (node.Contains(";") || node.Contains("*"))
+                    List<string> stringIndex = ids.Cast<string>().ToList();
+
+                    List<int> indices = stringIndex.Select(int.Parse).ToList();
+
+                    List<string> nodes = File.ReadAllLines(path).ToList();
+
+                    List<int> nodeIndexes = new List<int>();
+                    foreach (string node in nodes)
                     {
-                        int clone = 0;
-                        nodeIndexes.Add(clone);
+                        if (node.Contains(";") || node.Contains("*"))
+                        {
+                            int clone = 0;
+                            nodeIndexes.Add(clone);
+                        }
+                        else
+                        {
+                            int clone = int.Parse(node.Split(',')[0].Replace(" ", ""));
+                            nodeIndexes.Add(clone);
+                        }
                     }
-                    else
+
+                    foreach (int index in indices)
                     {
-                        int clone = int.Parse(node.Split(',')[0].Replace(" ", ""));
-                        nodeIndexes.Add(clone);
+                        if (nodeIndexes.Contains(index))
+                        {
+                            int nodeIndex = nodeIndexes.IndexOf(index);
+                            nodes[nodeIndex] = "";
+                        }
                     }
+
+                    nodes = nodes.Where(x => !string.IsNullOrEmpty(x)).ToList();
+
+                    File.Delete(path);
+                    File.WriteAllLines(path, nodes.ToArray());
                 }
-
-                foreach (int index in indicies)
-                {
-                    if (nodeIndexes.Contains(index))
-                    {
-                        int nodeIndex = nodeIndexes.IndexOf(index);
-                        nodes[nodeIndex] = "";
-                    }
-                }
-
-                nodes = nodes.Where(x => !string.IsNullOrEmpty(x)).ToList();
-
-                File.Delete(path);
-                File.WriteAllLines(path, nodes.ToArray());
-
             }
             return success;
         }
