@@ -25,7 +25,7 @@ namespace BH.Adapter.MidasCivil
                 return ReadBars(ids as dynamic);
             else if (type == typeof(FEMesh))
                 return ReadFEMeshses(ids as dynamic);
-            else if (type == typeof(ISectionProperty) || type.GetInterfaces().Contains(typeof(ISectionProperty)))
+            else if (typeof(ISectionProperty).IsAssignableFrom(type))
                 return ReadSectionProperties(ids as dynamic);
             else if (type == typeof(Material))
                 return ReadMaterials(ids as dynamic);
