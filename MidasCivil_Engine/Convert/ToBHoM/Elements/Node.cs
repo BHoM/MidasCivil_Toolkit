@@ -16,13 +16,13 @@ namespace BH.Engine.MidasCivil
             Node bhomNode = Structure.Create.Node(
                 new Point
                 {
-                    X = double.Parse(delimitted[1]),
-                    Y = double.Parse(delimitted[2]),
-                    Z = double.Parse(delimitted[3])
+                    X = double.Parse(delimitted[1].Replace(" ", "")),
+                    Y = double.Parse(delimitted[2].Replace(" ", "")),
+                    Z = double.Parse(delimitted[3].Replace(" ", ""))
                 }
                 );
 
-            bhomNode.CustomData[AdapterId] = delimitted[0];
+            bhomNode.CustomData[AdapterId] = delimitted[0].Replace(" ", "");
             int bhomID = System.Convert.ToInt32(bhomNode.CustomData[AdapterId]);
 
             string supportName = "";

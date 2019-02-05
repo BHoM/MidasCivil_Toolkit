@@ -12,12 +12,12 @@ namespace BH.Engine.MidasCivil
             Node startNode = null;
             Node endNode = null;
 
-            bhomNodes.TryGetValue(delimitted[4], out startNode);
-            bhomNodes.TryGetValue(delimitted[5], out endNode);
+            bhomNodes.TryGetValue(delimitted[4].Replace(" ", ""), out startNode);
+            bhomNodes.TryGetValue(delimitted[5].Replace(" ", ""), out endNode);
 
             Bar bhomBar = Structure.Create.Bar(startNode,endNode);
 
-            bhomBar.CustomData[AdapterId] = delimitted[0];
+            bhomBar.CustomData[AdapterId] = delimitted[0].Replace(" ", "");
 
             return bhomBar;
         }
