@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Properties;
+using BH.oM.Structure.Loads;
 
 namespace BH.Engine.MidasCivil
 {
     public partial class Convert
     {
-        public static bool CompileTextFiles(string filepath, List<string> files = null)
+        public static bool CompileTextFiles(string filepath, List<Type> files = null)
         {
             bool success = true;
 
@@ -23,6 +26,7 @@ namespace BH.Engine.MidasCivil
             // Retrieve type strings: select all from directory if none provided
 
             List<string> typeNames = new List<string>();
+            bool includeLoadcases = true;
 
             if (files.Count == 0)
             {
@@ -37,7 +41,14 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                files.ForEach(x => typeNames.Add(x));
+                files.ForEach(x => typeNames.Add(bhomTypeConvert(x.ToString())));
+
+                if (!typeNames.Contains("LOADCASE"))
+                {
+                    includeLoadcases = false;
+                }
+
+                typeNames.Remove("LOADCASE");
             }
 
             // Check type dependencies to see if valid
@@ -54,6 +65,7 @@ namespace BH.Engine.MidasCivil
             dependents.Add(elementDependencies);
             dependents.Add(materialDependencies);
             dependents.Add(sectionDependencies);
+            dependents.Add(loadcaseDependencies);
 
             for (int i = 0; i < independents.Count; i++)
             {
@@ -73,8 +85,6 @@ namespace BH.Engine.MidasCivil
             independents.Add("LOAD-GROUP");
             independents.Add("LOADCOMB");
 
-            typeNames = typeNames.Except(independents).ToList();
-
             List<string> loadcases = Directory.GetDirectories(directory).ToList();
 
             using (var combined = File.Create(path))
@@ -83,13 +93,18 @@ namespace BH.Engine.MidasCivil
                 {
                     foreach (string independent in independents)
                     {
-                        var input = File.OpenRead(directory + "\\" + independent + ".txt");
-                        input.CopyTo(combined);
-                        writer.Write(Environment.NewLine);
-                        writer.Flush();
+                        if (typeNames.Contains(independent))
+                        {
+                            var input = File.OpenRead(directory + "\\" + independent + ".txt");
+                            input.CopyTo(combined);
+                            writer.Write(Environment.NewLine);
+                            writer.Flush();
+                        }
                     }
 
-                    if (loadcases.Count() != 0)
+                    typeNames = typeNames.Except(independents).ToList();
+
+                    if (loadcases.Count() != 0 && includeLoadcases)
                     {
                         foreach (string loadcase in loadcases)
                         {
