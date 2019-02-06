@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Convert\AdapterId.cs" />
     <Compile Include="Convert\PrivateHelpers\CheckSupportedDOFType.cs" />
+    <Compile Include="Convert\PrivateHelpers\CompileTextFiles.cs" />
     <Compile Include="Convert\PrivateHelpers\GetSpringStiffness.cs" />
     <Compile Include="Convert\PrivateHelpers\SupportToString.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
