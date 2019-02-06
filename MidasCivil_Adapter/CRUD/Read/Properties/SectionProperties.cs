@@ -18,10 +18,19 @@ namespace BH.Adapter.MidasCivil
                 string sectionProperty = sectionProperties[i];
                 string type = sectionProperty.Split(',')[1];
 
+                ISectionProperty bhomSectionProperty = null;
+
                 if (type == "VALUE")
                 {
-                    ISectionProperty bhomSectionProperty = Engine.MidasCivil.Convert.ToBHoMSectionProperty(
+                    bhomSectionProperty = Engine.MidasCivil.Convert.ToBHoMSectionProperty(
                         sectionProperty);
+
+//; iSEC, TYPE, SNAME, [OFFSET], bSD, bWE, SHAPE, BLT, D1, ..., D8, iCEL              ; 1st line - VALUE
+//;       AREA, ASy, ASz, Ixx, Iyy, Izz                                               ; 2nd line
+//; CyP, CyM, CzP, CzM, QyB, QzB, PERI_OUT, PERI_IN, Cy, Cz                     ; 3rd line
+//; Y1, Y2, Y3, Y4, Z1, Z2, Z3, Z4, Zyy, Zzz                                    ; 4th line
+
+                    i = i + 4;
                 }
                 else if (type == "DBUSER")
                 {
@@ -29,7 +38,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordError(type + " not supported in the MidasCivil_Toolkit")
+                    Engine.Reflection.Compute.RecordError(type + " not supported in the MidasCivil_Toolkit");
                 }
 
 

@@ -46,6 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
     </Reference>
+    <Reference Include="Library_Engine">
+      <HintPath>..\..\BHoM_Engine\Build\Library_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
     </Reference>
