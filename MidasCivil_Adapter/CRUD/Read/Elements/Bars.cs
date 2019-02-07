@@ -9,9 +9,19 @@ namespace BH.Adapter.MidasCivil
         private List<Bar> ReadBars(List<string> ids = null)
         {
             List<Bar> bhomBars = new List<Bar>();
+            List<string> beamElements = new List<string> { "BEAM", "TRUSS", "TENSTR", "COMPTR" };
+            List<string> barText = new List<string>();
 
             List<string> elementsText = GetSectionText("ELEMENT");
-            List<string> barText = elementsText.Where(x => x.Contains("BEAM")).ToList();
+
+            foreach (string element in elementsText)
+            {
+                foreach(string type in beamElements)
+                {
+                    if (element.Contains(type))
+                        barText.Add(element);
+                }
+            }
 
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
