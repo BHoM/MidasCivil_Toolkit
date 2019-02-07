@@ -5,7 +5,7 @@ namespace BH.Engine.MidasCivil
 {
     public partial class Convert
     {
-        public static string bhomTypeConvert(string type)
+        public static string BHoMTypeConvert(string type)
         {
             string midasVersion;
 
