@@ -9,14 +9,49 @@ namespace BH.Engine.MidasCivil
     {
         public static void ToMCElement(this Bar bar, string path)
         {
-            using (StreamWriter elementText = File.AppendText(path))
+            string feaType = "TRUSS";
+            switch (bar.FEAType)
             {
-                elementText.WriteLine(bar.CustomData[AdapterId].ToString() + ",BEAM,1,1," +
-                                      bar.StartNode.CustomData[AdapterId].ToString() + "," +
-                                      bar.EndNode.CustomData[AdapterId].ToString() + ",0,0");
-                elementText.Close();
+                case BarFEAType.Axial:
+                    break;
+
+                case BarFEAType.Flexural:
+                    feaType = "BEAM";
+                    break;
+
+                case BarFEAType.TensionOnly:
+                    feaType = "TENSTR";
+                    break;
+
+                case BarFEAType.CompressionOnly:
+                    feaType = "COMPTR";
+                    break;
             }
-           
+
+            if (bar.FEAType == BarFEAType.Axial || bar.FEAType == BarFEAType.Flexural)
+            {
+                using (StreamWriter elementText = File.AppendText(path))
+                {
+                    elementText.WriteLine(bar.CustomData[AdapterId].ToString() + "," + feaType + ",1,1," +
+                                          bar.StartNode.CustomData[AdapterId].ToString() + "," +
+                                          bar.EndNode.CustomData[AdapterId].ToString() + "," +
+                                          bar.OrientationAngle.ToString() + ",0,0");
+                    elementText.Close();
+                }
+            }
+            else
+            {
+                using (StreamWriter elementText = File.AppendText(path))
+                {
+                    elementText.WriteLine(bar.CustomData[AdapterId].ToString() + "," + feaType + ",1,1," +
+                                          bar.StartNode.CustomData[AdapterId].ToString() + "," +
+                                          bar.EndNode.CustomData[AdapterId].ToString() + "," +
+                                          bar.OrientationAngle.ToString() + ",0,1,0,0,NO");
+                    elementText.Close();
+                }
+            }
+
+
         }
 
         public static void ToMCElement(this FEMesh feMesh, string path)
