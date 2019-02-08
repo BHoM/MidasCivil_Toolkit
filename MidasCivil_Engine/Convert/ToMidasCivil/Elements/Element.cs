@@ -7,8 +7,9 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static void ToMCElement(this Bar bar, string path)
+        public static string ToMCElement(this Bar bar)
         {
+            string midasElement;
             string feaType = "TRUSS";
             switch (bar.FEAType)
             {
@@ -30,39 +31,30 @@ namespace BH.Engine.MidasCivil
 
             if (bar.FEAType == BarFEAType.Axial || bar.FEAType == BarFEAType.Flexural)
             {
-                using (StreamWriter elementText = File.AppendText(path))
-                {
-                    elementText.WriteLine(bar.CustomData[AdapterId].ToString() + "," + feaType + ",1,1," +
+                    midasElement = (bar.CustomData[AdapterId].ToString() + "," + feaType + ",1,1," +
                                           bar.StartNode.CustomData[AdapterId].ToString() + "," +
                                           bar.EndNode.CustomData[AdapterId].ToString() + "," +
                                           bar.OrientationAngle.ToString() + ",0,0");
-                    elementText.Close();
-                }
             }
             else
             {
-                using (StreamWriter elementText = File.AppendText(path))
-                {
-                    elementText.WriteLine(bar.CustomData[AdapterId].ToString() + "," + feaType + ",1,1," +
+                    midasElement = (bar.CustomData[AdapterId].ToString() + "," + feaType + ",1,1," +
                                           bar.StartNode.CustomData[AdapterId].ToString() + "," +
                                           bar.EndNode.CustomData[AdapterId].ToString() + "," +
                                           bar.OrientationAngle.ToString() + ",0,1,0,0,NO");
-                    elementText.Close();
-                }
             }
 
-
+            return midasElement;
         }
 
-        public static void ToMCElement(this FEMesh feMesh, string path)
+        public static string ToMCElement(this FEMesh feMesh)
         {
-            using (StreamWriter elementText = File.AppendText(path))
-            {
+            string midasElement;
                 List<int> nodeIndices = feMesh.MeshFaces[0].NodeListIndices;
 
                 if (feMesh.Nodes.Count == 4)
                 {
-                    elementText.WriteLine(feMesh.CustomData[AdapterId].ToString() + ",PLATE,1, 1," +
+                    midasElement = (feMesh.CustomData[AdapterId].ToString() + ",PLATE,1, 1," +
                       feMesh.Nodes[nodeIndices[0]].CustomData[AdapterId].ToString() + "," +
                       feMesh.Nodes[nodeIndices[1]].CustomData[AdapterId].ToString() + "," +
                       feMesh.Nodes[nodeIndices[2]].CustomData[AdapterId].ToString() + "," +
@@ -70,14 +62,13 @@ namespace BH.Engine.MidasCivil
                 }
                 else
                 {
-                    elementText.WriteLine(feMesh.CustomData[AdapterId].ToString() + ",PLATE,1,1, " +
+                   midasElement = (feMesh.CustomData[AdapterId].ToString() + ",PLATE,1,1, " +
                     feMesh.Nodes[nodeIndices[0]].CustomData[AdapterId].ToString() + "," +
                     feMesh.Nodes[nodeIndices[1]].CustomData[AdapterId].ToString() + "," +
                     feMesh.Nodes[nodeIndices[2]].CustomData[AdapterId].ToString() + ",0,1,0");
                 }
 
-                elementText.Close();
-            }
+            return midasElement;
         }
     }
 }
