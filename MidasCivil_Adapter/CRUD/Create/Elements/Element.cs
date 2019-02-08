@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 
@@ -9,11 +9,14 @@ namespace BH.Adapter.MidasCivil
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
             string path = CreateSectionFile("ELEMENT");
+            List<string> midasElements = new List<string>();
 
             foreach (Bar bar in bars)
             {
-                Engine.MidasCivil.Convert.ToMCElement(bar,path);
+                midasElements.Add(Engine.MidasCivil.Convert.ToMCElement(bar));
             }
+
+            File.AppendAllLines(path, midasElements);
 
             return true;
         }
@@ -21,11 +24,14 @@ namespace BH.Adapter.MidasCivil
         private bool CreateCollection(IEnumerable<FEMesh> meshes)
         {
             string path = CreateSectionFile("ELEMENT");
+            List<string> midasElements = new List<string>();
 
             foreach (FEMesh mesh in meshes)
             {
-                Engine.MidasCivil.Convert.ToMCElement(mesh, path);
+                midasElements.Add(Engine.MidasCivil.Convert.ToMCElement(mesh));
             }
+
+            File.AppendAllLines(path, midasElements);
 
             return true;
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using BH.oM.Structure.Properties.Constraint;
 
 namespace BH.Adapter.MidasCivil
@@ -11,22 +12,31 @@ namespace BH.Adapter.MidasCivil
             string supportPath = CreateSectionFile("CONSTRAINT");
             string springPath = CreateSectionFile("SPRING");
 
+            List<string> midasBoundaryGroups = new List<string>();
+            List<string> midasSprings = new List<string>();
+            List<string> midasSupports = new List<string>();
+
             foreach (Constraint6DOF constraint6DOF in supports)
             {
-                Engine.MidasCivil.Convert.ToMCBoundaryGroup(constraint6DOF, boundaryGroupPath);
+                midasBoundaryGroups.Add(Engine.MidasCivil.Convert.ToMCBoundaryGroup(constraint6DOF));
             }
 
             foreach (Constraint6DOF constraint6DOF in supports)
             {
                 if (GetStiffnessVectorModulus(constraint6DOF) > 0)
                 {
-                    Engine.MidasCivil.Convert.ToMCSpring(constraint6DOF, springPath);
+                    midasSprings.Add(Engine.MidasCivil.Convert.ToMCSpring(constraint6DOF));
                 }
                 else
                 {
-                    Engine.MidasCivil.Convert.ToMCSupport(constraint6DOF, supportPath);
+                    midasSupports.Add(Engine.MidasCivil.Convert.ToMCSupport(constraint6DOF));
                 }
             }
+
+            File.AppendAllLines(boundaryGroupPath, midasBoundaryGroups);
+            File.AppendAllLines(supportPath, midasSupports);
+            File.AppendAllLines(springPath, midasSprings);
+
             return true;
         }
     }

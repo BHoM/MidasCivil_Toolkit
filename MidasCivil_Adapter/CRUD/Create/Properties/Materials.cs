@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
 using BH.oM.Common.Materials;
 
@@ -9,6 +9,7 @@ namespace BH.Adapter.MidasCivil
         private bool CreateCollection(IEnumerable<Material> materials)
         {
             string path = CreateSectionFile("MATERIAL");
+            List<string> midasMaterials = new List<string>();
 
             List<string> units = GetSectionText("UNIT");
 
@@ -21,8 +22,10 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Material material in materials)
             {
-                Engine.MidasCivil.Convert.ToMCMaterial(material, units, path);
+                midasMaterials.Add(Engine.MidasCivil.Convert.ToMCMaterial(material, units));
             }
+
+            File.AppendAllLines(path, midasMaterials);
 
             return true;
         }

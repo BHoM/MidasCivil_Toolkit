@@ -1,5 +1,6 @@
 ﻿using BH.oM.Structure.Elements;
 using System.Collections.Generic;
+using System.IO;
 
 
 namespace BH.Adapter.MidasCivil
@@ -9,6 +10,7 @@ namespace BH.Adapter.MidasCivil
         private bool CreateCollection(IEnumerable<Node> nodes)
         {
             string path = CreateSectionFile("NODE");
+            List<string> midasNodes = new List<string>();
 
             foreach (Node node in nodes)
             {
@@ -24,10 +26,12 @@ namespace BH.Adapter.MidasCivil
                     }
                     
                 }
-                Engine.MidasCivil.Convert.ToMCNode(node, path);
+                midasNodes.Add(Engine.MidasCivil.Convert.ToMCNode(node));
             }
 
-            return true;
+            File.AppendAllLines(path, midasNodes);
+
+                return true;
         }
     }
 }
