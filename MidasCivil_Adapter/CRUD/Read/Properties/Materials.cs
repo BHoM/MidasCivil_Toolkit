@@ -8,7 +8,17 @@ namespace BH.Adapter.MidasCivil
     {
         private List<Material> ReadMaterials(List<string> ids = null)
         {
-            throw new NotImplementedException();
+            List<Material> bhomMaterials = new List<Material>();
+
+            List<string> materialText = GetSectionText("MATERIAL");
+
+            foreach (string material in materialText)
+            {
+                Material bhomMaterial = Engine.MidasCivil.Convert.ToBHoMMaterial(material);
+                bhomMaterials.Add(bhomMaterial);
+            }
+
+            return bhomMaterials;
         }
     }
 }

@@ -21,6 +21,8 @@ namespace BH.Adapter.MidasCivil
             //Choose what to pull out depending on the type. Also see example methods below for pulling out bars and dependencies
             if (type == typeof(Node))
                 return ReadNodes(ids as dynamic);
+            if (type == typeof(Material))
+                return ReadMaterials(ids as dynamic);
             else if (type == typeof(Bar))
                 return ReadBars(ids as dynamic);
             else if (type == typeof(FEMesh))
