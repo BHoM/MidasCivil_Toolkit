@@ -46,6 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
     </Reference>
+    <Reference Include="Library_Engine">
+      <HintPath>..\..\BHoM_Engine\Build\Library_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
     </Reference>
@@ -76,6 +79,7 @@
     <Compile Include="Convert\PrivateHelpers\CombineTextFiles.cs" />
     <Compile Include="Convert\PrivateHelpers\GetSpringStiffness.cs" />
     <Compile Include="Convert\PrivateHelpers\SupportToString.cs" />
+    <Compile Include="Convert\PrivateHelpers\UnitConverter.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\FEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Node.cs" />
