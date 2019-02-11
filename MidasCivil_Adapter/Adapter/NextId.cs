@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
 
 
 namespace BH.Adapter.MidasCivil
@@ -83,8 +84,23 @@ namespace BH.Adapter.MidasCivil
                     {
                         index = 1;
                     }
-
                 }
+
+                if (type == typeof(Loadcase))
+                {
+                    string section = "STLDCASE";
+
+                    if (ExistsSection(section))
+                    {
+                        
+                        index = GetSectionText(section).Count;
+                    }
+                    else
+                    {
+                        index = 1;
+                    }
+                }
+
             }
 
             m_indexDict[type] = index;

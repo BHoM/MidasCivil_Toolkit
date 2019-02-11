@@ -4,6 +4,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Constraint;
 using BH.oM.Structure.Properties.Section;
 using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.Loads;
 using System;
 using System.Collections.Generic;
 
@@ -48,6 +49,7 @@ namespace BH.Adapter.MidasCivil
             {typeof(Material), new BHoMObjectNameComparer() },
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
             {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
+            {typeof(Loadcase), new BHoMObjectNameComparer() },
         };
 
 
