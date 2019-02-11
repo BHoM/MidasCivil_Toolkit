@@ -8,7 +8,17 @@ namespace BH.Adapter.MidasCivil
     {
         private List<Loadcase> ReadLoadcases(List<string> ids = null)
         {
-            throw new NotImplementedException();
+            List<Loadcase> bhomLoadCases = new List<Loadcase>();
+            List<string> loadcaseText = GetSectionText("STLDCASE");
+            int count = 1;
+
+            foreach (string loadcase in loadcaseText)
+            {
+                Loadcase bhomLoadCase = Engine.MidasCivil.Convert.ToBHoMLoadcase(loadcase,count);
+                bhomLoadCases.Add(bhomLoadCase);
+            }
+
+            return bhomLoadCases;
         }
     }
 }

@@ -6,13 +6,11 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static void ToMCSpring(this Constraint6DOF constraint6DOF, string path)
+        public static string ToMCSpring(this Constraint6DOF constraint6DOF)
         {
             List<double> stiffness = PrivateHelpers.GetSpringStiffness(constraint6DOF);
 
-            using (StreamWriter supportText = File.AppendText(path))
-            {
-                supportText.WriteLine(
+                string midasSpring = (
                     " " + "," + "LINEAR" + "," +
                     stiffness[0] + "," + stiffness[1] + "," + stiffness[2] + "," +
                     stiffness[3] + "," + stiffness[4] + "," + stiffness[5] + "," +
@@ -20,8 +18,8 @@ namespace BH.Engine.MidasCivil
                     constraint6DOF.Name + "," +
                     "0, 0, 0, 0, 0"
                     );
-                supportText.Close();
-            }
+
+            return midasSpring;
         }
     }
 }

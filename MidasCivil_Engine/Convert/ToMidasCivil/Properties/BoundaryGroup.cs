@@ -4,18 +4,16 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static void ToMCBoundaryGroup(this Constraint6DOF support, string path)
+        public static string ToMCBoundaryGroup(this Constraint6DOF support)
         {
-            using (StreamWriter boundaryGroupText = File.AppendText(path))
-            {
                 //Check what AUTOTYPE is, seems auto set to 0
 
-                boundaryGroupText.WriteLine(
+                string midasBoundaryGroup = (
                     support.Name + "," +
                     "0"
                 );
-                boundaryGroupText.Close();
-            }
+
+            return midasBoundaryGroup;
         }
     }
 }

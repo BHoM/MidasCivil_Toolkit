@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Constraint;
 using BH.oM.Common.Materials;
+using BH.oM.Structure.Loads;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -19,11 +20,15 @@ namespace BH.Adapter.MidasCivil
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
-            if(objects.Count() > 0)
+            if (objects.Count() > 0)
             {
-                if(objects.First() is Node)
+                if (objects.First() is Node)
                 {
                     success = CreateCollection(objects as IEnumerable<Node>);
+                }
+                if (objects.First() is Material)
+                {
+                    success = CreateCollection(objects as IEnumerable<Material>);
                 }
                 if (objects.First() is Constraint6DOF)
                 {
@@ -36,6 +41,10 @@ namespace BH.Adapter.MidasCivil
                 if (objects.First() is FEMesh)
                 {
                     success = CreateCollection(objects as IEnumerable<FEMesh>);
+                }
+                if (objects.First() is Loadcase)
+                {
+                    success = CreateCollection(objects as IEnumerable<Loadcase>);
                 }
             }
             //UpdateViews()             //If there exists a command for updating the views is the software call it now:

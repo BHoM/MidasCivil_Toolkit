@@ -4,17 +4,15 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static void ToMCSupport(this Constraint6DOF constraint6DOF, string path)
+        public static string ToMCSupport(this Constraint6DOF constraint6DOF)
         {
-            using (StreamWriter supportText = File.AppendText(path))
-            {
-                supportText.WriteLine(
+               string midasSupport = (
                     " " + "," +
                     PrivateHelpers.GetSupportString(constraint6DOF) + "," +
                     constraint6DOF.Name
                     );
-                supportText.Close();
-            }
+
+            return midasSupport;
         }
     }
 }

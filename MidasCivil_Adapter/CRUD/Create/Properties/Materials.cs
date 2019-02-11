@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
 using BH.oM.Common.Materials;
 
@@ -8,14 +8,26 @@ namespace BH.Adapter.MidasCivil
     {
         private bool CreateCollection(IEnumerable<Material> materials)
         {
-            //Code for creating a collection of nodes in the software
+            string path = CreateSectionFile("MATERIAL");
+            List<string> midasMaterials = new List<string>();
+
+            List<string> units = GetSectionText("UNIT");
+
+            string[] delimited = units[0].Split(',');
+            string EUnit = delimited[0].Replace(" ", "") + "/" + delimited[1].Replace(" ", "") + "2";
+            string tempCoeffUnit = "1/" + delimited[3].Replace(" ", "");
+            string densityUnit = "1/" + delimited[3].Replace(" ", "");
+
+            units = new List<string> { EUnit, tempCoeffUnit, densityUnit };
 
             foreach (Material material in materials)
             {
-                Engine.MidasCivil.Convert.ToMCMaterial(material);
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
+                midasMaterials.Add(Engine.MidasCivil.Convert.ToMCMaterial(material, units));
             }
-            throw new NotImplementedException();
+
+            File.AppendAllLines(path, midasMaterials);
+
+            return true;
         }
     }
 }

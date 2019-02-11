@@ -79,6 +79,7 @@
     <Compile Include="Convert\PrivateHelpers\CombineTextFiles.cs" />
     <Compile Include="Convert\PrivateHelpers\GetSpringStiffness.cs" />
     <Compile Include="Convert\PrivateHelpers\SupportToString.cs" />
+    <Compile Include="Convert\PrivateHelpers\UnitConverter.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\FEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Node.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Convert\ToBHoM\ToBHoM.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\Element.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\Node.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\Loadcase.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\BoundaryGroup.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\Material.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\SectionProperty.cs" />
@@ -104,9 +106,7 @@
     <Compile Include="Convert\ToMidasCivil\ToMidasCivil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Convert\ToMidasCivil\Loads\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
