@@ -8,7 +8,7 @@ namespace BH.Adapter.MidasCivil
     {
         public Dictionary<string,List<int>> GetPropertyAssignments(string section, string namePrefix)
         {
-            List<string> sectionText = GetSectionText(section);
+            List<string> sectionText = GetSectionText(section,directory);
 
             Dictionary<string, List<int>> propertyAssignments = new Dictionary<string, List<int>>();
 

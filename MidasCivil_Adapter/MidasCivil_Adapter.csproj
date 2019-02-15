@@ -101,13 +101,17 @@
     <Compile Include="CRUD\Read\Elements\Bars.cs" />
     <Compile Include="CRUD\Read\Elements\FEMeshes.cs" />
     <Compile Include="CRUD\Read\Elements\Nodes.cs" />
+    <Compile Include="CRUD\Read\Loads\AreaTemperatureLoad.cs" />
+    <Compile Include="CRUD\Read\Loads\AreaUniformlyDistributedLoad.cs" />
     <Compile Include="CRUD\Read\Loads\BarPointLoads.cs" />
     <Compile Include="CRUD\Read\Loads\BarTemperatureLoads.cs" />
     <Compile Include="CRUD\Read\Loads\BarUniformlyDistributedLoad.cs" />
     <Compile Include="CRUD\Read\Loads\BarVaryingDistributedLoads.cs" />
+    <Compile Include="CRUD\Read\Loads\ChooseLoad.cs" />
     <Compile Include="CRUD\Read\Loads\GravityLoads.cs" />
     <Compile Include="CRUD\Read\Loads\LoadCombinations.cs" />
     <Compile Include="CRUD\Read\Loads\Loadcases.cs" />
+    <Compile Include="CRUD\Read\Loads\PointDisplacement.cs" />
     <Compile Include="CRUD\Read\Loads\PointForces.cs" />
     <Compile Include="CRUD\Read\Properties\6DOFConstraints.cs" />
     <Compile Include="CRUD\Read\Properties\Materials.cs" />

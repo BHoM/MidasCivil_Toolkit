@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BH.oM.Structure.Loads;
 
-namespace BH.Adapter.MidasCivil.CRUD.Read.Loads
+namespace BH.Adapter.MidasCivil
 {
-    class AreaTemperatureLoad
+    public partial class MidasCivilAdapter
     {
+        private List<BarPointLoad> ReadAreaTemperatureLoads(List<string> ids = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

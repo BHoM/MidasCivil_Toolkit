@@ -10,7 +10,7 @@ namespace BH.Adapter.MidasCivil
         {
             List<Material> bhomMaterials = new List<Material>();
 
-            List<string> materialText = GetSectionText("MATERIAL");
+            List<string> materialText = GetSectionText("MATERIAL",directory);
 
             foreach (string material in materialText)
             {

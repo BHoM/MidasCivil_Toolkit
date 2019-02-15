@@ -9,7 +9,7 @@ namespace BH.Adapter.MidasCivil
         private List<Loadcase> ReadLoadcases(List<string> ids = null)
         {
             List<Loadcase> bhomLoadCases = new List<Loadcase>();
-            List<string> loadcaseText = GetSectionText("STLDCASE");
+            List<string> loadcaseText = GetSectionText("STLDCASE",directory);
             int count = 1;
 
             foreach (string loadcase in loadcaseText)

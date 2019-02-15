@@ -6,9 +6,9 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public List<string> GetSectionText(string section)
+        public List<string> GetSectionText(string section, string textDirectory)
         {
-            string path = directory + "\\" + section + ".txt";
+            string path = textDirectory + "\\" + section + ".txt";
             List<string> sectionText = new List<string>();
 
             if (File.Exists(path))

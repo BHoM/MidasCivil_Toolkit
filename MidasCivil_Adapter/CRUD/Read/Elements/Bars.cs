@@ -12,7 +12,7 @@ namespace BH.Adapter.MidasCivil
             List<string> beamElements = new List<string> { "BEAM", "TRUSS", "TENSTR", "COMPTR" };
             List<string> barText = new List<string>();
 
-            List<string> elementsText = GetSectionText("ELEMENT");
+            List<string> elementsText = GetSectionText("ELEMENT",directory);
 
             foreach (string element in elementsText)
             {
