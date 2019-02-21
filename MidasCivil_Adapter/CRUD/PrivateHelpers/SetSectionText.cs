@@ -44,13 +44,13 @@ namespace BH.Adapter.MidasCivil
                     continue;
                 }
 
-                string sectionName = GetSectionName(sectionHeader);
+                string sectionName = Engine.MidasCivil.Query.SectionName(sectionHeader);
                 List<string> sectionText = midasText.GetRange(sectionStart, sectionEnd - sectionStart);
 
                 if (loadcaseStarts.Contains(sectionStart))
                 {
                     string loadcaseName = sectionHeader.Split(',')[1];
-                    string path = directory + "\\" + loadcaseName;
+                    string path = directory + "\\_sectionfiles\\" + loadcaseName;
                     System.IO.Directory.CreateDirectory(path);
                     WriteSectionText(sectionText, sectionName, path);
 
@@ -66,7 +66,7 @@ namespace BH.Adapter.MidasCivil
                         {
                             continue;
                         }
-                        string loadName = GetSectionName(midasText[loadStart]);
+                        string loadName = Engine.MidasCivil.Query.SectionName(midasText[loadStart]);
                         WriteSectionText(loadText, loadName, path);
                     }
                 }

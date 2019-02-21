@@ -1,10 +1,9 @@
-﻿namespace BH.Adapter.MidasCivil
+﻿namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public partial class Query
     {
-        public string GetSectionName(string text)
+        public static string SectionName(string text)
         {
-
             if(text.Contains(" "))
             {
                 return text.Split(' ')[0].Split('*')[1];

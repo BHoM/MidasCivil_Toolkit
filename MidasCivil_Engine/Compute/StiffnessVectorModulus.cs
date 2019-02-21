@@ -1,12 +1,11 @@
 ﻿using BH.oM.Geometry;
 using BH.oM.Structure.Properties.Constraint;
 
-
-namespace BH.Adapter.MidasCivil
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public partial class Compute
     {
-        public double GetStiffnessVectorModulus(Constraint6DOF support)
+        public static double GetStiffnessVectorModulus(Constraint6DOF support)
         {
             Vector translationalStiffnessVector = new Vector()
             {
@@ -22,9 +21,8 @@ namespace BH.Adapter.MidasCivil
                 Z = support.RotationalStiffnessZ
             };
 
-
-
-            return Modulus(translationalStiffnessVector) + Modulus(rotationalStiffnessVector);
+            return Engine.MidasCivil.Compute.Modulus(translationalStiffnessVector) + 
+                Engine.MidasCivil.Compute.Modulus(rotationalStiffnessVector);
         }
     }
 }

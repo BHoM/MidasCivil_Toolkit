@@ -73,13 +73,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\AssignmentString.cs" />
+    <Compile Include="Compute\StiffnessVectorModulus.cs" />
+    <Compile Include="Compute\Modulus.cs" />
+    <Compile Include="Compute\RangeBySplit.cs" />
     <Compile Include="Convert\AdapterId.cs" />
-    <Compile Include="Convert\PrivateHelpers\BHoMTypeConvert.cs" />
-    <Compile Include="Convert\PrivateHelpers\CheckSupportedDOFType.cs" />
-    <Compile Include="Convert\PrivateHelpers\CombineTextFiles.cs" />
-    <Compile Include="Convert\PrivateHelpers\GetSpringStiffness.cs" />
-    <Compile Include="Convert\PrivateHelpers\SupportToString.cs" />
-    <Compile Include="Convert\PrivateHelpers\UnitConverter.cs" />
+    <Compile Include="Convert\BHoMTypeConvert.cs" />
+    <Compile Include="Query\Assignments.cs" />
+    <Compile Include="Query\SectionName.cs" />
+    <Compile Include="Query\SupportedDOFType.cs" />
+    <Compile Include="Compute\CombineTextFiles.cs" />
+    <Compile Include="Query\SpringStiffness.cs" />
+    <Compile Include="Query\SupportString.cs" />
+    <Compile Include="Convert\Unit.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\FEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Node.cs" />
@@ -104,6 +110,7 @@
     <Compile Include="Convert\ToMidasCivil\Properties\Spring.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\Support.cs" />
     <Compile Include="Convert\ToMidasCivil\ToMidasCivil.cs" />
+    <Compile Include="Modify\CleanString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

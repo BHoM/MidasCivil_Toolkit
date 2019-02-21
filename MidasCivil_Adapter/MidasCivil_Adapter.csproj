@@ -84,15 +84,8 @@
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CreateAssignmentString.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetAssignments.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetMaxElementID.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetSectionName.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetStiffnessVectorModulus.cs" />
-    <Compile Include="CRUD\PrivateHelpers\Modulus.cs" />
     <Compile Include="CRUD\PrivateHelpers\PropertyAssignment.cs" />
-    <Compile Include="CRUD\PrivateHelpers\RangeBySplit.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CleanString.cs" />
     <Compile Include="CRUD\PrivateHelpers\CreateSectionText.cs" />
     <Compile Include="CRUD\PrivateHelpers\ExistsSection.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetSectionText.cs" />

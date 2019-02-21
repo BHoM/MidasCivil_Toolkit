@@ -5,7 +5,7 @@ using System.IO;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Convert
+    public partial class Compute
     {
         public static bool CombineTextFiles(string filepath, List<Type> files = null, bool active = false)
         {
@@ -18,7 +18,7 @@ namespace BH.Engine.MidasCivil
                 delimited.Reverse();
                 delimited.RemoveAt(0);
                 delimited.Reverse();
-                directory = string.Join("\\", delimited);
+                directory = string.Join("\\", delimited) + "\\_sectionFiles";
 
                 string path = directory + "\\" + "COMBINED.txt";
 
@@ -40,7 +40,7 @@ namespace BH.Engine.MidasCivil
                 }
                 else
                 {
-                    files.ForEach(x => typeNames.Add(Convert.BHoMTypeConvert(x.ToString())));
+                    files.ForEach(x => typeNames.Add(Engine.MidasCivil.Convert.BHoMType(x.ToString())));
 
                     if (!typeNames.Contains("LOADCASE"))
                     {

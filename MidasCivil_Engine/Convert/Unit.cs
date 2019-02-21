@@ -8,7 +8,7 @@ namespace BH.Engine.MidasCivil
 {
     public partial class Convert
     {
-        public static double unitConverter(string startUnit, string endUnit, double value)
+        public static double Unit(string startUnit, string endUnit, double value)
         {
             double converted = value;
 

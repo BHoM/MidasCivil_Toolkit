@@ -8,7 +8,7 @@ namespace BH.Engine.MidasCivil
         {
                string midasSupport = (
                     " " + "," +
-                    PrivateHelpers.GetSupportString(constraint6DOF) + "," +
+                    Engine.MidasCivil.Query.SupportString(constraint6DOF) + "," +
                     constraint6DOF.Name
                     );
 

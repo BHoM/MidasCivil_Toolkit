@@ -31,10 +31,10 @@ namespace BH.Adapter.MidasCivil
                         Where(x => !string.IsNullOrEmpty(x)).
                         ToList();
                 }
-                List<int> assignments = GetAssignmentsAsList(assignmentRanges);
+                List<int> assignments = Engine.MidasCivil.Query.Assignments(assignmentRanges);
                 assignments.Add(int.Parse(bhomID));
 
-                split[0] = CreateAssignmentString(assignments);
+                split[0] = Engine.MidasCivil.Compute.AssignmentString(assignments);
             }
             else
             {
