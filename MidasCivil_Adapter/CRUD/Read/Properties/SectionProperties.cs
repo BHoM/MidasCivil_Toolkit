@@ -23,20 +23,15 @@ namespace BH.Adapter.MidasCivil
 
                 if (type == "VALUE")
                 {
-                    bhomSectionProperty = Engine.MidasCivil.Convert.ToBHoMSectionProperty(
-                        sectionProperty);
-
-                    string profile = sectionProperty;
+                    string sectionProfile = sectionProperty;
                     string sectionProperties1 = sectionProperties[i + 1];
                     string sectionProperties2 = sectionProperties[i + 2];
                     string sectionProperties3 = sectionProperties[i + 3];
 
-                    //; iSEC, TYPE, SNAME, [OFFSET], bSD, bWE, SHAPE, BLT, D1, ..., D8, iCEL              ; 1st line - VALUE
-                    //;       AREA, ASy, ASz, Ixx, Iyy, Izz                                               ; 2nd line
-                    //; CyP, CyM, CzP, CzM, QyB, QzB, PERI_OUT, PERI_IN, Cy, Cz                     ; 3rd line
-                    //; Y1, Y2, Y3, Y4, Z1, Z2, Z3, Z4, Zyy, Zzz                                    ; 4th line
+                    bhomSectionProperty = Engine.MidasCivil.Convert.ToBHoMSectionProperty(
+                        sectionProfile,sectionProperties1,sectionProperties2,sectionProperties3);
 
-                    i = i + 4;
+                    i = i + 3;
                 }
                 else if (type == "DBUSER")
                 {
