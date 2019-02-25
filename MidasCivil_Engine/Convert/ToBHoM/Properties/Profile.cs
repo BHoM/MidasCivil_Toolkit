@@ -21,7 +21,7 @@ namespace BH.Engine.MidasCivil
                 double width = System.Convert.ToDouble(split[15]);
                 double webSpacing = System.Convert.ToDouble(split[18]);
                 double webThickness = System.Convert.ToDouble(split[16]);
-                double corbel = width / 2 - webSpacing / 2 + webThickness / 2;
+                double corbel = width / 2 - webSpacing / 2 - webThickness / 2;
 
                 bhomProfile = Engine.Structure.Create.GeneralisedFabricatedBoxProfile(
                         System.Convert.ToDouble(split[14]), width, webThickness,

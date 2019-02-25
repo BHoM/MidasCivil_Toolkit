@@ -61,7 +61,6 @@
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Structure_oM">
       <HintPath>..\..\BHoM\Build\Structure_oM.dll</HintPath>

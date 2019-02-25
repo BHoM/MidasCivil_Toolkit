@@ -99,7 +99,7 @@ namespace BH.Engine.MidasCivil
             double wply = System.Convert.ToDouble(split3[8]);
             double wplz = System.Convert.ToDouble(split3[9]);
             double centreZ = System.Convert.ToDouble(split2[9]);
-            double centreY = System.Convert.ToDouble(split2[8]);
+            double centreY = -System.Convert.ToDouble(split2[8]);
             double zt = System.Convert.ToDouble(split2[2]);
             double zb = System.Convert.ToDouble(split2[3]);
             double yt = System.Convert.ToDouble(split2[0]);
@@ -111,9 +111,13 @@ namespace BH.Engine.MidasCivil
             double asy = System.Convert.ToDouble(split1[1]);
             double asz = System.Convert.ToDouble(split1[2]);
 
+            bhomProfile = Engine.Structure.Compute.Integrate(bhomProfile, oM.Geometry.Tolerance.MicroDistance).Item1;
+
             SteelSection bhomSection = new SteelSection(
                 bhomProfile, area, rgy, rgz, j, iy, iz, iw,
                 wely, welz, wply, wplz, centreZ, centreY, zt, zb, yt, yb, asy, asz);
+
+
 
             bhomSection.Name = split0[2];
             bhomSection.CustomData[AdapterId] = System.Convert.ToInt32(split0[0]);
