@@ -8,7 +8,7 @@ namespace BH.Engine.MidasCivil
     {
         public static string ToMCSpring(this Constraint6DOF constraint6DOF)
         {
-            List<double> stiffness = PrivateHelpers.GetSpringStiffness(constraint6DOF);
+            List<double> stiffness = Engine.MidasCivil.Query.SpringStiffness(constraint6DOF);
 
                 string midasSpring = (
                     " " + "," + "LINEAR" + "," +

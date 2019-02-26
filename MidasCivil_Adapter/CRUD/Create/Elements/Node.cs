@@ -16,7 +16,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if(!(node.Constraint==null))
                 {
-                    if(GetStiffnessVectorModulus(node.Constraint)>0)
+                    if(Engine.MidasCivil.Compute.GetStiffnessVectorModulus(node.Constraint)>0)
                     {
                         PropertyAssignment(node.CustomData[AdapterId].ToString(), node.Constraint.Name, "SPRING");
                     }

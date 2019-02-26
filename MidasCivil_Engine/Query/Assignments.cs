@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BH.Adapter.MidasCivil
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public partial class Query
     {
-        public List<int> GetAssignmentsAsList(List<string> assignments)
+        public static List<int> Assignments(List<string> assignments)
         {
             List<int> propertyAssignment = new List<int>();
 
@@ -13,21 +13,20 @@ namespace BH.Adapter.MidasCivil
             {
                 if (assignment.Contains("by"))
                 {
-                    propertyAssignment.AddRange(RangeBySplit(assignment, "to", "by"));
+                    propertyAssignment.AddRange(Engine.MidasCivil.Compute.RangeBySplit(assignment, "to", "by"));
                 }
                 else if (assignment.Contains("to"))
                 {
-                    propertyAssignment.AddRange(RangeBySplit(assignment, "to"));
+                    propertyAssignment.AddRange(Engine.MidasCivil.Compute.RangeBySplit(assignment, "to"));
                 }
                 else
                 {
-                    int id = Convert.ToInt32(assignment);
+                    int id = System.Convert.ToInt32(assignment);
                     propertyAssignment.Add(id);
                 }
             }
 
             return propertyAssignment;
-
         }
     }
 }

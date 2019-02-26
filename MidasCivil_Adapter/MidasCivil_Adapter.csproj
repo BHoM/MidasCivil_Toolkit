@@ -44,16 +44,20 @@
     </Reference>
     <Reference Include="Common_oM">
       <HintPath>..\..\BHoM\Build\Common_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Geometry_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Geometry_Engine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Geometry_oM">
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="MidasCivil_Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Reflection_Engine, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Build\MidasCivil_Engine.dll</HintPath>
+      <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
@@ -61,6 +65,7 @@
     </Reference>
     <Reference Include="Structure_oM">
       <HintPath>..\..\BHoM\Build\Structure_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -80,15 +85,8 @@
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CreateAssignmentString.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetAssignments.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetMaxElementID.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetSectionName.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetStiffnessVectorModulus.cs" />
-    <Compile Include="CRUD\PrivateHelpers\Modulus.cs" />
     <Compile Include="CRUD\PrivateHelpers\PropertyAssignment.cs" />
-    <Compile Include="CRUD\PrivateHelpers\RangeBySplit.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CleanString.cs" />
     <Compile Include="CRUD\PrivateHelpers\CreateSectionText.cs" />
     <Compile Include="CRUD\PrivateHelpers\ExistsSection.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetSectionText.cs" />
@@ -123,6 +121,12 @@
   <ItemGroup>
     <Folder Include="CRUD\Delete\Loads\" />
     <Folder Include="CRUD\Delete\Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MidasCivil_Engine\MidasCivil_Engine.csproj">
+      <Project>{bc0a8eff-4277-49e9-bbdc-66ffa11e5258}</Project>
+      <Name>MidasCivil_Engine</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
