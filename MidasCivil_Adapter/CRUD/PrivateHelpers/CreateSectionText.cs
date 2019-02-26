@@ -10,7 +10,7 @@ namespace BH.Adapter.MidasCivil
     {
         private string CreateSectionFile(string section)
         {
-            string newFolder = directory + "\\_sectionfiles\\";
+            string newFolder = directory + "\\TextFiles\\";
             System.IO.Directory.CreateDirectory(newFolder);
             string path =  newFolder + "\\" + section + ".txt";
             if (!File.Exists(path))
