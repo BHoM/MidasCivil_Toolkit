@@ -50,7 +50,7 @@ namespace BH.Adapter.MidasCivil
                 if (loadcaseStarts.Contains(sectionStart))
                 {
                     string loadcaseName = sectionHeader.Split(',')[1];
-                    string path = directory + "\\TextFiles\\" + loadcaseName;
+                    string path = directory + "\\_sectionfiles\\" + loadcaseName;
                     System.IO.Directory.CreateDirectory(path);
                     WriteSectionText(sectionText, sectionName, path);
 
