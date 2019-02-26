@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BH.Adapter.MidasCivil
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public partial class Compute
     {
-        public List<int> RangeBySplit(string text, string split)
+        public static List<int> RangeBySplit(string text, string split)
         {
             string[] splitStringTo = text.Split(new[] { split }, StringSplitOptions.RemoveEmptyEntries);
             int start = System.Convert.ToInt32(splitStringTo[0]);
@@ -16,7 +16,7 @@ namespace BH.Adapter.MidasCivil
             return range;
         }
 
-        public List<int> RangeBySplit(string text, string split1, string split2)
+        public static List<int> RangeBySplit(string text, string split1, string split2)
         {
             string[] splitStringTo = text.Split(new[] { split1 }, StringSplitOptions.RemoveEmptyEntries);
             int start = System.Convert.ToInt32(splitStringTo[0]);

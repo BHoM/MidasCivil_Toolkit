@@ -2,9 +2,9 @@
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class PrivateHelpers
+    public partial class Query
     {
-        public static bool CheckSupportedDOFTypes(DOFType freedom)
+        public static bool SupportedDOFTypes(DOFType freedom)
         {
             if (freedom == DOFType.Damped)
             {

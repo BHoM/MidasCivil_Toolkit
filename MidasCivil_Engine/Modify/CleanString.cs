@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace BH.Adapter.MidasCivil
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public partial class Modify
     {
-        public void CleanString(ref List<string> sectionText)
+        public static void CleanString(ref List<string> sectionText)
         {
             List<string> cleanString = new List<string>();
 

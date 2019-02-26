@@ -37,23 +37,29 @@
     <Reference Include="Common_oM, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Common_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Geometry_Engine, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM_Engine\Geometry_Engine\obj\Debug\Geometry_Engine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Geometry_oM, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Library_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Library_Engine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Reflection_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Reflection_oM">
       <HintPath>..\..\BHoM\Build\Reflection_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>..\..\BHoM_Engine\Build\Structure_Engine.dll</HintPath>
@@ -62,6 +68,7 @@
     <Reference Include="Structure_oM, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Structure_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,13 +80,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\AssignmentString.cs" />
+    <Compile Include="Compute\StiffnessVectorModulus.cs" />
+    <Compile Include="Compute\Modulus.cs" />
+    <Compile Include="Compute\RangeBySplit.cs" />
     <Compile Include="Convert\AdapterId.cs" />
-    <Compile Include="Convert\PrivateHelpers\BHoMTypeConvert.cs" />
-    <Compile Include="Convert\PrivateHelpers\CheckSupportedDOFType.cs" />
-    <Compile Include="Convert\PrivateHelpers\CombineTextFiles.cs" />
-    <Compile Include="Convert\PrivateHelpers\GetSpringStiffness.cs" />
-    <Compile Include="Convert\PrivateHelpers\SupportToString.cs" />
-    <Compile Include="Convert\PrivateHelpers\UnitConverter.cs" />
+    <Compile Include="Convert\BHoMTypeConvert.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\Profile.cs" />
+    <Compile Include="Query\Assignments.cs" />
+    <Compile Include="Query\SectionName.cs" />
+    <Compile Include="Query\SupportedDOFType.cs" />
+    <Compile Include="Compute\CombineTextFiles.cs" />
+    <Compile Include="Query\SpringStiffness.cs" />
+    <Compile Include="Query\SupportString.cs" />
+    <Compile Include="Convert\Unit.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\FEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Node.cs" />
@@ -104,6 +118,7 @@
     <Compile Include="Convert\ToMidasCivil\Properties\Spring.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\Support.cs" />
     <Compile Include="Convert\ToMidasCivil\ToMidasCivil.cs" />
+    <Compile Include="Modify\CleanString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
