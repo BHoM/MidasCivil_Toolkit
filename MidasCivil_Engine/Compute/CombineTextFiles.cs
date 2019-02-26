@@ -18,7 +18,7 @@ namespace BH.Engine.MidasCivil
                 delimited.Reverse();
                 delimited.RemoveAt(0);
                 delimited.Reverse();
-                directory = string.Join("\\", delimited) + "\\_sectionFiles";
+                directory = string.Join("\\", delimited) + "\\TextFiles";
 
                 string path = directory + "\\" + "COMBINED.txt";
 
