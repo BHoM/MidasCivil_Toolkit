@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace BH.Adapter.MidasCivil
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public partial class Compute
     {
-        public string CreateAssignmentString(List<int> assignmentIndexes)
+        public static string AssignmentString(List<int> assignmentIndexes)
         {
             string indexes = "";
 

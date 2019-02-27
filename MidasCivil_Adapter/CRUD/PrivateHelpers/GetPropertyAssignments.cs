@@ -26,7 +26,7 @@ namespace BH.Adapter.MidasCivil
                         ToList();
                 }
 
-                List<int> propertyAssignment = GetAssignmentsAsList(geometryAssignments);
+                List<int> propertyAssignment = Engine.MidasCivil.Query.Assignments(geometryAssignments);
 
                 propertyAssignments.Add(namePrefix + "_" + (i+1), propertyAssignment);
             }

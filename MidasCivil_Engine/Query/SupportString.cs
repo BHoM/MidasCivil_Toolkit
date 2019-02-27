@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class PrivateHelpers
+    public partial class Query
     {
-        public static string GetSupportString(Constraint6DOF constraint6DOF)
+        public static string SupportString(Constraint6DOF constraint6DOF)
         {
             List<DOFType> freedoms = new List<DOFType>
             {
@@ -19,7 +19,7 @@ namespace BH.Engine.MidasCivil
 
             foreach(DOFType freedom in freedoms)
             {
-                if(CheckSupportedDOFTypes(freedom))
+                if(Engine.MidasCivil.Query.SupportedDOFTypes(freedom))
                 {
                     Reflection.Compute.RecordWarning(
                         "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Free);

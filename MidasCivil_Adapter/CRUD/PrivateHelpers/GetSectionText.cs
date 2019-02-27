@@ -8,13 +8,14 @@ namespace BH.Adapter.MidasCivil
     {
         public List<string> GetSectionText(string section, string textDirectory)
         {
-            string path = textDirectory + "\\" + section + ".txt";
+
+            string path = directory + "\\TextFiles\\" + section + ".txt";
             List<string> sectionText = new List<string>();
 
             if (File.Exists(path))
             {
                 sectionText = File.ReadAllLines(path).ToList();
-                CleanString(ref sectionText);
+                Engine.MidasCivil.Modify.CleanString(ref sectionText);
             }
             return sectionText;
         }

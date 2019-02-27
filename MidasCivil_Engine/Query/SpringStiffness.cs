@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class PrivateHelpers
+    public partial class Query
     {
-        public static List<double> GetSpringStiffness(Constraint6DOF constraint6DOF)
+        public static List<double> SpringStiffness(Constraint6DOF constraint6DOF)
         {
             List<double> stiffness = new List<double>();
 
