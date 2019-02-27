@@ -11,7 +11,7 @@ namespace BH.Adapter.MidasCivil
             string path = CreateSectionFile("MATERIAL");
             List<string> midasMaterials = new List<string>();
 
-            List<string> units = GetSectionText("UNIT",directory);
+            List<string> units = GetSectionText("UNIT");
 
             string[] delimited = units[0].Split(',');
             string EUnit = delimited[0].Replace(" ", "") + "/" + delimited[1].Replace(" ", "") + "2";

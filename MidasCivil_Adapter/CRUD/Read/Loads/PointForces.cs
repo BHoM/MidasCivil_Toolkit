@@ -10,18 +10,19 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private List<PointForce> ReadPointForces(List<string> ids = null)
+        private List<ILoad> ReadPointForces(List<string> ids = null)
         {
-            List<PointForce> bhomPointForces = new List<PointForce>();
+            List<ILoad> bhomPointForces = new List<ILoad>();
             List<Loadcase> bhomLoadcases = ReadLoadcases();
             Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
                         x => x.Name);
 
-            string[] loadcases = Directory.GetDirectories(directory);
+            string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
 
-            foreach (string loadcase in loadcases)
+            foreach (string loadcaseFolder in loadcaseFolders)
             {
-                List<string> pointForceText = GetSectionText("CONLOAD",loadcase);
+                string loadcase = Path.GetFileName(loadcaseFolder);
+                List<string> pointForceText = GetSectionText(loadcase + "\\CONLOAD");
 
                 if (pointForceText.Count!=0)
                 {
@@ -34,10 +35,10 @@ namespace BH.Adapter.MidasCivil
 
                     foreach (string pointForce in pointForceText)
                     {
-                        List<string> delimitted = pointForceText[0].Split(',').ToList();
-                        delimitted.RemoveAt(0);
+                        List<string> delimitted = pointForce.Split(',').ToList();
                         pointForceNodes.Add(delimitted[0].Replace(" ", ""));
-                        pointForceComparison.Add(String.Join(String.Empty, delimitted));
+                        delimitted.RemoveAt(0);
+                        pointForceComparison.Add(String.Join(",", delimitted));
                     }
 
                     List<string> distinctPointForces = pointForceComparison.Distinct().ToList();
@@ -46,7 +47,7 @@ namespace BH.Adapter.MidasCivil
                     foreach (string distinctPointForce in distinctPointForces)
                     {
                         List<int> indexMatches = pointForceComparison.Select((pointload, index) => new { pointload, index })
-                                                   .Where(x => string.Equals(x.index, distinctPointForce))
+                                                   .Where(x => string.Equals(x.pointload, distinctPointForce))
                                                    .Select(x => x.index)
                                                    .ToList();
                         List<string> matchingNodes = new List<string>();

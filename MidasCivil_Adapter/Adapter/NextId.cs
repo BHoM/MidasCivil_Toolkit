@@ -93,7 +93,7 @@ namespace BH.Adapter.MidasCivil
                     if (ExistsSection(section))
                     {
                         
-                        index = GetSectionText(section,directory).Count;
+                        index = GetSectionText(section).Count;
                     }
                     else
                     {

@@ -9,7 +9,7 @@ namespace BH.Adapter.MidasCivil
         {
             List<Constraint6DOF> bhom6DOFConstraints = new List<Constraint6DOF>();
 
-            List<string> supports = GetSectionText("CONSTRAINT",directory);
+            List<string> supports = GetSectionText("CONSTRAINT");
 
             for (int i = 0; i < supports.Count; i++)
             {
@@ -19,7 +19,7 @@ namespace BH.Adapter.MidasCivil
                 bhom6DOFConstraints.Add(bhomConstraint6DOF);
             }
 
-            List<string> springs = GetSectionText("SPRING",directory);
+            List<string> springs = GetSectionText("SPRING");
 
             for (int i = 0; i < springs.Count; i++)
             {

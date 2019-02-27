@@ -7,7 +7,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Loadcase ToBHoMLoadcase(this string loadcase, int count)
+        public static Loadcase ToBHoMLoadcase(this string loadcase)
         {
             List<string> delimitted = loadcase.Split(',').ToList();
             LoadNature nature = LoadNature.Dead;

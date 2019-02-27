@@ -13,7 +13,7 @@ namespace BH.Adapter.MidasCivil
             int maxID = 0;
 
             List<int> allID = new List<int>();
-            List<string> elements = GetSectionText("ELEMENT",directory);
+            List<string> elements = GetSectionText("ELEMENT");
             List<List<string>> delimitted = new List<List<string>>();
             elements.ForEach(x =>  delimitted.Add(x.Split(',').ToList()));
 

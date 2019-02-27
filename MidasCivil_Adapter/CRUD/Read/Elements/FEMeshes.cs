@@ -10,7 +10,7 @@ namespace BH.Adapter.MidasCivil
         {
             List<FEMesh> bhomMeshes = new List<FEMesh>();
 
-            List<string> elementsText = GetSectionText("ELEMENT",directory);
+            List<string> elementsText = GetSectionText("ELEMENT");
             List<string> meshText = elementsText.Where(x => x.Contains("PLATE")).ToList();
 
             IEnumerable<Node> bhomNodesList = ReadNodes();

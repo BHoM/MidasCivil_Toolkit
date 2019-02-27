@@ -9,12 +9,11 @@ namespace BH.Adapter.MidasCivil
         private List<Loadcase> ReadLoadcases(List<string> ids = null)
         {
             List<Loadcase> bhomLoadCases = new List<Loadcase>();
-            List<string> loadcaseText = GetSectionText("STLDCASE",directory);
-            int count = 1;
+            List<string> loadcaseText = GetSectionText("STLDCASE");
 
             foreach (string loadcase in loadcaseText)
             {
-                Loadcase bhomLoadCase = Engine.MidasCivil.Convert.ToBHoMLoadcase(loadcase,count);
+                Loadcase bhomLoadCase = Engine.MidasCivil.Convert.ToBHoMLoadcase(loadcase);
                 bhomLoadCases.Add(bhomLoadCase);
             }
 

@@ -25,16 +25,16 @@ namespace BH.Engine.MidasCivil
 
             Vector forceVector = new Vector
             {
-                X = double.Parse(delimitted[1].Replace(" ", "")),
-                Y = double.Parse(delimitted[2].Replace(" ", "")),
-                Z = double.Parse(delimitted[3].Replace(" ", ""))
+                X = double.Parse(delimitted[0].Replace(" ", "")),
+                Y = double.Parse(delimitted[1].Replace(" ", "")),
+                Z = double.Parse(delimitted[2].Replace(" ", ""))
             };
 
             Vector momentVector = new Vector
             {
-                X = double.Parse(delimitted[4].Replace(" ", "")),
-                Y = double.Parse(delimitted[5].Replace(" ", "")),
-                Z = double.Parse(delimitted[6].Replace(" ", ""))
+                X = double.Parse(delimitted[3].Replace(" ", "")),
+                Y = double.Parse(delimitted[4].Replace(" ", "")),
+                Z = double.Parse(delimitted[5].Replace(" ", ""))
             };
 
             PointForce bhomPointForce = Engine.Structure.Create.PointForce(bhomLoadcase, bhomAssociatedNodes, forceVector, momentVector, LoadAxis.Global);
