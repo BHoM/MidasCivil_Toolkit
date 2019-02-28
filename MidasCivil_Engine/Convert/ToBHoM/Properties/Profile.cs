@@ -59,6 +59,13 @@ namespace BH.Engine.MidasCivil
                         System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]),
                         System.Convert.ToDouble(split[20]), System.Convert.ToDouble(split[21]));
             }
+            else if (shape == "L")
+            {
+                bhomProfile = Engine.Structure.Create.AngleProfile(
+                        System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),
+                        System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]),
+                        0,0,false,true);
+            }
 
             return bhomProfile;
             /***************************************************/

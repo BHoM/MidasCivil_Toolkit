@@ -70,6 +70,12 @@ namespace BH.Engine.MidasCivil
                 Engine.Reflection.Compute.RecordWarning(bhomSection.SectionProfile.GetType().ToString() +
                     " has identical flanges. Therefore, the top flange width and thickness have been used from MidasCivil.");
             }
+            else if (shape == "L")
+            {
+                //    1, DBUSER    , USERANGLE         , CC, 0, 0, 0, 0, 0, 0, YES, NO, L  , 2, 0.5, 0.25, 0.01, 0.03, 0, 0, 0, 0, 0, 0
+                bhomSection = Engine.Structure.Create.SteelSectionFromProfile(
+                        Engine.MidasCivil.Convert.ToProfile(sectionProperty));
+            }
             else
             {
                 Engine.Reflection.Compute.RecordError("Section not yet supported in MidasCivil_Toolkit ");
