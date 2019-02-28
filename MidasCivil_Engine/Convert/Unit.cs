@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BH.Engine.MidasCivil
+﻿namespace BH.Engine.MidasCivil
 {
     public partial class Convert
     {
@@ -56,7 +50,6 @@ namespace BH.Engine.MidasCivil
                     if (endUnit == "t/m3")
                         converted = converted / 9.81;
                     break;
-
             }
             return converted;
         }
