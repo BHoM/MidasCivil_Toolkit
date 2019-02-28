@@ -8,7 +8,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static PointForce ToBHoMPointForce(this string pointForce, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string,Node> nodeDictionary)
+        public static PointForce ToBHoMPointForce(this string pointForce, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string,Node> nodeDictionary, int count)
         {
             string[] delimitted = pointForce.Split(',');
             Node bhomAssociateNode;
@@ -37,7 +37,18 @@ namespace BH.Engine.MidasCivil
                 Z = double.Parse(delimitted[5].Replace(" ", ""))
             };
 
-            PointForce bhomPointForce = Engine.Structure.Create.PointForce(bhomLoadcase, bhomAssociatedNodes, forceVector, momentVector, LoadAxis.Global);
+            string name;
+
+            if(string.IsNullOrWhiteSpace(delimitted[6]))
+            {
+                name = "PF" + count;
+            }
+            else
+            {
+                name = delimitted[6].Replace(" ", "");
+            }
+
+            PointForce bhomPointForce = Engine.Structure.Create.PointForce(bhomLoadcase, bhomAssociatedNodes, forceVector, momentVector, LoadAxis.Global, name);
 
             return bhomPointForce;
         }

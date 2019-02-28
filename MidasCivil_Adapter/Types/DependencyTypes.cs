@@ -3,6 +3,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Constraint;
 using BH.oM.Structure.Properties.Section;
 using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.Loads;
 using System;
 using System.Collections.Generic;
 
@@ -53,7 +54,8 @@ namespace BH.Adapter.MidasCivil
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
             {typeof(MeshFace), new List<Type> { typeof(ISurfaceProperty), typeof(Node) } },
             {typeof(ISurfaceProperty), new List<Type> { typeof(Material) } },
-            {typeof(PanelPlanar), new List<Type> { typeof(ISurfaceProperty) } }
+            {typeof(PanelPlanar), new List<Type> { typeof(ISurfaceProperty) } },
+            {typeof(ILoad), new List<Type> {typeof(Loadcase) } }
         };
 
 

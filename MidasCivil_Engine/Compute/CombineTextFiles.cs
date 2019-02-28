@@ -111,6 +111,8 @@ namespace BH.Engine.MidasCivil
                                             .Select(Path.GetFileName)
                                             .ToList();
 
+                                bool endIncluded = false;
+
                                 foreach (string loadName in loadNames)
                                 {
                                     List<string> contents = File.ReadAllLines(loadcase + "\\" + loadName).ToList();
@@ -120,12 +122,22 @@ namespace BH.Engine.MidasCivil
                                         {
                                             loadNames.RemoveAt(loadNames.IndexOf(loadName));
                                             loadNames.Add(loadName);
+                                            endIncluded = true;
                                             goto ESCAPE;
                                         }
                                     }
                                 }
 
                                 ESCAPE:
+
+                                if (!endIncluded)
+                                {
+                                    using (StreamWriter loadEndWriter = new StreamWriter(loadcase + "\\" + loadNames[loadNames.Count -1]))
+                                    {
+                                        loadEndWriter.Write("; End of data for load case" + Path.GetFileName(loadcase));
+                                        loadEndWriter.Flush();
+                                    }
+                                }
 
                                 string start = loadNames.Find(x => x.Contains("USE-STLD"));
 

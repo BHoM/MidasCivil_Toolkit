@@ -16,7 +16,8 @@ namespace BH.Engine.MidasCivil
             Loadcase bhomLoadCase = new Loadcase
             {
                 Name = delimitted[0].Replace(" ", ""),
-                Nature = nature
+                Nature = nature,
+                Number = 0
             };
 
             return bhomLoadCase;

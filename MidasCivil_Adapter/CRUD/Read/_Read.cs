@@ -37,7 +37,7 @@ namespace BH.Adapter.MidasCivil
             else if (type == typeof(Loadcase))
                 return ReadLoadcases(ids as dynamic);
             else if (typeof(ILoad).IsAssignableFrom(type))
-                return ChooseLoad(type, ids as dynamic);
+                return ReadLoad(type, ids as dynamic);
 
             return null;
         }

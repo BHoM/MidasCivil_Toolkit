@@ -57,7 +57,7 @@ namespace BH.Adapter.MidasCivil
 
                     for (int i=0; i<distinctPointForces.Count; i++)
                     {
-                        PointForce bhomPointForce = Engine.MidasCivil.Convert.ToBHoMPointForce(distinctPointForces[i], nodeIndices[i], loadcase, loadcaseDictionary, nodeDictionary);
+                        PointForce bhomPointForce = Engine.MidasCivil.Convert.ToBHoMPointForce(distinctPointForces[i], nodeIndices[i], loadcase, loadcaseDictionary, nodeDictionary, i+1);
                         bhomPointForces.Add(bhomPointForce);
                     }
                  

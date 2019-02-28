@@ -6,7 +6,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private List<ILoad> ChooseLoad(Type type, List<string> ids = null)
+        private List<ILoad> ReadLoad(Type type, List<string> ids = null)
         {
             List<ILoad> readLoads = null;
             string typeName = type.Name;

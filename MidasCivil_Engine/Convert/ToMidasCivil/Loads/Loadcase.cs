@@ -11,7 +11,7 @@ namespace BH.Engine.MidasCivil
             string midasNature = "D";
             bhomLoadNatureConverter(bhomNature, ref midasNature);
 
-            string midasLoadcase = loadcase.Name + " " + count.ToString() + "," + midasNature + ",";
+            string midasLoadcase = loadcase.Name + " " + "," + midasNature + ",";
             
             return midasLoadcase;
         }

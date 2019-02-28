@@ -13,6 +13,13 @@ namespace BH.Adapter.MidasCivil
             string newFolder = directory + "\\TextFiles\\";
             System.IO.Directory.CreateDirectory(newFolder);
             string path =  newFolder + "\\" + section + ".txt";
+
+            if (section.Contains("\\"))
+            {
+                string [] delimitted = section.Split('\\');
+                section = delimitted[delimitted.Count() - 1];
+            }
+
             if (!File.Exists(path))
             {
                 using (StreamWriter sectionText = File.CreateText(path))
