@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
+using BH.oM.Common.Materials;
 using BH.oM.Structure.Properties.Section;
 
 namespace BH.Adapter.MidasCivil
@@ -8,14 +9,17 @@ namespace BH.Adapter.MidasCivil
     {
         private bool CreateCollection(IEnumerable<ISectionProperty> sectionProperties)
         {
-            //Code for creating a collection of nodes in the software
+            string path = CreateSectionFile("SECTION");
+            List<string> midasSectionProperties = new List<string>();
 
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                Engine.MidasCivil.Convert.ToMCSectionProperty(sectionProperty);
-                //Tip: if the NextId method has been implemented you can get the id to be used for the creation out as (cast into applicable type used by the software):
+                midasSectionProperties.Add(Engine.MidasCivil.Convert.ToMCSectionProperty(sectionProperty));
             }
-            throw new NotImplementedException();
+
+            File.AppendAllLines(path, midasSectionProperties);
+
+            return true;
         }
     }
 }
