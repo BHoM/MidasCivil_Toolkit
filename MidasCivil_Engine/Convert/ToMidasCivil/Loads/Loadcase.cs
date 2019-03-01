@@ -5,7 +5,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCLoadCase(this Loadcase loadcase, int count)
+        public static string ToMCLoadCase(this Loadcase loadcase)
         {
             LoadNature bhomNature = loadcase.Nature;
             string midasNature = "D";
