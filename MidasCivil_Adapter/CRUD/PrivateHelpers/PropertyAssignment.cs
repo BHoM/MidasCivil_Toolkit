@@ -9,7 +9,7 @@ namespace BH.Adapter.MidasCivil
     {
         public void PropertyAssignment(string bhomID, string propertyName, string section)
         {
-            string path = directory + "\\" + section + ".txt";
+            string path = directory + "\\TextFiles\\" + section + ".txt";
 
             List<string> propertyText = File.ReadAllLines(path).ToList();
 

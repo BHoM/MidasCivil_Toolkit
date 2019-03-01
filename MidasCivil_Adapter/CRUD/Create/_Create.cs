@@ -7,6 +7,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Constraint;
 using BH.oM.Common.Materials;
 using BH.oM.Structure.Loads;
+using BH.oM.Structure.Properties.Section;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -81,9 +82,11 @@ namespace BH.Adapter.MidasCivil
                             break;
                     }
                 }
-
+                if (objects.First() is ISectionProperty)
+                {
+                    success = CreateCollection(objects as IEnumerable<ISectionProperty>);
                 }
-                //UpdateViews()             //If there exists a command for updating the views is the software call it now:
+            }
 
                 return success;
 

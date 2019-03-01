@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.ComponentModel;
+using BH.oM.Reflection.Attributes;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Compute
+    public static partial class Compute
     {
-        public static bool CombineTextFiles(string filepath, List<Type> files = null, bool active = false)
+        [Description("Combines all text files specified by type in to a single MidasCivilText (MCT) to be loaded in to MidasCivil")]
+        [Input("filePath", "The same filepath used for the adapter (pointing to an mcb file)")]
+        [Input("types", "BHoM object types to specify the text files to be combined. A null value will combine all text files.")]
+        [Input("active", "Execute the method")]
+        [Output("success","Was the execution successful?")]
+
+        public static bool CombineTextFiles(string filepath, List<Type> types = null, bool active = false)
         {
             bool success = true;
 
@@ -20,14 +28,14 @@ namespace BH.Engine.MidasCivil
                 delimited.Reverse();
                 directory = string.Join("\\", delimited) + "\\TextFiles";
 
-                string path = directory + "\\" + "COMBINED.txt";
+                string path = directory + "\\" + "COMBINED.mct";
 
                 // Retrieve type strings: select all from directory if none provided
 
                 List<string> typeNames = new List<string>();
                 bool includeLoadcases = true;
 
-                if (files.Count == 0)
+                if (types.Count == 0)
                 {
                     typeNames = Directory.GetFiles(directory, "*.txt")
                         .Select(Path.GetFileName)
@@ -40,7 +48,7 @@ namespace BH.Engine.MidasCivil
                 }
                 else
                 {
-                    files.ForEach(x => typeNames.Add(Engine.MidasCivil.Convert.BHoMType(x.ToString())));
+                    types.ForEach(x => typeNames.Add(Engine.MidasCivil.Convert.BHoMType(x.ToString())));
 
                     if (!typeNames.Contains("LOADCASE"))
                     {
