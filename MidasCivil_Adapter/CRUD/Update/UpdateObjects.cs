@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BH.oM.Structure.Loads;
+using BH.oM.Base;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -17,9 +19,24 @@ namespace BH.Adapter.MidasCivil
 
         protected override bool UpdateObjects<T>(IEnumerable<T> objects)
         {
-            return base.UpdateObjects<T>(objects);
+            if (typeof(T).IsAssignableFrom(typeof(Loadcase)))
+            {
+
+                return UpdateCollection(objects as IEnumerable<Loadcase>);
+            }
+            else
+                return base.UpdateObjects<T>(objects);
         }
 
         /***************************************************/
+
+        private bool UpdateCollection(IEnumerable<Loadcase> loadcases)
+        {
+            return true; 
+        }
+
+        /***************************************************/
+
+
     }
 }
