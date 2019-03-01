@@ -24,7 +24,10 @@ namespace BH.Adapter.MidasCivil
             {
                 using (StreamWriter sectionText = File.CreateText(path))
                 {
-                    sectionText.WriteLine("*" + section);
+                    if (section != "SELFWEIGHT")
+                    {
+                        sectionText.WriteLine("*" + section);
+                    }
                     sectionText.Close();
                 }
             }
@@ -35,7 +38,10 @@ namespace BH.Adapter.MidasCivil
                 {
                     using (StreamWriter sectionText = File.CreateText(path))
                     {
-                        sectionText.WriteLine("*" + section);
+                        if(section != "SELFWEIGHT")
+                        {
+                            sectionText.WriteLine("*" + section);
+                        }
                         sectionText.Close();
                     }
                 }
