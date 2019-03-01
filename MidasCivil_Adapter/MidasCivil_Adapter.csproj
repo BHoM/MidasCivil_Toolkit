@@ -95,6 +95,7 @@
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
+    <Compile Include="CRUD\Delete\Loads\Loadcases.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetMaxElementID.cs" />
     <Compile Include="CRUD\PrivateHelpers\PropertyAssignment.cs" />
     <Compile Include="CRUD\PrivateHelpers\CreateSectionText.cs" />
@@ -133,7 +134,6 @@
     <Compile Include="Types\DependencyTypes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CRUD\Delete\Loads\" />
     <Folder Include="CRUD\Delete\Properties\" />
   </ItemGroup>
   <ItemGroup>
