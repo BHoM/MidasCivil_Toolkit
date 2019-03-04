@@ -48,7 +48,9 @@ namespace BH.Engine.MidasCivil
                 name = delimitted[6].Replace(" ", "");
             }
 
-            PointForce bhomPointForce = Engine.Structure.Create.PointForce(bhomLoadcase, bhomAssociatedNodes, forceVector, momentVector, LoadAxis.Global, name);
+            IEnumerable<Node> test = bhomAssociatedNodes;
+
+            PointForce bhomPointForce = Engine.Structure.Create.PointForce(bhomLoadcase, test, forceVector, momentVector, LoadAxis.Global, name);
 
             return bhomPointForce;
         }
