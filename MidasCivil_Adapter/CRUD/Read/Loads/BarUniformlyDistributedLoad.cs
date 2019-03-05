@@ -23,7 +23,10 @@ namespace BH.Adapter.MidasCivil
                 string loadcase = Path.GetFileName(loadcaseFolder);
                 List<string> barUniformlyDistributedLoadText = GetSectionText(loadcase + "\\BEAMLOAD");
 
-                if (barUniformlyDistributedLoadText.Count != 0)
+                List<string> barUniformLoads = barUniformlyDistributedLoadText.Where(x => x.Contains("UNILOAD")).ToList();
+                barUniformLoads.AddRange(barUniformlyDistributedLoadText.Where(x => x.Contains("UNIMOMENT")).ToList());
+
+                if (barUniformLoads.Count != 0)
                 {
                     List<Bar> bhomBars = ReadBars();
                     Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
@@ -32,15 +35,18 @@ namespace BH.Adapter.MidasCivil
                     List<string> barComparison = new List<string>();
                     List<string> loadedBars = new List<string>();
 
-                    foreach (string barUniformlyDistributedLoad in barUniformlyDistributedLoadText)
+                    foreach (string barUniformlyDistributedLoad in barUniformLoads)
                     {
                         List<string> delimitted = barUniformlyDistributedLoad.Split(',').ToList();
                         loadedBars.Add(delimitted[0].Replace(" ", ""));
                         delimitted.RemoveAt(0);
 
-                        if(delimitted[10]==delimitted[12])
+                        if(delimitted[10]==delimitted[12] || delimitted[14]==delimitted[16])
                         {
-                            barComparison.Add(String.Join(",", delimitted));
+                            if (delimitted[9].Replace(" ", "") == 0.ToString() && delimitted[11].Replace(" ", "") == 1.ToString())
+                            {
+                                barComparison.Add(String.Join(",", delimitted));
+                            }
                         }
                     }
 
