@@ -1,14 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using BH.oM.Structure.Loads;
+using BH.oM.Structure.Elements;
+using System.Linq;
+using System.IO;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private List<BarVaryingDistributedLoad> ReadBarVaryingDistributedLoads(List<string> ids = null)
+        private List<ILoad> ReadBarVaryingDistributedLoads(List<string> ids = null)
         {
-            throw new NotImplementedException();
+            List<ILoad> bhomBarVaryingDistributedLoads = new List<ILoad>();
+            List<Loadcase> bhomLoadcases = ReadLoadcases();
+            Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
+                        x => x.Name);
+
+            string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
+
+            foreach (string loadcaseFolder in loadcaseFolders)
+            {
+                string loadcase = Path.GetFileName(loadcaseFolder);
+                List<string> barVaryingDistributedLoadText = GetSectionText(loadcase + "\\BEAMLOAD");
+
+                List<string> barVaryingLoads = barVaryingDistributedLoadText.Where(x => x.Contains("UNILOAD")).ToList();
+                barVaryingLoads.AddRange(barVaryingDistributedLoadText.Where(x => x.Contains("UNIMOMENT")).ToList());
+
+                if (barVaryingLoads.Count != 0)
+                {
+                    List<string> barComparison = new List<string>();
+                    List<string> loadedBars = new List<string>();
+
+                    foreach (string barVaryingLoad in barVaryingLoads)
+                    {
+                        List<string> delimitted = barVaryingLoad.Split(',').ToList();
+                        loadedBars.Add(delimitted[0].Replace(" ", ""));
+                        delimitted.RemoveAt(0);
+
+                        if (delimitted[10] != delimitted[12] || double.Parse(delimitted[9].Replace(" ", "")) + double.Parse(delimitted[11].Replace(" ", "")) !=1)
+                        {
+                             barComparison.Add(String.Join(",", delimitted));
+                        }
+                    }
+
+                    if (barComparison.Count!=0)
+                    {
+                        List<Bar> bhomBars = ReadBars();
+                        Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
+                                                                    x => x.CustomData[AdapterId].ToString());
+
+                        List<string> distinctBarLoads = barComparison.Distinct().ToList();
+                        List<List<string>> barIndices = new List<List<string>>();
+
+                        foreach (string barLoad in distinctBarLoads)
+                        {
+                            List<int> indexMatches = barComparison.Select((barload, index) => new { barload, index })
+                                                       .Where(x => string.Equals(x.barload, barLoad))
+                                                       .Select(x => x.index)
+                                                       .ToList();
+                            List<string> matchingBars = new List<string>();
+                            indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
+                            barIndices.Add(matchingBars);
+                        }
+
+                        for (int i = 0; i < distinctBarLoads.Count; i++)
+                        {
+                            BarVaryingDistributedLoad bhomBarVaryingDistributedLoad = Engine.MidasCivil.Convert.ToBHoMBarVaryingDistributedLoad(distinctBarLoads[i], barIndices[i], loadcase, loadcaseDictionary, barDictionary, i + 1);
+                            bhomBarVaryingDistributedLoads.Add(bhomBarVaryingDistributedLoad);
+                        }
+                    }
+
+                }
+            }
+            return bhomBarVaryingDistributedLoads;
         }
     }
 }

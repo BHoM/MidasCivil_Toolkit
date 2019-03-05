@@ -28,10 +28,6 @@ namespace BH.Adapter.MidasCivil
 
                 if (barUniformLoads.Count != 0)
                 {
-                    List<Bar> bhomBars = ReadBars();
-                    Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
-                                                                x => x.CustomData[AdapterId].ToString());
-
                     List<string> barComparison = new List<string>();
                     List<string> loadedBars = new List<string>();
 
@@ -41,7 +37,7 @@ namespace BH.Adapter.MidasCivil
                         loadedBars.Add(delimitted[0].Replace(" ", ""));
                         delimitted.RemoveAt(0);
 
-                        if(delimitted[10]==delimitted[12] || delimitted[14]==delimitted[16])
+                        if (delimitted[10] == delimitted[12])
                         {
                             if (delimitted[9].Replace(" ", "") == 0.ToString() && delimitted[11].Replace(" ", "") == 1.ToString())
                             {
@@ -50,24 +46,31 @@ namespace BH.Adapter.MidasCivil
                         }
                     }
 
-                    List<string> distinctBarLoads = barComparison.Distinct().ToList();
-                    List<List<string>> barIndices = new List<List<string>>();
-
-                    foreach (string barLoad in distinctBarLoads)
+                    if (barComparison.Count!=0)
                     {
-                        List<int> indexMatches = barComparison.Select((barload, index) => new { barload, index })
-                                                   .Where(x => string.Equals(x.barload, barLoad))
-                                                   .Select(x => x.index)
-                                                   .ToList();
-                        List<string> matchingBars = new List<string>();
-                        indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
-                        barIndices.Add(matchingBars);
-                    }
+                        List<Bar> bhomBars = ReadBars();
+                        Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
+                                                                    x => x.CustomData[AdapterId].ToString());
 
-                    for (int i = 0; i < distinctBarLoads.Count; i++)
-                    {
-                        BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = Engine.MidasCivil.Convert.ToBHoMBarUniformlyDistributedLoad(distinctBarLoads[i], barIndices[i], loadcase, loadcaseDictionary, barDictionary, i + 1);
-                        bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
+                        List<string> distinctBarLoads = barComparison.Distinct().ToList();
+                        List<List<string>> barIndices = new List<List<string>>();
+
+                        foreach (string barLoad in distinctBarLoads)
+                        {
+                            List<int> indexMatches = barComparison.Select((barload, index) => new { barload, index })
+                                                       .Where(x => string.Equals(x.barload, barLoad))
+                                                       .Select(x => x.index)
+                                                       .ToList();
+                            List<string> matchingBars = new List<string>();
+                            indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
+                            barIndices.Add(matchingBars);
+                        }
+
+                        for (int i = 0; i < distinctBarLoads.Count; i++)
+                        {
+                            BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = Engine.MidasCivil.Convert.ToBHoMBarUniformlyDistributedLoad(distinctBarLoads[i], barIndices[i], loadcase, loadcaseDictionary, barDictionary, i + 1);
+                            bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
+                        }
                     }
 
                 }
