@@ -29,22 +29,20 @@ namespace BH.Adapter.MidasCivil
                                                               barUniformlyDistributedLoad.Moment.X,
                                                               barUniformlyDistributedLoad.Moment.Y,
                                                               barUniformlyDistributedLoad.Moment.Z};
- 
-                List<string> directions = new List<string> { "X", "Y", "Z", "X", "Y", "Z" };
+
+                Vector zeroVector = new Vector { X = 0, Y = 0, Z = 0 };
 
                 for (int i=0; i<6; i++)
                 {
-                    Vector zeroVector = new Vector { X = 0, Y = 0, Z = 0 };
                     barUniformlyDistributedLoad.Force = zeroVector;
                     barUniformlyDistributedLoad.Moment = zeroVector;
 
                     if (loadVectors[i]!=0)
                     {
-                        PropertyInfo property = barUniformlyDistributedLoad.Force.GetType().GetProperty(directions[i]);
-                        property.SetValue(barUniformlyDistributedLoad.Force, System.Convert.ChangeType(loadVectors[i], property.PropertyType));
-
                         if (i<3)
                         {
+                            barUniformlyDistributedLoad.Force = createSingleComponentVector(i, loadVectors[i]);
+
                             foreach (string assignedBar in assignedBars)
                             {
                                 midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Force"));
@@ -52,6 +50,8 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
+                            barUniformlyDistributedLoad.Moment = createSingleComponentVector(i-3, loadVectors[i]);
+
                             foreach (string assignedBar in assignedBars)
                             {
                                 midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Moment"));
