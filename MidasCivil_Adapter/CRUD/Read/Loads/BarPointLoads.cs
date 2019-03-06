@@ -60,11 +60,10 @@ namespace BH.Adapter.MidasCivil
                             }
                         }
 
-                        for (int i=0; i<count; i++)
+                        for (int i=0; i<=count; i++)
                         {
                             loadedBars.Add(bar);
                         }
-
                     }
 
                     if (barComparison.Count != 0)
