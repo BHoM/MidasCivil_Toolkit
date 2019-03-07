@@ -16,7 +16,6 @@ namespace BH.Adapter.MidasCivil
             foreach (BarUniformlyDistributedLoad barUniformlyDistributedLoad in barUniformlyDistributedLoads)
             {
                 List<string> midasBarLoads = new List<string>();
-                List<BarUniformlyDistributedLoad> seperatedLoads = new List<BarUniformlyDistributedLoad>();
                 string barLoadPath = CreateSectionFile(barUniformlyDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
                 List<string> midasLoadGroup = new List<string>();
                 midasLoadGroup.Add(Engine.MidasCivil.Convert.ToMCLoadGroup(barUniformlyDistributedLoad));
