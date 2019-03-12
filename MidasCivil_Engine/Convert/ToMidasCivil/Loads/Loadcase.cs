@@ -12,11 +12,11 @@ namespace BH.Engine.MidasCivil
             bhomLoadNatureConverter(bhomNature, ref midasNature);
 
             string midasLoadcase = loadcase.Name + " " + "," + midasNature + ",";
-            
+
             return midasLoadcase;
         }
 
-        public static void bhomLoadNatureConverter(LoadNature bhomNature, ref string nature)
+        private static void bhomLoadNatureConverter(LoadNature bhomNature, ref string nature)
         {
             Dictionary<LoadNature, string> converter = new Dictionary<LoadNature, string>
         {
@@ -26,9 +26,12 @@ namespace BH.Engine.MidasCivil
             {LoadNature.Temperature,"T"},
             {LoadNature.SuperDead,"DC"},
             {LoadNature.Prestress,"PS"},
-            {LoadNature.Snow,"S"}
+            {LoadNature.Snow,"S"},
+            {LoadNature.Seismic,"E"},
+            {LoadNature.Accidental,"CO"},
+            {LoadNature.Notional,"USER"},
+            {LoadNature.Other,"USER"}
         };
-
             converter.TryGetValue(bhomNature, out nature);
         }
     }
