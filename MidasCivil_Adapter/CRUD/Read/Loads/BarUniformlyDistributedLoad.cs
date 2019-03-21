@@ -14,16 +14,16 @@ namespace BH.Adapter.MidasCivil
         {
             List<ILoad> bhomBarUniformlyDistributedLoads = new List<ILoad>();
 
-            // Read Loadcases
             List<Loadcase> bhomLoadcases = ReadLoadcases();
             Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
                         x => x.Name);
 
             string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
 
+            int i = 1;
+
             foreach (string loadcaseFolder in loadcaseFolders)
             {
-                // Extract Beam UDL loads
                 string loadcase = Path.GetFileName(loadcaseFolder);
                 List<string> barUniformlyDistributedLoadText = GetSectionText(loadcase + "\\BEAMLOAD");
 
@@ -34,8 +34,6 @@ namespace BH.Adapter.MidasCivil
 
                 List<string> barUniformLoads = barUniformlyDistributedLoadText.Where(x => x.Contains("UNILOAD")).ToList();
                 barUniformLoads.AddRange(barUniformlyDistributedLoadText.Where(x => x.Contains("UNIMOMENT")).ToList());
-
-                // Filter the UDls to ensure the loads is spread over whole bar length and is constant in magnitude
 
                 if (barUniformLoads.Count != 0)
                 {
@@ -61,32 +59,31 @@ namespace BH.Adapter.MidasCivil
 
                     if (barComparison.Count != 0)
                     {
-                        // Read Bars
                         List<Bar> bhomBars = ReadBars();
                         Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
                                                                     x => x.CustomData[AdapterId].ToString());
-
-                        // Find matcing bars from dictionary
-                        List<List<string>> barIndices = new List<List<string>>();
                         List<string> distinctBarLoads = barComparison.Distinct().ToList();
 
-                        foreach (string barList in distinctBarLoads)
+                        foreach (string distinctBarLoad in distinctBarLoads)
                         {
                             List<int> indexMatches = barComparison.Select((barload, index) => new { barload, index })
-                                                       .Where(x => string.Equals(x.barload, barList))
+                                                       .Where(x => string.Equals(x.barload, distinctBarLoad))
                                                        .Select(x => x.index)
                                                        .ToList();
                             List<string> matchingBars = new List<string>();
                             indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
-                            barIndices.Add(matchingBars);
-                        }
 
-                        // Convert to BHoM UDL
-
-                        for (int i = 0; i < distinctBarLoads.Count; i++)
-                        {
-                            BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = Engine.MidasCivil.Convert.ToBHoMBarUniformlyDistributedLoad(distinctBarLoads[i], barIndices[i], loadcase, loadcaseDictionary, barDictionary, i + 1);
+                            BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = 
+                                Engine.MidasCivil.Convert.ToBHoMBarUniformlyDistributedLoad(
+                                    distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i);
                             bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
+
+
+                            if ((distinctBarLoad.Split(',').ToList()[22].ToString() == " "))
+                            {
+                                i = i + 1;
+                            }
+
                         }
                         
                     }

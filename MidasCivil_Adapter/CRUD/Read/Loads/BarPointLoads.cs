@@ -18,6 +18,8 @@ namespace BH.Adapter.MidasCivil
 
             string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
 
+            int j = 1;
+
             foreach (string loadcaseFolder in loadcaseFolders)
             {
                 string loadcase = Path.GetFileName(loadcaseFolder);
@@ -73,23 +75,24 @@ namespace BH.Adapter.MidasCivil
                                                                     x => x.CustomData[AdapterId].ToString());
 
                         List<string> distinctBarLoads = barComparison.Distinct().ToList();
-                        List<List<string>> barIndices = new List<List<string>>();
 
-                        foreach (string barLoad in distinctBarLoads)
+                        foreach (string distinctBarLoad in distinctBarLoads)
                         {
                             List<int> indexMatches = barComparison.Select((barload, index) => new { barload, index })
-                                                       .Where(x => string.Equals(x.barload, barLoad))
+                                                       .Where(x => string.Equals(x.barload, distinctBarLoad))
                                                        .Select(x => x.index)
                                                        .ToList();
                             List<string> matchingBars = new List<string>();
                             indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
-                            barIndices.Add(matchingBars);
-                        }
 
-                        for (int i = 0; i < distinctBarLoads.Count; i++)
-                        {
-                            BarPointLoad bhomBarPointLoad = Engine.MidasCivil.Convert.ToBHoMBarPointLoad(distinctBarLoads[i], barIndices[i], loadcase, loadcaseDictionary, barDictionary, i + 1);
+                            BarPointLoad bhomBarPointLoad = Engine.MidasCivil.Convert.ToBHoMBarPointLoad(distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, j);
                             bhomBarPointLoads.Add(bhomBarPointLoad);
+
+                            if (String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[22]))
+
+                            {
+                                j = j + 1;
+                            }
                         }
                     }
 
@@ -97,5 +100,6 @@ namespace BH.Adapter.MidasCivil
             }
             return bhomBarPointLoads;
         }
+
     }
 }

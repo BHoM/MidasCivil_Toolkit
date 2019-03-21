@@ -26,7 +26,7 @@ namespace BH.Adapter.MidasCivil
                 string loadcase = Path.GetFileName(loadcaseFolder);
                 List<string> pointForceText = GetSectionText(loadcase + "\\CONLOAD");
 
-                if (pointForceText.Count!=0)
+                if (pointForceText.Count != 0)
                 {
                     List<Node> bhomNodes = ReadNodes();
                     Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
@@ -44,7 +44,6 @@ namespace BH.Adapter.MidasCivil
                     }
 
                     List<string> distinctPointForces = pointForceComparison.Distinct().ToList();
-                    List<List<string>> nodeIndices = new List<List<string>>();
 
                     foreach (string distinctPointForce in distinctPointForces)
                     {
@@ -54,10 +53,10 @@ namespace BH.Adapter.MidasCivil
                                                    .ToList();
                         List<string> matchingNodes = new List<string>();
                         indexMatches.ForEach(x => matchingNodes.Add(pointForceNodes[x]));
-                        PointForce bhomPointForce = Engine.MidasCivil.Convert.ToBHoMPointForce(distinctPointForce, matchingNodes, loadcase, loadcaseDictionary, nodeDictionary,i+1);
+                        PointForce bhomPointForce = Engine.MidasCivil.Convert.ToBHoMPointForce(distinctPointForce, matchingNodes, loadcase, loadcaseDictionary, nodeDictionary, i);
                         bhomPointForces.Add(bhomPointForce);
 
-                        if((distinctPointForce.Split(',').ToList()[6].ToString()==" "))
+                        if (String.IsNullOrWhiteSpace(distinctPointForce.Split(',').ToList()[6]))
                         {
                             i = i + 1;
                         }

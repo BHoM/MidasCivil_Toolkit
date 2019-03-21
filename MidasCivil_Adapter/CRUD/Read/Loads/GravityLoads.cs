@@ -25,6 +25,8 @@ namespace BH.Adapter.MidasCivil
 
             string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
 
+            int i = 1;
+
             foreach (string loadcaseFolder in loadcaseFolders)
             {
                 string loadcase = Path.GetFileName(loadcaseFolder);
@@ -39,17 +41,20 @@ namespace BH.Adapter.MidasCivil
                         List<string> delimitted = gravityLoad.Split(',').ToList();
                         delimitted.RemoveAt(0);
                         gravityLoads.Add(String.Join(",", delimitted));
-                    }
-
-                    for (int i=0; i< gravityLoads.Count; i++)
-                    {
-                        GravityLoad bhomGravityLoad = Engine.MidasCivil.Convert.ToBHoMGravityLoad(objects, gravityLoads[i], loadcase, loadcaseDictionary, i+1);
+                        GravityLoad bhomGravityLoad = Engine.MidasCivil.Convert.ToBHoMGravityLoad(
+                            objects, gravityLoad, loadcase, loadcaseDictionary, i);
                         bhomGravityLoads.Add(bhomGravityLoad);
+
+                        if (String.IsNullOrWhiteSpace(delimitted[3]))
+                        {
+                            i = i + 1;
+                        }
                     }
                 }
             }
 
             return bhomGravityLoads;
         }
+
     }
 }

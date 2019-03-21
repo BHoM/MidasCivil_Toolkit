@@ -16,18 +16,18 @@ namespace BH.Engine.MidasCivil
             Loadcase bhomLoadcase;
             loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
 
-            Vector direction = new Vector { X = double.Parse(delimitted[0].Replace(" ", "")),
-                                            Y = double.Parse(delimitted[1].Replace(" ", "")),
-                                            Z = double.Parse(delimitted[2].Replace(" ", ""))};
+            Vector direction = new Vector { X = double.Parse(delimitted[1].Replace(" ", "")),
+                                            Y = double.Parse(delimitted[2].Replace(" ", "")),
+                                            Z = double.Parse(delimitted[3].Replace(" ", ""))};
             string name;
 
-            if (string.IsNullOrWhiteSpace(delimitted[3]))
+            if (string.IsNullOrWhiteSpace(delimitted[4]))
             {
                 name = "GL" + count;
             }
             else
             {
-                name = delimitted[3].Replace(" ", "");
+                name = delimitted[4].Replace(" ", "");
             }
 
             GravityLoad bhomGravityLoad = BH.Engine.Structure.Create.GravityLoad(bhomLoadcase, direction, objects, name);
