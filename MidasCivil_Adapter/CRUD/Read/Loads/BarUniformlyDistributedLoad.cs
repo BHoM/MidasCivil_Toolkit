@@ -29,7 +29,7 @@ namespace BH.Adapter.MidasCivil
 
                 if (barUniformlyDistributedLoadText.Contains("LINE"))
                 {
-                    Engine.Reflection.Compute.RecordWarning("The BHoM does not support line loads, only beams loads");
+                    Engine.Reflection.Compute.RecordWarning("MidasCivil_Toolkit does not support line loads");
                 }
 
                 List<string> barUniformLoads = barUniformlyDistributedLoadText.Where(x => x.Contains("UNILOAD")).ToList();

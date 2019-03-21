@@ -41,19 +41,19 @@ namespace BH.Adapter.MidasCivil
                         string bar = delimitted[0].Replace(" ", "");
                         delimitted.RemoveAt(0);
 
-                        for (int i=10;i<=16;i+=2)
+                        for (int i = 10; i <= 16; i += 2)
                         {
                             pointLoads.Add(double.Parse(delimitted[i].Replace(" ", "")));
                             pointLoadDistances.Add(double.Parse(delimitted[i - 1].Replace(" ", "")));
                             delimitted[i] = 0.ToString();
-                            delimitted[i-1] = 0.ToString();
+                            delimitted[i - 1] = 0.ToString();
                         }
 
                         int count = 0;
 
-                        for (int i=0; i<4; i++)
+                        for (int i = 0; i < 4; i++)
                         {
-                            if (pointLoads[i]!=0)
+                            if (pointLoads[i] != 0)
                             {
                                 delimitted[9] = pointLoadDistances[i].ToString();
                                 delimitted[10] = pointLoads[i].ToString();
@@ -62,7 +62,7 @@ namespace BH.Adapter.MidasCivil
                             }
                         }
 
-                        for (int i=0; i<=count; i++)
+                        for (int i = 0; i <= count; i++)
                         {
                             loadedBars.Add(bar);
                         }

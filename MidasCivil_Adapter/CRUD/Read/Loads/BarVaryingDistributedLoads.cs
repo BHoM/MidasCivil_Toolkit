@@ -36,11 +36,11 @@ namespace BH.Adapter.MidasCivil
                     foreach (string barVaryingLoad in barVaryingLoads)
                     {
                         List<string> delimitted = barVaryingLoad.Split(',').ToList();
-                        loadedBars.Add(delimitted[0].Replace(" ", ""));
-                        delimitted.RemoveAt(0);
 
-                        if (delimitted[10] != delimitted[12] || double.Parse(delimitted[9].Replace(" ", "")) + double.Parse(delimitted[11].Replace(" ", "")) != 1)
+                        if (delimitted[11] != delimitted[13] || double.Parse(delimitted[10].Replace(" ", "")) + double.Parse(delimitted[12].Replace(" ", "")) != 1)
                         {
+                            loadedBars.Add(delimitted[0].Replace(" ", ""));
+                            delimitted.RemoveAt(0);
                             barComparison.Add(String.Join(",", delimitted));
                         }
                     }
