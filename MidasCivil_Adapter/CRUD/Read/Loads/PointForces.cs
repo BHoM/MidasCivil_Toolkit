@@ -19,6 +19,8 @@ namespace BH.Adapter.MidasCivil
 
             string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
 
+            int i = 1;
+
             foreach (string loadcaseFolder in loadcaseFolders)
             {
                 string loadcase = Path.GetFileName(loadcaseFolder);
@@ -52,15 +54,15 @@ namespace BH.Adapter.MidasCivil
                                                    .ToList();
                         List<string> matchingNodes = new List<string>();
                         indexMatches.ForEach(x => matchingNodes.Add(pointForceNodes[x]));
-                        nodeIndices.Add(matchingNodes);
-                    }
-
-                    for (int i=0; i<distinctPointForces.Count; i++)
-                    {
-                        PointForce bhomPointForce = Engine.MidasCivil.Convert.ToBHoMPointForce(distinctPointForces[i], nodeIndices[i], loadcase, loadcaseDictionary, nodeDictionary, i+1);
+                        PointForce bhomPointForce = Engine.MidasCivil.Convert.ToBHoMPointForce(distinctPointForce, matchingNodes, loadcase, loadcaseDictionary, nodeDictionary,i+1);
                         bhomPointForces.Add(bhomPointForce);
+
+                        if((distinctPointForce.Split(',').ToList()[6].ToString()==" "))
+                        {
+                            i = i + 1;
+                        }
+
                     }
-                 
                 }
             }
             return bhomPointForces;
