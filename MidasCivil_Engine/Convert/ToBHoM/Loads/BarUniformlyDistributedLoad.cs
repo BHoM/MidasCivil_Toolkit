@@ -9,7 +9,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static BarUniformlyDistributedLoad ToBHoMBarUniformlyDistributedLoad(string barUniformlyDistributedLoad, List<string> associatedBars, string loadcase, Dictionary<string,Loadcase> loadcaseDictionary, Dictionary<string,Bar> barDictionary, int count)
+        public static BarUniformlyDistributedLoad ToBHoMBarUniformlyDistributedLoad(string barUniformlyDistributedLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
         {
             string[] delimitted = barUniformlyDistributedLoad.Split(',');
             Bar bhomAssociateBar;
@@ -32,12 +32,12 @@ namespace BH.Engine.MidasCivil
             LoadAxis axis = LoadAxis.Global;
             bool loadProjection = false;
 
-            if (loadAxis=="L")
+            if (loadAxis == "L")
             {
                 axis = LoadAxis.Local;
             }
 
-            if(projection=="YES")
+            if (projection == "YES")
             {
                 loadProjection = true;
             }
@@ -80,7 +80,7 @@ namespace BH.Engine.MidasCivil
 
             BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad;
 
-            if (loadType=="UNILOAD")
+            if (loadType == "UNILOAD")
             {
                 bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(bhomLoadcase, bhomAssociatedBars, loadVector, null, axis, loadProjection, name);
             }
