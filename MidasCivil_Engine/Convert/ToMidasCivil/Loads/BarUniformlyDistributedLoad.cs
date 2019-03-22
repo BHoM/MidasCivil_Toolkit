@@ -25,8 +25,8 @@ namespace BH.Engine.MidasCivil
                 midasBarLoad = assignedBar + ",BEAM,UNIMOMENT," + MCAxisConverter(barLoad.Axis) + direction +
                                                                     "," + MCProjectionConverter(barLoad.Projected) +
                                                                     ",NO,aDir[1], , , ,0," +
-                                                                    MCVectorConverter(barLoad.Force, direction) +
-                                                                    ",1," + MCVectorConverter(barLoad.Force, direction) +
+                                                                    MCVectorConverter(barLoad.Moment, direction) +
+                                                                    ",1," + MCVectorConverter(barLoad.Moment, direction) +
                                                                     ",0,0,0,0, ,NO,0,0,NO";
             }
 
