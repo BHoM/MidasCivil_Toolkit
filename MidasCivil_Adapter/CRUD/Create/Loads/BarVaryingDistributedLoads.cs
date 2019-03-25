@@ -30,8 +30,8 @@ namespace BH.Adapter.MidasCivil
                                                               barVaryingDistributedLoad.MomentA.Z};
 
                 List<double> endLoadVectors = new List<double> { barVaryingDistributedLoad.ForceB.X,
-                                                              barVaryingDistributedLoad.ForceA.Y,
-                                                              barVaryingDistributedLoad.ForceA.Z,
+                                                              barVaryingDistributedLoad.ForceB.Y,
+                                                              barVaryingDistributedLoad.ForceB.Z,
                                                               barVaryingDistributedLoad.MomentB.X,
                                                               barVaryingDistributedLoad.MomentB.Y,
                                                               barVaryingDistributedLoad.MomentB.Z};
@@ -45,7 +45,7 @@ namespace BH.Adapter.MidasCivil
                     barVaryingDistributedLoad.ForceB = zeroVector;
                     barVaryingDistributedLoad.MomentB = zeroVector;
 
-                    if (startLoadVectors[i] + endLoadVectors[i] != 0)
+                    if (!(startLoadVectors[i] == 0 && endLoadVectors[i] == 0))
                     {
                         if (i < 3)
                         {
