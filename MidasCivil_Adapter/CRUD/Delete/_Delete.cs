@@ -1,4 +1,5 @@
 ﻿using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +19,8 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteNodes(ids);
             if (type == typeof(Bar))
                 success = DeleteElements(ids);
+            if (type == typeof(Loadcase))
+                success = DeleteLoadcases(ids);
 
             return 0;
         }

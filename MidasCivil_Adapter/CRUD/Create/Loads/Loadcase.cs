@@ -11,12 +11,11 @@ namespace BH.Adapter.MidasCivil
         {
             string path = CreateSectionFile("STLDCASE");
             List<string> midasLoadCases = new List<string>();
-            int count = 1;
 
             foreach (Loadcase loadcase in loadcases)
             {
-                midasLoadCases.Add(Engine.MidasCivil.Convert.ToMCLoadCase(loadcase,count));
-                count++;
+                Directory.CreateDirectory(directory + "\\TextFiles\\" + loadcase.Name);
+                midasLoadCases.Add(Engine.MidasCivil.Convert.ToMCLoadCase(loadcase));
             }
 
             File.AppendAllLines(path, midasLoadCases);

@@ -8,7 +8,12 @@ namespace BH.Engine.MidasCivil
         {
             List<string> cleanString = new List<string>();
 
-            foreach(string text in sectionText)
+            if (sectionText.Count==1 && sectionText[0].Contains("*"))
+            {
+                cleanString.Add(sectionText[0].Split('*')[1]);
+            }
+
+            foreach (string text in sectionText)
             {
                 if (!(text.Contains(";")) && !(text.Contains("*")) && !(string.IsNullOrEmpty(text)))
                 {

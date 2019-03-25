@@ -13,11 +13,21 @@ namespace BH.Adapter.MidasCivil
             string newFolder = directory + "\\TextFiles\\";
             System.IO.Directory.CreateDirectory(newFolder);
             string path =  newFolder + "\\" + section + ".txt";
+
+            if (section.Contains("\\"))
+            {
+                string [] delimitted = section.Split('\\');
+                section = delimitted[delimitted.Count() - 1];
+            }
+
             if (!File.Exists(path))
             {
                 using (StreamWriter sectionText = File.CreateText(path))
                 {
-                    sectionText.WriteLine("*" + section);
+                    if (section != "SELFWEIGHT")
+                    {
+                        sectionText.WriteLine("*" + section);
+                    }
                     sectionText.Close();
                 }
             }
@@ -28,7 +38,10 @@ namespace BH.Adapter.MidasCivil
                 {
                     using (StreamWriter sectionText = File.CreateText(path))
                     {
-                        sectionText.WriteLine("*" + section);
+                        if(section != "SELFWEIGHT")
+                        {
+                            sectionText.WriteLine("*" + section);
+                        }
                         sectionText.Close();
                     }
                 }

@@ -7,7 +7,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Loadcase ToBHoMLoadcase(this string loadcase, int count)
+        public static Loadcase ToBHoMLoadcase(this string loadcase)
         {
             List<string> delimitted = loadcase.Split(',').ToList();
             LoadNature nature = LoadNature.Dead;
@@ -16,7 +16,8 @@ namespace BH.Engine.MidasCivil
             Loadcase bhomLoadCase = new Loadcase
             {
                 Name = delimitted[0].Replace(" ", ""),
-                Nature = nature
+                Nature = nature,
+                Number = 0
             };
 
             return bhomLoadCase;

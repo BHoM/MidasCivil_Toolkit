@@ -47,14 +47,48 @@ namespace BH.Adapter.MidasCivil
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);
                 }
+                if (typeof(ILoad).IsAssignableFrom(objects.First().GetType()))
+                {
+                    string loadType = objects.First().GetType().ToString();
+
+                    switch (loadType)
+                    {
+                        case "BH.oM.Structure.Loads.PointForce":
+                            success = CreateCollection(objects as IEnumerable<PointForce>);
+                            break;
+                        case "BH.oM.Structure.Loads.GravityLoad":
+                            success = CreateCollection(objects as IEnumerable<GravityLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.BarUniformlyDistributedLoad":
+                            success = CreateCollection(objects as IEnumerable<BarUniformlyDistributedLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.AreaUniformalyDistributedLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaUniformalyDistributedLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.BarTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<BarTemperatureLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.AreaTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaTemperatureLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.PointDisplacement":
+                            success = CreateCollection(objects as IEnumerable<PointDisplacement>);
+                            break;
+                        case "BH.oM.Structure.Loads.BarPointLoad":
+                            success = CreateCollection(objects as IEnumerable<BarPointLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.BarVaryingDistributedLoad":
+                            success = CreateCollection(objects as IEnumerable<BarVaryingDistributedLoad>);
+                            break;
+                    }
+                }
                 if (objects.First() is ISectionProperty)
                 {
                     success = CreateCollection(objects as IEnumerable<ISectionProperty>);
                 }
             }
-            //UpdateViews()             //If there exists a command for updating the views is the software call it now:
 
-            return success;
+                return success;
 
         }
     }

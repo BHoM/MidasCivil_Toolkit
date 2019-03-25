@@ -115,9 +115,13 @@ namespace BH.Engine.MidasCivil
                         {
                             foreach (string loadcase in loadcases)
                             {
+                                string loadcaseName = Path.GetFileName(loadcase);
+
                                 List<string> loadNames = Directory.GetFiles(loadcase, "*.txt")
                                             .Select(Path.GetFileName)
                                             .ToList();
+
+                                bool endIncluded = false;
 
                                 foreach (string loadName in loadNames)
                                 {
@@ -128,6 +132,7 @@ namespace BH.Engine.MidasCivil
                                         {
                                             loadNames.RemoveAt(loadNames.IndexOf(loadName));
                                             loadNames.Add(loadName);
+                                            endIncluded = true;
                                             goto ESCAPE;
                                         }
                                     }
@@ -135,13 +140,8 @@ namespace BH.Engine.MidasCivil
 
                                 ESCAPE:
 
-                                string start = loadNames.Find(x => x.Contains("USE-STLD"));
-
-                                using (var input = File.OpenRead(loadcase + "\\" + start))
-                                {
-                                    input.CopyTo(combined);
-                                    loadNames.Remove(start);
-                                }
+                                loadNames.Remove("USE-STLD");
+                                writer.Write("*USE-STLD, " + loadcaseName);
                                 writer.Write(Environment.NewLine);
                                 writer.Flush();
 
@@ -152,6 +152,14 @@ namespace BH.Engine.MidasCivil
                                         input.CopyTo(combined);
                                     }
 
+                                    writer.Write(Environment.NewLine);
+                                    writer.Flush();
+                                }
+
+                                if (!endIncluded)
+                                {
+                                    writer.Write("; End of data for load case " + loadcaseName);
+                                    writer.Write(Environment.NewLine);
                                     writer.Write(Environment.NewLine);
                                     writer.Flush();
                                 }
