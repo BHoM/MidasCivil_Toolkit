@@ -93,6 +93,7 @@
     <Compile Include="CRUD\Create\Properties\Materials.cs" />
     <Compile Include="CRUD\Create\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
+    <Compile Include="CRUD\Create\Properties\SurfaceProperty.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
     <Compile Include="CRUD\Delete\Loads\Loadcases.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="CRUD\Read\Properties\6DOFConstraints.cs" />
     <Compile Include="CRUD\Read\Properties\Materials.cs" />
     <Compile Include="CRUD\Read\Properties\SectionProperties.cs" />
+    <Compile Include="CRUD\Read\Properties\SurfaceProperty.cs" />
     <Compile Include="CRUD\Read\Properties\Tags.cs" />
     <Compile Include="CRUD\Read\_Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />

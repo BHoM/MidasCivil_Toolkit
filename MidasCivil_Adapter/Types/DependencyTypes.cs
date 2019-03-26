@@ -49,7 +49,7 @@ namespace BH.Adapter.MidasCivil
         {
             {typeof(Node), new List<Type> { typeof(Constraint6DOF)} },
             {typeof(Bar), new List<Type> { typeof(Node) , typeof(ISectionProperty)} },
-            {typeof(FEMesh), new List<Type> { typeof(Node) } },
+            {typeof(FEMesh), new List<Type> { typeof(Node), typeof(ISurfaceProperty) } },
             {typeof(ISectionProperty), new List<Type> { typeof(Material) } },
             {typeof(RigidLink), new List<Type> { typeof(LinkConstraint), typeof(Node) } },
             {typeof(MeshFace), new List<Type> { typeof(ISurfaceProperty), typeof(Node) } },

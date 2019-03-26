@@ -88,12 +88,14 @@
     <Compile Include="Convert\BHoMTypeConvert.cs" />
     <Compile Include="Convert\ToBHoM\Loads\CombineLoads.cs" />
     <Compile Include="Convert\ToBHoM\Properties\Profile.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\SurfaceProperty.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\BarPointLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\BarUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\LoadGroup.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\GravityLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\BarVaryingDistributedLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\PointForce.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\SurfaceProperty.cs" />
     <Compile Include="Query\Assignments.cs" />
     <Compile Include="Query\SectionName.cs" />
     <Compile Include="Query\SupportedDOFType.cs" />

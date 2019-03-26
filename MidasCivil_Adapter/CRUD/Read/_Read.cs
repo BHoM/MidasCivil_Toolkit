@@ -5,6 +5,7 @@ using System.Linq;
 using BH.oM.Base;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Section;
+using BH.oM.Structure.Properties.Surface;
 using BH.oM.Structure.Properties.Constraint;
 using BH.oM.Common.Materials;
 using BH.oM.Structure.Loads;
@@ -30,6 +31,8 @@ namespace BH.Adapter.MidasCivil
                 return ReadFEMeshses(ids as dynamic);
             else if (typeof(ISectionProperty).IsAssignableFrom(type))
                 return ReadSectionProperties(ids as dynamic);
+            else if (typeof(ISurfaceProperty).IsAssignableFrom(type))
+                return ReadSurfaceProperties(ids as dynamic);
             else if (type == typeof(Material))
                 return ReadMaterials(ids as dynamic);
             else if (type == typeof(Constraint6DOF))
@@ -41,5 +44,6 @@ namespace BH.Adapter.MidasCivil
 
             return null;
         }
+
     }
 }

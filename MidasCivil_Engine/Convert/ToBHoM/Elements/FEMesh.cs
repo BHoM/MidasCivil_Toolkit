@@ -1,4 +1,5 @@
 ﻿using BH.oM.Structure.Elements;
+using BH.oM.Structure.Properties.Surface;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,10 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static FEMesh ToBHoMFEMesh(this string feMesh, Dictionary<string, Node> bhomNodes)
+        public static FEMesh ToBHoMFEMesh(
+            this string feMesh, 
+            Dictionary<string, Node> bhomNodes, 
+            Dictionary<string,ISurfaceProperty> bhomSurfaceProperties)
         {
             List<string> delimitted = feMesh.Split(',').ToList();
             Node n1 = null;
@@ -18,6 +22,13 @@ namespace BH.Engine.MidasCivil
             bhomNodes.TryGetValue(delimitted[4].Replace(" ", ""), out n1);
             bhomNodes.TryGetValue(delimitted[5].Replace(" ", ""), out n2);
             bhomNodes.TryGetValue(delimitted[6].Replace(" ", ""), out n3);
+
+            ISurfaceProperty bhomSurfaceProperty = null;
+
+            if (!(bhomSurfaceProperties.Count() == 0))
+            {
+                bhomSurfaceProperties.TryGetValue(delimitted[3].Replace(" ",""), out bhomSurfaceProperty);
+            }
 
             List<Node> nodeList = new List<Node>()
             {
@@ -39,8 +50,10 @@ namespace BH.Engine.MidasCivil
                 bhomFEMesh = new FEMesh()
                 {
                     MeshFaces = feMeshFace,
-                    Nodes = nodeList
+                    Nodes = nodeList,
+                    Property = bhomSurfaceProperty
                 };
+
             }
             else
             {
@@ -53,7 +66,8 @@ namespace BH.Engine.MidasCivil
                 bhomFEMesh = new FEMesh()
                 {
                     MeshFaces = feMeshFace,
-                    Nodes = nodeList
+                    Nodes = nodeList,
+                    Property = bhomSurfaceProperty
                 };
             }
 
