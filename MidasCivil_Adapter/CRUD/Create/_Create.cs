@@ -8,6 +8,7 @@ using BH.oM.Structure.Properties.Constraint;
 using BH.oM.Common.Materials;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Properties.Section;
+using BH.oM.Structure.Properties.Surface;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -85,6 +86,10 @@ namespace BH.Adapter.MidasCivil
                 if (objects.First() is ISectionProperty)
                 {
                     success = CreateCollection(objects as IEnumerable<ISectionProperty>);
+                }
+                if (objects.First() is ISurfaceProperty)
+                {
+                    success = CreateCollection(objects as IEnumerable<ISurfaceProperty>);
                 }
             }
 
