@@ -14,7 +14,7 @@ namespace BH.Adapter.MidasCivil
 
             if (ids!=null)
             {
-                string path = directory + "\\" + "ELEMENT" + ".txt";
+                string path = directory + "\\TextFiles\\" + "ELEMENT" + ".txt";
 
                 if(File.Exists(path))
                 {

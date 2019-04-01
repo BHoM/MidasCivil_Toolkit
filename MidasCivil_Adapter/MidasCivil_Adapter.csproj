@@ -97,7 +97,8 @@
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
     <Compile Include="CRUD\Delete\Loads\Loadcases.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetMaxElementID.cs" />
+    <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
+    <Compile Include="CRUD\PrivateHelpers\GetMaxID.cs" />
     <Compile Include="CRUD\PrivateHelpers\PropertyAssignment.cs" />
     <Compile Include="CRUD\PrivateHelpers\CreateSectionText.cs" />
     <Compile Include="CRUD\PrivateHelpers\ExistsSection.cs" />
@@ -135,9 +136,7 @@
     <Compile Include="Types\Comparer.cs" />
     <Compile Include="Types\DependencyTypes.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CRUD\Delete\Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\MidasCivil_Engine\MidasCivil_Engine.csproj">
       <Project>{bc0a8eff-4277-49e9-bbdc-66ffa11e5258}</Project>

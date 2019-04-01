@@ -13,7 +13,7 @@ namespace BH.Adapter.MidasCivil
             List<ISurfaceProperty> bhomSurfaceProperties = new List<ISurfaceProperty>();
 
             List<string> surfaceProperties = GetSectionText("THICKNESS");
-            for (int i = 0; i < surfaceProperties.Count - 1; i++)
+            for (int i = 0; i < surfaceProperties.Count; i++)
             {
                 string surfaceProperty = surfaceProperties[i];
                 string type = surfaceProperty.Split(',')[1].Replace(" ", "");

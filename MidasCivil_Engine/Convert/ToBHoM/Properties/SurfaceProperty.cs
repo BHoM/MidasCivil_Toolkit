@@ -10,12 +10,13 @@ namespace BH.Engine.MidasCivil
         {
             string[] split = surfaceProperty.Split(',');
 
-            ISurfaceProperty constantThickness = Engine.Structure.Create.ConstantThickness(System.Convert.ToDouble(split[3]));
+            ISurfaceProperty constantThickness = Engine.Structure.Create.ConstantThickness(System.Convert.ToDouble(split[3].Replace(" ", "")));
 
-            constantThickness.Name = "t = " + split[3];
-            constantThickness.CustomData[AdapterId] = System.Convert.ToInt32(split[0]);
+            constantThickness.Name = "t = " + split[3].Replace(" ", "");
+            constantThickness.CustomData[AdapterId] = split[0].Replace(" ", "");
 
-            Engine.Reflection.Compute.RecordWarning("SurfaceProperty objects do not have offsets implemented so this information will be lost");
+            if (split[5].Replace(" ", "") == "YES")
+                Engine.Reflection.Compute.RecordWarning("SurfaceProperty objects do not have offsets implemented so this information will be lost");
 
             return constantThickness;
         }

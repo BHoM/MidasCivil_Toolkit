@@ -13,7 +13,7 @@ namespace BH.Adapter.MidasCivil
 
             if (ids != null)
             {
-                string path = directory + "\\" + "STLDCASE" + ".txt";
+                string path = directory + "\\TextFiles\\" + "STLDCASE" + ".txt";
 
                 if(File.Exists(path))
                 {

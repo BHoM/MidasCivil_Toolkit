@@ -1,5 +1,6 @@
 ﻿using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
+using BH.oM.Structure.Properties.Surface;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +22,8 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteElements(ids);
             if (type == typeof(Loadcase))
                 success = DeleteLoadcases(ids);
+            if (type == typeof(ISurfaceProperty))
+                success = DeleteSurfaceProperties(ids);
 
             return 0;
         }
