@@ -7,7 +7,7 @@ namespace BH.Adapter.MidasCivil
     {
         private bool ExistsSection(string section)
         {
-            string path = directory + "\\" + section + ".txt";
+            string path = directory + "\\TextFiles\\" + section + ".txt";
 
             if (File.Exists(path))
             {

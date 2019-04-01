@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
+using BH.oM.Structure.Properties.Surface;
 
 
 namespace BH.Adapter.MidasCivil
@@ -63,7 +64,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (ExistsSection(section))
                     {
-                        index = GetMaxElementID() + 1;
+                        index = GetMaxID(section) + 1;
                     }
                     else
                     {
@@ -78,7 +79,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (ExistsSection(section))
                     {
-                        index = GetMaxElementID() + 1;
+                        index = GetMaxID(section) + 1;
                     }
                     else
                     {
@@ -94,6 +95,21 @@ namespace BH.Adapter.MidasCivil
                     {
                         
                         index = GetSectionText(section).Count;
+                    }
+                    else
+                    {
+                        index = 1;
+                    }
+                }
+
+                if (type == typeof(ISurfaceProperty))
+                {
+                    string section = "THICKNESS";
+
+                    if (ExistsSection(section))
+                    {
+
+                        index = GetMaxID(section) +1;
                     }
                     else
                     {
