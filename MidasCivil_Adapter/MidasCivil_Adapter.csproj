@@ -96,7 +96,9 @@
     <Compile Include="CRUD\Create\Properties\SurfaceProperty.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
+    <Compile Include="CRUD\Delete\Loads\PointForces.cs" />
     <Compile Include="CRUD\Delete\Loads\Loadcases.cs" />
+    <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetMaxID.cs" />
     <Compile Include="CRUD\PrivateHelpers\PropertyAssignment.cs" />

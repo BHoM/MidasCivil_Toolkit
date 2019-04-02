@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.Properties.Section;
 
 
 namespace BH.Adapter.MidasCivil
@@ -22,6 +23,7 @@ namespace BH.Adapter.MidasCivil
 
             //Change from object to what the specific software is using
             int index = 1;
+            bool isString = false;
 
             if (!refresh && m_indexDict.TryGetValue(type, out index))
             {
@@ -89,20 +91,10 @@ namespace BH.Adapter.MidasCivil
 
                 if (type == typeof(Loadcase))
                 {
-                    string section = "STLDCASE";
-
-                    if (ExistsSection(section))
-                    {
-                        
-                        index = GetSectionText(section).Count;
-                    }
-                    else
-                    {
-                        index = 1;
-                    }
+                    isString = true;
                 }
 
-                if (type == typeof(ISurfaceProperty))
+                if (type == typeof(ConstantThickness))
                 {
                     string section = "THICKNESS";
 
@@ -117,10 +109,32 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
+                if (type == typeof(SteelSection))
+                {
+                    string section = "SECTION";
+
+                    if (ExistsSection(section))
+                    {
+
+                        index = GetMaxID(section) + 1;
+                    }
+                    else
+                    {
+                        index = 1;
+                    }
+                }
+
             }
 
-            m_indexDict[type] = index;
-            return index;
+            if (isString)
+            {
+                return null;
+            }
+            else
+            {
+                m_indexDict[type] = index;
+                return index;
+            }
         }
 
 

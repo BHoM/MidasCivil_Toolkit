@@ -1,0 +1,59 @@
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace BH.Adapter.MidasCivil
+{
+    public partial class MidasCivilAdapter
+    {
+        public int DeleteSectionProperties(IEnumerable<object> ids)
+        {
+            int success = 1;
+
+            if (ids != null)
+            {
+                string path = directory + "\\TextFiles\\" + "STLDCASE" + ".txt";
+
+                if(File.Exists(path))
+                {
+                    List<string> stringIndex = ids.Cast<string>().ToList();
+
+                    List<int> indices = ids.Cast<int>().ToList();
+
+                    List<string> sectionProperties = File.ReadAllLines(path).ToList();
+                    List<int> sectionIndexes = new List<int>();
+
+                    foreach (string sectionProperty in sectionProperties)
+                    {
+                        if (sectionProperty.Contains("*") || sectionProperty.Contains(";"))
+                        {
+                            int clone = 0;
+                            sectionIndexes.Add(clone);
+                        }
+                        else
+                        {
+                            int clone = int.Parse(sectionProperty.Split(',')[0].Replace(" ", ""));
+                            sectionIndexes.Add(clone);
+                        }
+                    }
+
+                    foreach (int index in indices)
+                    {
+                        if (sectionIndexes.Contains(index))
+                        {
+                            int sectionIndex = sectionIndexes.IndexOf(index);
+                            sectionProperties[sectionIndex] = "";
+                        }
+                    }
+
+                    sectionProperties = sectionProperties.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+
+                    File.Delete(path);
+                    File.WriteAllLines(path, sectionProperties.ToArray());
+                }
+            }
+            return success;
+        }
+    }
+}

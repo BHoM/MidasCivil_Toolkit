@@ -17,8 +17,10 @@ namespace BH.Engine.MidasCivil
             {
                 Name = delimitted[0].Replace(" ", ""),
                 Nature = nature,
-                Number = 0
+                Number = 0,
             };
+
+            bhomLoadCase.CustomData[AdapterId] = delimitted[0].Replace(" ", "");
 
             return bhomLoadCase;
         }
