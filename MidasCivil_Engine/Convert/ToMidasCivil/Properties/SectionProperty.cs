@@ -130,8 +130,11 @@ namespace BH.Engine.MidasCivil
 
         private static string CreateProfile(GeneralisedFabricatedBoxProfile profile)
         {
-            double webSpacing = profile.Width - profile.TopLeftCorbelWidth - profile.TopRightCorbelWidth
-                - profile.WebThickness;
+            double webSpacing = 0;
+            if (profile.TopLeftCorbelWidth!=0 || profile.TopRightCorbelWidth != 0 || profile.BotLeftCorbelWidth != 0 || profile.BotRightCorbelWidth != 0)
+            {
+                webSpacing = profile.Width - profile.TopLeftCorbelWidth - profile.TopRightCorbelWidth - profile.WebThickness;
+            }
 
             string midasSectionProperty = "B, 2," +
                 profile.Height + "," + profile.Width + "," + profile.WebThickness + "," +

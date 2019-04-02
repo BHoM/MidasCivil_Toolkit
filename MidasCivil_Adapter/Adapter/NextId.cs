@@ -115,7 +115,6 @@ namespace BH.Adapter.MidasCivil
 
                     if (ExistsSection(section))
                     {
-
                         index = GetMaxID(section) + 1;
                     }
                     else
