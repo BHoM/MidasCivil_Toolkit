@@ -13,16 +13,15 @@ namespace BH.Adapter.MidasCivil
 
             if (ids != null)
             {
-                string[] loadcaseNames = Directory.GetDirectories(directory);
+                string[] loadcaseNames = Directory.GetDirectories(directory+ "\\TextFiles\\");
 
                 foreach (string loadcaseName in loadcaseNames)
                 {
-                    string path = directory + "\\TextFiles\\" + loadcaseName + "\\CONLOAD" + ".txt";
+                    string path = loadcaseName + "\\CONLOAD.txt";
+                    List<string> loadgroups = ids.Cast<string>().ToList();
 
                     if (File.Exists(path))
                     {
-                        List<string> loadgroups = ids.Cast<string>().ToList();
-
                         List<string> pointForces = File.ReadAllLines(path).ToList();
 
                         List<string> pointForceNames = new List<string>();

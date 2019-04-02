@@ -50,7 +50,7 @@ namespace BH.Adapter.MidasCivil
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
             {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
             {typeof(Loadcase), new BHoMObjectNameComparer() },
-            {typeof(ILoad), new BHoMObjectNameComparer() },
+            {typeof(PointForce), new BHoMObjectNameComparer() },
         };
 
 

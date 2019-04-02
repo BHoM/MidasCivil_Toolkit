@@ -51,6 +51,7 @@ namespace BH.Engine.MidasCivil
             IEnumerable<Node> test = bhomAssociatedNodes;
 
             PointForce bhomPointForce = Engine.Structure.Create.PointForce(bhomLoadcase, test, forceVector, momentVector, LoadAxis.Global, name);
+            bhomPointForce.CustomData[AdapterId] = bhomPointForce.Name;
 
             return bhomPointForce;
         }
