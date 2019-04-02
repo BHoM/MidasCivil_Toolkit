@@ -45,7 +45,7 @@ namespace BH.Adapter.MidasCivil
         {
             {typeof(Node), new BH.Engine.Structure.NodeDistanceComparer(3) },   //The 3 in here sets how many decimal places to look at for node merging. 3 decimal places gives mm precision
             {typeof(Bar), new BH.Engine.Structure.BarEndNodesDistanceComparer(3) },
-            { typeof(ISectionProperty), new BHoMObjectNameOrToStringComparer() },
+            { typeof(SteelSection), new BHoMObjectNameComparer() },
             {typeof(Material), new BHoMObjectNameComparer() },
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
             {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },

@@ -23,12 +23,6 @@ namespace BH.Engine.MidasCivil
             else if (shape == "B")
             {
                 //    4, DBUSER    , USER-BOX          , CC, 0, 0, 0, 0, 0, 0, YES, NO, B  , 2, 0.5, 0.2, 0.01, 0.02, 0.19, 0.02, 0, 0, 0, 0
-
-                double width = System.Convert.ToDouble(split[15]);
-                double webSpacing = System.Convert.ToDouble(split[18]);
-                double webThickness = System.Convert.ToDouble(split[16]);
-                double corbel = width / 2 - webSpacing / 2 + webThickness / 2;
-
                 bhomSection = Engine.Structure.Create.SteelSectionFromProfile(
                     Engine.MidasCivil.Convert.ToProfile(sectionProperty)
                     );
@@ -82,7 +76,7 @@ namespace BH.Engine.MidasCivil
             }
 
             bhomSection.Name = split[2];
-            bhomSection.CustomData[AdapterId] = System.Convert.ToInt32(split[0]);
+            bhomSection.CustomData[AdapterId] = split[0].Replace(" ","");
 
             return bhomSection;
         }
@@ -127,7 +121,7 @@ namespace BH.Engine.MidasCivil
 
 
             bhomSection.Name = split0[2];
-            bhomSection.CustomData[AdapterId] = System.Convert.ToInt32(split0[0]);
+            bhomSection.CustomData[AdapterId] = split0[0].Replace(" ", "");
 
             return bhomSection;
         }

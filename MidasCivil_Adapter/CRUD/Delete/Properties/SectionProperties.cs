@@ -13,13 +13,13 @@ namespace BH.Adapter.MidasCivil
 
             if (ids != null)
             {
-                string path = directory + "\\TextFiles\\" + "STLDCASE" + ".txt";
+                string path = directory + "\\TextFiles\\" + "SECTION" + ".txt";
 
                 if(File.Exists(path))
                 {
                     List<string> stringIndex = ids.Cast<string>().ToList();
 
-                    List<int> indices = ids.Cast<int>().ToList();
+                    List<int> indices = stringIndex.Select(x => int.Parse(x)).ToList();
 
                     List<string> sectionProperties = File.ReadAllLines(path).ToList();
                     List<int> sectionIndexes = new List<int>();

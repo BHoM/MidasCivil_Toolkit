@@ -14,7 +14,7 @@ namespace BH.Adapter.MidasCivil
 
             List<string> sectionProperties = GetSectionText("SECTION");
 
-            for (int i = 0; i < sectionProperties.Count-1; i++)
+            for (int i = 0; i < sectionProperties.Count; i++)
             {
                 string sectionProperty = sectionProperties[i];
                 string type = sectionProperty.Split(',')[1].Replace(" ","");
@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
 
                     if(numberColumns == 16)
                     {
-                        Engine.Reflection.Compute.RecordError("Library sections are not yet supported in the MidasCivil_Toolkit");
+                        Engine.Reflection.Compute.RecordWarning("Library sections are not yet supported in the MidasCivil_Toolkit");
                     }
                     else
                     {
@@ -50,11 +50,11 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordError(type + " not supported in the MidasCivil_Toolkit");
+                    Engine.Reflection.Compute.RecordWarning(type + " not supported in the MidasCivil_Toolkit");
                 }
 
-
-                bhomSectionProperties.Add(bhomSectionProperty);
+                if (bhomSectionProperty!=null)
+                    bhomSectionProperties.Add(bhomSectionProperty);
             }
 
             return bhomSectionProperties;
