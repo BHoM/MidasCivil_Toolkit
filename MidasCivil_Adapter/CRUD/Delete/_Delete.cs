@@ -1,6 +1,7 @@
 ﻿using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.Properties.Section;
 using System;
 using System.Collections.Generic;
 
@@ -22,8 +23,10 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteElements(ids);
             if (type == typeof(Loadcase))
                 success = DeleteLoadcases(ids);
-            if (type == typeof(ISurfaceProperty))
+            if (type == typeof(ConstantThickness))
                 success = DeleteSurfaceProperties(ids);
+            if (type == typeof(SteelSection))
+                success = DeleteSectionProperties(ids);
 
             return 0;
         }

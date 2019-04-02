@@ -19,24 +19,10 @@ namespace BH.Adapter.MidasCivil
 
         protected override bool UpdateObjects<T>(IEnumerable<T> objects)
         {
-            if (typeof(T).IsAssignableFrom(typeof(Loadcase)))
-            {
-
-                return UpdateCollection(objects as IEnumerable<Loadcase>);
-            }
-            else
                 return base.UpdateObjects<T>(objects);
         }
 
         /***************************************************/
-
-        private bool UpdateCollection(IEnumerable<Loadcase> loadcases)
-        {
-            return true; 
-        }
-
-        /***************************************************/
-
 
     }
 }
