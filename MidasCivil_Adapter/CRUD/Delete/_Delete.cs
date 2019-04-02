@@ -27,6 +27,8 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteSurfaceProperties(ids);
             if (type == typeof(SteelSection))
                 success = DeleteSectionProperties(ids);
+            if (type == typeof(PointForce))
+                success = DeletePointForces(ids);
 
             return 0;
         }
