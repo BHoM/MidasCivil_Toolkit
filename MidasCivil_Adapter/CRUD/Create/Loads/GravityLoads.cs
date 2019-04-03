@@ -16,8 +16,7 @@ namespace BH.Adapter.MidasCivil
                 List<string> midasGravityLoads = new List<string>();
                 string gravityLoadPath = CreateSectionFile(gravityLoad.Loadcase.Name + "\\SELFWEIGHT");
 
-                List<string> midasLoadGroup = new List<string>();
-                midasLoadGroup.Add(Engine.MidasCivil.Convert.ToMCLoadGroup(gravityLoad));
+                string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(gravityLoad);
 
                 midasGravityLoads.Add(Engine.MidasCivil.Convert.ToMCGravityLoad(gravityLoad));
 
@@ -34,8 +33,8 @@ namespace BH.Adapter.MidasCivil
                     BH.Engine.Reflection.Compute.RecordError("Midas only supports one GravityLoad per loadcase");
                 else
                 {
-                    File.AppendAllLines(loadGroupPath, midasLoadGroup);
-                    File.WriteAllText(gravityLoadPath, string.Empty);
+                    CompareLoadGroup(midasLoadGroup, loadGroupPath);
+                    RemoveLoadEnd(gravityLoadPath);
                     File.AppendAllLines(gravityLoadPath, midasGravityLoads);
                 }
             }

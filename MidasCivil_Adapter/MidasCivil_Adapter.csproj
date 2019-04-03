@@ -114,7 +114,9 @@
     <Compile Include="CRUD\Delete\_Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetPropertyAssignments.cs" />
+    <Compile Include="CRUD\PrivateHelpers\CompareLoadGroup.cs" />
     <Compile Include="CRUD\PrivateHelpers\SetSectionText.cs" />
+    <Compile Include="CRUD\PrivateHelpers\RemoveLoadEnd.cs" />
     <Compile Include="CRUD\PrivateHelpers\WriteSectionText.cs" />
     <Compile Include="CRUD\Read\Elements\Bars.cs" />
     <Compile Include="CRUD\Read\Elements\FEMeshes.cs" />

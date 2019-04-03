@@ -17,8 +17,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barUniformlyDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
-                List<string> midasLoadGroup = new List<string>();
-                midasLoadGroup.Add(Engine.MidasCivil.Convert.ToMCLoadGroup(barUniformlyDistributedLoad));
+                string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(barUniformlyDistributedLoad);
 
                 List<string> assignedBars = barUniformlyDistributedLoad.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToList();
 
@@ -60,19 +59,8 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                string[] loads = File.ReadAllLines(barLoadPath);
-
-                for (int i=0; i<loads.Length; i++)
-                {
-                    if (loads[i].Contains("; End of data"))
-                        loads[i] = "";
-                }
-
-                loads = loads.Where(x => !string.IsNullOrEmpty(x)).ToArray();
-
-                File.Delete(barLoadPath);
-                File.AppendAllLines(loadGroupPath, midasLoadGroup);
-                File.AppendAllLines(barLoadPath, loads);
+                CompareLoadGroup(midasLoadGroup, loadGroupPath);
+                RemoveLoadEnd(barLoadPath);
                 File.AppendAllLines(barLoadPath, midasBarLoads);
             }
 
