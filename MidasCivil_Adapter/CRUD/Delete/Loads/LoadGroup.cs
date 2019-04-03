@@ -7,13 +7,13 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteLoadcases(IEnumerable<object> ids)
+        public int DeleteLoadGroups(IEnumerable<object> ids)
         {
             int success = 1;
 
             if (ids != null && ids.Count() != 0)
             {
-                string path = directory + "\\TextFiles\\" + "STLDCASE" + ".txt";
+                string path = directory + "\\TextFiles\\" + "LOADGROUP" + ".txt";
 
                 if (File.Exists(path))
                 {

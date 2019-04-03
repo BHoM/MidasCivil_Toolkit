@@ -29,6 +29,14 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteSectionProperties(ids);
             if (type == typeof(PointForce))
                 success = DeletePointForces(ids);
+            if (type == typeof(GravityLoad))
+                success = DeleteGravityLoads(ids);
+            //if (type == typeof(BarUniformlyDistributedLoad))
+            //    success = DeleteBarUniformlyDistributedLoads(ids);
+            //if (type == typeof(BarVaryingDistributedLoad))
+            //    success = DeleteBarVaryingDistributedLoads(ids);
+            //if (type == typeof(BarPointLoad))
+            //    success = DeleteBarPointLoads(ids);
 
             return 0;
         }

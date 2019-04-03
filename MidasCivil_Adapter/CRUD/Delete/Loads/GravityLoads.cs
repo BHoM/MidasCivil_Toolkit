@@ -7,17 +7,17 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeletePointForces(IEnumerable<object> ids)
+        public int DeleteGravityLoads(IEnumerable<object> ids)
         {
             int success = 1;
 
-            if (ids != null && ids.Count()!=0)
+            if (ids != null && ids.Count() != 0)
             {
                 string[] loadcaseNames = Directory.GetDirectories(directory+ "\\TextFiles\\");
 
                 foreach (string loadcaseName in loadcaseNames)
                 {
-                    string path = loadcaseName + "\\CONLOAD.txt";
+                    string path = loadcaseName + "\\SELFWEIGHT.txt";
                     List<string> loadgroups = ids.Cast<string>().ToList();
 
                     if (File.Exists(path))
@@ -27,7 +27,7 @@ namespace BH.Adapter.MidasCivil
                         List<string> loadNames = new List<string>();
                         foreach (string load in loads)
                         {
-                            if (load.Contains(";") || loads.Contains("*"))
+                            if (load.Contains(";")|| string.IsNullOrWhiteSpace(load))
                             {
                                 string clone = 0.ToString();
                                 loadNames.Add(clone);

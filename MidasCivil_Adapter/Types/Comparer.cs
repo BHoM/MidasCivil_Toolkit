@@ -51,6 +51,9 @@ namespace BH.Adapter.MidasCivil
             {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
             {typeof(Loadcase), new BHoMObjectNameComparer() },
             {typeof(PointForce), new BHoMObjectNameComparer() },
+            {typeof(GravityLoad), new BHoMObjectNameComparer() },
+            {typeof(BarUniformlyDistributedLoad), new BHoMObjectNameComparer() },
+            {typeof(BarVaryingDistributedLoad), new BHoMObjectNameComparer() },
         };
 
 
