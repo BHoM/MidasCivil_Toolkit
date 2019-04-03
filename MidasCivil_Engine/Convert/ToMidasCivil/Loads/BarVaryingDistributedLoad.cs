@@ -18,7 +18,7 @@ namespace BH.Engine.MidasCivil
                                                                     MCVectorConverter(barLoad.ForceA, direction) + "," +
                                                                     barLoad.DistanceFromB + "," 
                                                                     + MCVectorConverter(barLoad.ForceB, direction) +
-                                                                    ",0,0,0,0, ,NO,0,0,NO";
+                                                                    ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
             }
             else
             {
@@ -29,7 +29,7 @@ namespace BH.Engine.MidasCivil
                                                                     MCVectorConverter(barLoad.MomentA, direction) + "," +
                                                                     barLoad.DistanceFromB + ","
                                                                     + MCVectorConverter(barLoad.MomentB, direction) +
-                                                                    ",0,0,0,0, ,NO,0,0,NO";
+                                                                    ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
             }
 
             return midasBarLoad;

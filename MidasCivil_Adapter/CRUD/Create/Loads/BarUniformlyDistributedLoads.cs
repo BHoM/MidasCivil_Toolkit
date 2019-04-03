@@ -31,14 +31,14 @@ namespace BH.Adapter.MidasCivil
 
                 Vector zeroVector = new Vector { X = 0, Y = 0, Z = 0 };
 
-                for (int i=0; i<6; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     barUniformlyDistributedLoad.Force = zeroVector;
                     barUniformlyDistributedLoad.Moment = zeroVector;
 
-                    if (loadVectors[i]!=0)
+                    if (loadVectors[i] != 0)
                     {
-                        if (i<3)
+                        if (i < 3)
                         {
                             barUniformlyDistributedLoad.Force = createSingleComponentVector(i, loadVectors[i]);
 
@@ -49,7 +49,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            barUniformlyDistributedLoad.Moment = createSingleComponentVector(i-3, loadVectors[i]);
+                            barUniformlyDistributedLoad.Moment = createSingleComponentVector(i - 3, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
@@ -60,7 +60,19 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
+                string[] loads = File.ReadAllLines(barLoadPath);
+
+                for (int i=0; i<loads.Length; i++)
+                {
+                    if (loads[i].Contains("; End of data"))
+                        loads[i] = "";
+                }
+
+                loads = loads.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+                File.Delete(barLoadPath);
                 File.AppendAllLines(loadGroupPath, midasLoadGroup);
+                File.AppendAllLines(barLoadPath, loads);
                 File.AppendAllLines(barLoadPath, midasBarLoads);
             }
 

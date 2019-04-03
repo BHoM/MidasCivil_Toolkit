@@ -45,7 +45,7 @@ namespace BH.Engine.MidasCivil
             double XLoad = 0;
             double YLoad = 0;
             double ZLoad = 0;
-            double load = double.Parse(delimitted[9].Replace(" ", ""));
+            double load = double.Parse(delimitted[10].Replace(" ", ""));
 
             switch (direction)
             {
@@ -77,7 +77,7 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                name = delimitted[18].Replace(" ", "");
+                name = delimitted[17].Replace(" ", "");
             }
 
             BarPointLoad bhomBarPointLoad;

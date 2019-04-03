@@ -60,7 +60,19 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
+                string[] loads = File.ReadAllLines(barLoadPath);
+
+                for (int i = 0; i < loads.Length; i++)
+                {
+                    if (loads[i].Contains("; End of data"))
+                        loads[i] = "";
+                }
+
+                loads = loads.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+                File.Delete(barLoadPath);
                 File.AppendAllLines(loadGroupPath, midasLoadGroup);
+                File.AppendAllLines(barLoadPath, loads);
                 File.AppendAllLines(barLoadPath, midasBarLoads);
             }
 

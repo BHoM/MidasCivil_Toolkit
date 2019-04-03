@@ -140,7 +140,7 @@ namespace BH.Engine.MidasCivil
 
                                 ESCAPE:
 
-                                loadNames.Remove("USE-STLD");
+                                loadNames.Remove("USE-STLD.txt");
                                 writer.Write("*USE-STLD, " + loadcaseName);
                                 writer.Write(Environment.NewLine);
                                 writer.Flush();

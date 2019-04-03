@@ -96,8 +96,11 @@
     <Compile Include="CRUD\Create\Properties\SurfaceProperty.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
+    <Compile Include="CRUD\Delete\Loads\BarPointLoads.cs" />
+    <Compile Include="CRUD\Delete\Loads\BarVaryingDistributedLoads.cs" />
     <Compile Include="CRUD\Delete\Loads\LoadGroup.cs" />
     <Compile Include="CRUD\Delete\Loads\GravityLoads.cs" />
+    <Compile Include="CRUD\Delete\Loads\BarUniformlyDistributedLoads.cs" />
     <Compile Include="CRUD\Delete\Loads\PointForces.cs" />
     <Compile Include="CRUD\Delete\Loads\Loadcases.cs" />
     <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
