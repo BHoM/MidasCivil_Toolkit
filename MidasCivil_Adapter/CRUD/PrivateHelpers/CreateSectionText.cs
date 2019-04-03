@@ -34,15 +34,18 @@ namespace BH.Adapter.MidasCivil
             else
             {
                 List<string> readSection = File.ReadAllLines(path).ToList();
-                if(!(readSection[0].Contains("*"+section)))
+                if(readSection.Count!=0)
                 {
-                    using (StreamWriter sectionText = File.CreateText(path))
+                    if (!(readSection[0].Contains("*" + section)))
                     {
-                        if(section != "SELFWEIGHT")
+                        using (StreamWriter sectionText = File.CreateText(path))
                         {
-                            sectionText.WriteLine("*" + section);
+                            if (section != "SELFWEIGHT")
+                            {
+                                sectionText.WriteLine("*" + section);
+                            }
+                            sectionText.Close();
                         }
-                        sectionText.Close();
                     }
                 }
             }
