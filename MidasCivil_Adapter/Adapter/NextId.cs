@@ -99,6 +99,26 @@ namespace BH.Adapter.MidasCivil
                     isString = true;
                 }
 
+                if (type == typeof(GravityLoad))
+                {
+                    isString = true;
+                }
+
+                if (type == typeof(BarUniformlyDistributedLoad))
+                {
+                    isString = true;
+                }
+
+                if (type == typeof(BarVaryingDistributedLoad))
+                {
+                    isString = true;
+                }
+
+                if (type == typeof(BarPointLoad))
+                {
+                    isString = true;
+                }
+
                 if (type == typeof(ConstantThickness))
                 {
                     string section = "THICKNESS";

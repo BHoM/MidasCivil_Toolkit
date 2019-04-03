@@ -85,10 +85,12 @@ namespace BH.Engine.MidasCivil
             if (loadType == "CONLOAD")
             {
                 bhomBarPointLoad = Engine.Structure.Create.BarPointLoad(bhomLoadcase,distA,bhomAssociatedBars, loadVector,null,axis,name);
+                bhomBarPointLoad.CustomData[AdapterId] = bhomBarPointLoad.Name;
             }
             else
             {
                 bhomBarPointLoad = Engine.Structure.Create.BarPointLoad(bhomLoadcase, distA, bhomAssociatedBars, null, loadVector, axis, name);
+                bhomBarPointLoad.CustomData[AdapterId] = bhomBarPointLoad.Name;
             }
 
             return bhomBarPointLoad;

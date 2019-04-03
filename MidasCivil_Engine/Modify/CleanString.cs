@@ -8,7 +8,7 @@ namespace BH.Engine.MidasCivil
         {
             List<string> cleanString = new List<string>();
 
-            if (sectionText.Count==1 && sectionText[0].Contains("*"))
+            if (sectionText[0].Contains("SELFWEIGHT"))
             {
                 cleanString.Add(sectionText[0].Split('*')[1]);
             }

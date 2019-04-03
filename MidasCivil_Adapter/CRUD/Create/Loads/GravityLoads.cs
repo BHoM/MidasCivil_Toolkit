@@ -21,9 +21,23 @@ namespace BH.Adapter.MidasCivil
 
                 midasGravityLoads.Add(Engine.MidasCivil.Convert.ToMCGravityLoad(gravityLoad));
 
-                File.AppendAllLines(loadGroupPath, midasLoadGroup);
-                File.WriteAllText(gravityLoadPath, string.Empty);
-                File.AppendAllLines(gravityLoadPath, midasGravityLoads);
+                string[] exisitingGravityLoads = File.ReadAllLines(gravityLoadPath);
+                bool containsGravity = false;
+
+                foreach (string existingGravityLoad in exisitingGravityLoads)
+                {
+                    if (existingGravityLoad.Contains("SELFWEIGHT"))
+                        containsGravity = true;
+                }
+
+                if (containsGravity)
+                    BH.Engine.Reflection.Compute.RecordError("Midas only supports one GravityLoad per loadcase");
+                else
+                {
+                    File.AppendAllLines(loadGroupPath, midasLoadGroup);
+                    File.WriteAllText(gravityLoadPath, string.Empty);
+                    File.AppendAllLines(gravityLoadPath, midasGravityLoads);
+                }
             }
 
             return true;
