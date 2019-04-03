@@ -25,7 +25,19 @@ namespace BH.Adapter.MidasCivil
                    midasPointForces.Add(Engine.MidasCivil.Convert.ToMCPointForce(pointForce, assignedNode));
                 }
 
+                string[] loads = File.ReadAllLines(pointForcePath);
+
+                for (int i = 0; i < loads.Length; i++)
+                {
+                    if (loads[i].Contains("; End of data"))
+                        loads[i] = "";
+                }
+
+                loads = loads.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+                File.Delete(pointForcePath);
                 File.AppendAllLines(loadGroupPath, midasLoadGroup);
+                File.AppendAllLines(pointForcePath, loads);
                 File.AppendAllLines(pointForcePath, midasPointForces);
             }
 
