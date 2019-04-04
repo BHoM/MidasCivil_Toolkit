@@ -48,6 +48,10 @@ namespace BH.Adapter.MidasCivil
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);
                 }
+                if (objects.First() is LoadCombination)
+                {
+                    success = CreateCollection(objects as IEnumerable<LoadCombination>);
+                }
                 if (typeof(ILoad).IsAssignableFrom(objects.First().GetType()))
                 {
                     string loadType = objects.First().GetType().ToString();
