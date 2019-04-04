@@ -23,6 +23,8 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteElements(ids);
             if (type == typeof(Loadcase))
                 success = DeleteLoadcases(ids);
+            if (type == typeof(LoadCombination))
+                success = DeleteLoadCombinations(ids);
             if (type == typeof(ConstantThickness))
                 success = DeleteSurfaceProperties(ids);
             if (type == typeof(SteelSection))

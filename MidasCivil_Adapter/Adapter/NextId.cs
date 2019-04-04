@@ -94,6 +94,11 @@ namespace BH.Adapter.MidasCivil
                     isString = true;
                 }
 
+                if (type == typeof(LoadCombination))
+                {
+                    isString = true;
+                }
+
                 if (type == typeof(PointForce))
                 {
                     isString = true;
