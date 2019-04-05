@@ -86,10 +86,12 @@
     <Compile Include="Compute\RangeBySplit.cs" />
     <Compile Include="Convert\AdapterId.cs" />
     <Compile Include="Convert\BHoMTypeConvert.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\AreaUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\CombineLoads.cs" />
     <Compile Include="Convert\ToBHoM\Properties\Profile.cs" />
     <Compile Include="Convert\ToBHoM\Properties\SurfaceProperty.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\BarPointLoad.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\AreaUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\BarUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\LoadCombination.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\LoadGroup.cs" />

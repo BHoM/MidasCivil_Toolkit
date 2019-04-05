@@ -39,6 +39,8 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteBarVaryingDistributedLoads(ids);
             if (type == typeof(BarPointLoad))
                 success = DeleteBarPointLoads(ids);
+            if (type == typeof(AreaUniformalyDistributedLoad))
+                success = DeleteAreaUniformlyDistributedLoads(ids);
 
             return 0;
         }
