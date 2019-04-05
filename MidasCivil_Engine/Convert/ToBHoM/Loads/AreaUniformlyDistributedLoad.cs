@@ -78,40 +78,12 @@ namespace BH.Engine.MidasCivil
                 name = delimitted[13].Replace(" ", "");
             }
 
-            List<PanelPlanar> areaElements = ConvertFEMesh(bhomAssociatedFEMeshes);
-
-            AreaUniformalyDistributedLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformalyDistributedLoad(bhomLoadcase, loadVector, areaElements, axis, loadProjection, name);
+            AreaUniformalyDistributedLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformalyDistributedLoad(bhomLoadcase, loadVector, bhomAssociatedFEMeshes, axis, loadProjection, name);
             bhomAreaUniformlyDistributedLoad.CustomData[AdapterId] = bhomAreaUniformlyDistributedLoad.Name;
 
             return bhomAreaUniformlyDistributedLoad;
         }
 
-        public static List<PanelPlanar> ConvertFEMesh(List<FEMesh> meshes)
-        {
-            List<Polyline> polylines = new List<Polyline>();
-
-            foreach (FEMesh mesh in meshes)
-            {
-                List<Point> points = new List<Point>();
-
-                foreach (Node node in mesh.Nodes)
-                {
-                    points.Add(node.Coordinates.Origin);
-                }
-
-                points.Add(mesh.Nodes.First().Coordinates.Origin);
-                polylines.Add(BH.Engine.Geometry.Create.Polyline(points));
-            }
-
-            List<PanelPlanar> panels = BH.Engine.Structure.Create.PanelPlanar(polylines);
-
-            for (int i=0; i<panels.Count; i++)
-            {
-                panels[i].CustomData[AdapterId] = meshes[i].CustomData[AdapterId];
-            }
-
-            return panels;
-        }
     }
 }
 
