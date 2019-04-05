@@ -97,6 +97,7 @@
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
     <Compile Include="CRUD\Delete\Loads\BarPointLoads.cs" />
+    <Compile Include="CRUD\Delete\Loads\AreaUniformlyDistributedLoads.cs" />
     <Compile Include="CRUD\Delete\Loads\BarVaryingDistributedLoads.cs" />
     <Compile Include="CRUD\Delete\Loads\LoadCombinations.cs" />
     <Compile Include="CRUD\Delete\Loads\LoadGroup.cs" />

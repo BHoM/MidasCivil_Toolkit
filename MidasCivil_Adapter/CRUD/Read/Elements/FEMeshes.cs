@@ -7,7 +7,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private List<FEMesh> ReadFEMeshses(List<string> ids = null)
+        private List<FEMesh> ReadFEMeshes(List<string> ids = null)
         {
             List<FEMesh> bhomMeshes = new List<FEMesh>();
 

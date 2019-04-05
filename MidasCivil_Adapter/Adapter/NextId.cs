@@ -124,6 +124,11 @@ namespace BH.Adapter.MidasCivil
                     isString = true;
                 }
 
+                if (type == typeof(AreaUniformalyDistributedLoad))
+                {
+                    isString = true;
+                }
+
                 if (type == typeof(ConstantThickness))
                 {
                     string section = "THICKNESS";

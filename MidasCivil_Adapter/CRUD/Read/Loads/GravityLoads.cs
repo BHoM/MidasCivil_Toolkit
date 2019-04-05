@@ -19,7 +19,7 @@ namespace BH.Adapter.MidasCivil
 
             List<BHoMObject> objects = new List<BHoMObject>();
             objects.AddRange(ReadBars());
-            objects.AddRange(ReadFEMeshses());
+            objects.AddRange(ReadFEMeshes());
 
             Engine.Reflection.Compute.RecordWarning("Note: Midas applies Self Weight to all objects in a given loadcase");
 
