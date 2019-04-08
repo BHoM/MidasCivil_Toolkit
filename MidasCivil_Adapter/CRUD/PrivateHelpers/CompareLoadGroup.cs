@@ -22,10 +22,9 @@ namespace BH.Adapter.MidasCivil
 
             if (!existing)
             {
-                using (StreamWriter sw = new StreamWriter(path))
+                using (StreamWriter sw = new StreamWriter(path, append:true))
                 {
                     sw.WriteLine(loadGroup);
-                    sw.Flush();
                 }
             }
         }
