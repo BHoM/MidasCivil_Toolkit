@@ -1,8 +1,6 @@
 ﻿using BH.oM.Structure.Properties.Section;
 using System.Collections.Generic;
 using System.Linq;
-using BH.Engine.Reflection;
-
 
 namespace BH.Adapter.MidasCivil
 {
@@ -59,5 +57,6 @@ namespace BH.Adapter.MidasCivil
 
             return bhomSectionProperties;
         }
+
     }
 }

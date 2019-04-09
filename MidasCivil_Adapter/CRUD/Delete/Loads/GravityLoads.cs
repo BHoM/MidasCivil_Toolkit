@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -29,13 +28,12 @@ namespace BH.Adapter.MidasCivil
                         {
                             if (load.Contains(";")|| string.IsNullOrWhiteSpace(load))
                             {
-                                string clone = 0.ToString();
-                                loadNames.Add(clone);
+                                loadNames.Add("0");
                             }
                             else
                             {
-                                string clone = load.Split(',').Reverse().First().Replace(" ", "");
-                                loadNames.Add(clone);
+                                string loadName = load.Split(',').Reverse().First().Replace(" ", "");
+                                loadNames.Add(loadName);
                             }
                         }
 

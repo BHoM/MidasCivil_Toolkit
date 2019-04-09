@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
-using BH.oM.Geometry;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -74,5 +73,6 @@ namespace BH.Adapter.MidasCivil
             }
             return bhomAreaUniformlyDistributedLoads;
         }
+
     }
 }

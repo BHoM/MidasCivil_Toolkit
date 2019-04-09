@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -30,21 +29,19 @@ namespace BH.Adapter.MidasCivil
                         {
                             if (load.Contains(";") || loads.Contains("*"))
                             {
-                                string clone = 0.ToString();
-                                loadNames.Add(clone);
+                                loadNames.Add("0");
                             }
                             else if (load.Contains("UNILOAD") || load.Contains("UNIMOMENT"))
                             {
                                 string[] delimitted = load.Split(',');
                                 if (delimitted[11] != delimitted[13] || double.Parse(delimitted[10].Replace(" ", "")) + double.Parse(delimitted[12].Replace(" ", "")) != 1)
                                 {
-                                    string clone = delimitted[18].Replace(" ", "");
-                                    loadNames.Add(clone);
+                                    string loadName = delimitted[18].Replace(" ", "");
+                                    loadNames.Add(loadName);
                                 }
                                 else
                                 {
-                                    string clone = 0.ToString();
-                                    loadNames.Add(clone);
+                                    loadNames.Add("0");
                                 }
                             }
                         }

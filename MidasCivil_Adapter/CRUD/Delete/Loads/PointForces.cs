@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -27,15 +26,14 @@ namespace BH.Adapter.MidasCivil
                         List<string> loadNames = new List<string>();
                         foreach (string load in loads)
                         {
-                            if (load.Contains(";") || loads.Contains("*"))
+                            if (!(load.Contains(";") || loads.Contains("*")))
                             {
-                                string clone = 0.ToString();
-                                loadNames.Add(clone);
+                                loadNames.Add("0");
                             }
                             else
                             {
-                                string clone = load.Split(',').Reverse().First().Replace(" ", "");
-                                loadNames.Add(clone);
+                                string loadName = load.Split(',').Reverse().First().Replace(" ", "");
+                                loadNames.Add(loadName);
                             }
                         }
 

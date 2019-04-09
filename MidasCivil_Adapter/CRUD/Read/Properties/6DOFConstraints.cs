@@ -30,7 +30,9 @@ namespace BH.Adapter.MidasCivil
                     bhom6DOFConstraints.Add(bhomConstraint6DOF);
                 }
             }
+
             return bhom6DOFConstraints;
         }
+
     }
 }

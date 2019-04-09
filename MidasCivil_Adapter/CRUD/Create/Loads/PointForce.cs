@@ -25,8 +25,7 @@ namespace BH.Adapter.MidasCivil
                 }
 
                 RemoveLoadEnd(pointForcePath);
-                CompareGroup(midasLoadGroup,loadGroupPath);
-
+                CompareLoadGroup(midasLoadGroup,loadGroupPath);
                 File.AppendAllLines(pointForcePath, midasPointForces);
             }
 
@@ -34,5 +33,6 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
     }
 }

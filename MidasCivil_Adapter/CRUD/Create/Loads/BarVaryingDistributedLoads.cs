@@ -3,7 +3,6 @@ using BH.oM.Geometry;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -70,13 +69,10 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                CompareGroup(midasLoadGroup, loadGroupPath);
+                CompareLoadGroup(midasLoadGroup, loadGroupPath);
                 RemoveLoadEnd(barLoadPath);
                 File.AppendAllLines(barLoadPath, midasBarLoads);
             }
-
-
-
             return true;
         }
 
@@ -99,5 +95,6 @@ namespace BH.Adapter.MidasCivil
 
             return vector;
         }
+
     }
 }

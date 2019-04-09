@@ -24,5 +24,6 @@ namespace BH.Adapter.MidasCivil
 
             return bhomLoadCombinations;
         }
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using BH.oM.Structure.Loads;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -33,7 +32,7 @@ namespace BH.Adapter.MidasCivil
                     BH.Engine.Reflection.Compute.RecordError("Midas only supports one GravityLoad per loadcase");
                 else
                 {
-                    CompareGroup(midasLoadGroup, loadGroupPath);
+                    CompareLoadGroup(midasLoadGroup, loadGroupPath);
                     RemoveLoadEnd(gravityLoadPath);
                     File.AppendAllLines(gravityLoadPath, midasGravityLoads);
                 }

@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Collections.Generic;
-using BH.oM.Common.Materials;
 using BH.oM.Structure.Properties.Section;
 
 namespace BH.Adapter.MidasCivil
@@ -21,5 +20,6 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
     }
 }

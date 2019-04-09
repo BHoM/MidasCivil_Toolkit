@@ -1,7 +1,5 @@
 ﻿using BH.oM.Structure.Properties.Surface;
 using System.Collections.Generic;
-using System.Linq;
-using BH.Engine.Reflection;
 
 
 namespace BH.Adapter.MidasCivil

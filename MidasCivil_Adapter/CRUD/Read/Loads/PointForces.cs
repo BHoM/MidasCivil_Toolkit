@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
-using BH.oM.Geometry;
 using System.IO;
 
 namespace BH.Adapter.MidasCivil
@@ -64,7 +63,9 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
             }
+
             return bhomPointForces;
         }
+
     }
 }
