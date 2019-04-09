@@ -59,7 +59,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                CompareLoadGroup(midasLoadGroup, loadGroupPath);
+                CompareGroup(midasLoadGroup, loadGroupPath);
                 RemoveLoadEnd(barLoadPath);
                 File.AppendAllLines(barLoadPath, midasBarLoads);
             }

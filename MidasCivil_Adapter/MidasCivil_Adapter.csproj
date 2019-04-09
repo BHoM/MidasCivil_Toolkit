@@ -105,6 +105,7 @@
     <Compile Include="CRUD\Delete\Loads\BarUniformlyDistributedLoads.cs" />
     <Compile Include="CRUD\Delete\Loads\PointForces.cs" />
     <Compile Include="CRUD\Delete\Loads\Loadcases.cs" />
+    <Compile Include="CRUD\Delete\Properties\Constraint6DOF.cs" />
     <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetMaxID.cs" />
@@ -116,7 +117,7 @@
     <Compile Include="CRUD\Delete\_Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetPropertyAssignments.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CompareLoadGroup.cs" />
+    <Compile Include="CRUD\PrivateHelpers\CompareGroup.cs" />
     <Compile Include="CRUD\PrivateHelpers\SetSectionText.cs" />
     <Compile Include="CRUD\PrivateHelpers\RemoveLoadEnd.cs" />
     <Compile Include="CRUD\PrivateHelpers\WriteSectionText.cs" />

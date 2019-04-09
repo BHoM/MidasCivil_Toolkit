@@ -51,7 +51,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                CompareLoadGroup(midasLoadGroup, loadGroupPath);
+                CompareGroup(midasLoadGroup, loadGroupPath);
                 RemoveLoadEnd(FEMeshLoadPath);
                 File.AppendAllLines(FEMeshLoadPath, midasAreaLoads);
             }

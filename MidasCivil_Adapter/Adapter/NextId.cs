@@ -4,6 +4,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Properties.Surface;
 using BH.oM.Structure.Properties.Section;
+using BH.oM.Structure.Properties.Constraint;
 
 
 namespace BH.Adapter.MidasCivil
@@ -58,6 +59,11 @@ namespace BH.Adapter.MidasCivil
                         index = 1;
                     }
 
+                }
+
+                if (type == typeof(Constraint6DOF))
+                {
+                    isString = true;
                 }
 
                 if (type == typeof(Bar))
