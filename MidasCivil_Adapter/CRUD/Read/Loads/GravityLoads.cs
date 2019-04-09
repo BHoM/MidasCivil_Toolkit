@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BH.oM.Structure.Loads;
-using BH.oM.Structure.Elements;
 using BH.oM.Base;
 using System.Linq;
 using System.IO;

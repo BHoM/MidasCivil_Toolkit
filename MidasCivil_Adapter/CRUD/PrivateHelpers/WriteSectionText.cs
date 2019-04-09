@@ -18,6 +18,7 @@ namespace BH.Adapter.MidasCivil
                 sectionFile.Close();
             }
         }
+
         private void WriteSectionText(List<string> sectionText, string section, string subDirectory)
         {
             string path = subDirectory + "\\" + section + ".txt";
@@ -31,5 +32,6 @@ namespace BH.Adapter.MidasCivil
                 sectionFile.Close();
             }
         }
+
     }
 }

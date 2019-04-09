@@ -40,5 +40,6 @@ namespace BH.Adapter.MidasCivil
 
             return bhomBars;
         }
+
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BH.oM.Structure.Loads;
 
 namespace BH.Adapter.MidasCivil
@@ -19,5 +18,6 @@ namespace BH.Adapter.MidasCivil
 
             return bhomLoadCases;
         }
+
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.IO;
 
-
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
@@ -15,7 +14,7 @@ namespace BH.Adapter.MidasCivil
             }
 
             return false;
-
         }
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using BH.oM.Structure.Loads;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
