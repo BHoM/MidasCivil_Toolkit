@@ -55,7 +55,7 @@ namespace BH.Adapter.MidasCivil
             {typeof(MeshFace), new List<Type> { typeof(ISurfaceProperty), typeof(Node) } },
             {typeof(ISurfaceProperty), new List<Type> { typeof(Material) } },
             {typeof(PanelPlanar), new List<Type> { typeof(ISurfaceProperty) } },
-            {typeof(LoadCombination), new List<Type> { typeof(Loadcase) } },
+            //{typeof(LoadCombination), new List<Type> { typeof(Loadcase) } },
             {typeof(ILoad), new List<Type> {typeof(Loadcase) } }
         };
 

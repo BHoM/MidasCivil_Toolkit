@@ -12,12 +12,12 @@ namespace BH.Engine.MidasCivil
             string line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0";
             midasLoadCombination.Add(line1);
 
-            string line2 = "";
+            string line2 = 
+                "ST, " + loadCombination.LoadCases[0].Item2.Name + "," + loadCombination.LoadCases[0].Item1.ToString();
 
-            for (int i=0; i< loadCombination.LoadCases.Count; i++)
+            for (int i=1; i< loadCombination.LoadCases.Count; i++)
             {
-                line2 = line2 + "ST, " + loadCombination.LoadCases[i].Item2.Name + ",";
-                line2 = line2 + loadCombination.LoadCases[i].Item1.ToString() + ",";
+                line2 = line2 + ", ST, " + loadCombination.LoadCases[i].Item2.Name+ "," + loadCombination.LoadCases[i].Item1.ToString();
             }
 
             midasLoadCombination.Add(line2);
