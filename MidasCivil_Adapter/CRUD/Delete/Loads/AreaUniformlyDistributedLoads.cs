@@ -29,8 +29,7 @@ namespace BH.Adapter.MidasCivil
                         {
                             if (load.Contains(";") || loads.Contains("*") || string.IsNullOrWhiteSpace(load))
                             {
-                                string clone = 0.ToString();
-                                loadNames.Add(clone);
+                                loadNames.Add("0");
                             }
                             else
                             {
@@ -66,5 +65,6 @@ namespace BH.Adapter.MidasCivil
 
             return success;
         }
+
     }
 }

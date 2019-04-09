@@ -36,10 +36,8 @@ namespace BH.Adapter.MidasCivil
                 }
             }
 
-
             return new List<Type>();
         }
-
 
         /***************************************************/
         /**** Private Fields                            ****/
@@ -59,7 +57,7 @@ namespace BH.Adapter.MidasCivil
             {typeof(ILoad), new List<Type> {typeof(Loadcase) } }
         };
 
-
         /***************************************************/
+
     }
 }

@@ -43,5 +43,6 @@ namespace BH.Adapter.MidasCivil
 
             return readLoads;
         }
+
     }
 }

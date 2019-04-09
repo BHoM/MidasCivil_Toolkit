@@ -36,7 +36,6 @@ namespace BH.Adapter.MidasCivil
 
         }
 
-
         /***************************************************/
         /**** Private Fields                            ****/
         /***************************************************/
@@ -59,7 +58,7 @@ namespace BH.Adapter.MidasCivil
             {typeof(LoadCombination), new BHoMObjectNameComparer() },
         };
 
-
         /***************************************************/
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -29,8 +28,7 @@ namespace BH.Adapter.MidasCivil
                         {
                             if (load.Contains(";") || loads.Contains("*"))
                             {
-                                string clone = 0.ToString();
-                                loadNames.Add(clone);
+                                loadNames.Add("0");
                             }
                             else if (load.Contains("UNILOAD") || load.Contains("UNIMOMENT"))
                             {
@@ -39,14 +37,13 @@ namespace BH.Adapter.MidasCivil
                                 {
                                     if (delimitted[10].Replace(" ", "") == 0.ToString() && delimitted[12].Replace(" ", "") == 1.ToString())
                                     {
-                                        string clone = delimitted[18].Replace(" ", "");
-                                        loadNames.Add(clone);
+                                        string loadName = delimitted[18].Replace(" ", "");
+                                        loadNames.Add(loadName);
                                     }
                                 }
                                 else
                                 {
-                                    string clone = 0.ToString();
-                                    loadNames.Add(clone);
+                                    loadNames.Add("0");
                                 }
                             }
                         }
@@ -77,5 +74,6 @@ namespace BH.Adapter.MidasCivil
 
             return success;
         }
+
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -28,5 +26,6 @@ namespace BH.Adapter.MidasCivil
                 }
             }
         }
+
     }
 }

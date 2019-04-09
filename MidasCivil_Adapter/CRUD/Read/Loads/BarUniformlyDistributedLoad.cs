@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
-using BH.oM.Geometry;
 using System.Linq;
 using System.IO;
 
@@ -89,6 +88,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
             }
+
             return bhomBarUniformlyDistributedLoads;
         }
 

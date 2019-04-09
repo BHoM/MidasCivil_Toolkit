@@ -19,5 +19,6 @@ namespace BH.Adapter.MidasCivil
             }
             return sectionText;
         }
+
     }
 }

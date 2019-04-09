@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
 
 namespace BH.Adapter.MidasCivil
 {
@@ -52,5 +50,6 @@ namespace BH.Adapter.MidasCivil
 
             return path;
         }
+
     }
 }
