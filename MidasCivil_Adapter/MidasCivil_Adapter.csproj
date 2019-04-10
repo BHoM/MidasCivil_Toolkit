@@ -106,6 +106,7 @@
     <Compile Include="CRUD\Delete\Loads\PointForces.cs" />
     <Compile Include="CRUD\Delete\Loads\Loadcases.cs" />
     <Compile Include="CRUD\Delete\Properties\Constraint6DOF.cs" />
+    <Compile Include="CRUD\Delete\Properties\Materials.cs" />
     <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetMaxID.cs" />

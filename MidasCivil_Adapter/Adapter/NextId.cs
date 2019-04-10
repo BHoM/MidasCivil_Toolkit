@@ -5,6 +5,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.Properties.Surface;
 using BH.oM.Structure.Properties.Section;
 using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Common.Materials;
 
 
 
@@ -154,6 +155,20 @@ namespace BH.Adapter.MidasCivil
                 if (type == typeof(SteelSection))
                 {
                     string section = "SECTION";
+
+                    if (ExistsSection(section))
+                    {
+                        index = GetMaxID(section) + 1;
+                    }
+                    else
+                    {
+                        index = 1;
+                    }
+                }
+
+                if (type == typeof(Material))
+                {
+                    string section = "MATERIAL";
 
                     if (ExistsSection(section))
                     {

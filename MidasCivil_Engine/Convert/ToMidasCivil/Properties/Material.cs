@@ -22,7 +22,7 @@ namespace BH.Engine.MidasCivil
 
             string midasMaterial = (
                     material.CustomData[AdapterId].ToString() + "," + "USER," +
-                    material.Type.ToString() + " " + material.Name + ",0,0,,C,NO," +
+                    material.Type.ToString() + "," + material.Name + ",0,0,,C,NO," +
                     material.DampingRatio + ",2," + Engine.MidasCivil.Convert.Unit("kN/m2",youngsModulusUnit,material.YoungsModulus) + "," +
                     material.PoissonsRatio + "," + Engine.MidasCivil.Convert.Unit("kN/m2", coeffThermalExpansionUnit, material.CoeffThermalExpansion) + "," +
                     Engine.MidasCivil.Convert.Unit("kN/m2", densityUnit, material.Density) + "," + "0"

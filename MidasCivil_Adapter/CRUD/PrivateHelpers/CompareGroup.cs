@@ -13,7 +13,7 @@ namespace BH.Adapter.MidasCivil
 
             for (int i = 0; i < groups.Length; i++)
             {
-                if (groups[i].Contains(group))
+                if (groups[i].Replace(" ","").Contains(group))
                 {
                     existing = true;
                     break;

@@ -3,6 +3,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.Properties.Surface;
 using BH.oM.Structure.Properties.Section;
 using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Common.Materials;
 using System;
 using System.Collections.Generic;
 
@@ -22,6 +23,8 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteNodes(ids);
             if (type == typeof(Constraint6DOF))
                 success = DeleteConstraints(ids);
+            if (type == typeof(Material))
+                success = DeleteMaterials(ids);
             if (type == typeof(Bar))
                 success = DeleteElements(ids);
             if (type == typeof(Loadcase))
