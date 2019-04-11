@@ -24,7 +24,7 @@ namespace BH.Adapter.MidasCivil
 
                     for (int i=0; i<loadCombinations.Count; i++)
                     {
-                        if (loadCombinations[i].Contains(";") || loadCombinations[i].Contains("*"))
+                        if (loadCombinations[i].Contains(";") || loadCombinations[i].Contains("*") || string.IsNullOrWhiteSpace(loadCombinations[i]))
                         {
                             string clone = 0.ToString();
                             loadCombinationNames.Add(clone);

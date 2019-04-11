@@ -96,6 +96,8 @@
     <Compile Include="CRUD\Create\Properties\SurfaceProperty.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
+    <Compile Include="CRUD\Delete\Loads\BarTemperatureLoads.cs" />
+    <Compile Include="CRUD\Delete\Loads\AreaTemperatureLoads.cs" />
     <Compile Include="CRUD\Delete\Loads\BarPointLoads.cs" />
     <Compile Include="CRUD\Delete\Loads\AreaUniformlyDistributedLoads.cs" />
     <Compile Include="CRUD\Delete\Loads\BarVaryingDistributedLoads.cs" />

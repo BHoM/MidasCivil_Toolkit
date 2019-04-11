@@ -47,6 +47,10 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteBarPointLoads(ids);
             if (type == typeof(AreaUniformalyDistributedLoad))
                 success = DeleteAreaUniformlyDistributedLoads(ids);
+            if (type == typeof(AreaTemperatureLoad))
+                success = DeleteAreaTemperatureLoads(ids);
+            if (type == typeof(BarTemperatureLoad))
+                success = DeleteBarTemperatureLoads(ids);
 
             return 0;
         }

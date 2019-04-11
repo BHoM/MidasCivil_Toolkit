@@ -91,6 +91,8 @@
     <Compile Include="Convert\ToBHoM\Loads\CombineLoads.cs" />
     <Compile Include="Convert\ToBHoM\Properties\Profile.cs" />
     <Compile Include="Convert\ToBHoM\Properties\SurfaceProperty.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\BarTemperatureLoad.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\AreaTemperatureLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\BarPointLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\AreaUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\BarUniformlyDistributedLoad.cs" />
