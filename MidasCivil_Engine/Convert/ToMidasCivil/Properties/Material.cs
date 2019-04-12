@@ -20,9 +20,23 @@ namespace BH.Engine.MidasCivil
                 densityUnit = units[2];
             }
 
+            string type = "";
+            if(!(material.Type == MaterialType.Steel || material.Type == MaterialType.Concrete))
+            {
+                type = "USER";
+            }
+            else if(material.Type == MaterialType.Steel)
+            {
+                type = "STEEL";
+            }
+            else if(material.Type == MaterialType.Concrete)
+            {
+                type = "CONCRETE";
+            }
+
             string midasMaterial = (
-                    material.CustomData[AdapterId].ToString() + "," + "USER," +
-                    material.Type.ToString() + "," + material.Name + ",0,0,,C,NO," +
+                    material.CustomData[AdapterId].ToString() + "," + type + "," +
+                    material.Name + ",0,0,,C,NO," +
                     material.DampingRatio + ",2," + Engine.MidasCivil.Convert.Unit("kN/m2",youngsModulusUnit,material.YoungsModulus) + "," +
                     material.PoissonsRatio + "," + Engine.MidasCivil.Convert.Unit("kN/m2", coeffThermalExpansionUnit, material.CoeffThermalExpansion) + "," +
                     Engine.MidasCivil.Convert.Unit("kN/m2", densityUnit, material.Density) + "," + "0"
