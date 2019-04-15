@@ -127,6 +127,7 @@
     <Compile Include="CRUD\PrivateHelpers\WriteSectionText.cs" />
     <Compile Include="CRUD\Read\Elements\Bars.cs" />
     <Compile Include="CRUD\Read\Elements\FEMeshes.cs" />
+    <Compile Include="CRUD\Read\Elements\RigidLinks.cs" />
     <Compile Include="CRUD\Read\Elements\Nodes.cs" />
     <Compile Include="CRUD\Read\Loads\AreaTemperatureLoad.cs" />
     <Compile Include="CRUD\Read\Loads\AreaUniformlyDistributedLoad.cs" />
