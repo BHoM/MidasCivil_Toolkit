@@ -14,7 +14,7 @@ namespace BH.Adapter.MidasCivil
             for (int i = 0; i < supports.Count; i++)
             {
                 Constraint6DOF bhomConstraint6DOF = Engine.MidasCivil.Convert.ToBHoMConstraint6DOF(
-                    supports[i],"Support_"+(i+1));
+                    supports[i]);
 
                 bhom6DOFConstraints.Add(bhomConstraint6DOF);
             }
@@ -24,7 +24,7 @@ namespace BH.Adapter.MidasCivil
             for (int i = 0; i < springs.Count; i++)
             {
                 Constraint6DOF bhomConstraint6DOF = Engine.MidasCivil.Convert.ToBHoMConstraint6DOF(
-                    springs[i],"Spring_"+(i+1));
+                    springs[i]);
                 if(!(bhomConstraint6DOF==null))
                 {
                     bhom6DOFConstraints.Add(bhomConstraint6DOF);

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeletePointForces(IEnumerable<object> ids)
+        public int DeleteAreaTemperatureLoads(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -16,7 +17,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string loadcaseName in loadcaseNames)
                 {
-                    string path = loadcaseName + "\\CONLOAD.txt";
+                    string path = loadcaseName + "\\ELTEMPER.txt";
                     List<string> loadgroups = ids.Cast<string>().ToList();
 
                     if (File.Exists(path))
@@ -26,14 +27,15 @@ namespace BH.Adapter.MidasCivil
                         List<string> loadNames = new List<string>();
                         foreach (string load in loads)
                         {
-                            if (!load.Contains(";") || load.Contains("*") || string.IsNullOrWhiteSpace(load))
+                            if (load.Contains(";") || load.Contains("*") || string.IsNullOrWhiteSpace(load))
                             {
                                 loadNames.Add("0");
                             }
                             else
                             {
-                                string loadName = load.Split(',').Reverse().First().Replace(" ", "");
-                                loadNames.Add(loadName);
+                                string[] delimitted = load.Split(',');
+                                string clone = delimitted[2].Replace(" ", "");
+                                loadNames.Add(clone);
                             }
                         }
 
@@ -41,8 +43,15 @@ namespace BH.Adapter.MidasCivil
                         {
                             if (loadNames.Contains(loadgroup))
                             {
-                                int nameIndex = loadNames.IndexOf(loadgroup);
-                                loads[nameIndex] = "";
+                                var nameIndexes = loadNames.Select((l, i) => new { l, i })
+                                    .Where(x => x.l == loadgroup)
+                                    .Select(x => x.i)
+                                    .ToList();
+
+                                foreach (var index in nameIndexes)
+                                {
+                                    loads[index] = "";
+                                }
                             }
                         }
 

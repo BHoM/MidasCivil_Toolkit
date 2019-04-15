@@ -26,7 +26,7 @@ namespace BH.Adapter.MidasCivil
                         List<string> loadNames = new List<string>();
                         foreach (string load in loads)
                         {
-                            if (load.Contains(";") || loads.Contains("*"))
+                            if (load.Contains(";") || load.Contains("*") || string.IsNullOrWhiteSpace(load))
                             {
                                 loadNames.Add("0");
                             }
@@ -68,6 +68,5 @@ namespace BH.Adapter.MidasCivil
 
             return success;
         }
-
     }
 }

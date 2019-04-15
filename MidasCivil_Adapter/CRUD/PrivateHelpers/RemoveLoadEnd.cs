@@ -20,6 +20,5 @@ namespace BH.Adapter.MidasCivil
             File.Delete(path);
             File.AppendAllLines(path, loads);
         }
-
     }
 }
