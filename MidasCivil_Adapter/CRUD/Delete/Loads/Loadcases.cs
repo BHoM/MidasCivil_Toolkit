@@ -23,7 +23,7 @@ namespace BH.Adapter.MidasCivil
                     List<string> loadcaseNames = new List<string>();
                     foreach (string loadcase in loadcases)
                     {
-                        if (loadcase.Contains(";") || loadcase.Contains("*"))
+                        if (loadcase.Contains(";") || loadcase.Contains("*") || string.IsNullOrWhiteSpace(loadcase))
                         {
                             string clone = 0.ToString();
                             loadcaseNames.Add(clone);

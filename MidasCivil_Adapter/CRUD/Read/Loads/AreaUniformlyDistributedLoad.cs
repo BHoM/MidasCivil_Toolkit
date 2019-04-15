@@ -71,7 +71,6 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
             }
-
             return bhomAreaUniformlyDistributedLoads;
         }
 

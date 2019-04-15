@@ -21,6 +21,7 @@ namespace BH.Adapter.MidasCivil
                 List<IAreaElement> assignedElements = areaUniformlyDistributedLoad.Objects.Elements;
 
                 List<string> assignedFEMeshes = new List<string>();
+				
                 foreach (IAreaElement mesh in assignedElements)
                 {
                     assignedFEMeshes.Add(mesh.CustomData[AdapterId].ToString());

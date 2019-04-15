@@ -8,9 +8,10 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Constraint6DOF ToBHoMConstraint6DOF(this string support, string supportName)
+        public static Constraint6DOF ToBHoMConstraint6DOF(this string support)
         {
             List<string> delimitted = support.Split(',').ToList();
+            string supportName;
 
             List<bool> fixity = new List<bool>();
             List<double> stiffness = new List<double>();
@@ -35,6 +36,7 @@ namespace BH.Engine.MidasCivil
                         stiffness.Add(0.0);
                     }
                 }
+                supportName = delimitted[2].Replace(" ", "");
             }
             else
             {
@@ -66,13 +68,15 @@ namespace BH.Engine.MidasCivil
                                 fixity.Add(false);
                                 stiffness.Add(spring);
                             }
-                            
                         }
                     }
+                    supportName = delimitted[15].Replace(" ", "");
+
                 }
             }
+
             Constraint6DOF bhomConstraint6DOF = Engine.Structure.Create.Constraint6DOF(supportName, fixity, stiffness);
-            bhomConstraint6DOF.CustomData[AdapterId] = supportName.Split('_')[1];
+            bhomConstraint6DOF.CustomData[AdapterId] = supportName;
 
             return bhomConstraint6DOF;
 

@@ -11,7 +11,6 @@ namespace BH.Engine.MidasCivil
 
             string line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0";
             midasLoadCombination.Add(line1);
-
             string line2 = 
                 "ST, " + loadCombination.LoadCases[0].Item2.Name + "," + loadCombination.LoadCases[0].Item1.ToString();
 
