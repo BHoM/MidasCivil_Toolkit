@@ -77,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CRUD\Create\Elements\RigidLink.cs" />
     <Compile Include="CRUD\Create\Elements\Element.cs" />
     <Compile Include="CRUD\Create\Elements\Node.cs" />
     <Compile Include="CRUD\Create\Loads\Loadcase.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="CRUD\Create\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
     <Compile Include="CRUD\Create\Properties\SurfaceProperty.cs" />
+    <Compile Include="CRUD\Delete\Elements\RigidLink.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />
     <Compile Include="CRUD\Delete\Elements\Nodes.cs" />
     <Compile Include="CRUD\Delete\Loads\BarTemperatureLoads.cs" />

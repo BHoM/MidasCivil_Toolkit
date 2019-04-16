@@ -26,7 +26,6 @@ namespace BH.Adapter.MidasCivil
 
             //Change from object to what the specific software is using
             int index = 1;
-            bool isString = false;
 
             if (!refresh && m_indexDict.TryGetValue(type, out index))
             {
@@ -63,11 +62,6 @@ namespace BH.Adapter.MidasCivil
 
                 }
 
-                if (type == typeof(Constraint6DOF))
-                {
-                    isString = true;
-                }
-
                 if (type == typeof(Bar))
                 {
                     string section = "ELEMENT";
@@ -95,46 +89,6 @@ namespace BH.Adapter.MidasCivil
                     {
                         index = 1;
                     }
-                }
-
-                if (type == typeof(Loadcase))
-                {
-                    isString = true;
-                }
-
-                if (type == typeof(LoadCombination))
-                {
-                    isString = true;
-                }
-
-                if (type == typeof(PointForce))
-                {
-                    isString = true;
-                }
-
-                if (type == typeof(GravityLoad))
-                {
-                    isString = true;
-                }
-
-                if (type == typeof(BarUniformlyDistributedLoad))
-                {
-                    isString = true;
-                }
-
-                if (type == typeof(BarVaryingDistributedLoad))
-                {
-                    isString = true;
-                }
-
-                if (type == typeof(BarPointLoad))
-                {
-                    isString = true;
-                }
-
-                if (type == typeof(AreaUniformalyDistributedLoad))
-                {
-                    isString = true;
                 }
 
                 if (type == typeof(ConstantThickness))
@@ -182,15 +136,8 @@ namespace BH.Adapter.MidasCivil
 
             }
 
-            if (isString)
-            {
-                return null;
-            }
-            else
-            {
                 m_indexDict[type] = index;
                 return index;
-            }
         }
 
 

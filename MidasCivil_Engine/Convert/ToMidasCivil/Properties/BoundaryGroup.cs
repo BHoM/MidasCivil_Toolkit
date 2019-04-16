@@ -4,12 +4,12 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCBoundaryGroup(this Constraint6DOF support)
+        public static string ToMCBoundaryGroup(string name)
         {
                 //Check what AUTOTYPE is, seems auto set to 0
 
                 string midasBoundaryGroup = (
-                    support.Name + "," +
+                    name + "," +
                     "0"
                 );
 

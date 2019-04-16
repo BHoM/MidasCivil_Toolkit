@@ -41,6 +41,10 @@ namespace BH.Adapter.MidasCivil
                 {
                     success = CreateCollection(objects as IEnumerable<FEMesh>);
                 }
+                if (objects.First() is RigidLink)
+                {
+                    success = CreateCollection(objects as IEnumerable<RigidLink>);
+                }
                 if (objects.First() is Loadcase)
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);

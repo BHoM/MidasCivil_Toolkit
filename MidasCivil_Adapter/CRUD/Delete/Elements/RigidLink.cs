@@ -1,0 +1,63 @@
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace BH.Adapter.MidasCivil
+{
+    public partial class MidasCivilAdapter
+    {
+        public int DeleteRigidLinks(IEnumerable<object> ids)
+        {
+            int success = 1;
+
+            if (ids.Count()!=0)
+            {
+                string path = directory + "\\TextFiles\\" + "RIGIDLINK" + ".txt";
+
+                if(File.Exists(path))
+                {
+                    List<string> names = ids.Cast<string>().ToList();
+                    List<string> links = File.ReadAllLines(path).ToList();
+                    List<string> linkNames = new List<string>();
+
+                    foreach (string link in links)
+                    {
+                        if (link.Contains("*") || link.Contains(";") || string.IsNullOrWhiteSpace(link))
+                        {
+                            string clone = "0";
+                            linkNames.Add(clone);
+                        }
+                        else
+                        {
+                            string clone = link.Split(',')[3].Replace(" ", "");
+                            linkNames.Add(clone);
+                        }
+                    }
+
+                    foreach (string name in names)
+                    {
+                        if (linkNames.Contains(name))
+                        {
+                            var nameIndexes = linkNames.Select((l, i) => new { l, i })
+                                .Where(x => x.l == name)
+                                .Select(x => x.i)
+                                .ToList();
+
+                            foreach (var index in nameIndexes)
+                            {
+                                links[index] = "";
+                            }
+                        }
+                    }
+
+                    links = links.Where(x => !string.IsNullOrEmpty(x)).ToList();
+
+                    File.Delete(path);
+                    File.WriteAllLines(path, links.ToArray());
+                }
+            }
+            return success;
+        }
+
+    }
+}
