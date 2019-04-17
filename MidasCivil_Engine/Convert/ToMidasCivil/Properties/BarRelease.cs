@@ -26,7 +26,7 @@ namespace BH.Engine.MidasCivil
                 boolToConstraint(release.EndRelease.RotationY) +
                 boolToConstraint(release.EndRelease.RotationZ);
 
-            midasRelease.Add("," + startFixity + ",0,0,0,0,0,0");
+            midasRelease.Add(",NO," + startFixity + ",0,0,0,0,0,0");
             midasRelease.Add(endFixity + ",0,0,0,0,0,0," + release.Name);
 
             return midasRelease;
