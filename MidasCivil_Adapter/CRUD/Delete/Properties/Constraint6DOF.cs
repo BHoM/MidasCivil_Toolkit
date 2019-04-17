@@ -11,7 +11,7 @@ namespace BH.Adapter.MidasCivil
         {
             int success = 1;
 
-            if (ids != null && ids.Count() != 0)
+            if (ids.Count() != 0)
             {
                 string constraintPath = directory + "\\TextFiles\\" + "CONSTRAINT" + ".txt";
                 string springPath = directory + "\\TextFiles\\" + "SPRING" + ".txt";

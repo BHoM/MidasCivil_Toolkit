@@ -90,6 +90,7 @@
     <Compile Include="Convert\ToBHoM\Loads\AreaTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\AreaUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\CombineLoads.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\BarRelease.cs" />
     <Compile Include="Convert\ToBHoM\Properties\Profile.cs" />
     <Compile Include="Convert\ToBHoM\Properties\SurfaceProperty.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\RigidLink.cs" />

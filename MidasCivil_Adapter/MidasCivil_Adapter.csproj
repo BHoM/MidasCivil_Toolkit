@@ -144,6 +144,7 @@
     <Compile Include="CRUD\Read\Loads\PointDisplacement.cs" />
     <Compile Include="CRUD\Read\Loads\PointForces.cs" />
     <Compile Include="CRUD\Read\Properties\6DOFConstraints.cs" />
+    <Compile Include="CRUD\Read\Properties\BarReleases.cs" />
     <Compile Include="CRUD\Read\Properties\Materials.cs" />
     <Compile Include="CRUD\Read\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Read\Properties\SurfaceProperty.cs" />

@@ -10,7 +10,7 @@ namespace BH.Adapter.MidasCivil
         {
             int success = 1;
 
-            if (ids != null && ids.Count() != 0)
+            if (ids.Count() != 0)
             {
                 string path = directory + "\\TextFiles\\" + "MATERIAL" + ".txt";
 
