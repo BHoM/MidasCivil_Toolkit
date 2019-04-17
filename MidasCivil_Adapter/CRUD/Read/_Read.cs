@@ -39,6 +39,8 @@ namespace BH.Adapter.MidasCivil
                 return Read6DOFConstraints(ids as dynamic);
             else if (type == typeof(RigidLink))
                 return ReadRigidLinks(ids as dynamic);
+            else if (type == typeof(BarRelease))
+                return ReadBarReleases(ids as dynamic);
             else if (type == typeof(Loadcase))
                 return ReadLoadcases(ids as dynamic);
             else if (type == typeof(LoadCombination))

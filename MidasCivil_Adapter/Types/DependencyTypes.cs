@@ -50,6 +50,7 @@ namespace BH.Adapter.MidasCivil
             {typeof(FEMesh), new List<Type> { typeof(Node), typeof(ISurfaceProperty) } },
             {typeof(ISectionProperty), new List<Type> { typeof(Material) } },
             {typeof(RigidLink), new List<Type> { typeof(Node) } },
+            {typeof(BarRelease), new List<Type> { typeof(Bar) } },
             {typeof(MeshFace), new List<Type> { typeof(ISurfaceProperty), typeof(Node) } },
             {typeof(ISurfaceProperty), new List<Type> { typeof(Material) } },
             {typeof(PanelPlanar), new List<Type> { typeof(ISurfaceProperty) } },
