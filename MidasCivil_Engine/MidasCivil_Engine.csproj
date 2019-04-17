@@ -104,6 +104,7 @@
     <Compile Include="Convert\ToMidasCivil\Loads\GravityLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\BarVaryingDistributedLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\PointForce.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\BarRelease.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\SurfaceProperty.cs" />
     <Compile Include="Query\Assignments.cs" />
     <Compile Include="Query\SectionName.cs" />

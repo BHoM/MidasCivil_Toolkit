@@ -45,6 +45,10 @@ namespace BH.Adapter.MidasCivil
                 {
                     success = CreateCollection(objects as IEnumerable<RigidLink>);
                 }
+                if (objects.First() is BarRelease)
+                {
+                    success = CreateCollection(objects as IEnumerable<BarRelease>);
+                }
                 if (objects.First() is Loadcase)
                 {
                     success = CreateCollection(objects as IEnumerable<Loadcase>);

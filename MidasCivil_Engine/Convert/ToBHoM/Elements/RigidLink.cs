@@ -60,11 +60,11 @@ namespace BH.Engine.MidasCivil
 
         public static bool convertFixity(string number)
         {
-            bool fixity = false;
+            bool fixity = true;
 
             if (int.Parse(number)==1)
             {
-                fixity = true;
+                fixity = false;
             }
 
             return fixity;

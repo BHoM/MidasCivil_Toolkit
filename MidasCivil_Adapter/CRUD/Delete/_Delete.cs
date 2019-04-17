@@ -25,6 +25,8 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteConstraints(ids);
             if (type == typeof(RigidLink))
                 success = DeleteRigidLinks(ids);
+            if (type == typeof(BarRelease))
+                success = DeleteBarReleases(ids);
             if (type == typeof(Material))
                 success = DeleteMaterials(ids);
             if (type == typeof(Bar))

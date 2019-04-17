@@ -46,6 +46,7 @@ namespace BH.Adapter.MidasCivil
             {typeof(Bar), new BH.Engine.Structure.BarEndNodesDistanceComparer(3) },
             {typeof(Constraint6DOF), new BHoMObjectNameComparer() },
             {typeof(RigidLink), new BHoMObjectNameComparer() },
+            {typeof(BarRelease), new BHoMObjectNameComparer() },
             { typeof(SteelSection), new BHoMObjectNameComparer() },
             {typeof(Material), new BHoMObjectNameComparer() },
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
