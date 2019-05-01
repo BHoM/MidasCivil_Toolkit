@@ -14,6 +14,7 @@ namespace BH.Adapter.MidasCivil
             List<string> barText = new List<string>();
 
             List<string> elementsText = GetSectionText("ELEMENT");
+            Dictionary<string, List<int>> elementGroups = GetGroupAssignments("GROUP", 2);
 
             foreach (string element in elementsText)
             {
@@ -35,6 +36,8 @@ namespace BH.Adapter.MidasCivil
             foreach (string bar in barText)
             {
                 Bar bhomBar = Engine.MidasCivil.Convert.ToBHoMBar(bar, bhomNodes, bhomSectionProperties);
+                int bhomID = System.Convert.ToInt32(bhomBar.CustomData[AdapterId]);
+                bhomBar.Tags = CheckGroups(elementGroups, bhomID);
                 bhomBars.Add(bhomBar);
             }
 
