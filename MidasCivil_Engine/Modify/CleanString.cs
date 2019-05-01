@@ -13,11 +13,33 @@ namespace BH.Engine.MidasCivil
                 cleanString.Add(sectionText[0].Split('*')[1]);
             }
 
-            foreach (string text in sectionText)
+            for (int i = 0; i < sectionText.Count; i++)
             {
-                if (!(text.Contains(";")) && !(text.Contains("*")) && !(string.IsNullOrEmpty(text)))
+                if (!(sectionText[i].Contains(";")) && !(sectionText[i].Contains("*")) && !(string.IsNullOrEmpty(sectionText[i])))
                 {
-                    cleanString.Add(text);
+                    if (sectionText[i].Contains("\\"))
+                    {
+                        string combined = sectionText[i].Replace("\\", "");
+                        bool finished = false;
+                        while (!finished)
+                        {
+                            i++;
+                            if (!sectionText[i].Contains("\\"))
+                            {
+                                combined = combined + sectionText[i];
+                                finished = true;
+                            }
+                            else
+                            {
+                                combined = combined + sectionText[i].Replace("\\", "");
+                            }
+                        }
+                        cleanString.Add(combined);
+                    }
+                    else
+                    {
+                        cleanString.Add(sectionText[i]);
+                    }
                 }
             }
 
