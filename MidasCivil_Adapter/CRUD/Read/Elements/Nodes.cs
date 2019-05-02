@@ -16,7 +16,7 @@ namespace BH.Adapter.MidasCivil
             List<string> supportText = GetSectionText("CONSTRAINT");
             List<string> springText = GetSectionText("SPRING");
 
-            Dictionary<string, List<int>> nodeGroups = GetGroupAssignments("GROUP", 1);
+            Dictionary<string, List<int>> nodeGroups = ReadTags("GROUP", 1);
 
             List<Constraint6DOF> supportsList = Read6DOFConstraints();
             Dictionary<string, Constraint6DOF> supports = supportsList.ToDictionary(x => x.Name.ToString());
@@ -28,7 +28,7 @@ namespace BH.Adapter.MidasCivil
             {
                 Node bhomNode = Engine.MidasCivil.Convert.ToBHoMNode(node, supports, supportAssignments, springAssignments);
                 int bhomID = System.Convert.ToInt32(bhomNode.CustomData[AdapterId]);
-                bhomNode.Tags = CheckGroups(nodeGroups, bhomID);
+                bhomNode.Tags = GetGroupAssignments(nodeGroups, bhomID);
                 bhomNodes.Add(bhomNode);
             }
 

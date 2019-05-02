@@ -11,6 +11,8 @@ namespace BH.Adapter.MidasCivil
             string path = CreateSectionFile("ELEMENT");
             List<string> midasElements = new List<string>();
 
+            CreateGroups(bars);
+
             foreach (Bar bar in bars)
             {
                 midasElements.Add(Engine.MidasCivil.Convert.ToMCElement(bar));
@@ -25,6 +27,8 @@ namespace BH.Adapter.MidasCivil
         {
             string path = CreateSectionFile("ELEMENT");
             List<string> midasElements = new List<string>();
+
+            CreateGroups(meshes);
 
             foreach (FEMesh mesh in meshes)
             {

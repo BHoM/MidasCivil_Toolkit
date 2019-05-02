@@ -13,7 +13,7 @@ namespace BH.Adapter.MidasCivil
 
             List<string> elementsText = GetSectionText("ELEMENT");
             List<string> meshText = elementsText.Where(x => x.Contains("PLATE")).ToList();
-            Dictionary<string, List<int>> elementGroups = GetGroupAssignments("GROUP", 2);
+            Dictionary<string, List<int>> elementGroups = ReadTags("GROUP", 2);
 
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
@@ -27,7 +27,7 @@ namespace BH.Adapter.MidasCivil
             {
                 FEMesh bhomMesh = Engine.MidasCivil.Convert.ToBHoMFEMesh(mesh, bhomNodes,bhomSuraceProperties);
                 int bhomID = System.Convert.ToInt32(bhomMesh.CustomData[AdapterId]);
-                bhomMesh.Tags = CheckGroups(elementGroups, bhomID);
+                bhomMesh.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomMeshes.Add(bhomMesh);
             }
 
