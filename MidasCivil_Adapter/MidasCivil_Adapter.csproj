@@ -115,9 +115,10 @@
     <Compile Include="CRUD\Delete\Properties\BarReleases.cs" />
     <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CheckGroups.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetMaxID.cs" />
     <Compile Include="CRUD\PrivateHelpers\GetGroupAssignments.cs" />
+    <Compile Include="CRUD\PrivateHelpers\GetMaxID.cs" />
+    <Compile Include="CRUD\PrivateHelpers\CreateGroups.cs" />
+    <Compile Include="CRUD\PrivateHelpers\ReadTags.cs" />
     <Compile Include="CRUD\PrivateHelpers\PropertyAssignment.cs" />
     <Compile Include="CRUD\PrivateHelpers\CreateSectionText.cs" />
     <Compile Include="CRUD\PrivateHelpers\ExistsSection.cs" />
@@ -152,7 +153,6 @@
     <Compile Include="CRUD\Read\Properties\Materials.cs" />
     <Compile Include="CRUD\Read\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Read\Properties\SurfaceProperty.cs" />
-    <Compile Include="CRUD\Read\Properties\Tags.cs" />
     <Compile Include="CRUD\Read\_Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="Adapter\MidasCivilAdapter.cs" />

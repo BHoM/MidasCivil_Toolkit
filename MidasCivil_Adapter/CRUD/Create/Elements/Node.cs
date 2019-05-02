@@ -9,8 +9,10 @@ namespace BH.Adapter.MidasCivil
     {
         private bool CreateCollection(IEnumerable<Node> nodes)
         {
-            string path = CreateSectionFile("NODE");
+            string nodePath = CreateSectionFile("NODE");
             List<string> midasNodes = new List<string>();
+
+            CreateGroups(nodes);
 
             foreach (Node node in nodes)
             {
@@ -29,7 +31,7 @@ namespace BH.Adapter.MidasCivil
                 midasNodes.Add(Engine.MidasCivil.Convert.ToMCNode(node));
             }
 
-            File.AppendAllLines(path, midasNodes);
+            File.AppendAllLines(nodePath, midasNodes);
 
                 return true;
         }
