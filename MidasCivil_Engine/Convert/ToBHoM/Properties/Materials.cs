@@ -1,6 +1,4 @@
-﻿using System;
-using BH.oM.Common.Materials;
-using System.Collections.Generic;
+﻿using BH.oM.Physical.Materials;
 
 namespace BH.Engine.MidasCivil
 {
@@ -15,15 +13,14 @@ namespace BH.Engine.MidasCivil
 
             if (type == "USER")
             {
-                bhomMaterial = new Material
-                {
-                    Name = name,
-                    YoungsModulus = double.Parse(delimited[10].Replace(" ", "")),
-                    PoissonsRatio = double.Parse(delimited[11].Replace(" ", "")),
-                    CoeffThermalExpansion = double.Parse(delimited[12].Replace(" ", "")),
-                    Density = double.Parse(delimited[13].Replace(" ", "")),
-                    DampingRatio = double.Parse(delimited[8].Replace(" ", ""))
-                };
+                bhomMaterial = Engine.Structure.Create.SteelMaterial(
+                    name, 
+                    double.Parse(delimited[10].Replace(" ", "")), 
+                    double.Parse(delimited[11].Replace(" ", "")),
+                    double.Parse(delimited[12].Replace(" ", "")), 
+                    double.Parse(delimited[13].Replace(" ", "")), 
+                    double.Parse(delimited[8].Replace(" ", "")),0,0
+                    );
             }
             else
             {

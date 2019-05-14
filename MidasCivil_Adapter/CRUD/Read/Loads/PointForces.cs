@@ -9,9 +9,9 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private List<ILoad> ReadPointForces(List<string> ids = null)
+        private List<ILoad> ReadPointLoads(List<string> ids = null)
         {
-            List<ILoad> bhomPointForces = new List<ILoad>();
+            List<ILoad> bhomPointLoads = new List<ILoad>();
             List<Loadcase> bhomLoadcases = ReadLoadcases();
             Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
                         x => x.Name);
@@ -23,39 +23,39 @@ namespace BH.Adapter.MidasCivil
             foreach (string loadcaseFolder in loadcaseFolders)
             {
                 string loadcase = Path.GetFileName(loadcaseFolder);
-                List<string> pointForceText = GetSectionText(loadcase + "\\CONLOAD");
+                List<string> PointLoadText = GetSectionText(loadcase + "\\CONLOAD");
 
-                if (pointForceText.Count != 0)
+                if (PointLoadText.Count != 0)
                 {
                     List<Node> bhomNodes = ReadNodes();
                     Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
                                                                 x => x.CustomData[AdapterId].ToString());
 
-                    List<string> pointForceComparison = new List<string>();
-                    List<string> pointForceNodes = new List<string>();
+                    List<string> PointLoadComparison = new List<string>();
+                    List<string> PointLoadNodes = new List<string>();
 
-                    foreach (string pointForce in pointForceText)
+                    foreach (string PointLoad in PointLoadText)
                     {
-                        List<string> delimitted = pointForce.Split(',').ToList();
-                        pointForceNodes.Add(delimitted[0].Replace(" ", ""));
+                        List<string> delimitted = PointLoad.Split(',').ToList();
+                        PointLoadNodes.Add(delimitted[0].Replace(" ", ""));
                         delimitted.RemoveAt(0);
-                        pointForceComparison.Add(String.Join(",", delimitted));
+                        PointLoadComparison.Add(String.Join(",", delimitted));
                     }
 
-                    List<string> distinctPointForces = pointForceComparison.Distinct().ToList();
+                    List<string> distinctPointLoads = PointLoadComparison.Distinct().ToList();
 
-                    foreach (string distinctPointForce in distinctPointForces)
+                    foreach (string distinctPointLoad in distinctPointLoads)
                     {
-                        List<int> indexMatches = pointForceComparison.Select((pointload, index) => new { pointload, index })
-                                                   .Where(x => string.Equals(x.pointload, distinctPointForce))
+                        List<int> indexMatches = PointLoadComparison.Select((pointload, index) => new { pointload, index })
+                                                   .Where(x => string.Equals(x.pointload, distinctPointLoad))
                                                    .Select(x => x.index)
                                                    .ToList();
                         List<string> matchingNodes = new List<string>();
-                        indexMatches.ForEach(x => matchingNodes.Add(pointForceNodes[x]));
-                        PointForce bhomPointForce = Engine.MidasCivil.Convert.ToBHoMPointForce(distinctPointForce, matchingNodes, loadcase, loadcaseDictionary, nodeDictionary, i);
-                        bhomPointForces.Add(bhomPointForce);
+                        indexMatches.ForEach(x => matchingNodes.Add(PointLoadNodes[x]));
+                        PointLoad bhomPointLoad = Engine.MidasCivil.Convert.ToBHoMPointLoad(distinctPointLoad, matchingNodes, loadcase, loadcaseDictionary, nodeDictionary, i);
+                        bhomPointLoads.Add(bhomPointLoad);
 
-                        if (String.IsNullOrWhiteSpace(distinctPointForce.Split(',').ToList()[6]))
+                        if (String.IsNullOrWhiteSpace(distinctPointLoad.Split(',').ToList()[6]))
                         {
                             i = i + 1;
                         }
@@ -64,7 +64,7 @@ namespace BH.Adapter.MidasCivil
                 }
             }
 
-            return bhomPointForces;
+            return bhomPointLoads;
         }
 
     }

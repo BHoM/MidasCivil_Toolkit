@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System;
-using BH.oM.Structure.Elements;
+﻿using BH.oM.Structure.Elements;
 using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
@@ -64,7 +62,7 @@ namespace BH.Engine.MidasCivil
         public static string ToMCElement(this FEMesh feMesh)
         {
             string midasElement;
-            List<int> nodeIndices = feMesh.MeshFaces[0].NodeListIndices;
+            List<int> nodeIndices = feMesh.Faces[0].NodeListIndices;
 
             if (feMesh.Nodes.Count == 4)
             {

@@ -1,9 +1,9 @@
 ﻿using BH.Engine.Base.Objects;
-using BH.oM.Common.Materials;
+using BH.oM.Physical.Materials;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties.Constraint;
-using BH.oM.Structure.Properties.Section;
-using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
 using System;
 using System.Collections.Generic;
@@ -52,12 +52,12 @@ namespace BH.Adapter.MidasCivil
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
             {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
             {typeof(Loadcase), new BHoMObjectNameComparer() },
-            {typeof(PointForce), new BHoMObjectNameComparer() },
+            {typeof(PointLoad), new BHoMObjectNameComparer() },
             {typeof(GravityLoad), new BHoMObjectNameComparer() },
             {typeof(BarUniformlyDistributedLoad), new BHoMObjectNameComparer() },
             {typeof(BarVaryingDistributedLoad), new BHoMObjectNameComparer() },
             {typeof(BarPointLoad), new BHoMObjectNameComparer() },
-            {typeof(AreaUniformalyDistributedLoad), new BHoMObjectNameComparer() },
+            {typeof(AreaUniformlyDistributedLoad), new BHoMObjectNameComparer() },
             {typeof(AreaTemperatureLoad), new BHoMObjectNameComparer() },
             {typeof(BarTemperatureLoad), new BHoMObjectNameComparer() },
             {typeof(LoadCombination), new BHoMObjectNameComparer() },

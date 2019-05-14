@@ -1,4 +1,4 @@
-﻿using BH.oM.Structure.Properties.Section;
+﻿using BH.oM.Structure.SectionProperties;
 using System.Collections.Generic;
 using System.Linq;
 

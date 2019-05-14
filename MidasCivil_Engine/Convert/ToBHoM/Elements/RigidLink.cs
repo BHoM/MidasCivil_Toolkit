@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.MidasCivil
 {

@@ -1,5 +1,5 @@
 ﻿using System;
-using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.SurfaceProperties;
 
 namespace BH.Engine.MidasCivil
 {

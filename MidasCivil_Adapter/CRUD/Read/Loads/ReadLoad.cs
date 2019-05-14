@@ -12,8 +12,8 @@ namespace BH.Adapter.MidasCivil
             string typeName = type.Name;
             switch (typeName)
             {
-                case "PointForce":
-                    readLoads = ReadPointForces(ids as dynamic);
+                case "PointLoad":
+                    readLoads = ReadPointLoads(ids as dynamic);
                     break;
                 case "GravityLoad":
                     readLoads = ReadGravityLoads(ids as dynamic);
@@ -21,7 +21,7 @@ namespace BH.Adapter.MidasCivil
                 case "BarUniformlyDistributedLoad":
                     readLoads = ReadBarUniformlyDistributedLoads(ids as dynamic);
                     break;
-                case "AreaUniformalyDistributedLoad":
+                case "AreaUniformlyDistributedLoad":
                     readLoads = ReadAreaUniformlyDistributedLoads(ids as dynamic);
                     break;
                 case "BarTemperatureLoad":

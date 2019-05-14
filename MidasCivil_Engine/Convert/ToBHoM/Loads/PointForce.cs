@@ -8,9 +8,9 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static PointForce ToBHoMPointForce(this string pointForce, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string,Node> nodeDictionary, int count)
+        public static PointLoad ToBHoMPointLoad(this string PointLoad, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string,Node> nodeDictionary, int count)
         {
-            string[] delimitted = pointForce.Split(',');
+            string[] delimitted = PointLoad.Split(',');
             Node bhomAssociateNode;
             List<Node> bhomAssociatedNodes = new List<Node>();
 
@@ -50,10 +50,10 @@ namespace BH.Engine.MidasCivil
 
             IEnumerable<Node> test = bhomAssociatedNodes;
 
-            PointForce bhomPointForce = Engine.Structure.Create.PointForce(bhomLoadcase, test, forceVector, momentVector, LoadAxis.Global, name);
-            bhomPointForce.CustomData[AdapterId] = bhomPointForce.Name;
+            PointLoad bhomPointLoad = Engine.Structure.Create.PointLoad(bhomLoadcase, test, forceVector, momentVector, LoadAxis.Global, name);
+            bhomPointLoad.CustomData[AdapterId] = bhomPointLoad.Name;
 
-            return bhomPointForce;
+            return bhomPointLoad;
         }
     }
 }

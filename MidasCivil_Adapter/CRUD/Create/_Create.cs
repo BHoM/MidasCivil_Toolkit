@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties.Constraint;
-using BH.oM.Common.Materials;
+using BH.oM.Structure.Constraints;
+using BH.oM.Physical.Materials;
 using BH.oM.Structure.Loads;
-using BH.oM.Structure.Properties.Section;
-using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.SurfaceProperties;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -63,8 +63,8 @@ namespace BH.Adapter.MidasCivil
 
                     switch (loadType)
                     {
-                        case "BH.oM.Structure.Loads.PointForce":
-                            success = CreateCollection(objects as IEnumerable<PointForce>);
+                        case "BH.oM.Structure.Loads.PointLoad":
+                            success = CreateCollection(objects as IEnumerable<PointLoad>);
                             break;
                         case "BH.oM.Structure.Loads.GravityLoad":
                             success = CreateCollection(objects as IEnumerable<GravityLoad>);
@@ -72,8 +72,8 @@ namespace BH.Adapter.MidasCivil
                         case "BH.oM.Structure.Loads.BarUniformlyDistributedLoad":
                             success = CreateCollection(objects as IEnumerable<BarUniformlyDistributedLoad>);
                             break;
-                        case "BH.oM.Structure.Loads.AreaUniformalyDistributedLoad":
-                            success = CreateCollection(objects as IEnumerable<AreaUniformalyDistributedLoad>);
+                        case "BH.oM.Structure.Loads.AreaUniformlyDistributedLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaUniformlyDistributedLoad>);
                             break;
                         case "BH.oM.Structure.Loads.BarTemperatureLoad":
                             success = CreateCollection(objects as IEnumerable<BarTemperatureLoad>);

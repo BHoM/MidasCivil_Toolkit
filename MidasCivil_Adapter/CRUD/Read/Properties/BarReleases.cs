@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Constraints;
 using System.Linq;
 
 namespace BH.Adapter.MidasCivil

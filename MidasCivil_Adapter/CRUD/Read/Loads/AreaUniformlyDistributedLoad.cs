@@ -55,7 +55,7 @@ namespace BH.Adapter.MidasCivil
                             List<string> matchingFEMeshes = new List<string>();
                             indexMatches.ForEach(x => matchingFEMeshes.Add(loadedFEMeshes[x]));
 
-                            AreaUniformalyDistributedLoad bhomAreaUniformlyDistributedLoad =
+                            AreaUniformlyDistributedLoad bhomAreaUniformlyDistributedLoad =
                                 Engine.MidasCivil.Convert.ToBHoMAreaUniformlyDistributedLoad(
                                     distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i);
 

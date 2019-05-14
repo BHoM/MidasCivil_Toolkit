@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using BH.oM.Common.Materials;
-using System.IO;
+﻿using System.Collections.Generic;
+using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
+using BH.Engine.Structure;
 
 namespace BH.Engine.MidasCivil
 {
@@ -21,26 +21,28 @@ namespace BH.Engine.MidasCivil
             }
 
             string type = "";
-            if(!(material.Type == MaterialType.Steel || material.Type == MaterialType.Concrete))
+            if(!(material.MaterialType() == MaterialType.Steel || material.MaterialType() == MaterialType.Concrete))
             {
                 type = "USER";
             }
-            else if(material.Type == MaterialType.Steel)
+            else if(material.MaterialType() == MaterialType.Steel)
             {
                 type = "STEEL";
             }
-            else if(material.Type == MaterialType.Concrete)
+            else if(material.MaterialType() == MaterialType.Concrete)
             {
                 type = "CONCRETE";
             }
 
             string midasMaterial = (
-                    material.CustomData[AdapterId].ToString() + "," + type + "," +
+                    material.CustomData[AdapterId].ToString() +"," + type + "," +
                     material.Name + ",0,0,,C,NO," +
-                    material.DampingRatio + ",2," + Engine.MidasCivil.Convert.Unit("kN/m2",youngsModulusUnit,material.YoungsModulus) + "," +
-                    material.PoissonsRatio + "," + Engine.MidasCivil.Convert.Unit("kN/m2", coeffThermalExpansionUnit, material.CoeffThermalExpansion) + "," +
+                    material.DampingRatio() + ",2," + Engine.MidasCivil.Convert.Unit("kN/m2", youngsModulusUnit, material.YoungsModulusIsotropic()) + "," +
+                    material.PoissonsRatio() + "," + Engine.MidasCivil.Convert.Unit("kN/m2", coeffThermalExpansionUnit, material.ThermalExpansionCoeffIsotropic()) + "," +
                     Engine.MidasCivil.Convert.Unit("kN/m2", densityUnit, material.Density) + "," + "0"
                 );
+
+            material.CustomData[AdapterId].ToString();
 
             return midasMaterial;
         }

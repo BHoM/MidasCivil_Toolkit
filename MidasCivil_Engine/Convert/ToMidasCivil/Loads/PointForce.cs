@@ -5,16 +5,16 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCPointForce(this PointForce pointForce, string assignedNode)
+        public static string ToMCPointLoad(this PointLoad PointLoad, string assignedNode)
         {
-            string midasPointForce = assignedNode + "," + pointForce.Force.X.ToString() +
-                                                    "," + pointForce.Force.Y.ToString() +
-                                                    "," + pointForce.Force.Z.ToString() +
-                                                    "," + pointForce.Moment.X.ToString() +
-                                                    "," + pointForce.Moment.Y.ToString() +
-                                                    "," + pointForce.Moment.Z.ToString() +
-                                                    "," + pointForce.Name;
-            return midasPointForce;
+            string midasPointLoad = assignedNode + "," + PointLoad.Force.X.ToString() +
+                                                    "," + PointLoad.Force.Y.ToString() +
+                                                    "," + PointLoad.Force.Z.ToString() +
+                                                    "," + PointLoad.Moment.X.ToString() +
+                                                    "," + PointLoad.Moment.Y.ToString() +
+                                                    "," + PointLoad.Moment.Z.ToString() +
+                                                    "," + PointLoad.Name;
+            return midasPointLoad;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.SurfaceProperties;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -49,7 +49,7 @@ namespace BH.Engine.MidasCivil
 
                 bhomFEMesh = new FEMesh()
                 {
-                    MeshFaces = feMeshFace,
+                    Faces = feMeshFace,
                     Nodes = nodeList,
                     Property = bhomSurfaceProperty
                 };
@@ -65,7 +65,7 @@ namespace BH.Engine.MidasCivil
 
                 bhomFEMesh = new FEMesh()
                 {
-                    MeshFaces = feMeshFace,
+                    Faces = feMeshFace,
                     Nodes = nodeList,
                     Property = bhomSurfaceProperty
                 };
