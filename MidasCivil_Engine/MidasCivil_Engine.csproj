@@ -56,10 +56,8 @@
       <HintPath>..\..\BHoM_Engine\Build\Library_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Physical_Engine">
-      <HintPath>..\..\BHoM_Engine\Build\Physical_Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="Physical_oM">
+    <Reference Include="Physical_oM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
     </Reference>
     <Reference Include="Reflection_Engine">

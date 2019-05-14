@@ -1,6 +1,6 @@
-﻿using BH.oM.Physical.Materials;
-using BH.oM.Structure.Elements;
+﻿using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
@@ -48,9 +48,9 @@ namespace BH.Adapter.MidasCivil
             {typeof(Node), new List<Type> { typeof(Constraint6DOF)} },
             {typeof(Bar), new List<Type> { typeof(Node) , typeof(ISectionProperty), typeof(BarRelease) } },
             {typeof(FEMesh), new List<Type> { typeof(Node), typeof(ISurfaceProperty) } },
-            {typeof(ISectionProperty), new List<Type> { typeof(Material) } },
+            {typeof(ISectionProperty), new List<Type> { typeof(IMaterialFragment) } },
             {typeof(RigidLink), new List<Type> { typeof(Node) } },
-            {typeof(ISurfaceProperty), new List<Type> { typeof(Material) } },
+            {typeof(ISurfaceProperty), new List<Type> { typeof(IMaterialFragment) } },
             {typeof(ILoad), new List<Type> {typeof(Loadcase) } }
         };
 

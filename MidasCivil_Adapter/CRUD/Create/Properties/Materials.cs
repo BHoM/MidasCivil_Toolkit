@@ -1,12 +1,12 @@
 ﻿using System.IO;
 using System.Collections.Generic;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private bool CreateCollection(IEnumerable<Material> materials)
+        private bool CreateCollection(IEnumerable<IMaterialFragment> materials)
         {
             string path = CreateSectionFile("MATERIAL");
             List<string> midasMaterials = new List<string>();
@@ -26,7 +26,7 @@ namespace BH.Adapter.MidasCivil
                 units.Add(densityUnit);
             }
 
-            foreach (Material material in materials)
+            foreach (IMaterialFragment material in materials)
             {
                 midasMaterials.Add(Engine.MidasCivil.Convert.ToMCMaterial(material, units));
             }

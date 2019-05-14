@@ -1,7 +1,7 @@
 ﻿using BH.Engine.Base.Objects;
-using BH.oM.Physical.Materials;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
@@ -48,7 +48,7 @@ namespace BH.Adapter.MidasCivil
             {typeof(RigidLink), new BHoMObjectNameComparer() },
             {typeof(BarRelease), new BHoMObjectNameComparer() },
             { typeof(SteelSection), new BHoMObjectNameComparer() },
-            {typeof(Material), new BHoMObjectNameComparer() },
+            {typeof(IMaterialFragment), new BHoMObjectNameComparer() },
             {typeof(LinkConstraint), new BHoMObjectNameComparer() },
             {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
             {typeof(Loadcase), new BHoMObjectNameComparer() },

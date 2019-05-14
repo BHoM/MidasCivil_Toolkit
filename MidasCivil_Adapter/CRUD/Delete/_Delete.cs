@@ -3,7 +3,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Constraints;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using System;
 using System.Collections.Generic;
 
@@ -27,7 +27,7 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteRigidLinks(ids);
             if (type == typeof(BarRelease))
                 success = DeleteBarReleases(ids);
-            if (type == typeof(Material))
+            if (type == typeof(IMaterialFragment))
                 success = DeleteMaterials(ids);
             if (type == typeof(Bar))
                 success = DeleteElements(ids);
