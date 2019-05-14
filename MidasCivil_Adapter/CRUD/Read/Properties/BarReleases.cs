@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BH.oM.Structure.Properties.Constraint;
-using BH.oM.Structure.Elements;
 using System.Linq;
-using System.IO;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -30,11 +28,6 @@ namespace BH.Adapter.MidasCivil
                     barComparison.Add(String.Join(",", delimitted).Replace(" ", "") + "," + barReleaseText[i + 1].Replace(" ", ""));
                 }
 
-                List<List<Bar>> bhomLoadedBars = new List<List<Bar>>();
-
-                List<Bar> bhomBars = ReadBars();
-                Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
-                                                            x => x.CustomData[AdapterId].ToString());
                 List<string> distinctBarReleases = barComparison.Distinct().ToList();
 
                 foreach (string distinctBarRelease in distinctBarReleases)
@@ -46,10 +39,8 @@ namespace BH.Adapter.MidasCivil
                     List<string> matchingBars = new List<string>();
                     indexMatches.ForEach(x => matchingBars.Add(releasedBars[x]));
 
-                    BarRelease bhomBarRelease = Engine.MidasCivil.Convert.ToBHoMBarRelease(distinctBarRelease, matchingBars, barDictionary, count);
+                    BarRelease bhomBarRelease = Engine.MidasCivil.Convert.ToBHoMBarRelease(distinctBarRelease, count);
                     bhomBarReleases.Add(bhomBarRelease);
-
-
 
                     if ((distinctBarRelease.Split(',').ToList()[15].ToString() == " "))
                     {
@@ -58,7 +49,9 @@ namespace BH.Adapter.MidasCivil
 
                 }
             }
+
             return bhomBarReleases;
         }
+
     }
 }

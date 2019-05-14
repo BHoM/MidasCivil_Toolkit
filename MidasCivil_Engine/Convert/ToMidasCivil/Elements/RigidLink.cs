@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System;
-using BH.oM.Structure.Elements;
-using System.Collections.Generic;
+﻿using BH.oM.Structure.Elements;
 
 namespace BH.Engine.MidasCivil
 {
@@ -9,20 +6,20 @@ namespace BH.Engine.MidasCivil
     {
         public static string ToMCRigidLink(this RigidLink link)
         {
-            string midasLink;
+            string midasLink = "";
 
             string masterNode = link.MasterNode.CustomData[AdapterId].ToString();
             string slaveNodes = "";
 
-            foreach (Node node in link.SlaveNodes)
+            foreach (Node slaveNode in link.SlaveNodes)
             {
-                slaveNodes = slaveNodes + " " + node.CustomData[AdapterId].ToString();
+                slaveNodes = slaveNodes + " " + slaveNode.CustomData[AdapterId].ToString();
             }
 
             string fixity = boolToFixity(link.Constraint.XtoX) +
                             boolToFixity(link.Constraint.YtoY) +
-                            boolToFixity(link.Constraint.XXtoXX) +
                             boolToFixity(link.Constraint.ZtoZ) +
+                            boolToFixity(link.Constraint.XXtoXX) +
                             boolToFixity(link.Constraint.YYtoYY) +
                             boolToFixity(link.Constraint.ZZtoZZ);
 
@@ -31,7 +28,7 @@ namespace BH.Engine.MidasCivil
             return midasLink;
         }
 
-        public static string boolToFixity(bool fixity)
+        private static string boolToFixity(bool fixity)
         {
             string converted = "0";
 
@@ -42,5 +39,6 @@ namespace BH.Engine.MidasCivil
 
             return converted;
         }
+
     }
 }

@@ -17,7 +17,7 @@ namespace BH.Adapter.MidasCivil
 
                 if(File.Exists(path))
                 {
-                    List<string> stringIndex = ids.Cast<string>().ToList();
+                    List<string> stringIndex = ids.Select(x => x.ToString()).ToList();
 
                     List<int> indices = stringIndex.Select(int.Parse).ToList();
 

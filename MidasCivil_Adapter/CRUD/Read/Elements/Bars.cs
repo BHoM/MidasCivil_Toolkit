@@ -2,6 +2,7 @@
 using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Properties.Section;
+using BH.oM.Structure.Properties.Constraint;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -33,9 +34,14 @@ namespace BH.Adapter.MidasCivil
             Dictionary<string, ISectionProperty> bhomSectionProperties = bhomSectionPropertyList.ToDictionary(
                 x => x.CustomData[AdapterId].ToString());
 
+            List<BarRelease> barReleaseList = ReadBarReleases();
+            Dictionary<string, BarRelease> barReleases = barReleaseList.ToDictionary(x => x.Name.ToString());
+
+            Dictionary<string, List<int>> barReleaseAssignments = GetBarReleaseAssignments("FRAME-RLS", "barRelease");
+
             foreach (string bar in barText)
             {
-                Bar bhomBar = Engine.MidasCivil.Convert.ToBHoMBar(bar, bhomNodes, bhomSectionProperties);
+                Bar bhomBar = Engine.MidasCivil.Convert.ToBHoMBar(bar, bhomNodes, bhomSectionProperties,barReleases,barReleaseAssignments);
                 int bhomID = System.Convert.ToInt32(bhomBar.CustomData[AdapterId]);
                 bhomBar.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomBars.Add(bhomBar);

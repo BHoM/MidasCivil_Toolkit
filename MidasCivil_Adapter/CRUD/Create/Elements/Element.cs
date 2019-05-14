@@ -15,6 +15,11 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Bar bar in bars)
             {
+                if (!(bar.Release == null))
+                {
+                        BarReleaseAssignment(bar.CustomData[AdapterId].ToString(), bar.Release.Name, "FRAME-RLS");
+                }
+
                 midasElements.Add(Engine.MidasCivil.Convert.ToMCElement(bar));
             }
 
