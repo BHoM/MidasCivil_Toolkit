@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Collections.Generic;
-using BH.oM.Common.Materials;
+using BH.oM.Physical.Materials;
 
 namespace BH.Adapter.MidasCivil
 {

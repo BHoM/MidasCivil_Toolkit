@@ -1,4 +1,4 @@
-﻿using BH.oM.Structure.Properties.Constraint;
+﻿using BH.oM.Structure.Constraints;
 using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil

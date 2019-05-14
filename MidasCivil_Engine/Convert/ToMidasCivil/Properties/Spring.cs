@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using BH.oM.Structure.Properties.Constraint;
+using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.MidasCivil
 {

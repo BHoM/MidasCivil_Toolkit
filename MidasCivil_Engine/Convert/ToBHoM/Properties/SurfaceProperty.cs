@@ -1,4 +1,4 @@
-﻿using BH.oM.Structure.Properties.Surface;
+﻿using BH.oM.Structure.SurfaceProperties;
 using BH.Engine.Structure;
 using System;
 

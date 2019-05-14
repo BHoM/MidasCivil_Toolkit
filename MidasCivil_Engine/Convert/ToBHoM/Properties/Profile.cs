@@ -1,5 +1,4 @@
-﻿using System;
-using BH.oM.Structure.Properties.Section.ShapeProfiles;
+﻿using BH.oM.Geometry.ShapeProfiles;
 
 namespace BH.Engine.MidasCivil
 {
@@ -13,7 +12,7 @@ namespace BH.Engine.MidasCivil
             IProfile bhomProfile = null;
             if (shape == "SB")
             {
-                bhomProfile = Engine.Structure.Create.RectangleProfile(
+                bhomProfile = Engine.Geometry.Create.RectangleProfile(
                     System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),0);
             }
             else if (shape == "B")
@@ -28,7 +27,7 @@ namespace BH.Engine.MidasCivil
                 else
                     corbel = width / 2 - webSpacing / 2 - webThickness / 2;
 
-                bhomProfile = Engine.Structure.Create.GeneralisedFabricatedBoxProfile(
+                bhomProfile = Engine.Geometry.Create.GeneralisedFabricatedBoxProfile(
                         System.Convert.ToDouble(split[14]), width, webThickness,
                         System.Convert.ToDouble(split[17]), System.Convert.ToDouble(split[19]),
                         corbel, corbel
@@ -36,22 +35,22 @@ namespace BH.Engine.MidasCivil
             }
             else if (shape == "P")
             {
-                bhomProfile = Engine.Structure.Create.TubeProfile(System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]));
+                bhomProfile = Engine.Geometry.Create.TubeProfile(System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]));
             }
             else if (shape == "SR")
             {
-                bhomProfile = Engine.Structure.Create.CircleProfile(
+                bhomProfile = Engine.Geometry.Create.CircleProfile(
                      System.Convert.ToDouble(split[14]));
             }
             else if (shape == "H")
             {
-                bhomProfile = Engine.Structure.Create.FabricatedISectionProfile(
+                bhomProfile = Engine.Geometry.Create.FabricatedISectionProfile(
                     System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]), System.Convert.ToDouble(split[18]), 
                     System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]), System.Convert.ToDouble(split[19]),0);
             }
             else if (shape == "T")
             {
-                bhomProfile = Engine.Structure.Create.TSectionProfile(
+                bhomProfile = Engine.Geometry.Create.TSectionProfile(
                     System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),
                     System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]),
                     0,0
@@ -59,14 +58,14 @@ namespace BH.Engine.MidasCivil
             }
             else if (shape == "C")
             {
-                bhomProfile = Engine.Structure.Create.ChannelProfile(
+                bhomProfile = Engine.Geometry.Create.ChannelProfile(
                         System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),
                         System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]),
                         System.Convert.ToDouble(split[20]), System.Convert.ToDouble(split[21]));
             }
             else if (shape == "L")
             {
-                bhomProfile = Engine.Structure.Create.AngleProfile(
+                bhomProfile = Engine.Geometry.Create.AngleProfile(
                         System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),
                         System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]),
                         0,0,false,true);

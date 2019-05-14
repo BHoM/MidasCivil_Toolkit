@@ -8,9 +8,9 @@ namespace BH.Engine.MidasCivil
             string midasNode = 
                 (
                     node.CustomData[AdapterId].ToString() + "," +
-                    node.Coordinates.Origin.X + "," +
-                    node.Coordinates.Origin.Y.ToString() + "," +
-                    node.Coordinates.Origin.Z.ToString()
+                    node.Position.X.ToString() + "," +
+                    node.Position.Y.ToString() + "," +
+                    node.Position.Z.ToString()
                 );
 
             return midasNode;

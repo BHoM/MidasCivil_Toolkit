@@ -7,26 +7,26 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public bool CreateCollection(IEnumerable<PointForce> pointForces)
+        public bool CreateCollection(IEnumerable<PointLoad> PointLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
 
-            foreach (PointForce pointForce in pointForces)
+            foreach (PointLoad PointLoad in PointLoads)
             {
-                List<string> midasPointForces = new List<string>();
-                string pointForcePath = CreateSectionFile(pointForce.Loadcase.Name + "\\CONLOAD");
-                string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(pointForce);
+                List<string> midasPointLoads = new List<string>();
+                string PointLoadPath = CreateSectionFile(PointLoad.Loadcase.Name + "\\CONLOAD");
+                string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(PointLoad);
 
-                List<string> assignedNodes = pointForce.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToList();
+                List<string> assignedNodes = PointLoad.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToList();
 
                 foreach (string assignedNode in assignedNodes)
                 {
-                   midasPointForces.Add(Engine.MidasCivil.Convert.ToMCPointForce(pointForce, assignedNode));
+                   midasPointLoads.Add(Engine.MidasCivil.Convert.ToMCPointLoad(PointLoad, assignedNode));
                 }
 
-                RemoveLoadEnd(pointForcePath);
+                RemoveLoadEnd(PointLoadPath);
                 CompareLoadGroup(midasLoadGroup,loadGroupPath);
-                File.AppendAllLines(pointForcePath, midasPointForces);
+                File.AppendAllLines(PointLoadPath, midasPointLoads);
             }
 
             

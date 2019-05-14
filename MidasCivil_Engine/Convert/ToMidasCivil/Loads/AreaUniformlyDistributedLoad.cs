@@ -10,7 +10,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCAreaUniformlyDistributedLoad(this AreaUniformalyDistributedLoad FEMeshLoad, string assignedFEMesh)
+        public static string ToMCAreaUniformlyDistributedLoad(this AreaUniformlyDistributedLoad FEMeshLoad, string assignedFEMesh)
         {
             string midasFEMeshLoad = null;
 

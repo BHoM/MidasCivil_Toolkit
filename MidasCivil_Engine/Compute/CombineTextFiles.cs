@@ -104,7 +104,7 @@ namespace BH.Engine.MidasCivil
                             {
                                 var input = File.OpenRead(directory + "\\" + independent + ".txt");
                                 input.CopyTo(combined);
-                                writer.Write(Environment.NewLine);
+                                writer.Write(System.Environment.NewLine);
                                 writer.Flush();
                             }
                         }
@@ -142,7 +142,7 @@ namespace BH.Engine.MidasCivil
 
                                 loadNames.Remove("USE-STLD.txt");
                                 writer.Write("*USE-STLD, " + loadcaseName);
-                                writer.Write(Environment.NewLine);
+                                writer.Write(System.Environment.NewLine);
                                 writer.Flush();
 
                                 foreach (string load in loadNames)
@@ -152,15 +152,15 @@ namespace BH.Engine.MidasCivil
                                         input.CopyTo(combined);
                                     }
 
-                                    writer.Write(Environment.NewLine);
+                                    writer.Write(System.Environment.NewLine);
                                     writer.Flush();
                                 }
 
                                 if (!endIncluded)
                                 {
                                     writer.Write("; End of data for load case " + loadcaseName);
-                                    writer.Write(Environment.NewLine);
-                                    writer.Write(Environment.NewLine);
+                                    writer.Write(System.Environment.NewLine);
+                                    writer.Write(System.Environment.NewLine);
                                     writer.Flush();
                                 }
                             }
@@ -172,7 +172,7 @@ namespace BH.Engine.MidasCivil
                             {
                                 input.CopyTo(combined);
                             }
-                            writer.Write(Environment.NewLine);
+                            writer.Write(System.Environment.NewLine);
                             writer.Flush();
                         }
 

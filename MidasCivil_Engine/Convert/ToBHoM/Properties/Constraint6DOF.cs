@@ -1,6 +1,4 @@
-﻿using BH.oM.Structure.Properties.Constraint;
-using System;
-using System.IO;
+﻿using BH.oM.Structure.Constraints;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,9 +1,9 @@
 ﻿using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
-using BH.oM.Structure.Properties.Surface;
-using BH.oM.Structure.Properties.Section;
-using BH.oM.Structure.Properties.Constraint;
-using BH.oM.Common.Materials;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.Constraints;
+using BH.oM.Physical.Materials;
 using System;
 using System.Collections.Generic;
 
@@ -39,8 +39,8 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteSurfaceProperties(ids);
             if (type == typeof(SteelSection))
                 success = DeleteSectionProperties(ids);
-            if (type == typeof(PointForce))
-                success = DeletePointForces(ids);
+            if (type == typeof(PointLoad))
+                success = DeletePointLoads(ids);
             if (type == typeof(GravityLoad))
                 success = DeleteGravityLoads(ids);
             if (type == typeof(BarUniformlyDistributedLoad))
@@ -49,7 +49,7 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteBarVaryingDistributedLoads(ids);
             if (type == typeof(BarPointLoad))
                 success = DeleteBarPointLoads(ids);
-            if (type == typeof(AreaUniformalyDistributedLoad))
+            if (type == typeof(AreaUniformlyDistributedLoad))
                 success = DeleteAreaUniformlyDistributedLoads(ids);
             if (type == typeof(AreaTemperatureLoad))
                 success = DeleteAreaTemperatureLoads(ids);

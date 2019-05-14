@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Collections.Generic;
-using BH.oM.Structure.Properties.Surface;
+using BH.oM.Structure.SurfaceProperties;
 
 namespace BH.Adapter.MidasCivil
 {
