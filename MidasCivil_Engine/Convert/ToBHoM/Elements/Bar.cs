@@ -1,4 +1,5 @@
 ﻿using BH.oM.Structure.Elements;
+using BH.oM.Structure.Properties.Constraint;
 using BH.oM.Structure.Properties.Section;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace BH.Engine.MidasCivil
     public static partial class Convert
     {
         public static Bar ToBHoMBar(this string bar, Dictionary<string, Node> bhomNodes,
-            Dictionary<string, ISectionProperty> bhomSectionProperties)
+            Dictionary<string, ISectionProperty> bhomSectionProperties, Dictionary<string, BarRelease> barReleases, Dictionary<string, List<int>> barReleaseAssignments)
         {
             List<string> delimitted = bar.Split(',').ToList();
             Node startNode = null;
@@ -38,11 +39,29 @@ namespace BH.Engine.MidasCivil
                     break;
             }
 
+            int bhomID = System.Convert.ToInt32(delimitted[0].Replace(" ", ""));
+
+            string barReleaseName = "";
+
+            foreach (KeyValuePair<string, List<int>> barReleaseAssignment in barReleaseAssignments)
+            {
+                if (barReleaseAssignment.Value.Contains(bhomID))
+                {
+                    barReleaseName = barReleaseAssignment.Key;
+                    break;
+                }
+            }
+
+            BarRelease barRelease = null;
+            if (!(barReleaseName == ""))
+            {
+                barReleases.TryGetValue(barReleaseName, out barRelease);
+            }
+
             double orientationAngle = int.Parse(delimitted[6].Replace(" ", ""));
 
-            Bar bhomBar = Structure.Create.Bar(startNode, endNode, sectionProperty, orientationAngle, null, feaType);
-
-            bhomBar.CustomData[AdapterId] = delimitted[0].Replace(" ", "");
+            Bar bhomBar = Structure.Create.Bar(startNode, endNode, sectionProperty, orientationAngle, barRelease, feaType);
+            bhomBar.CustomData[AdapterId] = bhomID;
 
             return bhomBar;
         }

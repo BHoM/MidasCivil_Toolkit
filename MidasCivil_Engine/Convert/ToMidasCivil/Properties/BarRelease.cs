@@ -1,33 +1,30 @@
-﻿using System.IO;
-using System;
-using BH.oM.Structure.Elements;
-using BH.oM.Structure.Properties.Constraint;
+﻿using BH.oM.Structure.Properties.Constraint;
 using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static List<string> ToMCBarRelease(this BarRelease release)
+        public static List<string> ToMCBarRelease(this BarRelease barRelease)
         {
             List<string> midasRelease = new List<string>();
 
-            string startFixity = boolToConstraint(release.StartRelease.TranslationX) +
-                            boolToConstraint(release.StartRelease.TranslationY) +
-                            boolToConstraint(release.StartRelease.TranslationZ) +
-                            boolToConstraint(release.StartRelease.RotationX) +
-                            boolToConstraint(release.StartRelease.RotationY) +
-                            boolToConstraint(release.StartRelease.RotationZ);
+            string startFixity = boolToConstraint(barRelease.StartRelease.TranslationX) +
+                                    boolToConstraint(barRelease.StartRelease.TranslationY) +
+                                    boolToConstraint(barRelease.StartRelease.TranslationZ) +
+                                    boolToConstraint(barRelease.StartRelease.RotationX) +
+                                    boolToConstraint(barRelease.StartRelease.RotationY) +
+                                    boolToConstraint(barRelease.StartRelease.RotationZ);
 
-            string endFixity = boolToConstraint(release.EndRelease.TranslationX) +
-                boolToConstraint(release.EndRelease.TranslationY) +
-                boolToConstraint(release.EndRelease.TranslationZ) +
-                boolToConstraint(release.EndRelease.RotationX) +
-                boolToConstraint(release.EndRelease.RotationY) +
-                boolToConstraint(release.EndRelease.RotationZ);
+            string endFixity = boolToConstraint(barRelease.EndRelease.TranslationX) +
+                                    boolToConstraint(barRelease.EndRelease.TranslationY) +
+                                    boolToConstraint(barRelease.EndRelease.TranslationZ) +
+                                    boolToConstraint(barRelease.EndRelease.RotationX) +
+                                    boolToConstraint(barRelease.EndRelease.RotationY) +
+                                    boolToConstraint(barRelease.EndRelease.RotationZ);
 
             midasRelease.Add(",NO," + startFixity + ",0,0,0,0,0,0");
-            midasRelease.Add(endFixity + ",0,0,0,0,0,0," + release.Name);
+            midasRelease.Add(endFixity + ",0,0,0,0,0,0," + barRelease.Name);
 
             return midasRelease;
         }
