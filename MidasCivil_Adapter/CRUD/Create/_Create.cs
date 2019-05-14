@@ -2,7 +2,7 @@
 using System.Linq;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
@@ -25,9 +25,9 @@ namespace BH.Adapter.MidasCivil
                 {
                     success = CreateCollection(objects as IEnumerable<Node>);
                 }
-                if (objects.First() is Material)
+                if (objects.First() is IMaterialFragment)
                 {
-                    success = CreateCollection(objects as IEnumerable<Material>);
+                    success = CreateCollection(objects as IEnumerable<IMaterialFragment>);
                 }
                 if (objects.First() is Constraint6DOF)
                 {

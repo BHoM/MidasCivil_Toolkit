@@ -1,19 +1,19 @@
-﻿using BH.oM.Physical.Materials;
+﻿using BH.oM.Structure.MaterialFragments;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Material ToBHoMMaterial(this string material)
+        public static IMaterialFragment ToBHoMMaterial(this string material)
         {
             string[] delimited = material.Split(',');
             string type = delimited[1].Replace(" ", "");
             string name = delimited[2].Replace(" ", "");
-            Material bhomMaterial = null;
+            IMaterialFragment bhomMaterial = null;
 
             if (type == "USER")
             {
-                bhomMaterial = Engine.Structure.Create.SteelMaterial(
+                bhomMaterial = (IMaterialFragment)Engine.Structure.Create.SteelMaterial(
                     name, 
                     double.Parse(delimited[10].Replace(" ", "")), 
                     double.Parse(delimited[11].Replace(" ", "")),
@@ -24,7 +24,7 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                bhomMaterial = (Material)BH.Engine.Library.Query.Match("Materials", name);
+                bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", name);
 
                 if (bhomMaterial == null)
                 {
@@ -32,12 +32,12 @@ namespace BH.Engine.MidasCivil
                     {
                         case "STEEL":
                             Reflection.Compute.RecordWarning("Material not found in BHoM Library: S355 Steel properties assumed");
-                            bhomMaterial = (Material) BH.Engine.Library.Query.Match("Materials", "S355");
+                            bhomMaterial = (IMaterialFragment) BH.Engine.Library.Query.Match("Materials", "S355");
                             break;
 
                         case "CONC":
                             Reflection.Compute.RecordWarning("Material not found in BHoM Library: C30/37 Concrete properties assumed");
-                            bhomMaterial = (Material)BH.Engine.Library.Query.Match("Materials", "C30/37");
+                            bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "C30/37");
                             break;
 
                         case "SRC":

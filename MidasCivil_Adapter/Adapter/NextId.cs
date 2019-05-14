@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -116,7 +116,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                if (type == typeof(Material))
+                if (type == typeof(IMaterialFragment))
                 {
                     string section = "MATERIAL";
 

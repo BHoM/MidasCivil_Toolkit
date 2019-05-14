@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using BH.oM.Base;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Constraints;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.Loads;
 
 namespace BH.Adapter.MidasCivil
@@ -23,8 +22,6 @@ namespace BH.Adapter.MidasCivil
             //Choose what to pull out depending on the type. Also see example methods below for pulling out bars and dependencies
             if (type == typeof(Node))
                 return ReadNodes(ids as dynamic);
-            if (type == typeof(Material))
-                return ReadMaterials(ids as dynamic);
             else if (type == typeof(Bar))
                 return ReadBars(ids as dynamic);
             else if (type == typeof(FEMesh))
@@ -33,7 +30,7 @@ namespace BH.Adapter.MidasCivil
                 return ReadSectionProperties(ids as dynamic);
             else if (typeof(ISurfaceProperty).IsAssignableFrom(type))
                 return ReadSurfaceProperties(ids as dynamic);
-            else if (type == typeof(Material))
+            else if (type == typeof(IMaterialFragment))
                 return ReadMaterials(ids as dynamic);
             else if (type == typeof(Constraint6DOF))
                 return Read6DOFConstraints(ids as dynamic);

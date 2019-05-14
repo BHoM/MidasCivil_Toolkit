@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
-using BH.oM.Physical.Materials;
+using BH.oM.Structure.MaterialFragments;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private List<Material> ReadMaterials(List<string> ids = null)
+        private List<IMaterialFragment> ReadMaterials(List<string> ids = null)
         {
-            List<Material> bhomMaterials = new List<Material>();
+            List<IMaterialFragment> bhomMaterials = new List<IMaterialFragment>();
 
             List<string> materialText = GetSectionText("MATERIAL");
 
             foreach (string material in materialText)
             {
-                Material bhomMaterial = Engine.MidasCivil.Convert.ToBHoMMaterial(material);
+                IMaterialFragment bhomMaterial = Engine.MidasCivil.Convert.ToBHoMMaterial(material);
                 bhomMaterials.Add(bhomMaterial);
             }
 
