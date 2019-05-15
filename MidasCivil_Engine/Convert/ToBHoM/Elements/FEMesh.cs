@@ -1,4 +1,5 @@
 ﻿using BH.oM.Structure.Elements;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SurfaceProperties;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace BH.Engine.MidasCivil
         public static FEMesh ToBHoMFEMesh(
             this string feMesh, 
             Dictionary<string, Node> bhomNodes, 
-            Dictionary<string,ISurfaceProperty> bhomSurfaceProperties)
+            Dictionary<string,ISurfaceProperty> bhomSurfaceProperties,
+            Dictionary<string, IMaterialFragment> bhomMaterials)
         {
             List<string> delimitted = feMesh.Split(',').ToList();
             Node n1 = null;
@@ -24,10 +26,17 @@ namespace BH.Engine.MidasCivil
             bhomNodes.TryGetValue(delimitted[6].Replace(" ", ""), out n3);
 
             ISurfaceProperty bhomSurfaceProperty = null;
+            IMaterialFragment bhomMaterial = null;
 
             if (!(bhomSurfaceProperties.Count() == 0))
             {
                 bhomSurfaceProperties.TryGetValue(delimitted[3].Replace(" ",""), out bhomSurfaceProperty);
+
+                if (!(bhomMaterials.Count() == 0))
+                {
+                    bhomMaterials.TryGetValue(delimitted[2].Replace(" ", ""), out bhomMaterial);
+                    bhomSurfaceProperty.Material = bhomMaterial;
+                }
             }
 
             List<Node> nodeList = new List<Node>()

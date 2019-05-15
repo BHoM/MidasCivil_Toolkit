@@ -15,7 +15,7 @@ namespace BH.Engine.MidasCivil
         private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty)
         {
             string midasSurfaceProperty = 
-                bhomSurfaceProperty.CustomData[AdapterId].ToString() + ",Value,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
+                bhomSurfaceProperty.CustomData[AdapterId].ToString() + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
             return midasSurfaceProperty;
         }
 
