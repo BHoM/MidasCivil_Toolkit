@@ -35,9 +35,9 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteLoadcases(ids);
             if (type == typeof(LoadCombination))
                 success = DeleteLoadCombinations(ids);
-            if (type == typeof(ConstantThickness))
+            if (typeof(ISurfaceProperty).IsAssignableFrom(type))
                 success = DeleteSurfaceProperties(ids);
-            if (type == typeof(SteelSection))
+            if (typeof(ISectionProperty).IsAssignableFrom(type))
                 success = DeleteSectionProperties(ids);
             if (type == typeof(PointLoad))
                 success = DeletePointLoads(ids);

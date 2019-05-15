@@ -1,5 +1,6 @@
 ﻿using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SectionProperties;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +10,28 @@ namespace BH.Engine.MidasCivil
     public static partial class Convert
     {
         public static Bar ToBHoMBar(this string bar, Dictionary<string, Node> bhomNodes,
-            Dictionary<string, ISectionProperty> bhomSectionProperties, Dictionary<string, BarRelease> barReleases, Dictionary<string, List<int>> barReleaseAssignments)
+            Dictionary<string, ISectionProperty> bhomSectionProperties, Dictionary<string, IMaterialFragment> bhomMaterials,
+            Dictionary<string, BarRelease> barReleases, Dictionary<string, List<int>> barReleaseAssignments)
         {
             List<string> delimitted = bar.Split(',').ToList();
             Node startNode = null;
             Node endNode = null;
             BarFEAType feaType = BarFEAType.Axial;
             ISectionProperty sectionProperty = null;
+            IMaterialFragment material = null;
 
             bhomNodes.TryGetValue(delimitted[4].Replace(" ", ""), out startNode);
             bhomNodes.TryGetValue(delimitted[5].Replace(" ", ""), out endNode);
-            bhomSectionProperties.TryGetValue(delimitted[3].Replace(" ", ""),out sectionProperty);
+
+            if (!(bhomSectionProperties.Count() == 0))
+            {
+                bhomSectionProperties.TryGetValue(delimitted[3].Replace(" ", ""), out sectionProperty);
+                if (!(bhomMaterials.Count() == 0))
+                {
+                    bhomMaterials.TryGetValue(delimitted[2].Replace(" ", ""), out material);
+                    sectionProperty.Material = material;
+                }
+            }
 
             switch (delimitted[1].Replace(" ", ""))
             {

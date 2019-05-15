@@ -48,10 +48,9 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                Engine.Reflection.Compute.RecordWarning("MidasCivil_Toolkit currently suports Isotropic material only. No structural properties for material with name " + material.Name + " have been pushed");
+                Engine.Reflection.Compute.RecordWarning("MidasCivil_Toolkit currently suports Isotropic materials only. No structural properties for material with name " + material.Name + " have been pushed");
                 return null; ;
             }
-
 
             material.CustomData[AdapterId].ToString();
 
