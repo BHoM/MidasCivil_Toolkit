@@ -16,17 +16,21 @@ namespace BH.Adapter.MidasCivil
                 string name = sectionText[i].Split(',')[0].Replace(" ","");
                 string items = sectionText[i].Split(',')[position];
 
-                List<string> assignments = new List<string>();
+                List<int> itemAssignment = new List<int>();
 
-                if (items.Contains(" "))
+                if (items.Contains(" ") || string.IsNullOrWhiteSpace(items))
                 {
-                    assignments = items.Split(' ').
+                    List<string> assignments = items.Split(' ').
                         Select(x=>x.Trim()).
                         Where(x => !string.IsNullOrEmpty(x)).
                         ToList();
+                    itemAssignment = Engine.MidasCivil.Query.Assignments(assignments);
+                }
+                else
+                {
+                    itemAssignment.Add(int.Parse(items));
                 }
 
-                List<int> itemAssignment = Engine.MidasCivil.Query.Assignments(assignments);
                 itemAssignments.Add(name, itemAssignment);
             }
 
