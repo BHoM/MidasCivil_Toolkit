@@ -1,6 +1,7 @@
 ﻿using BH.oM.Structure.Elements;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Geometry;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -84,5 +85,28 @@ namespace BH.Engine.MidasCivil
 
             return bhomFEMesh;
         }
+
+        public static Panel ConvertFEMesh(FEMesh mesh)
+        {
+            List<Polyline> polylines = new List<Polyline>();
+
+                List<Point> points = new List<Point>();
+
+                foreach (Node node in mesh.Nodes)
+                {
+                    points.Add(node.Position);
+                }
+
+                points.Add(mesh.Nodes.First().Position);
+                polylines.Add(BH.Engine.Geometry.Create.Polyline(points));
+
+            List<Panel> panels = BH.Engine.Structure.Create.PanelPlanar(polylines);
+
+            if (mesh.CustomData.ContainsValue(AdapterId))
+                panels[0].CustomData[AdapterId] = mesh.CustomData[AdapterId];
+
+            return panels[0];
+        }
     }
+
 }

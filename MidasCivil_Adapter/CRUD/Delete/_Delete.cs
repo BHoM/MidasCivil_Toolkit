@@ -31,6 +31,8 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteMaterials(ids);
             if (type == typeof(Bar))
                 success = DeleteElements(ids);
+            if (type == typeof(FEMesh))
+                success = DeleteElements(ids);
             if (type == typeof(Loadcase))
                 success = DeleteLoadcases(ids);
             if (type == typeof(LoadCombination))

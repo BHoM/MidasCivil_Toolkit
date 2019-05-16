@@ -18,7 +18,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     List<string> stringIndex = ids.Select(x => x.ToString()).ToList();
 
-                    List<int> indices = ids.Cast<int>().ToList();
+                    List<int> indices = stringIndex.Select(int.Parse).ToList();
 
                     List<string> elements = File.ReadAllLines(path).ToList();
                     List<int> elementIndexes = new List<int>();
