@@ -57,5 +57,11 @@ namespace BH.Engine.MidasCivil
 
             return bhomNode;
         }
+
+        public static Node PointToNode (Point point)
+        {
+            Node node = new Node { Position = point };
+            return node;
+        }
     }
 }

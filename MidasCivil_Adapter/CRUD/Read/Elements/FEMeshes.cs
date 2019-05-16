@@ -25,7 +25,7 @@ namespace BH.Adapter.MidasCivil
                 x => x.CustomData[AdapterId].ToString());
 
             IEnumerable<IMaterialFragment> bhomMaterialList = ReadMaterials();
-            Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.Name.ToString());
+            Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.CustomData[AdapterId].ToString());
 
             foreach (string mesh in meshText)
             {
