@@ -93,7 +93,6 @@
     <Compile Include="Comparer\BarMidPointComparere.cs" />
     <Compile Include="Comparer\MeshCentreComparer.cs" />
     <Compile Include="Compute\AssignmentString.cs" />
-    <Compile Include="Compute\meshcentre.cs" />
     <Compile Include="Compute\StiffnessVectorModulus.cs" />
     <Compile Include="Compute\Modulus.cs" />
     <Compile Include="Compute\RangeBySplit.cs" />

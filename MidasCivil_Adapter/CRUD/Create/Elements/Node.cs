@@ -16,15 +16,15 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Node node in nodes)
             {
-                if(!(node.Constraint==null))
+                if(!(node.Support==null))
                 {
-                    if(Engine.MidasCivil.Compute.GetStiffnessVectorModulus(node.Constraint)>0)
+                    if(Engine.MidasCivil.Compute.GetStiffnessVectorModulus(node.Support)>0)
                     {
-                        PropertyAssignment(node.CustomData[AdapterId].ToString(), node.Constraint.Name, "SPRING");
+                        PropertyAssignment(node.CustomData[AdapterId].ToString(), node.Support.Name, "SPRING");
                     }
                     else
                     {
-                        PropertyAssignment(node.CustomData[AdapterId].ToString(), node.Constraint.Name, "CONSTRAINT");
+                        PropertyAssignment(node.CustomData[AdapterId].ToString(), node.Support.Name, "CONSTRAINT");
                     }
                     
                 }

@@ -52,7 +52,7 @@ namespace BH.Engine.MidasCivil
             }
 
 
-            bhomNode.Constraint = nodeConstraint;
+            bhomNode.Support = nodeConstraint;
 
 
             return bhomNode;
