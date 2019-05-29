@@ -27,7 +27,7 @@ namespace BH.Adapter.MidasCivil
                 success = DeleteRigidLinks(ids);
             if (type == typeof(BarRelease))
                 success = DeleteBarReleases(ids);
-            if (type == typeof(IMaterialFragment))
+            if (typeof(IMaterialFragment).IsAssignableFrom(type))
                 success = DeleteMaterials(ids);
             if (type == typeof(Bar))
                 success = DeleteElements(ids);

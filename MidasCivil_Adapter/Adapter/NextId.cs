@@ -102,7 +102,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                if (type == typeof(SteelSection))
+                if (type == typeof(ISectionProperty) || type == typeof(SteelSection))
                 {
                     string section = "SECTION";
 
