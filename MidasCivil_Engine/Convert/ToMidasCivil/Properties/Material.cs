@@ -30,7 +30,7 @@ namespace BH.Engine.MidasCivil
             }
             else if(material.IMaterialType() == MaterialType.Concrete)
             {
-                type = "CONCRETE";
+                type = "CONC";
             }
 
             string midasMaterial = "";

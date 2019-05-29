@@ -30,7 +30,7 @@ namespace BH.Adapter.MidasCivil
                 return ReadSectionProperties(ids as dynamic);
             else if (typeof(ISurfaceProperty).IsAssignableFrom(type))
                 return ReadSurfaceProperties(ids as dynamic);
-            else if (type == typeof(IMaterialFragment))
+            else if (typeof(IMaterialFragment).IsAssignableFrom(type))
                 return ReadMaterials(ids as dynamic);
             else if (type == typeof(Constraint6DOF))
                 return Read6DOFConstraints(ids as dynamic);
