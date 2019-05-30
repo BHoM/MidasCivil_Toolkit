@@ -116,7 +116,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                if (type == typeof(IMaterialFragment))
+                if (typeof(IMaterialFragment).IsAssignableFrom(type))
                 {
                     string section = "MATERIAL";
 
