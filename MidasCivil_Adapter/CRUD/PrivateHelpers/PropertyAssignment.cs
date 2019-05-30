@@ -16,20 +16,19 @@ namespace BH.Adapter.MidasCivil
 
             string constraint = propertyText[index];
 
-            string [] split = constraint.Split(',');
+            string[] split = constraint.Split(',');
 
             string assignmentList = split[0];
 
-            if(!(string.IsNullOrWhiteSpace(assignmentList)))
+            if (!(string.IsNullOrWhiteSpace(assignmentList)))
             {
                 List<string> assignmentRanges = new List<string>();
-                if (assignmentList.Contains(" "))
-                {
-                    assignmentRanges = assignmentList.Split(' ').
-                        Select(x => x.Trim()).
-                        Where(x => !string.IsNullOrEmpty(x)).
-                        ToList();
-                }
+
+                assignmentRanges = assignmentList.Split(' ').
+                    Select(x => x.Trim()).
+                    Where(x => !string.IsNullOrEmpty(x)).
+                    ToList();
+
                 List<int> assignments = Engine.MidasCivil.Query.Assignments(assignmentRanges);
                 assignments.Add(int.Parse(bhomID));
 
@@ -42,7 +41,7 @@ namespace BH.Adapter.MidasCivil
 
             string updatedProperty = split[0];
 
-            for(int i = 1; i < split.Count(); i++)
+            for (int i = 1; i < split.Count(); i++)
             {
                 updatedProperty = updatedProperty + "," + split[i];
             }
@@ -51,7 +50,7 @@ namespace BH.Adapter.MidasCivil
 
             using (StreamWriter sectionText = File.CreateText(path))
             {
-                foreach(string property in propertyText)
+                foreach (string property in propertyText)
                 {
                     sectionText.WriteLine(property);
                 }
