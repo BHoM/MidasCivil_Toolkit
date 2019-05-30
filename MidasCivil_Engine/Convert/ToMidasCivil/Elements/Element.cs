@@ -61,10 +61,14 @@ namespace BH.Engine.MidasCivil
 
         public static string ToMCElement(this FEMesh feMesh)
         {
-            string midasElement;
+            string midasElement = "";
             List<int> nodeIndices = feMesh.Faces[0].NodeListIndices;
 
-            if (feMesh.Nodes.Count == 4)
+            if(feMesh.Nodes.Count > 4)
+            {
+                BH.Engine.Reflection.Compute.RecordError("Cannot push mesh with more than 4 nodes");
+            }
+            else if (feMesh.Nodes.Count == 4)
             {
                 midasElement = (feMesh.CustomData[AdapterId].ToString() + ",PLATE,1," +
                     feMesh.Property.CustomData[AdapterId].ToString() + "," +
