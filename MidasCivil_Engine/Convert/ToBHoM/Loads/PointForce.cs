@@ -25,16 +25,16 @@ namespace BH.Engine.MidasCivil
 
             Vector forceVector = new Vector
             {
-                X = double.Parse(delimitted[0].Replace(" ", "")),
-                Y = double.Parse(delimitted[1].Replace(" ", "")),
-                Z = double.Parse(delimitted[2].Replace(" ", ""))
+                X = double.Parse(delimitted[0].Trim()),
+                Y = double.Parse(delimitted[1].Trim()),
+                Z = double.Parse(delimitted[2].Trim())
             };
 
             Vector momentVector = new Vector
             {
-                X = double.Parse(delimitted[3].Replace(" ", "")),
-                Y = double.Parse(delimitted[4].Replace(" ", "")),
-                Z = double.Parse(delimitted[5].Replace(" ", ""))
+                X = double.Parse(delimitted[3].Trim()),
+                Y = double.Parse(delimitted[4].Trim()),
+                Z = double.Parse(delimitted[5].Trim())
             };
 
             string name;
@@ -45,7 +45,7 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                name = delimitted[6].Replace(" ", "");
+                name = delimitted[6].Trim();
             }
 
             IEnumerable<Node> test = bhomAssociatedNodes;

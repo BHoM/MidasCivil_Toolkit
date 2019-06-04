@@ -32,7 +32,7 @@ namespace BH.Adapter.MidasCivil
                             }
                             else
                             {
-                                string loadName = load.Split(',').Reverse().First().Replace(" ", "");
+                                string loadName = load.Split(',').Reverse().First().Trim();
                                 loadNames.Add(loadName);
                             }
                         }

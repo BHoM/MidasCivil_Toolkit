@@ -22,9 +22,9 @@ namespace BH.Engine.MidasCivil
             Node n4 = null;
 
 
-            bhomNodes.TryGetValue(delimitted[4].Replace(" ", ""), out n1);
-            bhomNodes.TryGetValue(delimitted[5].Replace(" ", ""), out n2);
-            bhomNodes.TryGetValue(delimitted[6].Replace(" ", ""), out n3);
+            bhomNodes.TryGetValue(delimitted[4].Trim(), out n1);
+            bhomNodes.TryGetValue(delimitted[5].Trim(), out n2);
+            bhomNodes.TryGetValue(delimitted[6].Trim(), out n3);
 
             ISurfaceProperty bhomSurfaceProperty = null;
             IMaterialFragment bhomMaterial = null;
@@ -35,7 +35,7 @@ namespace BH.Engine.MidasCivil
 
                 if (!(bhomMaterials.Count() == 0))
                 {
-                    bhomMaterials.TryGetValue(delimitted[2].Replace(" ", ""), out bhomMaterial);
+                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out bhomMaterial);
                     bhomSurfaceProperty.Material = bhomMaterial;
                 }
             }
@@ -47,9 +47,9 @@ namespace BH.Engine.MidasCivil
 
             FEMesh bhomFEMesh = null;
 
-            if (System.Convert.ToInt32(delimitted[7].Replace(" ", "")) != 0)
+            if (System.Convert.ToInt32(delimitted[7].Trim()) != 0)
             {
-                bhomNodes.TryGetValue(delimitted[7].Replace(" ", ""), out n4);
+                bhomNodes.TryGetValue(delimitted[7].Trim(), out n4);
                 nodeList.Add(n4);
                 List<int> nodeListIndicies = Enumerable.Range(0, 4).ToList();
                 List<FEMeshFace> feMeshFace = new List<FEMeshFace>()
@@ -81,7 +81,7 @@ namespace BH.Engine.MidasCivil
                 };
             }
 
-            bhomFEMesh.CustomData[AdapterId] = delimitted[0].Replace(" ", "");
+            bhomFEMesh.CustomData[AdapterId] = delimitted[0].Trim();
 
             return bhomFEMesh;
         }

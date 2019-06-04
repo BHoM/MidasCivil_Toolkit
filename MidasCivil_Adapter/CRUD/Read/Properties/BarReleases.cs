@@ -23,9 +23,9 @@ namespace BH.Adapter.MidasCivil
                 for (int i = 0; i < barReleaseText.Count; i += 2)
                 {
                     List<string> delimitted = barReleaseText[i].Split(',').ToList();
-                    releasedBars.Add(delimitted[0].Replace(" ", ""));
+                    releasedBars.Add(delimitted[0].Trim());
                     delimitted.RemoveAt(0);
-                    barComparison.Add(String.Join(",", delimitted).Replace(" ", "") + "," + barReleaseText[i + 1].Replace(" ", ""));
+                    barComparison.Add(String.Join(",", delimitted).Trim() + "," + barReleaseText[i + 1].Trim());
                 }
 
                 List<string> distinctBarReleases = barComparison.Distinct().ToList();

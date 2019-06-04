@@ -34,7 +34,7 @@ namespace BH.Adapter.MidasCivil
                     foreach (string BarTemperatureLoad in BarTemperatureLoadText)
                     {
                         List<string> delimitted = BarTemperatureLoad.Split(',').ToList();
-                        loadedBars.Add(delimitted[0].Replace(" ", ""));
+                        loadedBars.Add(delimitted[0].Trim());
                         delimitted.RemoveAt(0);
                         barComparison.Add(String.Join(",", delimitted));
                     }

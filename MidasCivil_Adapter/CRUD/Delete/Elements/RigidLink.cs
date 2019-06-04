@@ -29,7 +29,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            string clone = link.Split(',')[3].Replace(" ", "");
+                            string clone = link.Split(',')[3].Trim();
                             linkNames.Add(clone);
                         }
                     }

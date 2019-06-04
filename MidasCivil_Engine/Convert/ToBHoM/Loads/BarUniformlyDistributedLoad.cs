@@ -22,10 +22,10 @@ namespace BH.Engine.MidasCivil
                 bhomAssociatedBars.Add(bhomAssociateBar);
             }
 
-            string loadType = delimitted[1].Replace(" ", "");
-            string loadAxis = delimitted[2].Replace(" ", "").Substring(0, 1);
-            string direction = delimitted[2].Replace(" ", "").Substring(1, 1);
-            string projection = delimitted[3].Replace(" ", "");
+            string loadType = delimitted[1].Trim();
+            string loadAxis = delimitted[2].Trim().Substring(0, 1);
+            string direction = delimitted[2].Trim().Substring(1, 1);
+            string projection = delimitted[3].Trim();
 
             LoadAxis axis = LoadAxis.Global;
             bool loadProjection = false;
@@ -43,7 +43,7 @@ namespace BH.Engine.MidasCivil
             double XLoad = 0;
             double YLoad = 0;
             double ZLoad = 0;
-            double force = double.Parse(delimitted[10].Replace(" ", ""));
+            double force = double.Parse(delimitted[10].Trim());
 
             switch (direction)
             {
@@ -73,7 +73,7 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                name = delimitted[17].Replace(" ", "");
+                name = delimitted[17].Trim();
             }
 
             BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad;

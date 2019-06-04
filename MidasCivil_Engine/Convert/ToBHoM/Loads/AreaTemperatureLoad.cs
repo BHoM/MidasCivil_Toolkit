@@ -24,7 +24,7 @@ namespace BH.Engine.MidasCivil
                 }
             }
 
-            double temperature = double.Parse(delimitted[0].Replace(" ", ""));
+            double temperature = double.Parse(delimitted[0].Trim());
 
             string name;
 
@@ -34,7 +34,7 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                name = delimitted[1].Replace(" ", "");
+                name = delimitted[1].Trim();
             }
 
             if (bhomAssociatedFEMeshes.Count!=0)

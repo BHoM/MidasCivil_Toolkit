@@ -35,9 +35,9 @@ namespace BH.Adapter.MidasCivil
                             else
                             {
                                 if (path.Contains("CONSTRAINT") && !string.IsNullOrWhiteSpace(constraint))
-                                    constraintNames.Add(constraint.Split(',').Reverse().First().Replace(" ", ""));
+                                    constraintNames.Add(constraint.Split(',').Reverse().First().Trim());
                                 else if (!string.IsNullOrWhiteSpace(constraint))
-                                    constraintNames.Add(constraint.Split(',')[15].Replace(" ", ""));
+                                    constraintNames.Add(constraint.Split(',')[15].Trim());
                             }
                         }
 

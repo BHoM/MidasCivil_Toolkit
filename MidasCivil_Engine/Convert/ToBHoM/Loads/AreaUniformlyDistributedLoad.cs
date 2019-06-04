@@ -22,9 +22,9 @@ namespace BH.Engine.MidasCivil
                 bhomAssociatedFEMeshes.Add(bhomAssociateFEMesh);
             }
 
-            string loadAxis = delimitted[3].Replace(" ", "").Substring(0, 1);
-            string direction = delimitted[3].Replace(" ", "").Substring(1, 1);
-            string projection = delimitted[7].Replace(" ", "");
+            string loadAxis = delimitted[3].Trim().Substring(0, 1);
+            string direction = delimitted[3].Trim().Substring(1, 1);
+            string projection = delimitted[7].Trim();
 
             LoadAxis axis = LoadAxis.Global;
             bool loadProjection = false;
@@ -42,7 +42,7 @@ namespace BH.Engine.MidasCivil
             double XLoad = 0;
             double YLoad = 0;
             double ZLoad = 0;
-            double force = double.Parse(delimitted[8].Replace(" ", ""));
+            double force = double.Parse(delimitted[8].Trim());
 
             switch (direction)
             {
@@ -72,7 +72,7 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                name = delimitted[13].Replace(" ", "");
+                name = delimitted[13].Trim();
             }
 
             AreaUniformlyDistributedLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformlyDistributedLoad(bhomLoadcase, loadVector, bhomAssociatedFEMeshes, axis, loadProjection, name);

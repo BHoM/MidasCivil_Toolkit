@@ -38,13 +38,13 @@ namespace BH.Adapter.MidasCivil
                         List<double> pointLoads = new List<double>();
                         List<double> pointLoadDistances = new List<double>();
                         List<string> delimitted = barPointLoad.Split(',').ToList();
-                        string bar = delimitted[0].Replace(" ", "");
+                        string bar = delimitted[0].Trim();
                         delimitted.RemoveAt(0);
 
                         for (int i = 10; i <= 16; i += 2)
                         {
-                            pointLoads.Add(double.Parse(delimitted[i].Replace(" ", "")));
-                            pointLoadDistances.Add(double.Parse(delimitted[i - 1].Replace(" ", "")));
+                            pointLoads.Add(double.Parse(delimitted[i].Trim()));
+                            pointLoadDistances.Add(double.Parse(delimitted[i - 1].Trim()));
                             delimitted[i] = 0.ToString();
                             delimitted[i - 1] = 0.ToString();
                         }

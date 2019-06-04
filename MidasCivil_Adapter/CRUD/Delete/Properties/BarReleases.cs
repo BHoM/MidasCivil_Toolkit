@@ -29,7 +29,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            string clone = releases[i+1].Split(',')[7].Replace(" ", "");
+                            string clone = releases[i+1].Split(',')[7].Trim();
                             releaseNames.Add(clone);
                             releaseNames.Add(clone);
                             i++;

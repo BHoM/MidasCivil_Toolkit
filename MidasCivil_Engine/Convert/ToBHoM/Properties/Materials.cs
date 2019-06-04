@@ -8,8 +8,8 @@ namespace BH.Engine.MidasCivil
         public static IMaterialFragment ToBHoMMaterial(this string material)
         {
             string[] delimited = material.Split(',');
-            string type = delimited[1].Replace(" ", "");
-            string name = delimited[2].Replace(" ", "");
+            string type = delimited[1].Trim();
+            string name = delimited[2].Trim();
             IMaterialFragment bhomMaterial = null;
 
             if (delimited.Count() == 15)
@@ -19,11 +19,11 @@ namespace BH.Engine.MidasCivil
                     case "USER":
                         bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Steel(
                             name,
-                            double.Parse(delimited[10].Replace(" ", "")),
-                            double.Parse(delimited[11].Replace(" ", "")),
-                            double.Parse(delimited[12].Replace(" ", "")),
-                            double.Parse(delimited[13].Replace(" ", "")),
-                            double.Parse(delimited[8].Replace(" ", "")), 0, 0
+                            double.Parse(delimited[10].Trim()),
+                            double.Parse(delimited[11].Trim()),
+                            double.Parse(delimited[12].Trim()),
+                            double.Parse(delimited[13].Trim()),
+                            double.Parse(delimited[8].Trim()), 0, 0
                             );
                         Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a steel material");
 
@@ -31,22 +31,22 @@ namespace BH.Engine.MidasCivil
                     case "STEEL":
                         bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Steel(
                             name,
-                            double.Parse(delimited[10].Replace(" ", "")),
-                            double.Parse(delimited[11].Replace(" ", "")),
-                            double.Parse(delimited[12].Replace(" ", "")),
-                            double.Parse(delimited[13].Replace(" ", "")),
-                            double.Parse(delimited[8].Replace(" ", "")), 0, 0
+                            double.Parse(delimited[10].Trim()),
+                            double.Parse(delimited[11].Trim()),
+                            double.Parse(delimited[12].Trim()),
+                            double.Parse(delimited[13].Trim()),
+                            double.Parse(delimited[8].Trim()), 0, 0
                             );
                         break;
 
                     case "CONC":
                         bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Concrete(
                             name,
-                            double.Parse(delimited[10].Replace(" ", "")),
-                            double.Parse(delimited[11].Replace(" ", "")),
-                            double.Parse(delimited[12].Replace(" ", "")),
-                            double.Parse(delimited[13].Replace(" ", "")),
-                            double.Parse(delimited[8].Replace(" ", "")), 0, 0
+                            double.Parse(delimited[10].Trim()),
+                            double.Parse(delimited[11].Trim()),
+                            double.Parse(delimited[12].Trim()),
+                            double.Parse(delimited[13].Trim()),
+                            double.Parse(delimited[8].Trim()), 0, 0
                             );
                         break;
 
@@ -80,7 +80,7 @@ namespace BH.Engine.MidasCivil
                 }
             }
 
-            bhomMaterial.CustomData[AdapterId] = delimited[0].Replace(" ", "");
+            bhomMaterial.CustomData[AdapterId] = delimited[0].Trim();
             return bhomMaterial;
 
         }

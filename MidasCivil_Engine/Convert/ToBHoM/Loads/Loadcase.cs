@@ -11,16 +11,16 @@ namespace BH.Engine.MidasCivil
         {
             List<string> delimitted = loadcase.Split(',').ToList();
             LoadNature nature = LoadNature.Dead;
-            midasLoadNatureConverter(delimitted[1].Replace(" ", ""), ref nature);
+            midasLoadNatureConverter(delimitted[1].Trim(), ref nature);
 
             Loadcase bhomLoadCase = new Loadcase
             {
-                Name = delimitted[0].Replace(" ", ""),
+                Name = delimitted[0].Trim(),
                 Nature = nature,
                 Number = 0,
             };
 
-            bhomLoadCase.CustomData[AdapterId] = delimitted[0].Replace(" ", "");
+            bhomLoadCase.CustomData[AdapterId] = delimitted[0].Trim();
 
             return bhomLoadCase;
         }

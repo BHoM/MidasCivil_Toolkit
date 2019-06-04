@@ -37,7 +37,7 @@ namespace BH.Adapter.MidasCivil
                     foreach (string PointLoad in PointLoadText)
                     {
                         List<string> delimitted = PointLoad.Split(',').ToList();
-                        PointLoadNodes.Add(delimitted[0].Replace(" ", ""));
+                        PointLoadNodes.Add(delimitted[0].Trim());
                         delimitted.RemoveAt(0);
                         PointLoadComparison.Add(String.Join(",", delimitted));
                     }

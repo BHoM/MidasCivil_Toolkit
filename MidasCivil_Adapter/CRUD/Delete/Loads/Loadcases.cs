@@ -30,7 +30,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            string clone = loadcase.Split(',')[0].Replace(" ", "");
+                            string clone = loadcase.Split(',')[0].Trim();
                             loadcaseNames.Add(clone);
                         }
                     }
