@@ -41,7 +41,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            int clone = int.Parse(thicknesses[i].Split(',')[0].Replace(" ", ""));
+                            int clone = int.Parse(thicknesses[i].Split(',')[0].Trim());
                             thicknessIndexes.Add(clone);
                         }
                     }

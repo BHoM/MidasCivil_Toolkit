@@ -34,7 +34,7 @@ namespace BH.Engine.MidasCivil
                         stiffness.Add(0.0);
                     }
                 }
-                supportName = delimitted[2].Replace(" ", "");
+                supportName = delimitted[2].Trim();
             }
             else
             {
@@ -68,7 +68,7 @@ namespace BH.Engine.MidasCivil
                             }
                         }
                     }
-                    supportName = delimitted[15].Replace(" ", "");
+                    supportName = delimitted[15].Trim();
 
                 }
             }

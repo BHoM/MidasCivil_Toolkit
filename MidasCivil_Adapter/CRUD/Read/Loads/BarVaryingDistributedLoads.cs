@@ -37,9 +37,9 @@ namespace BH.Adapter.MidasCivil
                     {
                         List<string> delimitted = barVaryingLoad.Split(',').ToList();
 
-                        if (delimitted[11] != delimitted[13] || double.Parse(delimitted[10].Replace(" ", "")) + double.Parse(delimitted[12].Replace(" ", "")) != 1)
+                        if (delimitted[11] != delimitted[13] || double.Parse(delimitted[10].Trim()) + double.Parse(delimitted[12].Trim()) != 1)
                         {
-                            loadedBars.Add(delimitted[0].Replace(" ", ""));
+                            loadedBars.Add(delimitted[0].Trim());
                             delimitted.RemoveAt(0);
                             barComparison.Add(String.Join(",", delimitted));
                         }

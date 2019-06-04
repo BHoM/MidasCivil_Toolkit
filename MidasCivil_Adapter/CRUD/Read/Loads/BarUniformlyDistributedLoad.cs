@@ -45,9 +45,9 @@ namespace BH.Adapter.MidasCivil
 
                         if (delimitted[11] == delimitted[13])
                         {
-                            if (delimitted[10].Replace(" ", "") == 0.ToString() && delimitted[12].Replace(" ", "") == 1.ToString())
+                            if (delimitted[10].Trim() == 0.ToString() && delimitted[12].Trim() == 1.ToString())
                             {
-                                loadedBars.Add(delimitted[0].Replace(" ", ""));
+                                loadedBars.Add(delimitted[0].Trim());
                                 delimitted.RemoveAt(0);
                                 barComparison.Add(String.Join(",", delimitted));
                             }

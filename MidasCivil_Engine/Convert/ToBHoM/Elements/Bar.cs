@@ -20,20 +20,20 @@ namespace BH.Engine.MidasCivil
             ISectionProperty sectionProperty = null;
             IMaterialFragment material = null;
 
-            bhomNodes.TryGetValue(delimitted[4].Replace(" ", ""), out startNode);
-            bhomNodes.TryGetValue(delimitted[5].Replace(" ", ""), out endNode);
+            bhomNodes.TryGetValue(delimitted[4].Trim(), out startNode);
+            bhomNodes.TryGetValue(delimitted[5].Trim(), out endNode);
 
             if (!(bhomSectionProperties.Count() == 0))
             {
-                bhomSectionProperties.TryGetValue(delimitted[3].Replace(" ", ""), out sectionProperty);
+                bhomSectionProperties.TryGetValue(delimitted[3].Trim(), out sectionProperty);
                 if (!(bhomMaterials.Count() == 0))
                 {
-                    bhomMaterials.TryGetValue(delimitted[2].Replace(" ", ""), out material);
+                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out material);
                     sectionProperty.Material = material;
                 }
             }
 
-            switch (delimitted[1].Replace(" ", ""))
+            switch (delimitted[1].Trim())
             {
                 case "TRUSS":
                     break;
@@ -51,7 +51,7 @@ namespace BH.Engine.MidasCivil
                     break;
             }
 
-            int bhomID = System.Convert.ToInt32(delimitted[0].Replace(" ", ""));
+            int bhomID = System.Convert.ToInt32(delimitted[0].Trim());
 
             string barReleaseName = "";
 
@@ -70,7 +70,7 @@ namespace BH.Engine.MidasCivil
                 barReleases.TryGetValue(barReleaseName, out barRelease);
             }
 
-            double orientationAngle = int.Parse(delimitted[6].Replace(" ", ""));
+            double orientationAngle = int.Parse(delimitted[6].Trim());
 
             Bar bhomBar = Structure.Create.Bar(startNode, endNode, sectionProperty, orientationAngle, barRelease, feaType);
             bhomBar.CustomData[AdapterId] = bhomID;

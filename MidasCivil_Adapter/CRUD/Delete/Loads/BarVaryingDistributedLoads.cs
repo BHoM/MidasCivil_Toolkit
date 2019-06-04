@@ -34,9 +34,9 @@ namespace BH.Adapter.MidasCivil
                             else if (load.Contains("UNILOAD") || load.Contains("UNIMOMENT"))
                             {
                                 string[] delimitted = load.Split(',');
-                                if (delimitted[11] != delimitted[13] || double.Parse(delimitted[10].Replace(" ", "")) + double.Parse(delimitted[12].Replace(" ", "")) != 1)
+                                if (delimitted[11] != delimitted[13] || double.Parse(delimitted[10].Trim()) + double.Parse(delimitted[12].Trim()) != 1)
                                 {
-                                    string loadName = delimitted[18].Replace(" ", "");
+                                    string loadName = delimitted[18].Trim();
                                     loadNames.Add(loadName);
                                 }
                                 else

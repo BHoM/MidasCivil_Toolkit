@@ -12,8 +12,8 @@ namespace BH.Engine.MidasCivil
 
             string releaseName = "";
 
-            string startFixity = delimitted[1].Replace(" ", "");
-            string endFixity = delimitted[8].Replace(" ", "");
+            string startFixity = delimitted[1].Trim();
+            string endFixity = delimitted[8].Trim();
 
             List<bool> bhomStartFixity = new List<bool>();
             List<bool> bhomEndFixity = new List<bool>();
@@ -31,7 +31,7 @@ namespace BH.Engine.MidasCivil
 
             if (!string.IsNullOrWhiteSpace(delimitted[15]))
             {
-                releaseName = delimitted[15].Replace(" ", "");
+                releaseName = delimitted[15].Trim();
             }
             else
             {

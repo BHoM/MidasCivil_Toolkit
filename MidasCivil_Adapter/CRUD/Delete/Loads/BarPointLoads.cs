@@ -33,7 +33,7 @@ namespace BH.Adapter.MidasCivil
                             else if (load.Contains("CONLOAD") || load.Contains("CONMOMENT"))
                             {
                                 string[] delimitted = load.Split(',');
-                                string loadName = delimitted[18].Replace(" ", "");
+                                string loadName = delimitted[18].Trim();
                                 loadNames.Add(loadName);
                             }
                             else

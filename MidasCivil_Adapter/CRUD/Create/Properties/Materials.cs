@@ -18,9 +18,9 @@ namespace BH.Adapter.MidasCivil
                 List<string> unitSection = GetSectionText("UNIT");
 
                 string[] delimited = unitSection[0].Split(',');
-                string EUnit = delimited[0].Replace(" ", "") + "/" + delimited[1].Replace(" ", "") + "2";
-                string tempCoeffUnit = "1/" + delimited[3].Replace(" ", "");
-                string densityUnit = "1/" + delimited[3].Replace(" ", "");
+                string EUnit = delimited[0].Trim() + "/" + delimited[1].Trim() + "2";
+                string tempCoeffUnit = "1/" + delimited[3].Trim();
+                string densityUnit = "1/" + delimited[3].Trim();
                 units.Add(EUnit);
                 units.Add(tempCoeffUnit);
                 units.Add(densityUnit);

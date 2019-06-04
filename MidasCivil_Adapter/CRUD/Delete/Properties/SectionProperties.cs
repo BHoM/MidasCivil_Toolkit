@@ -32,7 +32,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            int clone = int.Parse(sectionProperty.Split(',')[0].Replace(" ", ""));
+                            int clone = int.Parse(sectionProperty.Split(',')[0].Trim());
                             sectionIndexes.Add(clone);
                         }
                     }

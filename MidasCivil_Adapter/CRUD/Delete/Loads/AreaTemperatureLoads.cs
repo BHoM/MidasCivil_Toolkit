@@ -34,7 +34,7 @@ namespace BH.Adapter.MidasCivil
                             else
                             {
                                 string[] delimitted = load.Split(',');
-                                string clone = delimitted[2].Replace(" ", "");
+                                string clone = delimitted[2].Trim();
                                 loadNames.Add(clone);
                             }
                         }

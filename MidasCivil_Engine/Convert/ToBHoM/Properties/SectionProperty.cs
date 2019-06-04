@@ -10,7 +10,7 @@ namespace BH.Engine.MidasCivil
         public static ISectionProperty ToBHoMSectionProperty(this string sectionProperty)
         {
             string[] split = sectionProperty.Split(',');
-            string shape = split[12].Replace(" ", "");
+            string shape = split[12].Trim();
 
             SteelSection bhomSection = null;
 
@@ -121,7 +121,7 @@ namespace BH.Engine.MidasCivil
 
 
             bhomSection.Name = split0[2];
-            bhomSection.CustomData[AdapterId] = split0[0].Replace(" ", "");
+            bhomSection.CustomData[AdapterId] = split0[0].Trim();
 
             return bhomSection;
         }

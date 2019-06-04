@@ -33,7 +33,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            int clone = int.Parse(node.Split(',')[0].Replace(" ", ""));
+                            int clone = int.Parse(node.Split(',')[0].Trim());
                             nodeIndexes.Add(clone);
                         }
                     }

@@ -13,7 +13,7 @@ namespace BH.Engine.MidasCivil
             Node masterNode = null;
             List<Node> slaveNodes = new List<Node>();
 
-            string master = delimitted[0].Replace(" ", "");
+            string master = delimitted[0].Trim();
             string fixity = delimitted[1].Replace(" ","");
             List<string> slaves = delimitted[2].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
             List<int> assignments = Engine.MidasCivil.Query.Assignments(slaves);
@@ -44,7 +44,7 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                name = delimitted[3].Replace(" ", "");
+                name = delimitted[3].Trim();
             }
 
             RigidLink bhomRigidLink = Engine.Structure.Create.RigidLink(masterNode, slaveNodes, constraint);

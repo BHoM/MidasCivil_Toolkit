@@ -7,7 +7,7 @@ namespace BH.Engine.MidasCivil
         public static IProfile ToProfile(string sectionProfile)
         {
             string[] split = sectionProfile.Split(',');
-            string shape = split[12].Replace(" ", "");
+            string shape = split[12].Trim();
 
             IProfile bhomProfile = null;
             if (shape == "SB")
