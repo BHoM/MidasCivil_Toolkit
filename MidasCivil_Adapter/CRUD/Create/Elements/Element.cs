@@ -15,7 +15,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Bar bar in bars)
             {
-                if (!(bar.Release == null)&&bar.FEAType==BarFEAType.TensionOnly)
+                if (bar.Release.Name != "FixFix" && bar.FEAType==BarFEAType.TensionOnly)
                 {
                     Engine.Reflection.Compute.RecordError("Tension only elements cannot support bar releases in Midas");
                 }
