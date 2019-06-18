@@ -102,10 +102,13 @@ namespace BH.Engine.MidasCivil
                         {
                             if (typeNames.Contains(independent))
                             {
-                                var input = File.OpenRead(directory + "\\" + independent + ".txt");
-                                input.CopyTo(combined);
-                                writer.Write(System.Environment.NewLine);
-                                writer.Flush();
+                                if (new FileInfo(directory + "\\" + independent + ".txt").Length !=0)
+                                {
+                                    var input = File.OpenRead(directory + "\\" + independent + ".txt");
+                                    input.CopyTo(combined);
+                                    writer.Write(System.Environment.NewLine);
+                                    writer.Flush();
+                                }
                             }
                         }
 
@@ -128,7 +131,7 @@ namespace BH.Engine.MidasCivil
                                     List<string> contents = File.ReadAllLines(loadcase + "\\" + loadName).ToList();
                                     foreach (string line in contents)
                                     {
-                                        if (line.Contains("; End of data"))
+                                        if (line.Contains("; End of data") && new FileInfo(loadcase + "\\" + loadName).Length != 0)
                                         {
                                             loadNames.RemoveAt(loadNames.IndexOf(loadName));
                                             loadNames.Add(loadName);
@@ -170,7 +173,10 @@ namespace BH.Engine.MidasCivil
                         {
                             using (var input = File.OpenRead(directory + "\\" + file + ".txt"))
                             {
-                                input.CopyTo(combined);
+                                if (new FileInfo(directory + "\\" + file + ".txt").Length != 0)
+                                {
+                                    input.CopyTo(combined);
+                                }
                             }
                             writer.Write(System.Environment.NewLine);
                             writer.Flush();
