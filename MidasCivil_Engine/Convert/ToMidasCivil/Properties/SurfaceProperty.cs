@@ -14,9 +14,16 @@ namespace BH.Engine.MidasCivil
 
         private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty)
         {
-            string midasSurfaceProperty = 
+            if (bhomSurfaceProperty.Thickness==0)
+            {
+                return null;
+            }
+            else
+            {
+                string midasSurfaceProperty =
                 bhomSurfaceProperty.CustomData[AdapterId].ToString() + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
-            return midasSurfaceProperty;
+                return midasSurfaceProperty;
+            }
         }
 
         private static string CreateSurfaceProfile(LoadingPanelProperty bhomSurfaceProperty)
