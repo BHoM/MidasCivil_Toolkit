@@ -150,24 +150,44 @@ namespace BH.Engine.MidasCivil
 
         private static string CreateProfile(ZSectionProfile profile)
         {
+            string[] profilearray = profile.GetType().ToString().Split('.');
+            int profileindex = profilearray.Length;
+
             Engine.Reflection.Compute.RecordError(
-                profile.GetType().ToString() + "not supported in MidasCivil_Toolkit"
+                profilearray[profileindex-1] + " not supported in MidasCivil_Toolkit"
                 );
             return null;
         }
 
         private static string CreateProfile(FreeFormProfile profile)
         {
+            string[] profilearray = profile.GetType().ToString().Split('.');
+            int profileindex = profilearray.Length;
+
             Engine.Reflection.Compute.RecordError(
-                profile.GetType().ToString() + "not supported in MidasCivil_Toolkit"
+                profilearray[profileindex - 1] + " not supported in MidasCivil_Toolkit"
                 );
             return null;
         }
 
         private static string CreateProfile(KiteProfile profile)
         {
+            string[] profilearray = profile.GetType().ToString().Split('.');
+            int profileindex = profilearray.Length;
+
             Engine.Reflection.Compute.RecordError(
-                profile.GetType().ToString() + "not supported in MidasCivil_Toolkit"
+                profilearray[profileindex - 1] + " not supported in MidasCivil_Toolkit"
+                );
+            return null;
+        }
+
+        private static string CreateProfile(GeneralisedTSectionProfile profile)
+        {
+            string[] profilearray = profile.GetType().ToString().Split('.');
+            int profileindex = profilearray.Length;
+
+            Engine.Reflection.Compute.RecordError(
+                profilearray[profileindex - 1] + " not supported in MidasCivil_Toolkit"
                 );
             return null;
         }
