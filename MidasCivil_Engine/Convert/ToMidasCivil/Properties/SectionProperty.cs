@@ -52,7 +52,7 @@ namespace BH.Engine.MidasCivil
         {
             double webSpacing = profile.Width - profile.Thickness;
 
-            string midasSectionProperty = "B, BUILT," +
+            string midasSectionProperty = "B, 2," +
                 profile.Height + "," + profile.Width + "," + profile.Thickness + "," +
                 profile.Thickness + "," + webSpacing + "," + profile.Thickness +
                 ", 0, 0, 0, 0";
