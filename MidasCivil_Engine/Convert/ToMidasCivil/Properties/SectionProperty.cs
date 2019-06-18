@@ -48,7 +48,7 @@ namespace BH.Engine.MidasCivil
 
             string midasSectionProperty = "B, BUILT," +
                 profile.Height + "," + profile.Width + "," + profile.Thickness + "," +
-                profile.Thickness + "," + webSpacing + profile.Thickness +
+                profile.Thickness + "," + webSpacing + "," + profile.Thickness +
                 ", 0, 0, 0, 0";
             return midasSectionProperty;
         }
@@ -59,7 +59,7 @@ namespace BH.Engine.MidasCivil
 
             string midasSectionProperty = "B, 2," +
                 profile.Height + "," + profile.Width + "," + profile.WebThickness + "," +
-                profile.TopFlangeThickness + "," + webSpacing + profile.BotFlangeThickness +
+                profile.TopFlangeThickness + "," + webSpacing + "," + profile.BotFlangeThickness +
                 ", 0, 0, 0, 0";
             return midasSectionProperty;
         }
