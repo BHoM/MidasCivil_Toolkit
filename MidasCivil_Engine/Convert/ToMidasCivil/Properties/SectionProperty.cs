@@ -8,11 +8,17 @@ namespace BH.Engine.MidasCivil
     {
         public static string ToMCSectionProperty(this ISectionProperty sectionProperty)
         {
-            string midasSectionProperty = sectionProperty.CustomData[AdapterId] + ",DBUSER," +
-                sectionProperty.Name + ",CC, 0, 0, 0, 0, 0, 0, YES, NO," +
-                CreateSection(sectionProperty as dynamic);
-
-            return midasSectionProperty;
+            if (CreateSection(sectionProperty as dynamic) == null)
+            {
+                return null;
+            }
+            else
+            {
+                string midasSectionProperty = sectionProperty.CustomData[AdapterId] + ",DBUSER," +
+                 sectionProperty.Name + ",CC, 0, 0, 0, 0, 0, 0, YES, NO," +
+                 CreateSection(sectionProperty as dynamic);
+                return midasSectionProperty;
+            }
         }
 
         private static string CreateSection(SteelSection sectionProperty)
