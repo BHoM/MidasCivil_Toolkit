@@ -15,7 +15,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Bar bar in bars)
             {
-                if (!(bar.Release == null))
+                if (!(bar.Release == null) && bar.Release.Name!="FixFix")
                 {
                         BarReleaseAssignment(bar.CustomData[AdapterId].ToString(), bar.Release.Name, "FRAME-RLS");
                 }

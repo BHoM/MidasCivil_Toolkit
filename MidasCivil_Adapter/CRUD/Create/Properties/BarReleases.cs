@@ -14,9 +14,12 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarRelease release in releases)
             {
-                string midasBoundaryGroup = Engine.MidasCivil.Convert.ToMCBoundaryGroup(release.Name);
-                CompareGroup(midasBoundaryGroup, boundaryGroupPath);
-                midasBarReleases.AddRange(Engine.MidasCivil.Convert.ToMCBarRelease(release));
+                if (release.Name!="FixFix")
+                {
+                    string midasBoundaryGroup = Engine.MidasCivil.Convert.ToMCBoundaryGroup(release.Name);
+                    CompareGroup(midasBoundaryGroup, boundaryGroupPath);
+                    midasBarReleases.AddRange(Engine.MidasCivil.Convert.ToMCBarRelease(release));
+                }
             }
 
             File.AppendAllLines(path, midasBarReleases);
