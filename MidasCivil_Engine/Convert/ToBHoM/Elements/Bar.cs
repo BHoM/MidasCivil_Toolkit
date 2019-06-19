@@ -70,7 +70,7 @@ namespace BH.Engine.MidasCivil
                 barReleases.TryGetValue(barReleaseName, out barRelease);
             }
 
-            double orientationAngle = int.Parse(delimitted[6].Trim());
+            double orientationAngle = double.Parse(delimitted[6].Trim());
 
             Bar bhomBar = Structure.Create.Bar(startNode, endNode, sectionProperty, orientationAngle, barRelease, feaType);
             bhomBar.CustomData[AdapterId] = bhomID;
