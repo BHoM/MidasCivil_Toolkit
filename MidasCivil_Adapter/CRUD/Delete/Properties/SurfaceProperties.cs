@@ -26,7 +26,7 @@ namespace BH.Adapter.MidasCivil
 
                     for (int i=0; i<thicknesses.Count; i++)
                     {
-                        if (thicknesses[i].Contains(";") || thicknesses[i].Contains("*"))
+                        if (thicknesses[i].Contains(";") || thicknesses[i].Contains("*") || string.IsNullOrWhiteSpace(thicknesses[i]))
                         {
                             int clone = 0;
                             thicknessIndexes.Add(clone);
