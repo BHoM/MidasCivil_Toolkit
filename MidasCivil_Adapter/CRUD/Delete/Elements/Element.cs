@@ -25,7 +25,7 @@ namespace BH.Adapter.MidasCivil
 
                     foreach (string element in elements)
                     {
-                        if (element.Contains("*") || element.Contains(";"))
+                        if (element.Contains("*") || element.Contains(";") || string.IsNullOrWhiteSpace(element))
                         {
                             int clone = 0;
                             elementIndexes.Add(clone);

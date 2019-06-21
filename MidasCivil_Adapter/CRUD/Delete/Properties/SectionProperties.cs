@@ -25,7 +25,7 @@ namespace BH.Adapter.MidasCivil
 
                     foreach (string sectionProperty in sectionProperties)
                     {
-                        if (sectionProperty.Contains("*") || sectionProperty.Contains(";"))
+                        if (sectionProperty.Contains("*") || sectionProperty.Contains(";") || string.IsNullOrWhiteSpace(sectionProperty))
                         {
                             int clone = 0;
                             sectionIndexes.Add(clone);

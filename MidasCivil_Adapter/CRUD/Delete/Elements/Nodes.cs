@@ -26,7 +26,7 @@ namespace BH.Adapter.MidasCivil
                     List<int> nodeIndexes = new List<int>();
                     foreach (string node in nodes)
                     {
-                        if (node.Contains(";") || node.Contains("*"))
+                        if (node.Contains(";") || node.Contains("*") || string.IsNullOrWhiteSpace(element))
                         {
                             int clone = 0;
                             nodeIndexes.Add(clone);

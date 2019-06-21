@@ -27,16 +27,16 @@ namespace BH.Adapter.MidasCivil
                     {
                         foreach (string constraint in constraints)
                         {
-                            if (constraint.Contains("*") || constraint.Contains(";"))
+                            if (constraint.Contains("*") || constraint.Contains(";") || string.IsNullOrWhiteSpace(constraint))
                             {
                                 string clone = 0.ToString();
                                 constraintNames.Add(clone);
                             }
                             else
                             {
-                                if (path.Contains("CONSTRAINT") && !string.IsNullOrWhiteSpace(constraint))
+                                if (path.Contains("CONSTRAINT"))
                                     constraintNames.Add(constraint.Split(',').Reverse().First().Trim());
-                                else if (!string.IsNullOrWhiteSpace(constraint))
+                                else 
                                     constraintNames.Add(constraint.Split(',')[15].Trim());
                             }
                         }
