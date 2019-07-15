@@ -23,7 +23,7 @@ namespace BH.Engine.MidasCivil
                             boolToFixity(link.Constraint.YYtoYY) +
                             boolToFixity(link.Constraint.ZZtoZZ);
 
-            midasLink = masterNode + "," + fixity + "," + slaveNodes + "," + link.Name;
+            midasLink = "1, " + masterNode + "," + fixity + "," + slaveNodes + "," + link.Name;
 
             return midasLink;
         }
