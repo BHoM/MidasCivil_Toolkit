@@ -13,7 +13,7 @@ namespace BH.Adapter.MidasCivil
 
             for (int i = 0; i < sectionText.Count(); i++)
             {
-                string name = sectionText[i].Split(',')[0].Replace(" ","");
+                string name = sectionText[i].Split(',')[0].Trim();
                 string items = sectionText[i].Split(',')[position];
 
                 List<int> itemAssignment = new List<int>();
