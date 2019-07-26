@@ -5,12 +5,13 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCGravityLoad(this GravityLoad gravityLoad)
+        public static List<string> ToMCGravityLoad(this GravityLoad gravityLoad)
         {
-            string midasGravityLoad = "*SELFWEIGHT, " + gravityLoad.GravityDirection.X + "," +
-                                                       gravityLoad.GravityDirection.Y + "," +
-                                                       gravityLoad.GravityDirection.Z + "," +
-                                                       gravityLoad.Name;
+            List<string> midasGravityLoad = new List<string>(){
+                "*SELFWEIGHT",
+                gravityLoad.GravityDirection.X + "," + gravityLoad.GravityDirection.Y + "," + gravityLoad.GravityDirection.Z + "," + gravityLoad.Name
+            };
+
             return midasGravityLoad;
         }
     }
