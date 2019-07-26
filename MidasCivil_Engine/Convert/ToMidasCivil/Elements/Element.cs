@@ -46,14 +46,14 @@ namespace BH.Engine.MidasCivil
                 midasElement = (bar.CustomData[AdapterId].ToString() + "," + feaType +
                                       "," + materialID + "," + sectionID + "," +
                                       startNodeID + "," + endNodeID + "," +
-                                      bar.OrientationAngle.ToString() + ",0,0");
+                                      (bar.OrientationAngle*180/System.Math.PI).ToString() + ",0,0");
             }
             else
             {
                 midasElement = (bar.CustomData[AdapterId].ToString() + "," + feaType +
                                   "," + materialID + "," + sectionID + "," +
                                   startNodeID + "," + endNodeID + "," +
-                                  bar.OrientationAngle.ToString() + ",1,0,0,NO");
+                                  (bar.OrientationAngle * 180 / System.Math.PI).ToString() + ",1,0,0,NO");
             }
 
             return midasElement;
