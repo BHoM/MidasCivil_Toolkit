@@ -17,7 +17,7 @@ namespace BH.Adapter.MidasCivil
 
                 string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(gravityLoad);
 
-                midasGravityLoads.Add(Engine.MidasCivil.Convert.ToMCGravityLoad(gravityLoad));
+                midasGravityLoads.AddRange(Engine.MidasCivil.Convert.ToMCGravityLoad(gravityLoad));
 
                 string[] exisitingGravityLoads = File.ReadAllLines(gravityLoadPath);
                 bool containsGravity = false;
