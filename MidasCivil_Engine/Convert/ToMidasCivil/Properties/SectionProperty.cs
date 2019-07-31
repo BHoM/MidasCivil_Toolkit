@@ -30,8 +30,8 @@ namespace BH.Engine.MidasCivil
 
         private static string CreateSection(ConcreteSection sectionProperty)
         {
-            Engine.Reflection.Compute.RecordError("ConcreteSection not supported in MidasCivil_Toolkit");
-            return null;
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            return midasSectionProperty;
         }
 
         private static string CreateSection(ExplicitSection sectionProperty)
