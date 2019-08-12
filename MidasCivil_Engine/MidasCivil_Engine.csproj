@@ -125,7 +125,6 @@
     <Compile Include="Compute\CombineTextFiles.cs" />
     <Compile Include="Query\SpringStiffness.cs" />
     <Compile Include="Query\SupportString.cs" />
-    <Compile Include="Convert\Unit.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Bar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\FEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\Node.cs" />

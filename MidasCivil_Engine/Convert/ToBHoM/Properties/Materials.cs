@@ -14,31 +14,58 @@ namespace BH.Engine.MidasCivil
 
             bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", name);
 
-            if (bhomMaterial == null && type == "USER")
-            {
-                bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Steel(
-                    name,
-                    double.Parse(delimited[10].Trim()),
-                    double.Parse(delimited[11].Trim()),
-                    double.Parse(delimited[12].Trim()),
-                    double.Parse(delimited[13].Trim()),
-                    double.Parse(delimited[8].Trim()), 0, 0
-                    );
-                Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a steel material");
-            }
-
             if (bhomMaterial == null)
             {
                 switch (type)
                 {
+                    case "USER":
+                        bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Steel(
+                             name,
+                             double.Parse(delimited[10].Trim()),
+                             double.Parse(delimited[11].Trim()),
+                             double.Parse(delimited[12].Trim()),
+                             double.Parse(delimited[14].Trim()),
+                             double.Parse(delimited[8].Trim()), 0, 0
+                         );
+                        Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a steel material");
+                        break;
                     case "STEEL":
-                        Reflection.Compute.RecordWarning("Material not found in BHoM Library: S355 Steel properties assumed");
-                        bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "S355");
+                        if (delimited.Count() == 15)
+                        {
+                            bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Steel(
+                                name,
+                                double.Parse(delimited[10].Trim()),
+                                double.Parse(delimited[11].Trim()),
+                                double.Parse(delimited[12].Trim()),
+                                double.Parse(delimited[13].Trim()),
+                                double.Parse(delimited[8].Trim()), 0, 0
+                            );
+                        }
+                        else
+                        {
+                            Reflection.Compute.RecordWarning("Material not found in BHoM Library: S355 Steel properties assumed");
+                            bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "S355");
+                        }
                         break;
 
                     case "CONC":
-                        Reflection.Compute.RecordWarning("Material not found in BHoM Library: C30/37 Concrete properties assumed");
-                        bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "C30/37");
+                        if (delimited.Count() == 15)
+                        {
+                            bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Concrete(
+                                name,
+                                double.Parse(delimited[10].Trim()),
+                                double.Parse(delimited[11].Trim()),
+                                double.Parse(delimited[12].Trim()),
+                                double.Parse(delimited[13].Trim()),
+                                double.Parse(delimited[8].Trim()), 0, 0
+                            );
+
+                        }
+                        else
+                        {
+                            Reflection.Compute.RecordWarning("Material not found in BHoM Library: C30/37 Concrete properties assumed");
+                            bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "C30/37");
+                        }
                         break;
 
                     case "SRC":
