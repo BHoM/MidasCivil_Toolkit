@@ -11,24 +11,9 @@ namespace BH.Adapter.MidasCivil
             string path = CreateSectionFile("MATERIAL");
             List<string> midasMaterials = new List<string>();
 
-            List<string> units = new List<string>();
-
-            if(File.Exists(directory+"\\TextFiles\\"+"UNIT.txt"))
-            {
-                List<string> unitSection = GetSectionText("UNIT");
-
-                string[] delimited = unitSection[0].Split(',');
-                string EUnit = delimited[0].Trim() + "/" + delimited[1].Trim() + "2";
-                string tempCoeffUnit = "1/" + delimited[3].Trim();
-                string densityUnit = "1/" + delimited[3].Trim();
-                units.Add(EUnit);
-                units.Add(tempCoeffUnit);
-                units.Add(densityUnit);
-            }
-
             foreach (IMaterialFragment material in materials)
             {
-                midasMaterials.Add(Engine.MidasCivil.Convert.ToMCMaterial(material, units));
+                midasMaterials.Add(Engine.MidasCivil.Convert.ToMCMaterial(material));
             }
 
             File.AppendAllLines(path, midasMaterials);
