@@ -32,7 +32,7 @@ namespace BH.Engine.MidasCivil
                     isotropic.Name + ",0,0,,C,NO," +
                     isotropic.DampingRatio + ",2," + isotropic.YoungsModulus + "," +
                     isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff + "," +
-                    "0" + "," + isotropic.Density
+                    isotropic.Density*9.806 + "," + isotropic.Density
                 );
             }
             else
