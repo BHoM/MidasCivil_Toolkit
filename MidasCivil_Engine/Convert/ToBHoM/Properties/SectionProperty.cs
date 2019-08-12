@@ -1,7 +1,9 @@
 ﻿using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.MaterialFragments;
 using BH.oM.Geometry.ShapeProfiles;
 using BH.Engine.Structure;
 using System;
+using System.Linq;
 
 namespace BH.Engine.MidasCivil
 {
@@ -18,26 +20,26 @@ namespace BH.Engine.MidasCivil
             {
                 //    2, DBUSER    , USER-RECTANGLE    , CC, 0, 0, 0, 0, 0, 0, YES, NO, SB , 2, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0
                 bhomSection = Engine.Structure.Create.SteelRectangleSection(
-                    System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),0,null);
+                    System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]), 0, null);
             }
             else if (shape == "B")
             {
                 //    4, DBUSER    , USER-BOX          , CC, 0, 0, 0, 0, 0, 0, YES, NO, B  , 2, 0.5, 0.2, 0.01, 0.02, 0.19, 0.02, 0, 0, 0, 0
                 bhomSection = Engine.Structure.Create.SteelSectionFromProfile(
-                    Engine.MidasCivil.Convert.ToProfile(sectionProperty),null
+                    Engine.MidasCivil.Convert.ToProfile(sectionProperty), null
                     );
             }
             else if (shape == "P")
             {
                 //    6, DBUSER    , CHS 114.3x9.83    , CC, 0, 0, 0, 0, 0, 0, YES, NO, P  , 1, BS, CHS 114.3x9.83
                 bhomSection = Engine.Structure.Create.SteelTubeSection(
-                    System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),null);
+                    System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]), null);
             }
             else if (shape == "SR")
             {
                 //14, DBUSER    , USER - CIRCLE       , CC, 0, 0, 0, 0, 0, 0, YES, NO, SR , 2, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0
                 bhomSection = Engine.Structure.Create.SteelCircularSection(
-                    System.Convert.ToDouble(split[14]),null);
+                    System.Convert.ToDouble(split[14]), null);
             }
             else if (shape == "H")
             {
@@ -45,21 +47,21 @@ namespace BH.Engine.MidasCivil
                     System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[16]),
                     System.Convert.ToDouble(split[15]), System.Convert.ToDouble(split[17]),
                     System.Convert.ToDouble(split[18]), System.Convert.ToDouble(split[19]),
-                    0,null);
+                    0, null);
                 //    8, DBUSER    , USER-ISECTION     , CC, 0, 0, 0, 0, 0, 0, YES, NO, H  , 2, 1, 0.3, 0.03, 0.025, 0.5, 0.02, 0.01, 0.01, 0, 0
             }
             else if (shape == "T")
             {
                 bhomSection = Engine.Structure.Create.SteelTSection(
                     System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[16]),
-                    System.Convert.ToDouble(split[15]), System.Convert.ToDouble(split[17]),0,0,null);
+                    System.Convert.ToDouble(split[15]), System.Convert.ToDouble(split[17]), 0, 0, null);
                 //   10, DBUSER    , USER-TSECTION     , CC, 0, 0, 0, 0, 0, 0, YES, NO, T  , 2, 0.3, 0.2, 0.02, 0.05, 0, 0, 0, 0, 0, 0
             }
             else if (shape == "C")
             {
                 //   12, DBUSER    , USER-CHANNEL      , CC, 0, 0, 0, 0, 0, 0, YES, NO, C  , 2, 0.9, 0.5, 0.02, 0.02, 0.5, 0.02, 0, 0, 0, 0
                 bhomSection = Engine.Structure.Create.SteelSectionFromProfile(
-                        Engine.MidasCivil.Convert.ToProfile(sectionProperty),null);
+                        Engine.MidasCivil.Convert.ToProfile(sectionProperty), null);
 
                 Engine.Reflection.Compute.RecordWarning(bhomSection.SectionProfile.GetType().ToString() +
                     " has identical flanges. Therefore, the top flange width and thickness have been used from MidasCivil.");
@@ -68,7 +70,7 @@ namespace BH.Engine.MidasCivil
             {
                 //    1, DBUSER    , USERANGLE         , CC, 0, 0, 0, 0, 0, 0, YES, NO, L  , 2, 0.5, 0.25, 0.01, 0.03, 0, 0, 0, 0, 0, 0
                 bhomSection = Engine.Structure.Create.SteelSectionFromProfile(
-                        Engine.MidasCivil.Convert.ToProfile(sectionProperty),null);
+                        Engine.MidasCivil.Convert.ToProfile(sectionProperty), null);
             }
             else
             {
@@ -76,7 +78,38 @@ namespace BH.Engine.MidasCivil
             }
 
             bhomSection.Name = split[2];
-            bhomSection.CustomData[AdapterId] = split[0].Replace(" ","");
+            bhomSection.CustomData[AdapterId] = split[0].Replace(" ", "");
+
+            return bhomSection;
+        }
+
+        public static ISectionProperty BHoMSteeltoConcrete(this SteelSection steelSection)
+        {
+            ConcreteSection bhomSection = null;
+            string sectionType = steelSection.SectionProfile.GetType().ToString().Split('.').Last();
+
+            switch (sectionType)
+            {
+                case "RectangleProfile":
+                    RectangleProfile rectangle = (RectangleProfile)steelSection.SectionProfile;
+                    bhomSection = Engine.Structure.Create.ConcreteRectangleSection(rectangle.Height, rectangle.Width, null, steelSection.Name);
+                    break;
+
+                case "CircleProfile":
+                    CircleProfile circle = (CircleProfile)steelSection.SectionProfile;
+                    bhomSection = Engine.Structure.Create.ConcreteCircularSection(circle.Diameter, null, steelSection.Name);
+                    break;
+
+                case "TSectionProfile":
+                    TSectionProfile tee = (TSectionProfile)steelSection.SectionProfile;
+                    bhomSection = Engine.Structure.Create.ConcreteTSection(tee.Height, tee.WebThickness, tee.Width, tee.FlangeThickness, null, steelSection.Name);
+                    break;
+            }
+
+            if (bhomSection == null)
+            {
+                Engine.Reflection.Compute.RecordError(sectionType + "Concrete section not yet supported in the BHoM");
+            }
 
             return bhomSection;
         }

@@ -29,6 +29,10 @@ namespace BH.Engine.MidasCivil
                 if (!(bhomMaterials.Count() == 0))
                 {
                     bhomMaterials.TryGetValue(delimitted[2].Trim(), out material);
+
+                    if (material.GetType().ToString().Split('.').Last() == "Concrete")
+                        sectionProperty = BHoMSteeltoConcrete((SteelSection)sectionProperty);
+
                     sectionProperty.Material = material;
                 }
             }
