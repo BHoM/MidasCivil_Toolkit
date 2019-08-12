@@ -14,6 +14,18 @@ namespace BH.Engine.MidasCivil
 
             bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", name);
 
+            double density = 0;
+
+            if (delimited.Count() == 15)
+            {
+                density = double.Parse(delimited[14].Trim());
+                if (double.Parse(delimited[14].Trim()) == 0)
+                {
+                    density = double.Parse(delimited[13].Trim()) / 9.806;
+                }
+            }
+
+
             if (bhomMaterial == null)
             {
                 switch (type)
@@ -24,7 +36,7 @@ namespace BH.Engine.MidasCivil
                              double.Parse(delimited[10].Trim()),
                              double.Parse(delimited[11].Trim()),
                              double.Parse(delimited[12].Trim()),
-                             double.Parse(delimited[14].Trim()),
+                             density,
                              double.Parse(delimited[8].Trim()), 0, 0
                          );
                         Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a steel material");
@@ -37,7 +49,7 @@ namespace BH.Engine.MidasCivil
                                 double.Parse(delimited[10].Trim()),
                                 double.Parse(delimited[11].Trim()),
                                 double.Parse(delimited[12].Trim()),
-                                double.Parse(delimited[13].Trim()),
+                                density,
                                 double.Parse(delimited[8].Trim()), 0, 0
                             );
                         }
@@ -56,7 +68,7 @@ namespace BH.Engine.MidasCivil
                                 double.Parse(delimited[10].Trim()),
                                 double.Parse(delimited[11].Trim()),
                                 double.Parse(delimited[12].Trim()),
-                                double.Parse(delimited[13].Trim()),
+                                density,
                                 double.Parse(delimited[8].Trim()), 0, 0
                             );
 
