@@ -53,6 +53,9 @@ namespace BH.Adapter.MidasCivil
                         midasText = File.ReadAllLines(mctFile).ToList();
                         SetSectionText();
                     }
+
+                    
+
                 }
             }
         }
