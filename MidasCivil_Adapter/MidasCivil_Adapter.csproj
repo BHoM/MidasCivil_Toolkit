@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="Analytical_oM">
       <HintPath>..\..\BHoM\Build\Analytical_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="BHoM">
       <HintPath>..\..\BHoM\Build\BHoM.dll</HintPath>
@@ -60,6 +61,7 @@
     <Reference Include="Physical_oM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Reflection_Engine, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -172,6 +174,7 @@
     <ProjectReference Include="..\MidasCivil_Engine\MidasCivil_Engine.csproj">
       <Project>{bc0a8eff-4277-49e9-bbdc-66ffa11e5258}</Project>
       <Name>MidasCivil_Engine</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
