@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("BuroHappold")]
 [assembly: AssemblyProduct("MidasCivil_oM")]
-[assembly: AssemblyCopyright("Copyright © BuroHappold 2019")]
+[assembly: AssemblyCopyright("Copyright © https://github.com/BHoM")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
