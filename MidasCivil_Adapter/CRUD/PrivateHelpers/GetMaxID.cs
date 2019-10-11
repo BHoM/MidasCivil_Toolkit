@@ -15,7 +15,7 @@ namespace BH.Adapter.MidasCivil
             List<List<string>> delimitted = new List<List<string>>();
             text.ForEach(x =>  delimitted.Add(x.Split(',').ToList()));
 
-            if (text != null)
+            if (!(text.Count() == 0))
             {
                 foreach (List<string> line in delimitted)
                 {
