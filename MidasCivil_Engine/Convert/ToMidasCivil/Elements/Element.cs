@@ -70,8 +70,9 @@ namespace BH.Engine.MidasCivil
             }
             else if (feMesh.Nodes.Count == 4)
             {
-                midasElement = (feMesh.CustomData[AdapterId].ToString() + ",PLATE,1," +
+                midasElement = (feMesh.CustomData[AdapterId].ToString() + ",PLATE," +
                     feMesh.Property.CustomData[AdapterId].ToString() + "," +
+                    feMesh.Property.Material.CustomData[AdapterId] + "," +
                   feMesh.Nodes[nodeIndices[0]].CustomData[AdapterId].ToString() + "," +
                   feMesh.Nodes[nodeIndices[1]].CustomData[AdapterId].ToString() + "," +
                   feMesh.Nodes[nodeIndices[2]].CustomData[AdapterId].ToString() + "," +
@@ -79,8 +80,9 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                midasElement = (feMesh.CustomData[AdapterId].ToString() + ",PLATE,1," +
+                midasElement = (feMesh.CustomData[AdapterId].ToString() + ",PLATE," +
                     feMesh.Property.CustomData[AdapterId].ToString() + "," +
+                    feMesh.Property.Material.CustomData[AdapterId] + "," +
                  feMesh.Nodes[nodeIndices[0]].CustomData[AdapterId].ToString() + "," +
                  feMesh.Nodes[nodeIndices[1]].CustomData[AdapterId].ToString() + "," +
                  feMesh.Nodes[nodeIndices[2]].CustomData[AdapterId].ToString() + ",0,1,0");
