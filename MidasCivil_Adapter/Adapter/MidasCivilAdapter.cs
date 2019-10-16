@@ -14,7 +14,7 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
-        public MidasCivilAdapter(string filePath, bool active = false)
+        public MidasCivilAdapter(string filePath, bool active = false, string version = "")
         {
             
             if (active)
@@ -53,9 +53,17 @@ namespace BH.Adapter.MidasCivil
                         midasText = File.ReadAllLines(mctFile).ToList();
                         SetSectionText();
                     }
-
-                    
-
+                    string versionFile = directory + "\\TextFiles\\" + "VERSION" + ".txt";
+                    if (File.Exists(versionFile))
+                    {
+                        List<string> versionText = GetSectionText("VERSION");
+                        version = versionText[0];
+                    }
+                    else
+                    {
+                        version = "8.8.1";
+                        Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory, MidasCivil version assumed default value =  " + version);
+                    }
                 }
             }
         }
