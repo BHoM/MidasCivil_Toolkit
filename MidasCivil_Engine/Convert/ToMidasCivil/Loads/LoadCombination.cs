@@ -5,11 +5,22 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static List<string> ToMCLoadCombination(this LoadCombination loadCombination)
+        public static List<string> ToMCLoadCombination(this LoadCombination loadCombination, string version)
         {
             List<string> midasLoadCombination = new List<string>();
 
-            string line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0";
+            string line1 = "";
+
+            switch(version)
+            {
+                case "8.8.5":
+                    line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0, 0";
+                    break;
+                default:
+                    line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0";
+                    break;
+            }
+
             midasLoadCombination.Add(line1);
             string line2 = 
                 "ST, " + loadCombination.LoadCases[0].Item2.Name + "," + loadCombination.LoadCases[0].Item1.ToString();
