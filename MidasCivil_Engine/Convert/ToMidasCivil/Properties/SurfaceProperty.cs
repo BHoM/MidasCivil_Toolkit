@@ -5,14 +5,14 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCSurfaceProperty(this ISurfaceProperty surfaceProperty)
+        public static string ToMCSurfaceProperty(this ISurfaceProperty surfaceProperty, string version)
         {
-            string midasSurfaceProperty = CreateSurfaceProfile(surfaceProperty as dynamic);
+            string midasSurfaceProperty = CreateSurfaceProfile(surfaceProperty as dynamic, version);
 
             return midasSurfaceProperty;
         }
 
-        private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty)
+        private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty, string version)
         {
             if (bhomSurfaceProperty.Thickness==0)
             {
@@ -20,8 +20,20 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                string midasSurfaceProperty =
-                bhomSurfaceProperty.CustomData[AdapterId].ToString() + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
+                string midasSurfaceProperty = "";
+                switch (version)
+                {
+
+                    case "8.8.5":
+                        midasSurfaceProperty =
+                        bhomSurfaceProperty.CustomData[AdapterId].ToString() + "," + bhomSurfaceProperty.Name + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
+                        break;
+                    default:
+                        midasSurfaceProperty =
+                        bhomSurfaceProperty.CustomData[AdapterId].ToString() + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
+                        break;
+                }
+
                 return midasSurfaceProperty;
             }
         }

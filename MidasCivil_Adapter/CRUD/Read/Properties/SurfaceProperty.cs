@@ -26,7 +26,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else if (type == "VALUE")
                 {
-                    bhomSurfaceProperty = Engine.MidasCivil.Convert.ToBHoMSurfaceProperty(surfaceProperty);
+                    bhomSurfaceProperty = Engine.MidasCivil.Convert.ToBHoMSurfaceProperty(surfaceProperty, midasCivilVersion);
                     bhomSurfaceProperties.Add(bhomSurfaceProperty);
                 }
             }
