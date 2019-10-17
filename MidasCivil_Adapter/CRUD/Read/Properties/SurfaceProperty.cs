@@ -14,7 +14,17 @@ namespace BH.Adapter.MidasCivil
             for (int i = 0; i < surfaceProperties.Count; i++)
             {
                 string surfaceProperty = surfaceProperties[i];
-                string type = surfaceProperty.Split(',')[1].Trim();
+                string type = "";
+
+                switch (midasCivilVersion)
+                {
+                    case "8.8.5":
+                        type = surfaceProperty.Split(',')[2].Trim();
+                        break;
+                    default:
+                        type = surfaceProperty.Split(',')[1].Trim();
+                        break;
+                }
 
                 ISurfaceProperty bhomSurfaceProperty = null;
 
