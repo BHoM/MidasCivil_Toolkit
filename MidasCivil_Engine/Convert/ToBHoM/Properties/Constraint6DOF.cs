@@ -6,7 +6,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Constraint6DOF ToBHoMConstraint6DOF(this string support)
+        public static Constraint6DOF ToBHoMConstraint6DOF(this string support, string version)
         {
             List<string> delimitted = support.Split(',').ToList();
             string supportName;
@@ -46,28 +46,60 @@ namespace BH.Engine.MidasCivil
                 }
                 else
                 {
-                    for (int i = 2; i < 8; i++)
+
+                    switch(version)
                     {
-                        if (delimitted[i] == "")
-                        {
-                            fixity.Add(false);
-                            stiffness.Add(0);
-                        }
-                        else
-                        {
-                            double spring = double.Parse(delimitted[i]);
-                            if (spring == 1E+016 || spring == 100000)
+                        case "8.8.5":
+                            for (int i = 2; i < 8; i++)
                             {
-                                fixity.Add(true);
-                                stiffness.Add(0);
+                                if (delimitted[i].Trim() == "YES")
+                                {
+                                    fixity.Add(true);
+                                    stiffness.Add(0);
+                                }
+                                else if(delimitted[i].Trim() == "NO")
+                                {
+                                    double spring = double.Parse(delimitted[i+6]);
+                                    if (spring == 1E+016 || spring == 100000)
+                                    {
+                                        fixity.Add(true);
+                                        stiffness.Add(0);
+                                    }
+                                    else
+                                    {
+                                        fixity.Add(false);
+                                        stiffness.Add(spring);
+                                    }
+                                }
                             }
-                            else
+                            break;
+
+                        default:
+                            for (int i = 2; i < 8; i++)
                             {
-                                fixity.Add(false);
-                                stiffness.Add(spring);
+                                if (delimitted[i] == "")
+                                {
+                                    fixity.Add(false);
+                                    stiffness.Add(0);
+                                }
+                                else
+                                {
+                                    double spring = double.Parse(delimitted[i]);
+                                    if (spring == 1E+016 || spring == 100000)
+                                    {
+                                        fixity.Add(true);
+                                        stiffness.Add(0);
+                                    }
+                                    else
+                                    {
+                                        fixity.Add(false);
+                                        stiffness.Add(spring);
+                                    }
+                                }
                             }
-                        }
+                            break;
                     }
+
                     supportName = delimitted[15].Trim();
 
                 }
