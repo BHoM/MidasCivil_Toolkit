@@ -53,11 +53,11 @@ namespace BH.Adapter.MidasCivil
                         SetSectionText();
                     }
                     string versionFile = directory + "\\TextFiles\\" + "VERSION" + ".txt";
-                    string midasCivilVersion = "8.8.1";
+                    midasCivilVersion = "8.8.1";
 
                     if (!(version == ""))
                     {
-                        midasCivilVersion = version;
+                        midasCivilVersion = version.Trim();
                         if(File.Exists(versionFile))
                         {
                             Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + midasCivilVersion);
@@ -66,7 +66,7 @@ namespace BH.Adapter.MidasCivil
                     else if (File.Exists(versionFile))
                     {
                         List<string> versionText = GetSectionText("VERSION");
-                        midasCivilVersion  = versionText[0];
+                        midasCivilVersion  = versionText[0].Trim();
                     }
                     else
                     {
