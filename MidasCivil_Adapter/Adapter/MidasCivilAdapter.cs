@@ -15,8 +15,7 @@ namespace BH.Adapter.MidasCivil
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
         public MidasCivilAdapter(string filePath, bool active = false, string version = "")
-        {
-            
+        { 
             if (active)
             {
                 AdapterId = "MidasCivil_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
@@ -54,15 +53,24 @@ namespace BH.Adapter.MidasCivil
                         SetSectionText();
                     }
                     string versionFile = directory + "\\TextFiles\\" + "VERSION" + ".txt";
-                    if (File.Exists(versionFile))
+                    string midasCivilVersion = "8.8.1";
+
+                    if (!(version == ""))
+                    {
+                        midasCivilVersion = version;
+                        if(File.Exists(versionFile))
+                        {
+                            Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + midasCivilVersion);
+                        }
+                    }
+                    else if (File.Exists(versionFile))
                     {
                         List<string> versionText = GetSectionText("VERSION");
-                        version = versionText[0];
+                        midasCivilVersion  = versionText[0];
                     }
                     else
                     {
-                        version = "8.8.1";
-                        Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory, MidasCivil version assumed default value =  " + version);
+                        Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + midasCivilVersion);
                     }
                 }
             }
@@ -75,6 +83,7 @@ namespace BH.Adapter.MidasCivil
 
         public List<string> midasText;
         public string directory;
+        public string midasCivilVersion;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
 
         /***************************************************/
