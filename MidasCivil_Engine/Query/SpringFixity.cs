@@ -5,7 +5,7 @@ namespace BH.Engine.MidasCivil
 {
     public partial class Query
     {
-        public static string SupportString(Constraint6DOF constraint6DOF)
+        public static string SpringFixity(Constraint6DOF constraint6DOF)
         {
             List<DOFType> freedoms = new List<DOFType>
             {
@@ -15,25 +15,25 @@ namespace BH.Engine.MidasCivil
 
             string support = "";
 
-            foreach(DOFType freedom in freedoms)
+            foreach (DOFType freedom in freedoms)
             {
-                if(Engine.MidasCivil.Query.SupportedDOFTypes(freedom))
+                if (!(Engine.MidasCivil.Query.SupportedDOFTypes(freedom)))
                 {
                     Reflection.Compute.RecordWarning(
-                        "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Free);
-                    support = support + "0";
+                        "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Fixed);
+                    support = support + "YES,";
                 }
-                else if(freedom == DOFType.Free)
+                else if (freedom == DOFType.Free)
                 {
-                    support = support + "0";
+                    support = support + "NO,";
                 }
                 else if (freedom == DOFType.Fixed)
                 {
-                    support = support + "1";
+                    support = support + "YES,";
                 }
             }
-            return support;
 
+            return support;
         }
     }
 }
