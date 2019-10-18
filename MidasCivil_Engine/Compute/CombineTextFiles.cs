@@ -81,7 +81,7 @@ namespace BH.Engine.MidasCivil
                         foreach (string dependent in dependents[i])
                         {
                             if (typeNames.Contains(dependent))
-                                Reflection.Compute.RecordError(dependent + "must have a" + independents[i] + "type file associated with it");
+                                Reflection.Compute.RecordError(dependent + " must have a " + independents[i] + " file associated with it");
                         }
                     }
                 }
