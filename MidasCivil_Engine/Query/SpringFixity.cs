@@ -23,13 +23,14 @@ namespace BH.Engine.MidasCivil
                         "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Fixed);
                     support = support + "YES,";
                 }
-                else if (freedom == DOFType.Free)
-                {
-                    support = support + "NO,";
-                }
+
                 else if (freedom == DOFType.Fixed)
                 {
                     support = support + "YES,";
+                }
+                else 
+                {
+                    support = support + "NO,";
                 }
             }
 
