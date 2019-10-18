@@ -10,9 +10,10 @@ namespace BH.Engine.MidasCivil
             {
                 case DOFType.Free:
                 case DOFType.Fixed:
+                case DOFType.Spring:
                     return true;
                 default:
-                    Reflection.Compute.RecordWarning(freedom.ToString() + "not supported in MidasCivil_Toolkit");
+                    Reflection.Compute.RecordWarning(freedom.ToString() + " not supported in MidasCivil_Toolkit");
                     return false;
             }
         }

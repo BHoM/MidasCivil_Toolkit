@@ -124,6 +124,7 @@
     <Compile Include="Convert\ToMidasCivil\Properties\SurfaceProperty.cs" />
     <Compile Include="Query\Assignments.cs" />
     <Compile Include="Query\SectionName.cs" />
+    <Compile Include="Query\SpringFixity.cs" />
     <Compile Include="Query\SupportedDOFType.cs" />
     <Compile Include="Compute\CombineTextFiles.cs" />
     <Compile Include="Query\SpringStiffness.cs" />
