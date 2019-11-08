@@ -10,7 +10,6 @@ namespace BH.Engine.MidasCivil
         public static RigidLink ToBHoMRigidLink(string rigidLink, Dictionary<string,Node> nodes, int count)
         {
             string[] delimitted = rigidLink.Split(',');
-            Node masterNode = null;
             List<Node> slaveNodes = new List<Node>();
 
             string master = delimitted[0].Trim();
@@ -27,12 +26,11 @@ namespace BH.Engine.MidasCivil
 
             LinkConstraint constraint = new LinkConstraint { XtoX = x, YtoY = y, ZtoZ = z, XXtoXX = xx, YYtoYY = yy, ZZtoZZ = zz };
 
-            nodes.TryGetValue(master, out masterNode);
+            nodes.TryGetValue(master, out Node masterNode);
 
             foreach (int assignment in assignments)
             {
-                Node bhomSlave = null;
-                nodes.TryGetValue(assignment.ToString(), out bhomSlave);
+                nodes.TryGetValue(assignment.ToString(), out Node bhomSlave);
                 slaveNodes.Add(bhomSlave);
             }
 

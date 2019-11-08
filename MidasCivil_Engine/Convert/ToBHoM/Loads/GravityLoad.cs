@@ -13,8 +13,7 @@ namespace BH.Engine.MidasCivil
         {
             string[] delimitted = gravityLoad.Split(',');
 
-            Loadcase bhomLoadcase;
-            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
+            loadcaseDictionary.TryGetValue(loadcase, out Loadcase bhomLoadcase);
 
             Vector direction = new Vector { X = double.Parse(delimitted[1].Trim()),
                                             Y = double.Parse(delimitted[2].Trim()),
