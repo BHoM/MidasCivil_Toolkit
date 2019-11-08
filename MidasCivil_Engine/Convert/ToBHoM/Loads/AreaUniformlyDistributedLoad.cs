@@ -10,15 +10,13 @@ namespace BH.Engine.MidasCivil
         public static AreaUniformlyDistributedLoad ToBHoMAreaUniformlyDistributedLoad(string areaUniformlyDistributedLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> FEMeshDictionary, int count)
         {
             string[] delimitted = areaUniformlyDistributedLoad.Split(',');
-            FEMesh bhomAssociateFEMesh;
             List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
 
-            Loadcase bhomLoadcase;
-            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
+            loadcaseDictionary.TryGetValue(loadcase, out Loadcase bhomLoadcase);
 
             foreach (string associatedFEMesh in associatedFEMeshes)
             {
-                FEMeshDictionary.TryGetValue(associatedFEMesh, out bhomAssociateFEMesh);
+                FEMeshDictionary.TryGetValue(associatedFEMesh, out FEMesh bhomAssociateFEMesh);
                 bhomAssociatedFEMeshes.Add(bhomAssociateFEMesh);
             }
 

@@ -121,8 +121,7 @@ namespace BH.Engine.MidasCivil
 
                         foreach (string bar in matchingBars[i])
                         {
-                            Bar bhomBar;
-                            barDictionary.TryGetValue(bar, out bhomBar);
+                            barDictionary.TryGetValue(bar, out Bar bhomBar);
                             matchingBhomBars.Add(bhomBar);
                         }
 

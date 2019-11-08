@@ -14,11 +14,10 @@ namespace BH.Engine.MidasCivil
 
             List<Loadcase> associatedLoadcases = new List<Loadcase>();
             List<double> loadFactors = new List<double>();
-            Loadcase bhomLoadcase;
 
             for (int i=1; i<delimittedLine2.Count; i+=3)
             {
-                    bhomLoadCaseDictionary.TryGetValue(delimittedLine2[i].Trim(), out bhomLoadcase);
+                    bhomLoadCaseDictionary.TryGetValue(delimittedLine2[i].Trim(), out Loadcase bhomLoadcase);
                     associatedLoadcases.Add(bhomLoadcase);
                     loadFactors.Add(double.Parse(delimittedLine2[i+1].Trim()));
             }

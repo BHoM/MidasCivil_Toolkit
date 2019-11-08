@@ -11,15 +11,13 @@ namespace BH.Engine.MidasCivil
         public static PointLoad ToBHoMPointLoad(this string PointLoad, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string,Node> nodeDictionary, int count)
         {
             string[] delimitted = PointLoad.Split(',');
-            Node bhomAssociateNode;
             List<Node> bhomAssociatedNodes = new List<Node>();
 
-            Loadcase bhomLoadcase;
-            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
+            loadcaseDictionary.TryGetValue(loadcase, out Loadcase bhomLoadcase);
 
             foreach (string associatedNode in associatedNodes)
             {
-                nodeDictionary.TryGetValue(associatedNode, out bhomAssociateNode);
+                nodeDictionary.TryGetValue(associatedNode, out Node bhomAssociateNode);
                 bhomAssociatedNodes.Add(bhomAssociateNode);
             }
 

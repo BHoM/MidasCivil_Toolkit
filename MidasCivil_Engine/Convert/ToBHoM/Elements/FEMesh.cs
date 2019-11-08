@@ -16,18 +16,12 @@ namespace BH.Engine.MidasCivil
             Dictionary<string, IMaterialFragment> bhomMaterials)
         {
             List<string> delimitted = feMesh.Split(',').ToList();
-            Node n1 = null;
-            Node n2 = null;
-            Node n3 = null;
-            Node n4 = null;
 
-
-            bhomNodes.TryGetValue(delimitted[4].Trim(), out n1);
-            bhomNodes.TryGetValue(delimitted[5].Trim(), out n2);
-            bhomNodes.TryGetValue(delimitted[6].Trim(), out n3);
+            bhomNodes.TryGetValue(delimitted[4].Trim(), out Node n1);
+            bhomNodes.TryGetValue(delimitted[5].Trim(), out Node n2);
+            bhomNodes.TryGetValue(delimitted[6].Trim(), out Node n3);
 
             ISurfaceProperty bhomSurfaceProperty = null;
-            IMaterialFragment bhomMaterial = null;
 
             if (!(bhomSurfaceProperties.Count() == 0))
             {
@@ -35,7 +29,7 @@ namespace BH.Engine.MidasCivil
 
                 if (!(bhomMaterials.Count() == 0))
                 {
-                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out bhomMaterial);
+                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out IMaterialFragment bhomMaterial);
                     bhomSurfaceProperty.Material = bhomMaterial;
                 }
             }
@@ -45,11 +39,11 @@ namespace BH.Engine.MidasCivil
                 n1, n2, n3
             };
 
-            FEMesh bhomFEMesh = null;
+            FEMesh bhomFEMesh;
 
             if (System.Convert.ToInt32(delimitted[7].Trim()) != 0)
             {
-                bhomNodes.TryGetValue(delimitted[7].Trim(), out n4);
+                bhomNodes.TryGetValue(delimitted[7].Trim(), out Node n4);
                 nodeList.Add(n4);
                 List<int> nodeListIndicies = Enumerable.Range(0, 4).ToList();
                 List<FEMeshFace> feMeshFace = new List<FEMeshFace>()

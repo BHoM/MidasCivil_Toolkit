@@ -14,21 +14,19 @@ namespace BH.Engine.MidasCivil
             Dictionary<string, BarRelease> barReleases, Dictionary<string, List<int>> barReleaseAssignments)
         {
             List<string> delimitted = bar.Split(',').ToList();
-            Node startNode = null;
-            Node endNode = null;
+
             BarFEAType feaType = BarFEAType.Axial;
             ISectionProperty sectionProperty = null;
-            IMaterialFragment material = null;
 
-            bhomNodes.TryGetValue(delimitted[4].Trim(), out startNode);
-            bhomNodes.TryGetValue(delimitted[5].Trim(), out endNode);
+            bhomNodes.TryGetValue(delimitted[4].Trim(), out Node startNode);
+            bhomNodes.TryGetValue(delimitted[5].Trim(), out Node endNode);
 
             if (!(bhomSectionProperties.Count() == 0))
             {
                 bhomSectionProperties.TryGetValue(delimitted[3].Trim(), out sectionProperty);
                 if (!(bhomMaterials.Count() == 0))
                 {
-                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out material);
+                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out IMaterialFragment material);
 
                     if (material.GetType().ToString().Split('.').Last() == "Concrete")
                         sectionProperty = BHoMSteeltoConcrete((SteelSection)sectionProperty);

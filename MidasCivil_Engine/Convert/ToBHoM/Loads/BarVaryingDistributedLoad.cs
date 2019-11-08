@@ -10,15 +10,13 @@ namespace BH.Engine.MidasCivil
         public static BarVaryingDistributedLoad ToBHoMBarVaryingDistributedLoad(string barVaryingDistributedLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
         {
             string[] delimitted = barVaryingDistributedLoad.Split(',');
-            Bar bhomAssociateBar;
             List<Bar> bhomAssociatedBars = new List<Bar>();
 
-            Loadcase bhomLoadcase;
-            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
+            loadcaseDictionary.TryGetValue(loadcase, out Loadcase bhomLoadcase);
 
             foreach (string associatedBar in associatedBars)
             {
-                barDictionary.TryGetValue(associatedBar, out bhomAssociateBar);
+                barDictionary.TryGetValue(associatedBar, out Bar bhomAssociateBar);
                 bhomAssociatedBars.Add(bhomAssociateBar);
             }
 

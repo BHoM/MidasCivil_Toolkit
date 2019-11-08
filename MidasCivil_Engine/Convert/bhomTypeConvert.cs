@@ -7,7 +7,6 @@ namespace BH.Engine.MidasCivil
     {
         public static string BHoMType(string type)
         {
-            string midasVersion;
 
             string[] delimited = type.Split('.');
             type = delimited[delimited.Count() - 1];
@@ -25,7 +24,7 @@ namespace BH.Engine.MidasCivil
                 {"Loadcase", "LOADCASE" },
             };
 
-            conversion.TryGetValue(type, out midasVersion);
+            conversion.TryGetValue(type, out string midasVersion);
             return midasVersion;
         }
     }
