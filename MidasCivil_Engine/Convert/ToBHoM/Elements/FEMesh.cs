@@ -39,41 +39,28 @@ namespace BH.Engine.MidasCivil
                 n1, n2, n3
             };
 
-            FEMesh bhomFEMesh;
+            List<int> nodeListIndicies = Enumerable.Range(0, 3).ToList();
 
             if (System.Convert.ToInt32(delimitted[7].Trim()) != 0)
             {
+
+                nodeListIndicies = Enumerable.Range(0, 4).ToList();
                 bhomNodes.TryGetValue(delimitted[7].Trim(), out Node n4);
                 nodeList.Add(n4);
-                List<int> nodeListIndicies = Enumerable.Range(0, 4).ToList();
-                List<FEMeshFace> feMeshFace = new List<FEMeshFace>()
+            }
+
+
+            List<FEMeshFace> feMeshFace = new List<FEMeshFace>()
                 {
                     new FEMeshFace() {NodeListIndices = nodeListIndicies}
                 };
 
-                bhomFEMesh = new FEMesh()
-                {
-                    Faces = feMeshFace,
-                    Nodes = nodeList,
-                    Property = bhomSurfaceProperty
-                };
-
-            }
-            else
+            FEMesh bhomFEMesh = new FEMesh()
             {
-                List<int> nodeListIndicies = Enumerable.Range(0, 4).ToList();
-                List<FEMeshFace> feMeshFace = new List<FEMeshFace>()
-                {
-                    new FEMeshFace() {NodeListIndices = nodeListIndicies}
-                };
-
-                bhomFEMesh = new FEMesh()
-                {
-                    Faces = feMeshFace,
-                    Nodes = nodeList,
-                    Property = bhomSurfaceProperty
-                };
-            }
+                Faces = feMeshFace,
+                Nodes = nodeList,
+                Property = bhomSurfaceProperty
+            };
 
             bhomFEMesh.CustomData[AdapterId] = delimitted[0].Trim();
 
