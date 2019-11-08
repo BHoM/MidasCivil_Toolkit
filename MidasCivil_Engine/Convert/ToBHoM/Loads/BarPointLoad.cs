@@ -25,19 +25,12 @@ namespace BH.Engine.MidasCivil
             string loadType = delimitted[1].Trim();
             string loadAxis = delimitted[2].Trim().Substring(0, 1);
             string direction = delimitted[2].Trim().Substring(1, 1);
-            string projection = delimitted[3].Trim();
 
             LoadAxis axis = LoadAxis.Global;
-            bool loadProjection = false;
 
             if (loadAxis == "L")
             {
                 axis = LoadAxis.Local;
-            }
-
-            if (projection == "YES")
-            {
-                loadProjection = true;
             }
 
             double XLoad = 0;
