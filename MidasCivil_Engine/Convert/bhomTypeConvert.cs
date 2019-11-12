@@ -24,7 +24,8 @@ namespace BH.Engine.MidasCivil
                 {"Loadcase", "LOADCASE" },
             };
 
-            conversion.TryGetValue(type, out string midasVersion);
+            string midasVersion;
+            conversion.TryGetValue(type, out midasVersion);
             return midasVersion;
         }
     }

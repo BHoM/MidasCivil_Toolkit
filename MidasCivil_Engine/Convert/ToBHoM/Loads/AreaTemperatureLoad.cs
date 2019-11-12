@@ -11,14 +11,16 @@ namespace BH.Engine.MidasCivil
             string[] delimitted = temperatureLoad.Split(',');
             List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
 
-            loadcaseDictionary.TryGetValue(loadcase, out Loadcase bhomLoadcase);
+            Loadcase bhomLoadcase;
+            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
 
             foreach (string associatedFEMesh in associatedFEMeshes)
             {
                 if (FEMeshDictionary.ContainsKey(associatedFEMesh))
                 {
-                    FEMeshDictionary.TryGetValue(associatedFEMesh, out FEMesh bhomAssociateFEMesh);
-                    bhomAssociatedFEMeshes.Add(bhomAssociateFEMesh);
+                    FEMesh bhomAssociatedFEMesh;
+                    FEMeshDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedFEMesh);
+                    bhomAssociatedFEMeshes.Add(bhomAssociatedFEMesh);
                 }
             }
 

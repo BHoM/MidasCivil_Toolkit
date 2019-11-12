@@ -18,20 +18,25 @@ namespace BH.Engine.MidasCivil
             BarFEAType feaType = BarFEAType.Axial;
             ISectionProperty sectionProperty = null;
 
-            bhomNodes.TryGetValue(delimitted[4].Trim(), out Node startNode);
-            bhomNodes.TryGetValue(delimitted[5].Trim(), out Node endNode);
+            Node startNode;
+            bhomNodes.TryGetValue(delimitted[4].Trim(), out startNode);
+            Node endNode;
+            bhomNodes.TryGetValue(delimitted[5].Trim(), out endNode);
 
             if (!(bhomSectionProperties.Count() == 0))
             {
                 bhomSectionProperties.TryGetValue(delimitted[3].Trim(), out sectionProperty);
                 if (!(bhomMaterials.Count() == 0))
                 {
-                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out IMaterialFragment material);
+                    IMaterialFragment bhommMaterial;
+                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out bhommMaterial);
 
-                    if (material.GetType().ToString().Split('.').Last() == "Concrete")
+                    if (bhommMaterial.GetType().ToString().Split('.').Last() == "Concrete")
+                    {
                         sectionProperty = BHoMSteeltoConcrete((SteelSection)sectionProperty);
+                    }
 
-                    sectionProperty.Material = material;
+                    sectionProperty.Material = bhommMaterial;
                 }
             }
 

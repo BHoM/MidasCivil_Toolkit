@@ -29,7 +29,8 @@ namespace BH.Engine.MidasCivil
 
                 if (!(bhomMaterials.Count() == 0))
                 {
-                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out IMaterialFragment bhomMaterial);
+                    IMaterialFragment bhomMaterial;
+                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out bhomMaterial);
                     bhomSurfaceProperty.Material = bhomMaterial;
                 }
             }
@@ -43,9 +44,9 @@ namespace BH.Engine.MidasCivil
 
             if (System.Convert.ToInt32(delimitted[7].Trim()) != 0)
             {
-
                 nodeListIndicies = Enumerable.Range(0, 4).ToList();
-                bhomNodes.TryGetValue(delimitted[7].Trim(), out Node n4);
+                Node n4;
+                bhomNodes.TryGetValue(delimitted[7].Trim(), out n4);
                 nodeList.Add(n4);
             }
 

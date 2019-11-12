@@ -12,12 +12,14 @@ namespace BH.Engine.MidasCivil
             string[] delimitted = barVaryingDistributedLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
 
-            loadcaseDictionary.TryGetValue(loadcase, out Loadcase bhomLoadcase);
+            Loadcase bhomLoadcase;
+            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
 
             foreach (string associatedBar in associatedBars)
             {
-                barDictionary.TryGetValue(associatedBar, out Bar bhomAssociateBar);
-                bhomAssociatedBars.Add(bhomAssociateBar);
+                Bar bhomAssociatedBar;
+                barDictionary.TryGetValue(associatedBar, out bhomAssociatedBar);
+                bhomAssociatedBars.Add(bhomAssociatedBar);
             }
 
             string loadType = delimitted[1].Trim();
