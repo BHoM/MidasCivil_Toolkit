@@ -26,7 +26,8 @@ namespace BH.Engine.MidasCivil
 
             LinkConstraint constraint = new LinkConstraint { XtoX = x, YtoY = y, ZtoZ = z, XXtoXX = xx, YYtoYY = yy, ZZtoZZ = zz };
 
-            nodes.TryGetValue(master, out Node masterNode);
+            Node masterNode;
+            nodes.TryGetValue(master, out masterNode);
 
             foreach (int assignment in assignments)
             {
