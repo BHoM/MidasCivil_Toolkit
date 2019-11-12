@@ -30,7 +30,8 @@ namespace BH.Engine.MidasCivil
 
             foreach (int assignment in assignments)
             {
-                nodes.TryGetValue(assignment.ToString(), out Node bhomSlave);
+                Node bhomSlave;
+                nodes.TryGetValue(assignment.ToString(), out bhomSlave);
                 slaveNodes.Add(bhomSlave);
             }
 

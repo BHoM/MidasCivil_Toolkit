@@ -13,12 +13,13 @@ namespace BH.Adapter.MidasCivil
 
             foreach (string key in keys)
             {
-                dictionary.TryGetValue(key, out List<int> values);
-                if (values.Contains(id))
-                    groups.Add(key);
+                List<int> values = new List<int>();
+                dictionary.TryGetValue(key, out values);
+                if (values.Contains(id)) { groups.Add(key); }
             }
 
             return groups;
         }
+
     }
 }

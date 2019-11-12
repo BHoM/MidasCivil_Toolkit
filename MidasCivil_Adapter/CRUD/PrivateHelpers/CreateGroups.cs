@@ -21,8 +21,10 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string key in keys)
                 {
-                    existingNodeGroups.TryGetValue(key, out List<int> nodeValues);
-                    existingElementGroups.TryGetValue(key, out List<int> elementValues);
+                    List<int> nodeValues = new List<int>();
+                    existingNodeGroups.TryGetValue(key, out nodeValues);
+                    List<int> elementValues = new List<int>();
+                    existingElementGroups.TryGetValue(key, out elementValues);
                     string nodeStringValue = "";
                     string elementStringValue = "";
 
@@ -51,7 +53,8 @@ namespace BH.Adapter.MidasCivil
                     }
                     else
                     {
-                        groupsToAdd.TryGetValue(tag, out string assignedNodes);
+                        string assignedNodes;
+                        groupsToAdd.TryGetValue(tag, out assignedNodes);
                         string bhomID = node.CustomData[AdapterId].ToString();
 
                         if (!assignedNodes.Contains(bhomID))
@@ -73,8 +76,10 @@ namespace BH.Adapter.MidasCivil
             {
                 foreach (string key in totalKeys)
                 {
-                    groupsToAdd.TryGetValue(key, out string nodeList);
-                    existingStringElementGroups.TryGetValue(key, out string elementList);
+                    string nodeList;
+                    groupsToAdd.TryGetValue(key, out nodeList);
+                    string elementList;
+                    existingStringElementGroups.TryGetValue(key, out elementList);
                     string line = key + "," + nodeList + "," + elementList + ",0";
                     sw.WriteLine(line);
                 }
@@ -97,8 +102,10 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string key in keys)
                 {
-                    existingNodeGroups.TryGetValue(key, out List<int> nodeValues);
-                    existingElementGroups.TryGetValue(key, out List<int> elementValues);
+                    List<int> nodeValues = new List<int>();
+                    existingNodeGroups.TryGetValue(key, out nodeValues);
+                    List<int> elementValues = new List<int>();
+                    existingElementGroups.TryGetValue(key, out elementValues);
                     string nodeStringValue = "";
                     string elementStringValue = "";
 
@@ -127,7 +134,8 @@ namespace BH.Adapter.MidasCivil
                     }
                     else
                     {
-                        groupsToAdd.TryGetValue(tag, out string assignedBars);
+                        string assignedBars;
+                        groupsToAdd.TryGetValue(tag, out assignedBars);
                         string bhomID = bar.CustomData[AdapterId].ToString();
 
                         if (!assignedBars.Contains(bhomID))
@@ -149,8 +157,10 @@ namespace BH.Adapter.MidasCivil
             {
                 foreach (string key in totalKeys)
                 {
-                    existingStringNodeGroups.TryGetValue(key, out string nodeList);
-                    groupsToAdd.TryGetValue(key, out string elementList);
+                    string nodeList;
+                    existingStringNodeGroups.TryGetValue(key, out nodeList);
+                    string elementList;
+                    groupsToAdd.TryGetValue(key, out elementList);
                     string line = key + "," + nodeList + "," + elementList + ",0";
                     sw.WriteLine(line);
                 }
@@ -173,8 +183,10 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string key in keys)
                 {
-                    existingNodeGroups.TryGetValue(key, out List<int> nodeValues);
-                    existingElementGroups.TryGetValue(key, out List<int> elementValues);
+                    List<int> nodeValues = new List<int>();
+                    existingNodeGroups.TryGetValue(key, out nodeValues);
+                    List<int> elementValues = new List<int>();
+                    existingElementGroups.TryGetValue(key, out elementValues);
                     string nodeStringValue = "";
                     string elementStringValue = "";
 
@@ -203,7 +215,8 @@ namespace BH.Adapter.MidasCivil
                     }
                     else
                     {
-                        groupsToAdd.TryGetValue(tag, out string assignedFEMesh);
+                        string assignedFEMesh;
+                        groupsToAdd.TryGetValue(tag, out assignedFEMesh);
                         string bhomID = mesh.CustomData[AdapterId].ToString();
 
                         if (!assignedFEMesh.Contains(bhomID))
@@ -225,8 +238,10 @@ namespace BH.Adapter.MidasCivil
             {
                 foreach (string key in totalKeys)
                 {
-                    existingStringNodeGroups.TryGetValue(key, out string nodeList);
-                    groupsToAdd.TryGetValue(key, out string elementList);
+                    string nodeList;
+                    existingStringNodeGroups.TryGetValue(key, out nodeList);
+                    string elementList;
+                    groupsToAdd.TryGetValue(key, out elementList);
                     string line = key + "," + nodeList + "," + elementList + ",0";
                     sw.WriteLine(line);
                 }

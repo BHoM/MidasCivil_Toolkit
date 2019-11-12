@@ -13,12 +13,14 @@ namespace BH.Engine.MidasCivil
             string[] delimitted = PointLoad.Split(',');
             List<Node> bhomAssociatedNodes = new List<Node>();
 
-            loadcaseDictionary.TryGetValue(loadcase, out Loadcase bhomLoadcase);
+            Loadcase bhomLoadcase;
+            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
 
             foreach (string associatedNode in associatedNodes)
             {
-                nodeDictionary.TryGetValue(associatedNode, out Node bhomAssociateNode);
-                bhomAssociatedNodes.Add(bhomAssociateNode);
+                Node bhomAssociatedNode;
+                nodeDictionary.TryGetValue(associatedNode, out bhomAssociatedNode);
+                bhomAssociatedNodes.Add(bhomAssociatedNode);
             }
 
             Vector forceVector = new Vector
@@ -44,11 +46,11 @@ namespace BH.Engine.MidasCivil
             else
             {
                 name = delimitted[6].Trim();
-            }
+            } 
 
-            IEnumerable<Node> test = bhomAssociatedNodes;
+            IEnumerable<Node> nodes = bhomAssociatedNodes;
 
-            PointLoad bhomPointLoad = Engine.Structure.Create.PointLoad(bhomLoadcase, test, forceVector, momentVector, LoadAxis.Global, name);
+            PointLoad bhomPointLoad = Engine.Structure.Create.PointLoad(bhomLoadcase, nodes, forceVector, momentVector, LoadAxis.Global, name);
             bhomPointLoad.CustomData[AdapterId] = bhomPointLoad.Name;
 
             return bhomPointLoad;

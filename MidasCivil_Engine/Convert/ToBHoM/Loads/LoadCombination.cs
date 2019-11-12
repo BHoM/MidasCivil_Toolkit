@@ -17,9 +17,10 @@ namespace BH.Engine.MidasCivil
 
             for (int i=1; i<delimittedLine2.Count; i+=3)
             {
-                    bhomLoadCaseDictionary.TryGetValue(delimittedLine2[i].Trim(), out Loadcase bhomLoadcase);
-                    associatedLoadcases.Add(bhomLoadcase);
-                    loadFactors.Add(double.Parse(delimittedLine2[i+1].Trim()));
+                Loadcase bhomLoadcase;
+                bhomLoadCaseDictionary.TryGetValue(delimittedLine2[i].Trim(), out bhomLoadcase);
+                associatedLoadcases.Add(bhomLoadcase);
+                loadFactors.Add(double.Parse(delimittedLine2[i+1].Trim()));
             }
 
             string name = delimittedLine1[0].Split('=')[1].Trim();
