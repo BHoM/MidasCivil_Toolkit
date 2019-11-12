@@ -17,9 +17,10 @@ namespace BH.Engine.MidasCivil
         {
             List<string> delimitted = feMesh.Split(',').ToList();
 
-            bhomNodes.TryGetValue(delimitted[4].Trim(), out Node n1);
-            bhomNodes.TryGetValue(delimitted[5].Trim(), out Node n2);
-            bhomNodes.TryGetValue(delimitted[6].Trim(), out Node n3);
+            Node n1; Node n2; Node n3;
+            bhomNodes.TryGetValue(delimitted[4].Trim(), out n1);
+            bhomNodes.TryGetValue(delimitted[5].Trim(), out n2);
+            bhomNodes.TryGetValue(delimitted[6].Trim(), out n3);
 
             ISurfaceProperty bhomSurfaceProperty = null;
 
