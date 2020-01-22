@@ -4,6 +4,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.IO;
+using BH.Engine.Base.Objects;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Constraints;
+using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Structure.Loads;
+using BH.Engine.MidasCivil.Comparer;
+
 
 namespace BH.Adapter.MidasCivil
 {
@@ -22,6 +31,45 @@ namespace BH.Adapter.MidasCivil
                 AdapterIdName = "MidasCivil_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
 
                 BH.Adapter.Modules.Structure.ModuleLoader.LoadModules(this);
+
+                AdapterComparers = new Dictionary<Type, object>
+                {
+                    {typeof(Node), new BH.Engine.Structure.NodeDistanceComparer(3) },   //The 3 in here sets how many decimal places to look at for node merging. 3 decimal places gives mm precision
+                    {typeof(Bar), new BarMidPointComparer(3) },
+                    {typeof(FEMesh), new MeshCentreComparer() },
+                    {typeof(Constraint6DOF), new BHoMObjectNameComparer() },
+                    {typeof(RigidLink), new BHoMObjectNameComparer() },
+                    {typeof(BarRelease), new BHoMObjectNameComparer() },
+                    {typeof(SteelSection), new BHoMObjectNameComparer() },
+                    {typeof(ISectionProperty), new BHoMObjectNameComparer() },
+                    {typeof(Steel), new BHoMObjectNameComparer() },
+                    {typeof(Concrete), new BHoMObjectNameComparer() },
+                    {typeof(IMaterialFragment), new BHoMObjectNameComparer() },
+                    {typeof(LinkConstraint), new BHoMObjectNameComparer() },
+                    {typeof(ConstantThickness), new BHoMObjectNameComparer() },
+                    {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
+                    {typeof(Loadcase), new BHoMObjectNameComparer() },
+                    {typeof(PointLoad), new BHoMObjectNameComparer() },
+                    {typeof(GravityLoad), new BHoMObjectNameComparer() },
+                    {typeof(BarUniformlyDistributedLoad), new BHoMObjectNameComparer() },
+                    {typeof(BarVaryingDistributedLoad), new BHoMObjectNameComparer() },
+                    {typeof(BarPointLoad), new BHoMObjectNameComparer() },
+                    {typeof(AreaUniformlyDistributedLoad), new BHoMObjectNameComparer() },
+                    {typeof(AreaTemperatureLoad), new BHoMObjectNameComparer() },
+                    {typeof(BarTemperatureLoad), new BHoMObjectNameComparer() },
+                    {typeof(LoadCombination), new BHoMObjectNameComparer() },
+                };
+
+                DependencyTypes = new Dictionary<Type, List<Type>>
+                {
+                    {typeof(Node), new List<Type> { typeof(Constraint6DOF)} },
+                    {typeof(Bar), new List<Type> { typeof(Node) , typeof(ISectionProperty), typeof(BarRelease) } },
+                    {typeof(FEMesh), new List<Type> { typeof(Node), typeof(ISurfaceProperty) } },
+                    {typeof(ISectionProperty), new List<Type> { typeof(IMaterialFragment) } },
+                    {typeof(RigidLink), new List<Type> { typeof(Node) } },
+                    {typeof(ISurfaceProperty), new List<Type> { typeof(IMaterialFragment) } },
+                    {typeof(ILoad), new List<Type> {typeof(Loadcase) } }
+                };
 
                 if (string.IsNullOrWhiteSpace(filePath))
                 {
