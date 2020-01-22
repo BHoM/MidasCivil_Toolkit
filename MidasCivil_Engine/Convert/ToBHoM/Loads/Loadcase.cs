@@ -20,7 +20,7 @@ namespace BH.Engine.MidasCivil
                 Number = 0,
             };
 
-            bhomLoadCase.CustomData[AdapterId] = delimitted[0].Trim();
+            bhomLoadCase.CustomData[AdapterIdName] = delimitted[0].Trim();
 
             return bhomLoadCase;
         }

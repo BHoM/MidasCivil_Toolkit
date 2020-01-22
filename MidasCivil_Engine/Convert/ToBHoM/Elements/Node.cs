@@ -22,8 +22,8 @@ namespace BH.Engine.MidasCivil
                 }
                 );
 
-            bhomNode.CustomData[AdapterId] = delimitted[0].Trim();
-            int bhomID = System.Convert.ToInt32(bhomNode.CustomData[AdapterId]);
+            bhomNode.CustomData[AdapterIdName] = delimitted[0].Trim();
+            int bhomID = System.Convert.ToInt32(bhomNode.CustomData[AdapterIdName]);
 
             string supportName = "";
 

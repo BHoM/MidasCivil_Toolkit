@@ -14,7 +14,7 @@ namespace BH.Engine.MidasCivil
             }
             else
             {
-                string midasSectionProperty = sectionProperty.CustomData[AdapterId] + ",DBUSER," +
+                string midasSectionProperty = sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
                  sectionProperty.Name + ",CC, 0, 0, 0, 0, 0, 0, YES, NO," +
                  CreateSection(sectionProperty as dynamic);
                 return midasSectionProperty;

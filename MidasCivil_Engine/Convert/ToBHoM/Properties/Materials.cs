@@ -86,7 +86,7 @@ namespace BH.Engine.MidasCivil
                 }
             }
 
-            bhomMaterial.CustomData[AdapterId] = delimited[0].Trim();
+            bhomMaterial.CustomData[AdapterIdName] = delimited[0].Trim();
             return bhomMaterial;
         }
     }

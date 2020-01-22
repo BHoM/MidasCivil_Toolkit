@@ -106,7 +106,7 @@ namespace BH.Engine.MidasCivil
             }
 
             Constraint6DOF bhomConstraint6DOF = Engine.Structure.Create.Constraint6DOF(supportName, fixity, stiffness);
-            bhomConstraint6DOF.CustomData[AdapterId] = supportName;
+            bhomConstraint6DOF.CustomData[AdapterIdName] = supportName;
 
             return bhomConstraint6DOF;
 

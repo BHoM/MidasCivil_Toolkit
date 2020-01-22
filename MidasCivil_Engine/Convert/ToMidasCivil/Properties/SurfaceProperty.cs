@@ -26,11 +26,11 @@ namespace BH.Engine.MidasCivil
 
                     case "8.8.5":
                         midasSurfaceProperty =
-                        bhomSurfaceProperty.CustomData[AdapterId].ToString() + "," + bhomSurfaceProperty.Name + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
+                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + "," + bhomSurfaceProperty.Name + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
                         break;
                     default:
                         midasSurfaceProperty =
-                        bhomSurfaceProperty.CustomData[AdapterId].ToString() + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
+                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
                         break;
                 }
 

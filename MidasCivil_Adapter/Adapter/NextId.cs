@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
                     {
                         List<Node> nodes = ReadNodes();
                         List<int> nodeID = new List<int>();
-                        nodes.ForEach(x => nodeID.Add(Convert.ToInt32(x.CustomData[AdapterId].ToString())));
+                        nodes.ForEach(x => nodeID.Add(Convert.ToInt32(x.CustomData[AdapterIdName].ToString())));
                         nodeID.Sort();
                         nodeID.Reverse();
 

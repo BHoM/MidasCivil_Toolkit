@@ -25,7 +25,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (IAreaElement mesh in assignedElements)
                 {
-                    assignedFEMeshes.Add(mesh.CustomData[AdapterId].ToString());
+                    assignedFEMeshes.Add(mesh.CustomData[AdapterIdName].ToString());
                 }
 
                 foreach (string assignedFEMesh in assignedFEMeshes)

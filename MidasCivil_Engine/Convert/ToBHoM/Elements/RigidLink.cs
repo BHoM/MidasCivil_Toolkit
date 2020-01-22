@@ -49,7 +49,7 @@ namespace BH.Engine.MidasCivil
 
             RigidLink bhomRigidLink = Engine.Structure.Create.RigidLink(masterNode, slaveNodes, constraint);
             bhomRigidLink.Name = name;
-            bhomRigidLink.CustomData[AdapterId] = name;
+            bhomRigidLink.CustomData[AdapterIdName] = name;
 
             return bhomRigidLink;
         }

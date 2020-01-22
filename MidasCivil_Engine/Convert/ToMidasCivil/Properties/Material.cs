@@ -28,7 +28,7 @@ namespace BH.Engine.MidasCivil
             {
                 IIsotropic isotropic = material as IIsotropic;
                 midasMaterial = (
-                    isotropic.CustomData[AdapterId].ToString() + "," + type + "," +
+                    isotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
                     isotropic.Name + ",0,0,,C,NO," +
                     isotropic.DampingRatio + ",2," + isotropic.YoungsModulus + "," +
                     isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff + "," +
@@ -41,7 +41,7 @@ namespace BH.Engine.MidasCivil
                 return null; ;
             }
 
-            //material.CustomData[AdapterId].ToString();
+            //material.CustomData[AdapterIdName].ToString();
 
             return midasMaterial;
         }

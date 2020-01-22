@@ -8,12 +8,12 @@ namespace BH.Engine.MidasCivil
         {
             string midasLink = "";
 
-            string masterNode = link.MasterNode.CustomData[AdapterId].ToString();
+            string masterNode = link.MasterNode.CustomData[AdapterIdName].ToString();
             string slaveNodes = "";
 
             foreach (Node slaveNode in link.SlaveNodes)
             {
-                slaveNodes = slaveNodes + " " + slaveNode.CustomData[AdapterId].ToString();
+                slaveNodes = slaveNodes + " " + slaveNode.CustomData[AdapterIdName].ToString();
             }
 
             string fixity = boolToFixity(link.Constraint.XtoX) +

@@ -99,7 +99,7 @@
     <Compile Include="Compute\StiffnessVectorModulus.cs" />
     <Compile Include="Compute\Modulus.cs" />
     <Compile Include="Compute\RangeBySplit.cs" />
-    <Compile Include="Convert\AdapterId.cs" />
+    <Compile Include="Convert\AdapterIdName.cs" />
     <Compile Include="Convert\BHoMTypeConvert.cs" />
     <Compile Include="Convert\Fixity.cs" />
     <Compile Include="Convert\ToBHoM\Elements\RigidLink.cs" />

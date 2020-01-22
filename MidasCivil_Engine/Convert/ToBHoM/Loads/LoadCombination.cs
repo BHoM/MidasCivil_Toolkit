@@ -27,7 +27,7 @@ namespace BH.Engine.MidasCivil
             int number = 0;
 
             LoadCombination bhomLoadCombination = BH.Engine.Structure.Create.LoadCombination(name, number, associatedLoadcases, loadFactors);
-            bhomLoadCombination.CustomData[AdapterId] = name;
+            bhomLoadCombination.CustomData[AdapterIdName] = name;
 
             return bhomLoadCombination;
         }

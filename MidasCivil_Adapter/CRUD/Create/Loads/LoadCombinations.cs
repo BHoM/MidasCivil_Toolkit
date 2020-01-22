@@ -13,7 +13,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (LoadCombination loadCombination in loadCombinations)
             {
-                loadCombination.CustomData[AdapterId] = loadCombination.Name;
+                loadCombination.CustomData[AdapterIdName] = loadCombination.Name;
                 midasLoadCombinations.AddRange(Engine.MidasCivil.Convert.ToMCLoadCombination(loadCombination, midasCivilVersion));
             }
 

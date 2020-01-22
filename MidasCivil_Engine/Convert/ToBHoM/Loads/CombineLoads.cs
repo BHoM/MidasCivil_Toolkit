@@ -14,7 +14,7 @@ namespace BH.Engine.MidasCivil
             var groupedByLoadCase = loads.GroupBy(x => x.Loadcase);
 
             Dictionary<string, Bar> barDictionary = bars.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
+                x => x.CustomData[AdapterIdName].ToString());
 
             foreach (var loadcaseGroup in groupedByLoadCase)
             {
@@ -57,7 +57,7 @@ namespace BH.Engine.MidasCivil
 
                         foreach (var element in load.Objects.Elements)
                         {
-                            loadBar.Add(element.CustomData[AdapterId].ToString());
+                            loadBar.Add(element.CustomData[AdapterIdName].ToString());
                         }
 
                         loadBars.Add(loadBar);

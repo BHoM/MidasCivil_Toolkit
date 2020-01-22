@@ -19,7 +19,7 @@ namespace BH.Adapter.MidasCivil
         { 
             if (active)
             {
-                AdapterId = "MidasCivil_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
+                AdapterIdName = "MidasCivil_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
 
                 BH.Adapter.Modules.Structure.ModuleLoader.LoadModules(this);
 

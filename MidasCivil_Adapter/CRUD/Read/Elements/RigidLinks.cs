@@ -14,7 +14,7 @@ namespace BH.Adapter.MidasCivil
 
             List<string> linkText = GetSectionText("RIGIDLINK");
             List<Node> nodes = ReadNodes();
-            Dictionary<string, Node> nodeDictionary = nodes.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            Dictionary<string, Node> nodeDictionary = nodes.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
 
             int count = 0;
 

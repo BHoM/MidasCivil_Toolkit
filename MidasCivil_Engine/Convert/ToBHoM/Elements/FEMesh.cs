@@ -64,7 +64,7 @@ namespace BH.Engine.MidasCivil
                 Property = bhomSurfaceProperty
             };
 
-            bhomFEMesh.CustomData[AdapterId] = delimitted[0].Trim();
+            bhomFEMesh.CustomData[AdapterIdName] = delimitted[0].Trim();
 
             return bhomFEMesh;
         }
@@ -85,8 +85,8 @@ namespace BH.Engine.MidasCivil
 
             List<Panel> panels = BH.Engine.Structure.Create.PanelPlanar(polylines);
 
-            if (mesh.CustomData.ContainsValue(AdapterId))
-                panels[0].CustomData[AdapterId] = mesh.CustomData[AdapterId];
+            if (mesh.CustomData.ContainsValue(AdapterIdName))
+                panels[0].CustomData[AdapterIdName] = mesh.CustomData[AdapterIdName];
 
             return panels[0];
         }

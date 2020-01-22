@@ -17,7 +17,7 @@ namespace BH.Adapter.MidasCivil
                 string PointLoadPath = CreateSectionFile(PointLoad.Loadcase.Name + "\\CONLOAD");
                 string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(PointLoad);
 
-                List<string> assignedNodes = PointLoad.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToList();
+                List<string> assignedNodes = PointLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
 
                 foreach (string assignedNode in assignedNodes)
                 {

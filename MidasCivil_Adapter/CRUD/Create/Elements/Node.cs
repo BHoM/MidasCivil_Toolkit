@@ -20,11 +20,11 @@ namespace BH.Adapter.MidasCivil
                 {
                     if(Engine.MidasCivil.Compute.GetStiffnessVectorModulus(node.Support)>0)
                     {
-                        PropertyAssignment(node.CustomData[AdapterId].ToString(), node.Support.Name, "SPRING");
+                        PropertyAssignment(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "SPRING");
                     }
                     else
                     {
-                        PropertyAssignment(node.CustomData[AdapterId].ToString(), node.Support.Name, "CONSTRAINT");
+                        PropertyAssignment(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "CONSTRAINT");
                     }
                     
                 }

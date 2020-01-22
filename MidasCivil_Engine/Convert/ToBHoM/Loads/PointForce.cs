@@ -51,7 +51,7 @@ namespace BH.Engine.MidasCivil
             IEnumerable<Node> nodes = bhomAssociatedNodes;
 
             PointLoad bhomPointLoad = Engine.Structure.Create.PointLoad(bhomLoadcase, nodes, forceVector, momentVector, LoadAxis.Global, name);
-            bhomPointLoad.CustomData[AdapterId] = bhomPointLoad.Name;
+            bhomPointLoad.CustomData[AdapterIdName] = bhomPointLoad.Name;
 
             return bhomPointLoad;
         }

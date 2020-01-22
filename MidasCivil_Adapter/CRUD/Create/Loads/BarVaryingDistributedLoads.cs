@@ -18,7 +18,7 @@ namespace BH.Adapter.MidasCivil
                 string barLoadPath = CreateSectionFile(barVaryingDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(barVaryingDistributedLoad);
 
-                List<string> assignedBars = barVaryingDistributedLoad.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToList();
+                List<string> assignedBars = barVaryingDistributedLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
 
                 List<double> startLoadVectors = new List<double> { barVaryingDistributedLoad.ForceA.X,
                                                               barVaryingDistributedLoad.ForceA.Y,
