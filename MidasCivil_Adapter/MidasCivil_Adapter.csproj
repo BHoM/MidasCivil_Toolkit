@@ -30,6 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Adapter_Engine">
+      <HintPath>..\..\BHoM_Adapter\Build\Adapter_Engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Adapter_oM">
+      <HintPath>..\..\BHoM_Adapter\Build\Adapter_oM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Analytical_oM">
       <HintPath>..\..\BHoM\Build\Analytical_oM.dll</HintPath>
       <Private>False</Private>
@@ -66,6 +74,10 @@
     <Reference Include="Reflection_Engine, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Structure_AdapterModules">
+      <HintPath>..\..\BHoM_Adapter\Build\Structure_AdapterModules.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Structure_Engine">
@@ -126,23 +138,23 @@
     <Compile Include="CRUD\Delete\Properties\BarReleases.cs" />
     <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetGroupAssignments.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetMaxID.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CreateGroups.cs" />
-    <Compile Include="CRUD\PrivateHelpers\ReadTags.cs" />
-    <Compile Include="CRUD\PrivateHelpers\PropertyAssignment.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CreateSectionText.cs" />
-    <Compile Include="CRUD\PrivateHelpers\ExistsSection.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetSectionText.cs" />
-    <Compile Include="CRUD\Create\_Create.cs" />
-    <Compile Include="CRUD\Delete\_Delete.cs" />
+    <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
+    <Compile Include="PrivateHelpers\GetMaxID.cs" />
+    <Compile Include="PrivateHelpers\CreateGroups.cs" />
+    <Compile Include="PrivateHelpers\ReadTags.cs" />
+    <Compile Include="PrivateHelpers\PropertyAssignment.cs" />
+    <Compile Include="PrivateHelpers\CreateSectionText.cs" />
+    <Compile Include="PrivateHelpers\ExistsSection.cs" />
+    <Compile Include="PrivateHelpers\GetSectionText.cs" />
+    <Compile Include="CRUD\Create\Create.cs" />
+    <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="Adapter\NextId.cs" />
-    <Compile Include="CRUD\PrivateHelpers\GetPropertyAssignments.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CompareGroup.cs" />
-    <Compile Include="CRUD\PrivateHelpers\CompareLoadGroup.cs" />
-    <Compile Include="CRUD\PrivateHelpers\SetSectionText.cs" />
-    <Compile Include="CRUD\PrivateHelpers\RemoveLoadEnd.cs" />
-    <Compile Include="CRUD\PrivateHelpers\WriteSectionText.cs" />
+    <Compile Include="PrivateHelpers\GetPropertyAssignments.cs" />
+    <Compile Include="PrivateHelpers\CompareGroup.cs" />
+    <Compile Include="PrivateHelpers\CompareLoadGroup.cs" />
+    <Compile Include="PrivateHelpers\SetSectionText.cs" />
+    <Compile Include="PrivateHelpers\RemoveLoadEnd.cs" />
+    <Compile Include="PrivateHelpers\WriteSectionText.cs" />
     <Compile Include="CRUD\Read\Elements\Bars.cs" />
     <Compile Include="CRUD\Read\Elements\FEMeshes.cs" />
     <Compile Include="CRUD\Read\Elements\RigidLinks.cs" />
@@ -164,7 +176,7 @@
     <Compile Include="CRUD\Read\Properties\Materials.cs" />
     <Compile Include="CRUD\Read\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Read\Properties\SurfaceProperty.cs" />
-    <Compile Include="CRUD\Read\_Read.cs" />
+    <Compile Include="CRUD\Read\Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="Adapter\MidasCivilAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
