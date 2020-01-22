@@ -180,10 +180,10 @@
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="Adapter\MidasCivilAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\Comparer.cs" />
-    <Compile Include="Types\DependencyTypes.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="AdapterActions\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MidasCivil_Engine\MidasCivil_Engine.csproj">
       <Project>{bc0a8eff-4277-49e9-bbdc-66ffa11e5258}</Project>
