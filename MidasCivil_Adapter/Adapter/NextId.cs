@@ -13,7 +13,7 @@ namespace BH.Adapter.MidasCivil
         /**** Adapter overload method                   ****/
         /***************************************************/
 
-        protected override object NextId(Type type, bool refresh = false)
+        protected override object NextFreeId(Type type, bool refresh = false)
         {
             //Method that returns the next free index for a specific object type.
             //Software dependent which type of index to return. Could be int, string, Guid or whatever the specific software is using
