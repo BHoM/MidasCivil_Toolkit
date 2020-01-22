@@ -81,12 +81,12 @@ namespace BH.Engine.MidasCivil
             if (loadType == "UNILOAD")
             {
                 bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(bhomLoadcase, bhomAssociatedBars, loadVector, null, axis, loadProjection, name);
-                bhomBarUniformlyDistributedLoad.CustomData[AdapterId] = bhomBarUniformlyDistributedLoad.Name;
+                bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
             }
             else
             {
                 bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(bhomLoadcase, bhomAssociatedBars, null, loadVector, axis, loadProjection, name);
-                bhomBarUniformlyDistributedLoad.CustomData[AdapterId] = bhomBarUniformlyDistributedLoad.Name;
+                bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
             }
 
             return bhomBarUniformlyDistributedLoad;

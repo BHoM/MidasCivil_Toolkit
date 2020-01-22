@@ -80,7 +80,7 @@ namespace BH.Engine.MidasCivil
             double orientationAngle = double.Parse(delimitted[6].Trim());
 
             Bar bhomBar = Structure.Create.Bar(startNode, endNode, sectionProperty, orientationAngle, barRelease, feaType);
-            bhomBar.CustomData[AdapterId] = bhomID;
+            bhomBar.CustomData[AdapterIdName] = bhomID;
 
             return bhomBar;
         }

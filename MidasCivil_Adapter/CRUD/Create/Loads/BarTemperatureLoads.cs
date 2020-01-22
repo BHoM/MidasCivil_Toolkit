@@ -23,7 +23,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (Bar bar in assignedElements)
                 {
-                    assignedBars.Add(bar.CustomData[AdapterId].ToString());
+                    assignedBars.Add(bar.CustomData[AdapterIdName].ToString());
                 }
 
                 foreach (string assignedBar in assignedBars)

@@ -29,24 +29,24 @@ namespace BH.Adapter.MidasCivil
 
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
+                x => x.CustomData[AdapterIdName].ToString());
 
             IEnumerable<ISectionProperty> bhomSectionPropertyList = ReadSectionProperties();
             Dictionary<string, ISectionProperty> bhomSectionProperties = bhomSectionPropertyList.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
+                x => x.CustomData[AdapterIdName].ToString());
 
             IEnumerable<BarRelease> bhomBarReleaseList = ReadBarReleases();
-            Dictionary<string, BarRelease> bhomBarReleases = bhomBarReleaseList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            Dictionary<string, BarRelease> bhomBarReleases = bhomBarReleaseList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
 
             IEnumerable<IMaterialFragment> bhomMaterialList = ReadMaterials();
-            Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
 
             Dictionary<string, List<int>> barReleaseAssignments = GetBarReleaseAssignments("FRAME-RLS", "barRelease");
 
             foreach (string bar in barText)
             {
                 Bar bhomBar = Engine.MidasCivil.Convert.ToBHoMBar(bar, bhomNodes, bhomSectionProperties,bhomMaterials, bhomBarReleases, barReleaseAssignments);
-                int bhomID = System.Convert.ToInt32(bhomBar.CustomData[AdapterId]);
+                int bhomID = System.Convert.ToInt32(bhomBar.CustomData[AdapterIdName]);
                 bhomBar.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomBars.Add(bhomBar);
             }

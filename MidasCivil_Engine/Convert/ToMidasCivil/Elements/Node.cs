@@ -7,7 +7,7 @@ namespace BH.Engine.MidasCivil
         {
             string midasNode = 
                 (
-                    node.CustomData[AdapterId].ToString() + "," +
+                    node.CustomData[AdapterIdName].ToString() + "," +
                     node.Position.X.ToString() + "," +
                     node.Position.Y.ToString() + "," +
                     node.Position.Z.ToString()

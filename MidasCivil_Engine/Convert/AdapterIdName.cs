@@ -8,6 +8,6 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public const string AdapterId = "MidasCivil_id";
+        public const string AdapterIdName = "MidasCivil_id";
     }
 }

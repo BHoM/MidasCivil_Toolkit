@@ -39,7 +39,7 @@ namespace BH.Engine.MidasCivil
             }
 
             BarRelease bhomBarRelease = Engine.Structure.Create.BarRelease(startConstraint, endConstraint, releaseName);
-            bhomBarRelease.CustomData[AdapterId] = bhomBarRelease.Name;
+            bhomBarRelease.CustomData[AdapterIdName] = bhomBarRelease.Name;
 
             return bhomBarRelease;
         }

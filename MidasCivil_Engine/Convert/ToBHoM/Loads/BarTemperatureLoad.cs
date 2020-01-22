@@ -40,7 +40,7 @@ namespace BH.Engine.MidasCivil
             if (bhomAssociatedBars.Count != 0)
             {
                 BarTemperatureLoad bhombarUniformlyDistributedLoad = Engine.Structure.Create.BarTemperatureLoad(bhomLoadcase, temperature, bhomAssociatedBars, LoadAxis.Global, false, name);
-                bhombarUniformlyDistributedLoad.CustomData[AdapterId] = bhombarUniformlyDistributedLoad.Name;
+                bhombarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhombarUniformlyDistributedLoad.Name;
                 return bhombarUniformlyDistributedLoad;
             }
             else

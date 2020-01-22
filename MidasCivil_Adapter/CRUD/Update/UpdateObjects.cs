@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BH.oM.Structure.Loads;
-using BH.oM.Base;
+﻿using System.Collections.Generic;
+using BH.oM.Adapter;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -17,9 +12,9 @@ namespace BH.Adapter.MidasCivil
         //Method being called for any object already existing in the model in terms of comparers is found.
         //Default implementation first deletes these objects, then creates new ones, if not applicable for the software, override this method
 
-        protected override bool UpdateObjects<T>(IEnumerable<T> objects)
+        protected override bool IUpdate<T>(IEnumerable<T> objects, ActionConfig actionConfig = null)
         {
-                return base.UpdateObjects<T>(objects);
+                return base.IUpdate<T>(objects);
         }
 
         /***************************************************/

@@ -18,7 +18,7 @@ namespace BH.Adapter.MidasCivil
                 string barLoadPath = CreateSectionFile(barPointLoad.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(barPointLoad);
 
-                List<string> assignedBars = barPointLoad.Objects.Elements.Select(x => x.CustomData[AdapterId].ToString()).ToList();
+                List<string> assignedBars = barPointLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
 
                 List<double> loadVectors = new List<double> { barPointLoad.Force.X,
                                                               barPointLoad.Force.Y,

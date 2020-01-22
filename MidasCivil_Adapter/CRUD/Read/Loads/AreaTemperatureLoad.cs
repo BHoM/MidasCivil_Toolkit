@@ -43,7 +43,7 @@ namespace BH.Adapter.MidasCivil
                     {
                         List<FEMesh> bhomMeshes = ReadFEMeshes();
                         Dictionary<string, FEMesh> FEMeshDictionary = bhomMeshes.ToDictionary(
-                                                                    x => x.CustomData[AdapterId].ToString());
+                                                                    x => x.CustomData[AdapterIdName].ToString());
                         List<string> distinctFEMeshLoads = feMeshComparison.Distinct().ToList();
 
                         foreach (string distinctFEMeshLoad in distinctFEMeshLoads)

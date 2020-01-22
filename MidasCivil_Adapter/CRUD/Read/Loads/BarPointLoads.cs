@@ -72,7 +72,7 @@ namespace BH.Adapter.MidasCivil
                     {
                         List<Bar> bhomBars = ReadBars();
                         Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
-                                                                    x => x.CustomData[AdapterId].ToString());
+                                                                    x => x.CustomData[AdapterIdName].ToString());
 
                         List<string> distinctBarLoads = barComparison.Distinct().ToList();
 

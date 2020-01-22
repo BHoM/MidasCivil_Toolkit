@@ -18,19 +18,19 @@ namespace BH.Adapter.MidasCivil
 
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
+                x => x.CustomData[AdapterIdName].ToString());
 
             IEnumerable<ISurfaceProperty> bhomSurfacePropertiesList = ReadSurfaceProperties();
             Dictionary<string, ISurfaceProperty> bhomSuraceProperties = bhomSurfacePropertiesList.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
+                x => x.CustomData[AdapterIdName].ToString());
 
             IEnumerable<IMaterialFragment> bhomMaterialList = ReadMaterials();
-            Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.CustomData[AdapterId].ToString());
+            Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
 
             foreach (string mesh in meshText)
             {
                 FEMesh bhomMesh = Engine.MidasCivil.Convert.ToBHoMFEMesh(mesh, bhomNodes,bhomSuraceProperties, bhomMaterials);
-                int bhomID = System.Convert.ToInt32(bhomMesh.CustomData[AdapterId]);
+                int bhomID = System.Convert.ToInt32(bhomMesh.CustomData[AdapterIdName]);
                 bhomMesh.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomMeshes.Add(bhomMesh);
             }

@@ -1,4 +1,5 @@
-﻿using BH.oM.Structure.Elements;
+﻿using BH.oM.Adapter;
+using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
@@ -15,7 +16,7 @@ namespace BH.Adapter.MidasCivil
         /**** Adapter overload method                   ****/
         /***************************************************/
 
-        protected override int Delete(Type type, IEnumerable<object> ids)
+        protected override int IDelete(Type type, IEnumerable<object> ids, ActionConfig actionConfig = null)
         {
             int success = 0;
 

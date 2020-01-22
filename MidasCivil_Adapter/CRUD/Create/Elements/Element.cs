@@ -22,7 +22,7 @@ namespace BH.Adapter.MidasCivil
 
                 if (!(bar.Release == null) && bar.Release.Name!="FixFix")
                 {
-                        BarReleaseAssignment(bar.CustomData[AdapterId].ToString(), bar.Release.Name, "FRAME-RLS");
+                        BarReleaseAssignment(bar.CustomData[AdapterIdName].ToString(), bar.Release.Name, "FRAME-RLS");
                 }
 
                 midasElements.Add(Engine.MidasCivil.Convert.ToMCElement(bar));

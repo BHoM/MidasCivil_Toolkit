@@ -49,13 +49,13 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (!groupsToAdd.ContainsKey(tag))
                     {
-                        groupsToAdd.Add(tag, node.CustomData[AdapterId].ToString());
+                        groupsToAdd.Add(tag, node.CustomData[AdapterIdName].ToString());
                     }
                     else
                     {
                         string assignedNodes;
                         groupsToAdd.TryGetValue(tag, out assignedNodes);
-                        string bhomID = node.CustomData[AdapterId].ToString();
+                        string bhomID = node.CustomData[AdapterIdName].ToString();
 
                         if (!assignedNodes.Contains(bhomID))
                         {
@@ -130,13 +130,13 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (!groupsToAdd.ContainsKey(tag))
                     {
-                        groupsToAdd.Add(tag, bar.CustomData[AdapterId].ToString());
+                        groupsToAdd.Add(tag, bar.CustomData[AdapterIdName].ToString());
                     }
                     else
                     {
                         string assignedBars;
                         groupsToAdd.TryGetValue(tag, out assignedBars);
-                        string bhomID = bar.CustomData[AdapterId].ToString();
+                        string bhomID = bar.CustomData[AdapterIdName].ToString();
 
                         if (!assignedBars.Contains(bhomID))
                         {
@@ -211,13 +211,13 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (!groupsToAdd.ContainsKey(tag))
                     {
-                        groupsToAdd.Add(tag, mesh.CustomData[AdapterId].ToString());
+                        groupsToAdd.Add(tag, mesh.CustomData[AdapterIdName].ToString());
                     }
                     else
                     {
                         string assignedFEMesh;
                         groupsToAdd.TryGetValue(tag, out assignedFEMesh);
-                        string bhomID = mesh.CustomData[AdapterId].ToString();
+                        string bhomID = mesh.CustomData[AdapterIdName].ToString();
 
                         if (!assignedFEMesh.Contains(bhomID))
                         {

@@ -78,7 +78,7 @@ namespace BH.Engine.MidasCivil
             }
 
             bhomSection.Name = split[2];
-            bhomSection.CustomData[AdapterId] = split[0].Replace(" ", "");
+            bhomSection.CustomData[AdapterIdName] = split[0].Replace(" ", "");
 
             return bhomSection;
         }
@@ -154,7 +154,7 @@ namespace BH.Engine.MidasCivil
 
 
             bhomSection.Name = split0[2];
-            bhomSection.CustomData[AdapterId] = split0[0].Trim();
+            bhomSection.CustomData[AdapterIdName] = split0[0].Trim();
 
             return bhomSection;
         }

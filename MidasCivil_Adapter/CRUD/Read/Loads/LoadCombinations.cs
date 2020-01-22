@@ -14,7 +14,7 @@ namespace BH.Adapter.MidasCivil
 
             IEnumerable<Loadcase> bhomLoadCases = ReadLoadcases();
             Dictionary<string, Loadcase> bhomLoadCaseDictionary = bhomLoadCases.ToDictionary(
-                x => x.CustomData[AdapterId].ToString());
+                x => x.CustomData[AdapterIdName].ToString());
 
             for (int i=0; i<loadCombinationText.Count; i+=2)
             {
