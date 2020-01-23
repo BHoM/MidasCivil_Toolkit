@@ -148,7 +148,7 @@
     <Compile Include="PrivateHelpers\GetSectionText.cs" />
     <Compile Include="CRUD\Create\Create.cs" />
     <Compile Include="CRUD\Delete\Delete.cs" />
-    <Compile Include="Adapter\NextId.cs" />
+    <Compile Include="Type\NextFreeId.cs" />
     <Compile Include="PrivateHelpers\GetPropertyAssignments.cs" />
     <Compile Include="PrivateHelpers\CompareGroup.cs" />
     <Compile Include="PrivateHelpers\CompareLoadGroup.cs" />
@@ -178,12 +178,10 @@
     <Compile Include="CRUD\Read\Properties\SurfaceProperty.cs" />
     <Compile Include="CRUD\Read\Read.cs" />
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
-    <Compile Include="Adapter\MidasCivilAdapter.cs" />
+    <Compile Include="MidasCivilAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AdapterActions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\MidasCivil_Engine\MidasCivil_Engine.csproj">
       <Project>{bc0a8eff-4277-49e9-bbdc-66ffa11e5258}</Project>
