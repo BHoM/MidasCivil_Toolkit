@@ -35,10 +35,17 @@ namespace BH.Engine.MidasCivil
                     isotropic.Density*9.806 + "," + isotropic.Density
                 );
             }
-            else
+            else if(material is IOrthotropic)
             {
-                Engine.Reflection.Compute.RecordWarning("MidasCivil_Toolkit currently suports Isotropic materials only. No structural properties for material with name " + material.Name + " have been pushed");
-                return null; ;
+                IOrthotropic iorthotropic = material as IOrthotropic;
+                midasMaterial = (
+                     iorthotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
+                    iorthotropic.Name + ",0,0,,C,NO," +
+                    iorthotropic.DampingRatio + ",2," + iorthotropic.YoungsModulus + "," +
+                    iorthotropic.PoissonsRatio + "," + iorthotropic.ThermalExpansionCoeff + "," +
+                    iorthotropic.Density * 9.806 + "," + iorthotropic.Density
+                );
+
             }
 
             //material.CustomData[AdapterIdName].ToString();
