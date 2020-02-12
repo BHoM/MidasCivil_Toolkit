@@ -1,5 +1,8 @@
-﻿using BH.oM.Structure.MaterialFragments;
+﻿
+using BH.oM.Structure.MaterialFragments;
+using BH.oM.Geometry;
 using System.Linq;
+
 
 namespace BH.Engine.MidasCivil
 {
@@ -10,6 +13,7 @@ namespace BH.Engine.MidasCivil
             string[] delimited = material.Split(',');
             string type = delimited[1].Trim();
             string name = delimited[2].Trim();
+            string tropic = delimited[9].Trim();
             IMaterialFragment bhomMaterial = null;
 
             bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", name);
@@ -26,21 +30,51 @@ namespace BH.Engine.MidasCivil
             }
 
 
+          
             if (bhomMaterial == null)
             {
                 switch (type)
                 {
                     case "USER":
-                        bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Steel(
-                             name,
-                             double.Parse(delimited[10].Trim()),
-                             double.Parse(delimited[11].Trim()),
-                             double.Parse(delimited[12].Trim()),
-                             density,
-                             double.Parse(delimited[8].Trim()), 0, 0
-                         );
-                        Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a steel material");
+                        if (delimited[9].Count()== 2)
+
+                        {
+
+
+                            bhomMaterial = new GenericIsotropicMaterial()
+                            {
+
+                                Name = name,
+                                YoungsModulus = double.Parse(delimited[10].Trim()),
+                                PoissonsRatio = double.Parse(delimited[11].Trim()),
+                                ThermalExpansionCoeff = double.Parse(delimited[12].Trim()),
+                                Density = density,
+                                DampingRatio = double.Parse(delimited[8].Trim())
+                            };
+                                    Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Isotropic material");
+                        }
+                        else if (delimited[9].Count() == 3)
+                            bhomMaterial = new GenericOrthotropicMaterial()
+                            {
+                                Name = name,
+                                YoungsModulus = new Vector() { X = double.Parse(delimited[11].Trim()), Y = double.Parse(delimited[12].Trim()), Z = double.Parse(delimited[13].Trim()) },
+                                PoissonsRatio = new Vector() { X = double.Parse(delimited[20].Trim()), Y = double.Parse(delimited[21].Trim()), Z = double.Parse(delimited[22].Trim()) },
+                                ThermalExpansionCoeff = new Vector() { X = double.Parse(delimited[14].Trim()), Y = double.Parse(delimited[15].Trim()), Z = double.Parse(delimited[16].Trim()) },
+                                ShearModulus = new Vector() { X = double.Parse(delimited[17].Trim()), Y = double.Parse(delimited[18].Trim()), Z = double.Parse(delimited[19].Trim()) },
+                                Density = density,
+
+                                DampingRatio = double.Parse(delimited[8].Trim())
+
+                            };
+                        Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Orthotropic material");
+
+
+
+
+
                         break;
+                                    
+              
                     case "STEEL":
                         if (delimited.Count() == 15)
                         {
