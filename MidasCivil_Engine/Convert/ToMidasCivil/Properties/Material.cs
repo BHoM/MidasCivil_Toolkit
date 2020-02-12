@@ -41,9 +41,12 @@ namespace BH.Engine.MidasCivil
                 midasMaterial = (
                      iorthotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
                     iorthotropic.Name + ",0,0,,C,NO," +
-                    iorthotropic.DampingRatio + ",2," + iorthotropic.YoungsModulus + "," +
-                    iorthotropic.PoissonsRatio + "," + iorthotropic.ThermalExpansionCoeff + "," +
-                    iorthotropic.Density * 9.806 + "," + iorthotropic.Density
+                    iorthotropic.DampingRatio + ",3," 
+                    + iorthotropic.YoungsModulus.X + ","+ iorthotropic.YoungsModulus.Y + "," + iorthotropic.YoungsModulus.Z + ","
+                    + iorthotropic.ThermalExpansionCoeff.X + "," + iorthotropic.ThermalExpansionCoeff.Y + "," + iorthotropic.ThermalExpansionCoeff.Z + ","
+                    + iorthotropic.ShearModulus.X + "," + iorthotropic.ShearModulus.Y + "," + iorthotropic.ShearModulus.Z + ","
+                    + iorthotropic.PoissonsRatio.X + "," + iorthotropic.PoissonsRatio.Y + "," + iorthotropic.PoissonsRatio.Z + ","
+                    + iorthotropic.Density * 9.806 + "," + iorthotropic.Density
                 );
 
             }
