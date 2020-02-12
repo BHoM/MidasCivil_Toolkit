@@ -33,6 +33,21 @@ namespace BH.Engine.MidasCivil
             string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
             return midasSectionProperty;
         }
+        private static string CreateSection(TimberSection sectionProperty)
+        {
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            return midasSectionProperty;
+        }
+        private static string CreateSection(GenericSection sectionProperty)
+        {
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            return midasSectionProperty;
+        }
+        private static string CreateSection(AluminiumSection sectionProperty)
+        {
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            return midasSectionProperty;
+        }
 
         private static string CreateSection(ExplicitSection sectionProperty)
         {
