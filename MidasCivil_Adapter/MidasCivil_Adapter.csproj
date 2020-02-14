@@ -181,7 +181,6 @@
     <Compile Include="MidasCivilAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\MidasCivil_Engine\MidasCivil_Engine.csproj">
       <Project>{bc0a8eff-4277-49e9-bbdc-66ffa11e5258}</Project>
