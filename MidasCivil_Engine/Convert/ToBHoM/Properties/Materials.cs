@@ -30,7 +30,7 @@ namespace BH.Engine.MidasCivil
             }
 
 
-          
+
             if (bhomMaterial == null)
             {
                 switch (type)
@@ -51,7 +51,7 @@ namespace BH.Engine.MidasCivil
                                 Density = density,
                                 DampingRatio = double.Parse(delimited[8].Trim())
                             };
-                                    Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Isotropic material");
+                            Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Isotropic material");
                         }
                         else if ((delimited[9].Trim()) == "3")
                             bhomMaterial = new GenericOrthotropicMaterial()
@@ -73,8 +73,8 @@ namespace BH.Engine.MidasCivil
 
 
                         break;
-                                    
-              
+
+
                     case "STEEL":
                         if (delimited.Count() == 15)
                         {
@@ -125,3 +125,4 @@ namespace BH.Engine.MidasCivil
         }
     }
 }
+
