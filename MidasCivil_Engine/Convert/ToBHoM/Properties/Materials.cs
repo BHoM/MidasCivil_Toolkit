@@ -57,10 +57,10 @@ namespace BH.Engine.MidasCivil
                             bhomMaterial = new GenericOrthotropicMaterial()
                             {
                                 Name = name,
-                                YoungsModulus = new Vector() { X = double.Parse(delimited[11].Trim()), Y = double.Parse(delimited[12].Trim()), Z = double.Parse(delimited[13].Trim()) },
-                                PoissonsRatio = new Vector() { X = double.Parse(delimited[20].Trim()), Y = double.Parse(delimited[21].Trim()), Z = double.Parse(delimited[22].Trim()) },
-                                ThermalExpansionCoeff = new Vector() { X = double.Parse(delimited[14].Trim()), Y = double.Parse(delimited[15].Trim()), Z = double.Parse(delimited[16].Trim()) },
-                                ShearModulus = new Vector() { X = double.Parse(delimited[17].Trim()), Y = double.Parse(delimited[18].Trim()), Z = double.Parse(delimited[19].Trim()) },
+                                YoungsModulus = new Vector() { X = double.Parse(delimited[10].Trim()), Y = double.Parse(delimited[11].Trim()), Z = double.Parse(delimited[12].Trim()) },
+                                PoissonsRatio = new Vector() { X = double.Parse(delimited[19].Trim()), Y = double.Parse(delimited[20].Trim()), Z = double.Parse(delimited[21].Trim()) },
+                                ThermalExpansionCoeff = new Vector() { X = double.Parse(delimited[13].Trim()), Y = double.Parse(delimited[14].Trim()), Z = double.Parse(delimited[15].Trim()) },
+                                ShearModulus = new Vector() { X = double.Parse(delimited[16].Trim()), Y = double.Parse(delimited[17].Trim()), Z = double.Parse(delimited[18].Trim()) },
                                 Density = density,
 
                                 DampingRatio = double.Parse(delimited[8].Trim())
