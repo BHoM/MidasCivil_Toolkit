@@ -36,7 +36,7 @@ namespace BH.Engine.MidasCivil
                 switch (type)
                 {
                     case "USER":
-                        if (delimited[9].Count()== 2)
+                        if ((delimited[9].Trim()) == "2")
 
                         {
 
@@ -53,7 +53,7 @@ namespace BH.Engine.MidasCivil
                             };
                                     Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Isotropic material");
                         }
-                        else if (delimited[9].Count() == 3)
+                        else if ((delimited[9].Trim()) == "3")
                             bhomMaterial = new GenericOrthotropicMaterial()
                             {
                                 Name = name,
