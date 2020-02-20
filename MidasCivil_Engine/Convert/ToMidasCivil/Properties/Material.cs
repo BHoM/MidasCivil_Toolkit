@@ -73,8 +73,6 @@ namespace BH.Engine.MidasCivil
 
             }
 
-            //material.CustomData[AdapterIdName].ToString();
-
             return midasMaterial;
         }
     }
