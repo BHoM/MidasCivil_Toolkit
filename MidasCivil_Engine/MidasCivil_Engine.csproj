@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="Dimensional_oM">
       <HintPath>..\..\BHoM\Build\Dimensional_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Geometry_Engine, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
