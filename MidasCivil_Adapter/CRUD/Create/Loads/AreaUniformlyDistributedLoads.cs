@@ -61,7 +61,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (loadVectors[i] != 0)
                     {
-                        areaUniformlyDistributedLoad.Pressure = createSingleComponentVector(i, loadVectors[i]);
+                        areaUniformlyDistributedLoad.Pressure = CreateSingleComponentVector(i, loadVectors[i]);
 
                             foreach (string assignedFEMesh in assignedFEMeshes)
                             {

@@ -38,19 +38,19 @@ namespace BH.Engine.MidasCivil
                 slaveNodes = slaveNodes + " " + slaveNode.CustomData[AdapterIdName].ToString();
             }
 
-            string fixity = boolToFixity(link.Constraint.XtoX) +
-                            boolToFixity(link.Constraint.YtoY) +
-                            boolToFixity(link.Constraint.ZtoZ) +
-                            boolToFixity(link.Constraint.XXtoXX) +
-                            boolToFixity(link.Constraint.YYtoYY) +
-                            boolToFixity(link.Constraint.ZZtoZZ);
+            string fixity = BoolToFixity(link.Constraint.XtoX) +
+                            BoolToFixity(link.Constraint.YtoY) +
+                            BoolToFixity(link.Constraint.ZtoZ) +
+                            BoolToFixity(link.Constraint.XXtoXX) +
+                            BoolToFixity(link.Constraint.YYtoYY) +
+                            BoolToFixity(link.Constraint.ZZtoZZ);
 
             midasLink = "1, " + masterNode + "," + fixity + "," + slaveNodes + "," + link.Name;
 
             return midasLink;
         }
 
-        private static string boolToFixity(bool fixity)
+        private static string BoolToFixity(bool fixity)
         {
             string converted = "0";
 

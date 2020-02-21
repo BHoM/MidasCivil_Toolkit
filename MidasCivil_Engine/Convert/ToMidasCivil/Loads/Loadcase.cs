@@ -31,14 +31,14 @@ namespace BH.Engine.MidasCivil
         {
             LoadNature bhomNature = loadcase.Nature;
             string midasNature = "D";
-            bhomLoadNatureConverter(bhomNature, ref midasNature);
+            BhomLoadNatureConverter(bhomNature, ref midasNature);
 
             string midasLoadcase = loadcase.Name + " " + "," + midasNature + ",";
 
             return midasLoadcase;
         }
 
-        private static void bhomLoadNatureConverter(LoadNature bhomNature, ref string nature)
+        private static void BhomLoadNatureConverter(LoadNature bhomNature, ref string nature)
         {
             Dictionary<LoadNature, string> converter = new Dictionary<LoadNature, string>
         {
