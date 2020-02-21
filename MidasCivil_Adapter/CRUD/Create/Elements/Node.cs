@@ -40,7 +40,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if(!(node.Support==null))
                 {
-                    if(Engine.MidasCivil.Compute.GetStiffnessVectorModulus(node.Support)>0)
+                    if(Engine.MidasCivil.Compute.StiffnessVectorModulus(node.Support)>0)
                     {
                         PropertyAssignment(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "SPRING");
                     }

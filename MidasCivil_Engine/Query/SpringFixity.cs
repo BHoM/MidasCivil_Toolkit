@@ -39,7 +39,7 @@ namespace BH.Engine.MidasCivil
 
             foreach (DOFType freedom in freedoms)
             {
-                if (!(Engine.MidasCivil.Query.SupportedDOFTypes(freedom)))
+                if (!(Engine.MidasCivil.Query.SupportedDOFType(freedom)))
                 {
                     Reflection.Compute.RecordWarning(
                         "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Fixed);
