@@ -61,7 +61,7 @@ namespace BH.Adapter.MidasCivil
                     List<string> matchingBars = new List<string>();
                     indexMatches.ForEach(x => matchingBars.Add(releasedBars[x]));
 
-                    BarRelease bhomBarRelease = Engine.MidasCivil.Convert.ToBHoMBarRelease(distinctBarRelease, count);
+                    BarRelease bhomBarRelease = Engine.MidasCivil.Convert.ToBarRelease(distinctBarRelease, count);
                     bhomBarReleases.Add(bhomBarRelease);
 
                     if ((distinctBarRelease.Split(',').ToList()[15].ToString() == " "))

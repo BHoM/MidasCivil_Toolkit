@@ -28,7 +28,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Constraint6DOF ToBHoMConstraint6DOF(this string support, string version)
+        public static Constraint6DOF ToConstraint6DOF(this string support, string version)
         {
             List<string> delimitted = support.Split(',').ToList();
             string supportName;

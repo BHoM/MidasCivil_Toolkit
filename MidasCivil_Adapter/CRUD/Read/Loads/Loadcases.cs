@@ -34,7 +34,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (string loadcase in loadcaseText)
             {
-                Loadcase bhomLoadCase = Engine.MidasCivil.Convert.ToBHoMLoadcase(loadcase);
+                Loadcase bhomLoadCase = Engine.MidasCivil.Convert.ToLoadcase(loadcase);
                 bhomLoadCases.Add(bhomLoadCase);
             }
 

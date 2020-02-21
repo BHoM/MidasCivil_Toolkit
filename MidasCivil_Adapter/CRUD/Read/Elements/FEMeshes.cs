@@ -51,7 +51,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (string mesh in meshText)
             {
-                FEMesh bhomMesh = Engine.MidasCivil.Convert.ToBHoMFEMesh(mesh, bhomNodes,bhomSuraceProperties, bhomMaterials);
+                FEMesh bhomMesh = Engine.MidasCivil.Convert.ToFEMesh(mesh, bhomNodes,bhomSuraceProperties, bhomMaterials);
                 int bhomID = System.Convert.ToInt32(bhomMesh.CustomData[AdapterIdName]);
                 bhomMesh.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomMeshes.Add(bhomMesh);

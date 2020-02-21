@@ -29,7 +29,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static BarPointLoad ToBHoMBarPointLoad(string barPointLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
+        public static BarPointLoad ToBarPointLoad(string barPointLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
         {
             string[] delimitted = barPointLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
