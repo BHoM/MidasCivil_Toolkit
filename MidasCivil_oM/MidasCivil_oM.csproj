@@ -40,9 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="eNum.cs" />
+    <Compile Include="eNum\ForceUnit.cs" />
+    <Compile Include="eNum\HeatUnit.cs" />
+    <Compile Include="eNum\LengthUnit.cs" />
+    <Compile Include="eNum\TemperatureUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
