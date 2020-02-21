@@ -30,6 +30,10 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static List<ILoad> CombineLoads(List<BarUniformlyDistributedLoad> loads, List<Bar> bars)
         {
             List<ILoad> resultant = new List<ILoad>();
@@ -159,7 +163,7 @@ namespace BH.Engine.MidasCivil
             return resultant;
         }
 
-
+        /***************************************************/
 
     }
 }
