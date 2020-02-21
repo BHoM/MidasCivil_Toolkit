@@ -91,27 +91,5 @@ namespace BH.Engine.MidasCivil
             return bhomFEMesh;
         }
 
-        public static Panel ConvertFEMesh(FEMesh mesh)
-        {
-            List<Polyline> polylines = new List<Polyline>();
-
-                List<Point> points = new List<Point>();
-
-                foreach (Node node in mesh.Nodes)
-                {
-                    points.Add(node.Position);
-                }
-
-                points.Add(mesh.Nodes.First().Position);
-                polylines.Add(BH.Engine.Geometry.Create.Polyline(points));
-
-            List<Panel> panels = BH.Engine.Structure.Create.PanelPlanar(polylines);
-
-            if (mesh.CustomData.ContainsValue(AdapterIdName))
-                panels[0].CustomData[AdapterIdName] = mesh.CustomData[AdapterIdName];
-
-            return panels[0];
-        }
     }
-
 }

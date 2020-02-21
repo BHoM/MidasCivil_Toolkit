@@ -22,25 +22,32 @@
 
 using System;
 using System.Collections.Generic;
+using BH.oM.Structure.Loads;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BH.Engine.MidasCivil
 {
-    public static partial class Compute
+    public static partial class Convert
     {
-        /***************************************************/
-        /**** Public Methods                            ****/
-        /***************************************************/
+        public static void ToLoadNature(string midasNature, ref LoadNature nature)
+        {
+            Dictionary<string, LoadNature> converter = new Dictionary<string, LoadNature>
+        {
+            {"D", LoadNature.Dead},
+            {"L", LoadNature.Live},
+            {"W", LoadNature.Wind},
+            {"T", LoadNature.Temperature},
+            {"DC", LoadNature.SuperDead},
+            {"DW", LoadNature.SuperDead},
+            {"PL", LoadNature.SuperDead},
+            {"BL", LoadNature.SuperDead},
+            {"PS", LoadNature.Prestress},
+            {"S", LoadNature.Snow}
+        };
 
-        //Add methods for converting From BHoM to the specific software types, if possible to do without any BHoM calls
-        //Example:
-        //public static MidasCivilNode ToMidasCivil(this Node node)
-        //{
-        //    //Insert code for convertion
-        //}
+            converter.TryGetValue(midasNature, out nature);
+        }
 
-        /***************************************************/
     }
 }
+

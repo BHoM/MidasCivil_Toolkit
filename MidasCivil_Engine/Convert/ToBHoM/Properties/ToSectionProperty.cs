@@ -105,37 +105,6 @@ namespace BH.Engine.MidasCivil
             return bhomSection;
         }
 
-        public static ISectionProperty BHoMSteeltoConcrete(this SteelSection steelSection)
-        {
-            ConcreteSection bhomSection = null;
-            string sectionType = steelSection.SectionProfile.GetType().ToString().Split('.').Last();
-
-            switch (sectionType)
-            {
-                case "RectangleProfile":
-                    RectangleProfile rectangle = (RectangleProfile)steelSection.SectionProfile;
-                    bhomSection = Engine.Structure.Create.ConcreteRectangleSection(rectangle.Height, rectangle.Width, null, steelSection.Name);
-                    break;
-
-                case "CircleProfile":
-                    CircleProfile circle = (CircleProfile)steelSection.SectionProfile;
-                    bhomSection = Engine.Structure.Create.ConcreteCircularSection(circle.Diameter, null, steelSection.Name);
-                    break;
-
-                case "TSectionProfile":
-                    TSectionProfile tee = (TSectionProfile)steelSection.SectionProfile;
-                    bhomSection = Engine.Structure.Create.ConcreteTSection(tee.Height, tee.WebThickness, tee.Width, tee.FlangeThickness, null, steelSection.Name);
-                    break;
-            }
-
-            if (bhomSection == null)
-            {
-                Engine.Reflection.Compute.RecordError(sectionType + "Concrete section not yet supported in the BHoM");
-            }
-
-            return bhomSection;
-        }
-
         public static ISectionProperty ToSectionProperty(this string sectionProfile, string sectionProperty1,
             string sectionProperty2, string sectionProperty3)
         {
@@ -180,5 +149,6 @@ namespace BH.Engine.MidasCivil
 
             return bhomSection;
         }
+
     }
 }

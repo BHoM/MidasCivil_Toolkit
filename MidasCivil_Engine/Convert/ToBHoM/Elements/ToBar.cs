@@ -55,7 +55,7 @@ namespace BH.Engine.MidasCivil
 
                     if (bhommMaterial.GetType().ToString().Split('.').Last() == "Concrete")
                     {
-                        sectionProperty = BHoMSteeltoConcrete((SteelSection)sectionProperty);
+                        sectionProperty = ToConcreteSection((SteelSection)sectionProperty);
                     }
 
                     sectionProperty.Material = bhommMaterial;
