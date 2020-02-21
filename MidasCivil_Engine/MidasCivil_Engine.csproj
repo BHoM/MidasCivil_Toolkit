@@ -153,8 +153,11 @@
     <Compile Include="Convert\ToMidasCivil\Properties\Spring.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\Support.cs" />
     <Compile Include="Convert\ToMidasCivil\ToMidasCivil.cs" />
-    <Compile Include="Modify\CleanString.cs" />
+    <Compile Include="Compute\CleanString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modify\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

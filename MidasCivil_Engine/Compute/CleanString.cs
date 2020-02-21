@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Modify
+    public partial class Compute
     {
         public static void CleanString(ref List<string> sectionText)
         {
