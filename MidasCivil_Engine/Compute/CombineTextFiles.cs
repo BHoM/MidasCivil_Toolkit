@@ -70,7 +70,7 @@ namespace BH.Engine.MidasCivil
                 }
                 else
                 {
-                    types.ForEach(x => typeNames.Add(Engine.MidasCivil.Convert.BHoMType(x.ToString())));
+                    types.ForEach(x => typeNames.Add(Engine.MidasCivil.Convert.ToType(x.ToString())));
 
                     if (!typeNames.Contains("LOADCASE"))
                     {

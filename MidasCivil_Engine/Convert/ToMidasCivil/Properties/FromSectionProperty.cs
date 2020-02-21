@@ -28,7 +28,11 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCSectionProperty(this ISectionProperty sectionProperty)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromSectionProperty(this ISectionProperty sectionProperty)
         {
             if (CreateSection(sectionProperty as dynamic) == null)
             {
@@ -43,6 +47,10 @@ namespace BH.Engine.MidasCivil
             }
         }
 
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private static string CreateSection(SteelSection sectionProperty)
         {
             string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
@@ -50,17 +58,23 @@ namespace BH.Engine.MidasCivil
             return midasSectionProperty;
         }
 
+        /***************************************************/
+
         private static string CreateSection(ConcreteSection sectionProperty)
         {
             string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
             return midasSectionProperty;
         }
 
+        /***************************************************/
+
         private static string CreateSection(ExplicitSection sectionProperty)
         {
             Engine.Reflection.Compute.RecordError("ExplicitSection not supported in MidasCivil_Toolkit");
             return null;
         }
+
+        /***************************************************/
 
         private static string CreateProfile(RectangleProfile profile)
         {
@@ -69,6 +83,8 @@ namespace BH.Engine.MidasCivil
                 " ,0, 0, 0, 0, 0, 0, 0, 0";
             return midasSectionProperty;
         }
+
+        /***************************************************/
 
         private static string CreateProfile(BoxProfile profile)
         {
@@ -81,6 +97,8 @@ namespace BH.Engine.MidasCivil
             return midasSectionProperty;
         }
 
+        /***************************************************/
+
         private static string CreateProfile(FabricatedBoxProfile profile)
         {
             double webSpacing = profile.Width - profile.WebThickness;
@@ -92,6 +110,8 @@ namespace BH.Engine.MidasCivil
             return midasSectionProperty;
         }
 
+        /***************************************************/
+
         private static string CreateProfile(CircleProfile profile)
         {
             string midasSectionProperty = "SR, 2," +
@@ -100,6 +120,8 @@ namespace BH.Engine.MidasCivil
             return midasSectionProperty;
         }
 
+        /***************************************************/
+
         private static string CreateProfile(TubeProfile profile)
         {
             string midasSectionProperty = "P  , 2," +
@@ -107,6 +129,8 @@ namespace BH.Engine.MidasCivil
                 ", 0, 0, 0, 0, 0, 0, 0, 0";
             return midasSectionProperty;
         }
+
+        /***************************************************/
 
         private static string CreateProfile(ISectionProfile profile)
         {
@@ -117,6 +141,8 @@ namespace BH.Engine.MidasCivil
             return midasSectionProperty;
         }
 
+        /***************************************************/
+
         private static string CreateProfile(TSectionProfile profile)
         {
             string midasSectionProperty = "T, 2," + profile.Height + "," + profile.Width + "," + 
@@ -124,6 +150,8 @@ namespace BH.Engine.MidasCivil
                 ",0, 0, 0, 0, 0, 0";
             return midasSectionProperty;
         }
+
+        /***************************************************/
 
         private static string CreateProfile(FabricatedISectionProfile profile)
         {
@@ -139,6 +167,8 @@ namespace BH.Engine.MidasCivil
             return midasSectionProperty;
         }
 
+        /***************************************************/
+
         private static string CreateProfile(AngleProfile profile)
         {
             string midasSectionProperty = "L, 2," + profile.Height + "," + profile.Width + "," + 
@@ -148,6 +178,8 @@ namespace BH.Engine.MidasCivil
             return midasSectionProperty;
         }
 
+        /***************************************************/
+
         private static string CreateProfile(ChannelProfile profile)
         {
             string midasSectionProperty = "C  , 2," + profile.Height + "," + profile.FlangeWidth + "," + profile.WebThickness + "," +
@@ -155,6 +187,7 @@ namespace BH.Engine.MidasCivil
             return midasSectionProperty;
         }
 
+        /***************************************************/
 
         private static string CreateProfile(GeneralisedFabricatedBoxProfile profile)
         {
@@ -176,6 +209,8 @@ namespace BH.Engine.MidasCivil
             return midasSectionProperty;
         }
 
+        /***************************************************/
+
         private static string CreateProfile(ZSectionProfile profile)
         {
             string[] profilearray = profile.GetType().ToString().Split('.');
@@ -186,6 +221,8 @@ namespace BH.Engine.MidasCivil
                 );
             return null;
         }
+
+        /***************************************************/
 
         private static string CreateProfile(FreeFormProfile profile)
         {
@@ -198,6 +235,8 @@ namespace BH.Engine.MidasCivil
             return null;
         }
 
+        /***************************************************/
+
         private static string CreateProfile(KiteProfile profile)
         {
             string[] profilearray = profile.GetType().ToString().Split('.');
@@ -209,6 +248,8 @@ namespace BH.Engine.MidasCivil
             return null;
         }
 
+        /***************************************************/
+
         private static string CreateProfile(GeneralisedTSectionProfile profile)
         {
             string[] profilearray = profile.GetType().ToString().Split('.');
@@ -219,5 +260,8 @@ namespace BH.Engine.MidasCivil
                 );
             return null;
         }
+
+        /***************************************************/
+
     }
 }

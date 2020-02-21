@@ -20,45 +20,52 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Structure.Loads;
 using System.Collections.Generic;
-using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCSpring(this Constraint6DOF constraint6DOF, string version)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromLoadcase(this Loadcase loadcase)
         {
-            List<double> stiffness = Engine.MidasCivil.Query.SpringStiffness(constraint6DOF);
+            LoadNature bhomNature = loadcase.Nature;
+            string midasNature = "D";
+            BhomLoadNatureConverter(bhomNature, ref midasNature);
 
-            string midasSpring = "";
+            string midasLoadcase = loadcase.Name + " " + "," + midasNature + ",";
 
-            switch(version)
-            {
-                case "8.8.5":
-                    string springFixity = Engine.MidasCivil.Query.SpringFixity(constraint6DOF);
-                    midasSpring = (
-                        " " + "," + "LINEAR" + "," + springFixity +
-                        stiffness[0] + "," + stiffness[1] + "," + stiffness[2] + "," +
-                        stiffness[3] + "," + stiffness[4] + "," + stiffness[5] + "," +
-                        "NO, 0, 0, 0, 0, 0, 0," +
-                        constraint6DOF.Name + "," +
-                        "0, 0, 0, 0, 0"
-                        );
-                    break;
-                default:
-                    midasSpring = (
-                        " " + "," + "LINEAR" + "," +
-                        stiffness[0] + "," + stiffness[1] + "," + stiffness[2] + "," +
-                        stiffness[3] + "," + stiffness[4] + "," + stiffness[5] + "," +
-                        "NO, 0, 0, 0, 0, 0, 0," +
-                        constraint6DOF.Name + "," +
-                        "0, 0, 0, 0, 0"
-                        );
-                    break;
-            }
-
-           return midasSpring;
+            return midasLoadcase;
         }
+
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private static void BhomLoadNatureConverter(LoadNature bhomNature, ref string nature)
+        {
+            Dictionary<LoadNature, string> converter = new Dictionary<LoadNature, string>
+        {
+            {LoadNature.Dead,"D"},
+            {LoadNature.Live,"L"},
+            {LoadNature.Wind,"W"},
+            {LoadNature.Temperature,"T"},
+            {LoadNature.SuperDead,"DC"},
+            {LoadNature.Prestress,"PS"},
+            {LoadNature.Snow,"S"},
+            {LoadNature.Seismic,"E"},
+            {LoadNature.Accidental,"CO"},
+            {LoadNature.Notional,"USER"},
+            {LoadNature.Other,"USER"}
+        };
+            converter.TryGetValue(bhomNature, out nature);
+        }
+
+        /***************************************************/
+
     }
 }

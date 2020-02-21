@@ -20,21 +20,35 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.IO;
-using BH.oM.Structure.Constraints;
+using BH.oM.Structure.Loads;
+using BH.oM.Geometry;
+using System.Collections.Generic;
+
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCSupport(this Constraint6DOF constraint6DOF)
-        {
-               string midasSupport = (
-                    " " + "," +
-                    Engine.MidasCivil.Query.SupportString(constraint6DOF) + "," +
-                    constraint6DOF.Name
-                    );
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
-            return midasSupport;
+        public static string FromVector(Vector bhomVector)
+        {
+            string MCDirection = "X";
+
+            if (bhomVector.Y != 0)
+            {
+                MCDirection = "Y";
+            }
+            else if (bhomVector.Z != 0)
+            {
+                MCDirection = "Z";
+            }
+
+            return MCDirection;
         }
+
+        /***************************************************/
+
     }
 }

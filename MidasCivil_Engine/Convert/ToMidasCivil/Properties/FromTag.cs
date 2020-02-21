@@ -21,27 +21,21 @@
  */
 
 using System.IO;
-using System.Collections.Generic;
-using BH.oM.Structure.MaterialFragments;
-
-namespace BH.Adapter.MidasCivil
+using BH.oM.Structure.Constraints;
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public static partial class Convert
     {
-        private bool CreateCollection(IEnumerable<IMaterialFragment> materials)
+        public static string FromTag(string name)
         {
-            string path = CreateSectionFile("MATERIAL");
-            List<string> midasMaterials = new List<string>();
+                //Check what AUTOTYPE is, seems auto set to 0
 
-            foreach (IMaterialFragment material in materials)
-            {
-                midasMaterials.Add(Engine.MidasCivil.Convert.FromMaterial(material));
-            }
+                string midasBoundaryGroup = (
+                    name + "," +
+                    "0"
+                );
 
-            File.AppendAllLines(path, midasMaterials);
-
-            return true;
+            return midasBoundaryGroup;
         }
-
     }
 }

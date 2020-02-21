@@ -20,29 +20,21 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Structure.Loads;
-using BH.oM.Geometry;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using BH.oM.Structure.Elements;
-using BH.Engine.Geometry;
-
+using System.IO;
+using BH.oM.Structure.Constraints;
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCAreaUniformlyDistributedLoad(this AreaUniformlyDistributedLoad femeshLoad, string assignedFEMesh)
+        public static string FromSupport(this Constraint6DOF constraint6DOF)
         {
-            string midasFEMeshLoad = null;
+               string midasSupport = (
+                    " " + "," +
+                    Engine.MidasCivil.Query.SupportString(constraint6DOF) + "," +
+                    constraint6DOF.Name
+                    );
 
-            string direction = MCDirectionConverter(femeshLoad.Pressure);
-            midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + MCAxisConverter(femeshLoad.Axis) + direction +
-                                                                    ", 0, 0, 0, " + MCProjectionConverter(femeshLoad.Projected) +
-                                                                    ", " + MCVectorConverter(femeshLoad.Pressure, direction) +
-                                                                    ", 0, 0, 0, 0, " + femeshLoad.Name;
-
-            return midasFEMeshLoad;
+            return midasSupport;
         }
     }
 }

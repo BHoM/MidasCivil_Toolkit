@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barVaryingDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
-                string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(barVaryingDistributedLoad);
+                string midasLoadGroup = Engine.MidasCivil.Convert.FromLoadGroup(barVaryingDistributedLoad);
 
                 List<string> assignedBars = barVaryingDistributedLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
 
@@ -74,7 +74,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarVaryingDistributedLoad(barVaryingDistributedLoad, assignedBar, "Force"));
+                                midasBarLoads.Add(Engine.MidasCivil.Convert.FromBarVaryingDistributedLoad(barVaryingDistributedLoad, assignedBar, "Force"));
                             }
                         }
                         else
@@ -84,7 +84,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarVaryingDistributedLoad(barVaryingDistributedLoad, assignedBar, "Moment"));
+                                midasBarLoads.Add(Engine.MidasCivil.Convert.FromBarVaryingDistributedLoad(barVaryingDistributedLoad, assignedBar, "Moment"));
                             }
                         }
 

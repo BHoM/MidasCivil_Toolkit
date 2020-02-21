@@ -28,7 +28,11 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCMaterial(this IMaterialFragment material)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromMaterial(this IMaterialFragment material)
         {
             string type = "";
             if(!(material.IMaterialType() == MaterialType.Steel || material.IMaterialType() == MaterialType.Concrete))
@@ -63,9 +67,10 @@ namespace BH.Engine.MidasCivil
                 return null; ;
             }
 
-            //material.CustomData[AdapterIdName].ToString();
-
             return midasMaterial;
         }
+
+        /***************************************************/
+
     }
 }

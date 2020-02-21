@@ -20,27 +20,44 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
+using BH.oM.Structure.Loads;
+using BH.oM.Geometry;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BH.Engine.MidasCivil
 {
-    public static partial class Compute
+    public static partial class Convert
     {
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
 
-        //Add methods for converting From BHoM to the specific software types, if possible to do without any BHoM calls
-        //Example:
-        //public static MidasCivilNode ToMidasCivil(this Node node)
-        //{
-        //    //Insert code for convertion
-        //}
+        public static string FromBarPointLoad(this BarPointLoad barLoad, string assignedBar, string loadType)
+        {
+            string midasBarLoad = null;
+            if (loadType == "Force")
+            {
+                string direction = FromVector(barLoad.Force);
+                midasBarLoad = assignedBar + ",BEAM,CONLOAD," + FromLoadAxis(barLoad.Axis) + direction +
+                                                                    "," + FromLoadProjection(barLoad.Projected) +
+                                                                    ",NO,aDir[1], , , ," + barLoad.DistanceFromA.ToString() + "," +
+                                                                    FromVectorDirection(barLoad.Force, direction) +
+                                                                    ",0,0,0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+            }
+            else
+            {
+                string direction = FromVector(barLoad.Moment);
+                midasBarLoad = assignedBar + ",BEAM,CONMOMENT," + FromLoadAxis(barLoad.Axis) + direction +
+                                                                    "," + FromLoadProjection(barLoad.Projected) +
+                                                                    ",NO,aDir[1], , , ," + barLoad.DistanceFromA.ToString() + "," +
+                                                                    FromVectorDirection(barLoad.Moment, direction) +
+                                                                    ",0,0,0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+            }
+
+            return midasBarLoad;
+        }
 
         /***************************************************/
+
     }
 }

@@ -20,23 +20,35 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Structure.Loads;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BH.Engine.MidasCivil
 {
-    public static partial class Convert
+    public partial class Convert
     {
-        public static string ToMCPointLoad(this PointLoad pointLoad, string assignedNode)
+        public static string ToType(string type)
         {
-            string midasPointLoad = assignedNode + "," + pointLoad.Force.X.ToString() +
-                                                    "," + pointLoad.Force.Y.ToString() +
-                                                    "," + pointLoad.Force.Z.ToString() +
-                                                    "," + pointLoad.Moment.X.ToString() +
-                                                    "," + pointLoad.Moment.Y.ToString() +
-                                                    "," + pointLoad.Moment.Z.ToString() +
-                                                    "," + pointLoad.Name;
-            return midasPointLoad;
+
+            string[] delimited = type.Split('.');
+            type = delimited[delimited.Count() - 1];
+
+            Dictionary<string, string> conversion = new Dictionary<string, string>
+            {
+                {"Node", "NODE" },
+                {"Bar", "ELEMENT" },
+                {"FEMesh", "ELEMENT" },
+                {"Constraint6DOF", "CONSTRAINT" },
+                {"Material", "MATERIAL" },
+                {"SteelSection", "SECTION" },
+                {"ConcreteSection", "SECTION" },
+                {"ConstantThickness", "THICKNESS" },
+                {"Loadcase", "LOADCASE" },
+            };
+
+            string midasVersion;
+            conversion.TryGetValue(type, out midasVersion);
+            return midasVersion;
         }
     }
 }

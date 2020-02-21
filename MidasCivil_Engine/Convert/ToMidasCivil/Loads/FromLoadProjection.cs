@@ -21,16 +21,30 @@
  */
 
 using BH.oM.Structure.Loads;
+using BH.oM.Geometry;
 using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCLoadGroup(this ILoad load)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromLoadProjection(bool bhomProjection)
         {
-            string midasLoadGroup = load.Name;
-            return midasLoadGroup;
+            string MCProjection = "NO";
+
+            if (bhomProjection)
+            {
+                MCProjection = "YES";
+            }
+
+            return MCProjection;
         }
+
+        /***************************************************/
+
     }
 }

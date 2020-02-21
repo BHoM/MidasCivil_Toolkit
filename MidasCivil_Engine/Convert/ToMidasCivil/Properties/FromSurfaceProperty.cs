@@ -27,12 +27,20 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCSurfaceProperty(this ISurfaceProperty surfaceProperty, string version)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromSurfaceProperty(this ISurfaceProperty surfaceProperty, string version)
         {
             string midasSurfaceProperty = CreateSurfaceProfile(surfaceProperty as dynamic, version);
 
             return midasSurfaceProperty;
         }
+
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
 
         private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty, string version)
         {
@@ -60,11 +68,15 @@ namespace BH.Engine.MidasCivil
             }
         }
 
+        /***************************************************/
+
         private static string CreateSurfaceProfile(LoadingPanelProperty bhomSurfaceProperty)
         {
             Engine.Reflection.Compute.RecordError("LoadingPanelProperty not supported in MidasCivil_Toolkit");
             return null;
         }
+
+        /***************************************************/
 
         private static string CreateSurfaceProfile(Ribbed bhomSurfaceProperty)
         {
@@ -72,11 +84,15 @@ namespace BH.Engine.MidasCivil
             return null;
         }
 
+        /***************************************************/
+
         private static string CreateSurfaceProfile(Waffle bhomSurfaceProperty)
         {
             Engine.Reflection.Compute.RecordError("Waffle not supported in MidasCivil_Toolkit");
             return null;
         }
+
+        /***************************************************/
 
     }
 }

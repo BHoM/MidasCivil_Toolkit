@@ -28,33 +28,38 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCBarVaryingDistributedLoad(this BarVaryingDistributedLoad barLoad, string assignedBar, string loadType)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromBarUniformlyDistributedLoad(this BarUniformlyDistributedLoad barLoad, string assignedBar, string loadType)
         {
             string midasBarLoad = null;
-            if (loadType == "Force")
+            if (loadType=="Force")
             {
-                string direction = MCDirectionConverter(barLoad.ForceA);
-                midasBarLoad = assignedBar + ",BEAM,UNILOAD," + MCAxisConverter(barLoad.Axis) + direction +
-                                                                    "," + MCProjectionConverter(barLoad.Projected) +
-                                                                    ",NO,aDir[1], , , ," + barLoad.DistanceFromA + "," +
-                                                                    MCVectorConverter(barLoad.ForceA, direction) + "," +
-                                                                    barLoad.DistanceFromB + "," 
-                                                                    + MCVectorConverter(barLoad.ForceB, direction) +
+                string direction = FromVector(barLoad.Force);
+                midasBarLoad = assignedBar + ",BEAM,UNILOAD," + FromLoadAxis(barLoad.Axis) + direction +
+                                                                    "," + FromLoadProjection(barLoad.Projected) +
+                                                                    ",NO,aDir[1], , , ,0," +
+                                                                    FromVectorDirection(barLoad.Force, direction) +
+                                                                    ",1," + FromVectorDirection(barLoad.Force, direction) +
                                                                     ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
             }
             else
             {
-                string direction = MCDirectionConverter(barLoad.MomentA);
-                midasBarLoad = assignedBar + ",BEAM,UNIMOMENT," + MCAxisConverter(barLoad.Axis) + direction +
-                                                                    "," + MCProjectionConverter(barLoad.Projected) +
-                                                                    ",NO,aDir[1], , , ," + barLoad.DistanceFromA + "," +
-                                                                    MCVectorConverter(barLoad.MomentA, direction) + "," +
-                                                                    barLoad.DistanceFromB + ","
-                                                                    + MCVectorConverter(barLoad.MomentB, direction) +
+                string direction = FromVector(barLoad.Moment);
+                midasBarLoad = assignedBar + ",BEAM,UNIMOMENT," + FromLoadAxis(barLoad.Axis) + direction +
+                                                                    "," + FromLoadProjection(barLoad.Projected) +
+                                                                    ",NO,aDir[1], , , ,0," +
+                                                                    FromVectorDirection(barLoad.Moment, direction) +
+                                                                    ",1," + FromVectorDirection(barLoad.Moment, direction) +
                                                                     ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
             }
 
             return midasBarLoad;
         }
+
+        /***************************************************/
+
     }
 }

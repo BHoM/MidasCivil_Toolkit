@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barPointLoad.Loadcase.Name + "\\BEAMLOAD");
-                string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(barPointLoad);
+                string midasLoadGroup = Engine.MidasCivil.Convert.FromLoadGroup(barPointLoad);
 
                 List<string> assignedBars = barPointLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
 
@@ -64,7 +64,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarPointLoad(barPointLoad, assignedBar, "Force"));
+                                midasBarLoads.Add(Engine.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Force"));
                             }
                         }
                         else
@@ -73,7 +73,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarPointLoad(barPointLoad, assignedBar, "Moment"));
+                                midasBarLoads.Add(Engine.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Moment"));
                             }
                         }
 
