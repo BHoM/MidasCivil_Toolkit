@@ -26,11 +26,11 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCAreaTemperatureLoad(this AreaTemperatureLoad FEMeshLoad, string assignedFEMesh)
+        public static string ToMCAreaTemperatureLoad(this AreaTemperatureLoad femeshLoad, string assignedFEMesh)
         {
             string midasFEMeshLoad = null;
 
-            midasFEMeshLoad = assignedFEMesh + "," + FEMeshLoad.TemperatureChange.ToString() + "," + FEMeshLoad.Name;
+            midasFEMeshLoad = assignedFEMesh + "," + femeshLoad.TemperatureChange.ToString() + "," + femeshLoad.Name;
 
             return midasFEMeshLoad;
         }

@@ -32,15 +32,15 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCAreaUniformlyDistributedLoad(this AreaUniformlyDistributedLoad FEMeshLoad, string assignedFEMesh)
+        public static string ToMCAreaUniformlyDistributedLoad(this AreaUniformlyDistributedLoad femeshLoad, string assignedFEMesh)
         {
             string midasFEMeshLoad = null;
 
-            string direction = MCDirectionConverter(FEMeshLoad.Pressure);
-            midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + MCAxisConverter(FEMeshLoad.Axis) + direction +
-                                                                    ", 0, 0, 0, " + MCProjectionConverter(FEMeshLoad.Projected) +
-                                                                    ", " + MCVectorConverter(FEMeshLoad.Pressure, direction) +
-                                                                    ", 0, 0, 0, 0, " + FEMeshLoad.Name;
+            string direction = MCDirectionConverter(femeshLoad.Pressure);
+            midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + MCAxisConverter(femeshLoad.Axis) + direction +
+                                                                    ", 0, 0, 0, " + MCProjectionConverter(femeshLoad.Projected) +
+                                                                    ", " + MCVectorConverter(femeshLoad.Pressure, direction) +
+                                                                    ", 0, 0, 0, 0, " + femeshLoad.Name;
 
             return midasFEMeshLoad;
         }
