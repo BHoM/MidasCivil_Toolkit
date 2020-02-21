@@ -71,7 +71,6 @@ namespace BH.Engine.MidasCivil
                 }
 
                 // Sort through each of the sorted Loads
-
                 foreach (var sortedLoad in sortedLoads)
                 {
                     List<List<string>> loadBars = new List<List<string>>();
@@ -140,7 +139,6 @@ namespace BH.Engine.MidasCivil
                     }
 
                     // Get corresponding BhoM bar and create resultant load
-
                     for (int i = 0; i < distinctLoads.Count; i++)
                     {
                         List<Bar> matchingBhomBars = new List<Bar>();
