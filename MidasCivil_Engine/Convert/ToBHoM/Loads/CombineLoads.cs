@@ -115,12 +115,12 @@ namespace BH.Engine.MidasCivil
                     }
 
                     // Get distinct resultant loads for each bar and extract all bars that have that distinct load
-                    List<double[]> distinctLoads = vectors.Distinct(new ArrayComparer()).ToList();
+                    List<double[]> distinctLoads = vectors.Distinct(new Comparer.ArrayComparer()).ToList();
                     List<List<string>> matchingBars = new List<List<string>>();
 
                     foreach (double[] distinctLoad in distinctLoads)
                     {
-                        ArrayComparer comparer = new ArrayComparer();
+                        Comparer.ArrayComparer comparer = new Comparer.ArrayComparer();
 
                         var distinctMatches = vectors.Select((v, i) => new { v, i })
                             .Where(x => comparer.Equals(x.v, distinctLoad));
@@ -159,25 +159,8 @@ namespace BH.Engine.MidasCivil
             return resultant;
         }
 
-        private class ArrayComparer : IEqualityComparer<double[]>
-        {
-            public bool Equals(double[] x, double[] y)
-            {
-                if (x.Length != y.Length)
-                    return false;
 
-                for (int i = 0; i < x.Length; ++i)
-                    if (!x[i].Equals(y[i]))
-                        return false;
 
-                return true;
-            }
-
-            public int GetHashCode(double[] obj)
-            {
-                return string.Join("", obj).GetHashCode();
-            }
-        }
     }
 }
 
