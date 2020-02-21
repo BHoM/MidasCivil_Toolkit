@@ -28,29 +28,23 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCBarPointLoad(this BarPointLoad barLoad, string assignedBar, string loadType)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromLoadAxis(LoadAxis bhomAxis)
         {
-            string midasBarLoad = null;
-            if (loadType == "Force")
+            string MCAxis = "G";
+
+            if (bhomAxis == LoadAxis.Local)
             {
-                string direction = MCDirectionConverter(barLoad.Force);
-                midasBarLoad = assignedBar + ",BEAM,CONLOAD," + MCAxisConverter(barLoad.Axis) + direction +
-                                                                    "," + MCProjectionConverter(barLoad.Projected) +
-                                                                    ",NO,aDir[1], , , ," + barLoad.DistanceFromA.ToString() + "," +
-                                                                    MCVectorConverter(barLoad.Force, direction) +
-                                                                    ",0,0,0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
-            }
-            else
-            {
-                string direction = MCDirectionConverter(barLoad.Moment);
-                midasBarLoad = assignedBar + ",BEAM,CONMOMENT," + MCAxisConverter(barLoad.Axis) + direction +
-                                                                    "," + MCProjectionConverter(barLoad.Projected) +
-                                                                    ",NO,aDir[1], , , ," + barLoad.DistanceFromA.ToString() + "," +
-                                                                    MCVectorConverter(barLoad.Moment, direction) +
-                                                                    ",0,0,0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+                MCAxis = "L";
             }
 
-            return midasBarLoad;
+            return MCAxis;
         }
+
+        /***************************************************/
+
     }
 }

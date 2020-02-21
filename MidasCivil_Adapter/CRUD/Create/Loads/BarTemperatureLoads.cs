@@ -37,7 +37,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasTemperatureLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barTemperatureLoad.Loadcase.Name + "\\ELTEMPER");
-                string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(barTemperatureLoad);
+                string midasLoadGroup = Engine.MidasCivil.Convert.FromLoadGroup(barTemperatureLoad);
 
                 List<Bar> assignedElements = barTemperatureLoad.Objects.Elements;
 
@@ -50,7 +50,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedBar in assignedBars)
                 {
-                    midasTemperatureLoads.Add(Engine.MidasCivil.Convert.ToMCBarTemperatureLoad(barTemperatureLoad, assignedBar));
+                    midasTemperatureLoads.Add(Engine.MidasCivil.Convert.FromBarTemperatureLoad(barTemperatureLoad, assignedBar));
                 }
 
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);

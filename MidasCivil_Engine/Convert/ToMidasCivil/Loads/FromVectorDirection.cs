@@ -20,28 +20,39 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.IO;
+using BH.oM.Structure.Loads;
+using BH.oM.Geometry;
 using System.Collections.Generic;
-using BH.oM.Structure.MaterialFragments;
 
-namespace BH.Adapter.MidasCivil
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public static partial class Convert
     {
-        private bool CreateCollection(IEnumerable<IMaterialFragment> materials)
-        {
-            string path = CreateSectionFile("MATERIAL");
-            List<string> midasMaterials = new List<string>();
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
-            foreach (IMaterialFragment material in materials)
+        public static string FromVectorDirection(Vector bhomVector, string direction)
+        {
+            string MCLoad = "0";
+
+            if (direction == "X")
             {
-                midasMaterials.Add(Engine.MidasCivil.Convert.FromMaterial(material));
+                MCLoad = bhomVector.X.ToString();
+            }
+            else if (direction == "Y")
+            {
+                MCLoad = bhomVector.Y.ToString();
+            }
+            else
+            {
+                MCLoad = bhomVector.Z.ToString();
             }
 
-            File.AppendAllLines(path, midasMaterials);
-
-            return true;
+            return MCLoad;
         }
+
+        /***************************************************/
 
     }
 }

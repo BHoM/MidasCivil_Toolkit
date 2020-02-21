@@ -21,18 +21,23 @@
  */
 
 using BH.oM.Structure.Loads;
+using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCAreaTemperatureLoad(this AreaTemperatureLoad femeshLoad, string assignedFEMesh)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromLoadGroup(this ILoad load)
         {
-            string midasFEMeshLoad = null;
-
-            midasFEMeshLoad = assignedFEMesh + "," + femeshLoad.TemperatureChange.ToString() + "," + femeshLoad.Name;
-
-            return midasFEMeshLoad;
+            string midasLoadGroup = load.Name;
+            return midasLoadGroup;
         }
+
+        /***************************************************/
+
     }
 }

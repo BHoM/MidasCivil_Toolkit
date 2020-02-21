@@ -20,47 +20,48 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
+using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCRigidLink(this RigidLink link)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static List<string> FromLoadCombination(this LoadCombination loadCombination, string version)
         {
-            string midasLink = "";
+            List<string> midasLoadCombination = new List<string>();
 
-            string masterNode = link.MasterNode.CustomData[AdapterIdName].ToString();
-            string slaveNodes = "";
+            string line1 = "";
 
-            foreach (Node slaveNode in link.SlaveNodes)
+            switch(version)
             {
-                slaveNodes = slaveNodes + " " + slaveNode.CustomData[AdapterIdName].ToString();
+                case "8.8.5":
+                    line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0, 0";
+                    break;
+                default:
+                    line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0";
+                    break;
             }
 
-            string fixity = BoolToFixity(link.Constraint.XtoX) +
-                            BoolToFixity(link.Constraint.YtoY) +
-                            BoolToFixity(link.Constraint.ZtoZ) +
-                            BoolToFixity(link.Constraint.XXtoXX) +
-                            BoolToFixity(link.Constraint.YYtoYY) +
-                            BoolToFixity(link.Constraint.ZZtoZZ);
+            midasLoadCombination.Add(line1);
+            string line2 = 
+                "ST, " + loadCombination.LoadCases[0].Item2.Name + "," + loadCombination.LoadCases[0].Item1.ToString();
 
-            midasLink = "1, " + masterNode + "," + fixity + "," + slaveNodes + "," + link.Name;
-
-            return midasLink;
-        }
-
-        private static string BoolToFixity(bool fixity)
-        {
-            string converted = "0";
-
-            if (fixity)
+            for (int i=1; i< loadCombination.LoadCases.Count; i++)
             {
-                converted = "1";
+                line2 = line2 + ", ST, " + loadCombination.LoadCases[i].Item2.Name+ "," + loadCombination.LoadCases[i].Item1.ToString();
             }
 
-            return converted;
+            midasLoadCombination.Add(line2);
+
+            return midasLoadCombination;
         }
+
+        /***************************************************/
 
     }
 }

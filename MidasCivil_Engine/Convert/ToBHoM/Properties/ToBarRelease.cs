@@ -42,8 +42,8 @@ namespace BH.Engine.MidasCivil
 
             for (int i=0; i<6; i++)
             {
-                bhomStartFixity.Add(Engine.MidasCivil.Convert.Fixity(startFixity.Substring(i, 1)));
-                bhomEndFixity.Add(Engine.MidasCivil.Convert.Fixity(endFixity.Substring(i, 1)));
+                bhomStartFixity.Add(Engine.MidasCivil.Compute.Fixity(startFixity.Substring(i, 1)));
+                bhomEndFixity.Add(Engine.MidasCivil.Compute.Fixity(endFixity.Substring(i, 1)));
             }
 
             Constraint6DOF startConstraint = BH.Engine.Structure.Create.Constraint6DOF(bhomStartFixity[0], bhomStartFixity[1], bhomStartFixity[2],

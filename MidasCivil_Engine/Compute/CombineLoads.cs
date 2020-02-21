@@ -28,7 +28,7 @@ using BH.oM.Geometry;
 
 namespace BH.Engine.MidasCivil
 {
-    public static partial class Convert
+    public static partial class Compute
     {
         /***************************************************/
         /**** Public Methods                            ****/
@@ -40,7 +40,7 @@ namespace BH.Engine.MidasCivil
             var groupedByLoadCase = loads.GroupBy(x => x.Loadcase);
 
             Dictionary<string, Bar> barDictionary = bars.ToDictionary(
-                x => x.CustomData[AdapterIdName].ToString());
+                x => x.CustomData[Convert.AdapterIdName].ToString());
 
             foreach (var loadcaseGroup in groupedByLoadCase)
             {
@@ -83,7 +83,7 @@ namespace BH.Engine.MidasCivil
 
                         foreach (var element in load.Objects.Elements)
                         {
-                            loadBar.Add(element.CustomData[AdapterIdName].ToString());
+                            loadBar.Add(element.CustomData[Convert.AdapterIdName].ToString());
                         }
 
                         loadBars.Add(loadBar);

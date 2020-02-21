@@ -21,40 +21,35 @@
  */
 
 using BH.oM.Structure.Loads;
+using BH.oM.Geometry;
 using System.Collections.Generic;
+using System.Linq;
+using System;
+using BH.oM.Structure.Elements;
+using BH.Engine.Geometry;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCLoadCase(this Loadcase loadcase)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromAreaUniformlyDistributedLoad(this AreaUniformlyDistributedLoad femeshLoad, string assignedFEMesh)
         {
-            LoadNature bhomNature = loadcase.Nature;
-            string midasNature = "D";
-            BhomLoadNatureConverter(bhomNature, ref midasNature);
+            string midasFEMeshLoad = null;
 
-            string midasLoadcase = loadcase.Name + " " + "," + midasNature + ",";
+            string direction = FromVector(femeshLoad.Pressure);
+            midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
+                                                                    ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) +
+                                                                    ", " + FromVectorDirection(femeshLoad.Pressure, direction) +
+                                                                    ", 0, 0, 0, 0, " + femeshLoad.Name;
 
-            return midasLoadcase;
+            return midasFEMeshLoad;
         }
 
-        private static void BhomLoadNatureConverter(LoadNature bhomNature, ref string nature)
-        {
-            Dictionary<LoadNature, string> converter = new Dictionary<LoadNature, string>
-        {
-            {LoadNature.Dead,"D"},
-            {LoadNature.Live,"L"},
-            {LoadNature.Wind,"W"},
-            {LoadNature.Temperature,"T"},
-            {LoadNature.SuperDead,"DC"},
-            {LoadNature.Prestress,"PS"},
-            {LoadNature.Snow,"S"},
-            {LoadNature.Seismic,"E"},
-            {LoadNature.Accidental,"CO"},
-            {LoadNature.Notional,"USER"},
-            {LoadNature.Other,"USER"}
-        };
-            converter.TryGetValue(bhomNature, out nature);
-        }
+        /***************************************************/
+
     }
 }

@@ -27,23 +27,27 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static List<string> ToMCBarRelease(this BarRelease barRelease)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static List<string> FromBarRelease(this BarRelease barRelease)
         {
             List<string> midasRelease = new List<string>();
 
-            string startFixity = BoolToConstraint(barRelease.StartRelease.TranslationX) +
-                                    BoolToConstraint(barRelease.StartRelease.TranslationY) +
-                                    BoolToConstraint(barRelease.StartRelease.TranslationZ) +
-                                    BoolToConstraint(barRelease.StartRelease.RotationX) +
-                                    BoolToConstraint(barRelease.StartRelease.RotationY) +
-                                    BoolToConstraint(barRelease.StartRelease.RotationZ);
+            string startFixity = FromDOFType(barRelease.StartRelease.TranslationX) +
+                                    FromDOFType(barRelease.StartRelease.TranslationY) +
+                                    FromDOFType(barRelease.StartRelease.TranslationZ) +
+                                    FromDOFType(barRelease.StartRelease.RotationX) +
+                                    FromDOFType(barRelease.StartRelease.RotationY) +
+                                    FromDOFType(barRelease.StartRelease.RotationZ);
 
-            string endFixity = BoolToConstraint(barRelease.EndRelease.TranslationX) +
-                                    BoolToConstraint(barRelease.EndRelease.TranslationY) +
-                                    BoolToConstraint(barRelease.EndRelease.TranslationZ) +
-                                    BoolToConstraint(barRelease.EndRelease.RotationX) +
-                                    BoolToConstraint(barRelease.EndRelease.RotationY) +
-                                    BoolToConstraint(barRelease.EndRelease.RotationZ);
+            string endFixity = FromDOFType(barRelease.EndRelease.TranslationX) +
+                                    FromDOFType(barRelease.EndRelease.TranslationY) +
+                                    FromDOFType(barRelease.EndRelease.TranslationZ) +
+                                    FromDOFType(barRelease.EndRelease.RotationX) +
+                                    FromDOFType(barRelease.EndRelease.RotationY) +
+                                    FromDOFType(barRelease.EndRelease.RotationZ);
 
             midasRelease.Add(",NO," + startFixity + ",0,0,0,0,0,0");
             midasRelease.Add(endFixity + ",0,0,0,0,0,0," + barRelease.Name);
@@ -51,16 +55,7 @@ namespace BH.Engine.MidasCivil
             return midasRelease;
         }
 
-        public static string BoolToConstraint(DOFType fixity)
-        {
-            string converted = "0";
+        /***************************************************/
 
-            if (fixity == DOFType.Free)
-            {
-                converted = "1";
-            }
-
-            return converted;
-        }
     }
 }

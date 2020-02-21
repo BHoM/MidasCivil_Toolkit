@@ -20,21 +20,30 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Structure.Loads;
-using System.Collections.Generic;
+using BH.oM.Structure.Elements;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static List<string> ToMCGravityLoad(this GravityLoad gravityLoad)
-        {
-            List<string> midasGravityLoad = new List<string>(){
-                "*SELFWEIGHT",
-                gravityLoad.GravityDirection.X + "," + gravityLoad.GravityDirection.Y + "," + gravityLoad.GravityDirection.Z + "," + gravityLoad.Name
-            };
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
-            return midasGravityLoad;
+        public static string FromNode(this Node node)
+        {
+            string midasNode = 
+                (
+                    node.CustomData[AdapterIdName].ToString() + "," +
+                    node.Position.X.ToString() + "," +
+                    node.Position.Y.ToString() + "," +
+                    node.Position.Z.ToString()
+                );
+
+            return midasNode;
         }
+
+        /***************************************************/
+
     }
 }

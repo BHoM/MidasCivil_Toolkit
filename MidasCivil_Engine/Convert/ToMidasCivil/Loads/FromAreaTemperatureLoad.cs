@@ -20,22 +20,26 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
+
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCNode(this Node node)
-        {
-            string midasNode = 
-                (
-                    node.CustomData[AdapterIdName].ToString() + "," +
-                    node.Position.X.ToString() + "," +
-                    node.Position.Y.ToString() + "," +
-                    node.Position.Z.ToString()
-                );
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
-            return midasNode;
+        public static string FromAreaTemperatureLoad(this AreaTemperatureLoad femeshLoad, string assignedFEMesh)
+        {
+            string midasFEMeshLoad = null;
+
+            midasFEMeshLoad = assignedFEMesh + "," + femeshLoad.TemperatureChange.ToString() + "," + femeshLoad.Name;
+
+            return midasFEMeshLoad;
         }
+
+        /***************************************************/
+
     }
 }

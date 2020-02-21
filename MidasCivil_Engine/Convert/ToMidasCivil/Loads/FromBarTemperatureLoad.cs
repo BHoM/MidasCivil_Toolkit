@@ -20,35 +20,26 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
-using System.Linq;
+using BH.oM.Structure.Loads;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Convert
+    public static partial class Convert
     {
-        public static string BHoMType(string type)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromBarTemperatureLoad(this BarTemperatureLoad barLoad, string assignedBar)
         {
+            string midasBarLoad = null;
 
-            string[] delimited = type.Split('.');
-            type = delimited[delimited.Count() - 1];
+            midasBarLoad = assignedBar + "," + barLoad.TemperatureChange.ToString() + "," + barLoad.Name;
 
-            Dictionary<string, string> conversion = new Dictionary<string, string>
-            {
-                {"Node", "NODE" },
-                {"Bar", "ELEMENT" },
-                {"FEMesh", "ELEMENT" },
-                {"Constraint6DOF", "CONSTRAINT" },
-                {"Material", "MATERIAL" },
-                {"SteelSection", "SECTION" },
-                {"ConcreteSection", "SECTION" },
-                {"ConstantThickness", "THICKNESS" },
-                {"Loadcase", "LOADCASE" },
-            };
-
-            string midasVersion;
-            conversion.TryGetValue(type, out midasVersion);
-            return midasVersion;
+            return midasBarLoad;
         }
+
+        /***************************************************/
+
     }
 }

@@ -20,28 +20,53 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.IO;
-using System.Collections.Generic;
-using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.Elements;
 
-namespace BH.Adapter.MidasCivil
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public static partial class Convert
     {
-        private bool CreateCollection(IEnumerable<IMaterialFragment> materials)
-        {
-            string path = CreateSectionFile("MATERIAL");
-            List<string> midasMaterials = new List<string>();
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
-            foreach (IMaterialFragment material in materials)
+        public static string FromRigidLink(this RigidLink link)
+        {
+            string midasLink = "";
+
+            string masterNode = link.MasterNode.CustomData[AdapterIdName].ToString();
+            string slaveNodes = "";
+
+            foreach (Node slaveNode in link.SlaveNodes)
             {
-                midasMaterials.Add(Engine.MidasCivil.Convert.FromMaterial(material));
+                slaveNodes = slaveNodes + " " + slaveNode.CustomData[AdapterIdName].ToString();
             }
 
-            File.AppendAllLines(path, midasMaterials);
+            string fixity = BoolToFixity(link.Constraint.XtoX) +
+                            BoolToFixity(link.Constraint.YtoY) +
+                            BoolToFixity(link.Constraint.ZtoZ) +
+                            BoolToFixity(link.Constraint.XXtoXX) +
+                            BoolToFixity(link.Constraint.YYtoYY) +
+                            BoolToFixity(link.Constraint.ZZtoZZ);
 
-            return true;
+            midasLink = "1, " + masterNode + "," + fixity + "," + slaveNodes + "," + link.Name;
+
+            return midasLink;
         }
+
+        private static string BoolToFixity(bool fixity)
+        {
+            string converted = "0";
+
+            if (fixity)
+            {
+                converted = "1";
+            }
+
+            return converted;
+        }
+
+        /***************************************************/
 
     }
 }

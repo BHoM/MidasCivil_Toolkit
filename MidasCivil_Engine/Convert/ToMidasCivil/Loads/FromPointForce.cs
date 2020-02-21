@@ -21,18 +21,29 @@
  */
 
 using BH.oM.Structure.Loads;
+using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static string ToMCBarTemperatureLoad(this BarTemperatureLoad barLoad, string assignedBar)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static string FromPointLoad(this PointLoad pointLoad, string assignedNode)
         {
-            string midasBarLoad = null;
-
-            midasBarLoad = assignedBar + "," + barLoad.TemperatureChange.ToString() + "," + barLoad.Name;
-
-            return midasBarLoad;
+            string midasPointLoad = assignedNode + "," + pointLoad.Force.X.ToString() +
+                                                    "," + pointLoad.Force.Y.ToString() +
+                                                    "," + pointLoad.Force.Z.ToString() +
+                                                    "," + pointLoad.Moment.X.ToString() +
+                                                    "," + pointLoad.Moment.Y.ToString() +
+                                                    "," + pointLoad.Moment.Z.ToString() +
+                                                    "," + pointLoad.Name;
+            return midasPointLoad;
         }
+
+        /***************************************************/
+
     }
 }
