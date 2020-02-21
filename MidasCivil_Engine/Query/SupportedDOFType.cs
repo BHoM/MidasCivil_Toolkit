@@ -26,7 +26,7 @@ namespace BH.Engine.MidasCivil
 {
     public partial class Query
     {
-        public static bool SupportedDOFTypes(DOFType freedom)
+        public static bool SupportedDOFType(DOFType freedom)
         {
             switch(freedom)
             {
