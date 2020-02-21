@@ -37,14 +37,14 @@ namespace BH.Engine.MidasCivil
         [Input("active", "Execute the method")]
         [Output("success","Was the execution successful?")]
 
-        public static bool CombineTextFiles(string filepath, List<Type> types = null, bool active = false)
+        public static bool CombineTextFiles(string filePath, List<Type> types = null, bool active = false)
         {
             bool success = true;
 
             if (active)
             {
                 string directory;
-                List<string> delimited = filepath.Split(new Char[] { '\\' }).ToList();
+                List<string> delimited = filePath.Split(new Char[] { '\\' }).ToList();
                 delimited.Reverse();
                 delimited.RemoveAt(0);
                 delimited.Reverse();
