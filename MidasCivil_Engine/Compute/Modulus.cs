@@ -25,7 +25,7 @@ using System;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Compute
+    public static partial class Compute
     {
         public static double Modulus(Vector vector)
         {

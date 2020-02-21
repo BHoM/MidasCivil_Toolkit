@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Compute
+    public static partial class Compute
     {
         public static string AssignmentString(List<int> assignmentIndexes)
         {

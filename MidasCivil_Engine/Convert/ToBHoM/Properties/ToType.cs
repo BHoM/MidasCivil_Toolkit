@@ -25,7 +25,7 @@ using System.Linq;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Convert
+    public static partial class Convert
     {
         public static string ToType(string type)
         {
