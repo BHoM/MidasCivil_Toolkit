@@ -29,6 +29,10 @@ namespace BH.Engine.MidasCivil.Comparer
 {
     public class ArrayComparer : IEqualityComparer<double[]>
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public bool Equals(double[] x, double[] y)
         {
             if (x.Length != y.Length)
@@ -41,10 +45,15 @@ namespace BH.Engine.MidasCivil.Comparer
             return true;
         }
 
+        /***************************************************/
+
         public int GetHashCode(double[] obj)
         {
             return string.Join("", obj).GetHashCode();
         }
+
+        /***************************************************/
+
     }
 }
 
