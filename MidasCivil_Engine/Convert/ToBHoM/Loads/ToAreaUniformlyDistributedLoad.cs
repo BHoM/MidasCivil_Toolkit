@@ -29,25 +29,24 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static BarUniformlyDistributedLoad ToBHoMBarUniformlyDistributedLoad(string barUniformlyDistributedLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
+        public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributedLoad(string areaUniformlyDistributedLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count)
         {
-            string[] delimitted = barUniformlyDistributedLoad.Split(',');
-            List<Bar> bhomAssociatedBars = new List<Bar>();
+            string[] delimitted = areaUniformlyDistributedLoad.Split(',');
+            List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
 
             Loadcase bhomLoadcase;
             loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
 
-            foreach (string associatedBar in associatedBars)
+            foreach (string associatedFEMesh in associatedFEMeshes)
             {
-                Bar bhomAssociatedBar;
-                barDictionary.TryGetValue(associatedBar, out bhomAssociatedBar);
-                bhomAssociatedBars.Add(bhomAssociatedBar);
+                FEMesh bhomAssociatedFEMesh;
+                femeshDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedFEMesh);
+                bhomAssociatedFEMeshes.Add(bhomAssociatedFEMesh);
             }
 
-            string loadType = delimitted[1].Trim();
-            string loadAxis = delimitted[2].Trim().Substring(0, 1);
-            string direction = delimitted[2].Trim().Substring(1, 1);
-            string projection = delimitted[3].Trim();
+            string loadAxis = delimitted[3].Trim().Substring(0, 1);
+            string direction = delimitted[3].Trim().Substring(1, 1);
+            string projection = delimitted[7].Trim();
 
             LoadAxis axis = LoadAxis.Global;
             bool loadProjection = false;
@@ -65,7 +64,7 @@ namespace BH.Engine.MidasCivil
             double XLoad = 0;
             double YLoad = 0;
             double ZLoad = 0;
-            double force = double.Parse(delimitted[10].Trim());
+            double force = double.Parse(delimitted[8].Trim());
 
             switch (direction)
             {
@@ -89,30 +88,21 @@ namespace BH.Engine.MidasCivil
 
             string name;
 
-            if (string.IsNullOrWhiteSpace(delimitted[17]))
+            if (string.IsNullOrWhiteSpace(delimitted[13]))
             {
-                name = "UBL" + count;
+                name = "AL" + count;
             }
             else
             {
-                name = delimitted[17].Trim();
+                name = delimitted[13].Trim();
             }
 
-            BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad;
+            AreaUniformlyDistributedLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformlyDistributedLoad(bhomLoadcase, loadVector, bhomAssociatedFEMeshes, axis, loadProjection, name);
+            bhomAreaUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomAreaUniformlyDistributedLoad.Name;
 
-            if (loadType == "UNILOAD")
-            {
-                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(bhomLoadcase, bhomAssociatedBars, loadVector, null, axis, loadProjection, name);
-                bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
-            }
-            else
-            {
-                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(bhomLoadcase, bhomAssociatedBars, null, loadVector, axis, loadProjection, name);
-                bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
-            }
-
-            return bhomBarUniformlyDistributedLoad;
+            return bhomAreaUniformlyDistributedLoad;
         }
+
     }
 }
 

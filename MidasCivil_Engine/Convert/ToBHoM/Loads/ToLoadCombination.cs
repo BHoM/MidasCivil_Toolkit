@@ -22,42 +22,37 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using BH.oM.Structure.Loads;
-using BH.oM.Structure.Elements;
-using BH.oM.Geometry;
-using BH.oM.Base;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static GravityLoad ToBHoMGravityLoad(List<BHoMObject> objects, string gravityLoad, string loadcase, Dictionary<string,Loadcase> loadcaseDictionary, int count)
+        public static LoadCombination ToLoadCombination(string loadCombination1, string loadCombination2, Dictionary<string, Loadcase> bhomLoadCaseDictionary)
         {
-            string[] delimitted = gravityLoad.Split(',');
+            List<string> delimittedLine1 = loadCombination1.Split(',').ToList();
+            List<string> delimittedLine2 = loadCombination2.Split(',').ToList();
 
-            Loadcase bhomLoadcase;
-            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
+            List<Loadcase> associatedLoadcases = new List<Loadcase>();
+            List<double> loadFactors = new List<double>();
 
-            Vector direction = new Vector { X = double.Parse(delimitted[1].Trim()),
-                                            Y = double.Parse(delimitted[2].Trim()),
-                                            Z = double.Parse(delimitted[3].Trim())};
-            string name;
-
-            if (string.IsNullOrWhiteSpace(delimitted[4]))
+            for (int i=1; i<delimittedLine2.Count; i+=3)
             {
-                name = "GL" + count;
-            }
-            else
-            {
-                name = delimitted[4].Trim();
+                Loadcase bhomLoadcase;
+                bhomLoadCaseDictionary.TryGetValue(delimittedLine2[i].Trim(), out bhomLoadcase);
+                associatedLoadcases.Add(bhomLoadcase);
+                loadFactors.Add(double.Parse(delimittedLine2[i+1].Trim()));
             }
 
-            GravityLoad bhomGravityLoad = BH.Engine.Structure.Create.GravityLoad(bhomLoadcase, direction, objects, name);
-            bhomGravityLoad.CustomData[AdapterIdName] = bhomGravityLoad.Name;
+            string name = delimittedLine1[0].Split('=')[1].Trim();
+            int number = 0;
 
-            return bhomGravityLoad;
+            LoadCombination bhomLoadCombination = BH.Engine.Structure.Create.LoadCombination(name, number, associatedLoadcases, loadFactors);
+            bhomLoadCombination.CustomData[AdapterIdName] = name;
+
+            return bhomLoadCombination;
         }
     }
 }
-
 

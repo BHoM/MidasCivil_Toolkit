@@ -31,7 +31,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Bar ToBHoMBar(this string bar, Dictionary<string, Node> bhomNodes,
+        public static Bar ToBar(this string bar, Dictionary<string, Node> bhomNodes,
             Dictionary<string, ISectionProperty> bhomSectionProperties, Dictionary<string, IMaterialFragment> bhomMaterials,
             Dictionary<string, BarRelease> barReleases, Dictionary<string, List<int>> barReleaseAssignments)
         {

@@ -27,7 +27,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static IMaterialFragment ToBHoMMaterial(this string material)
+        public static IMaterialFragment ToMaterial(this string material)
         {
             string[] delimited = material.Split(',');
             string type = delimited[1].Trim();

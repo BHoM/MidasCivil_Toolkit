@@ -31,7 +31,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static FEMesh ToBHoMFEMesh(
+        public static FEMesh ToFEMesh(
             this string feMesh, 
             Dictionary<string, Node> bhomNodes, 
             Dictionary<string,ISurfaceProperty> bhomSurfaceProperties,

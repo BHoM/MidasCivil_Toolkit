@@ -20,52 +20,36 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections.Generic;
-using BH.oM.Structure.Loads;
-using System.Linq;
+using BH.oM.Structure.SurfaceProperties;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Loadcase ToBHoMLoadcase(this string loadcase)
+        public static ISurfaceProperty ToSurfaceProperty(this string surfaceProperty, string version)
         {
-            List<string> delimitted = loadcase.Split(',').ToList();
-            LoadNature nature = LoadNature.Dead;
-            MidasLoadNatureConverter(delimitted[1].Trim(), ref nature);
+            string[] split = surfaceProperty.Split(',');
 
-            Loadcase bhomLoadCase = new Loadcase
+            ISurfaceProperty constantThickness = null;
+
+            switch(version)
             {
-                Name = delimitted[0].Trim(),
-                Nature = nature,
-                Number = 0,
-            };
+                case "8.8.5":
+                    constantThickness = Engine.Structure.Create.ConstantThickness(System.Convert.ToDouble(split[4].Trim()),null,split[1]);
+                    break;
+                default:
+                    constantThickness = Engine.Structure.Create.ConstantThickness(System.Convert.ToDouble(split[3].Trim()));
+                    constantThickness.Name = "t = " + split[3].Trim();
+                    break;
+            }
 
-            bhomLoadCase.CustomData[AdapterIdName] = delimitted[0].Trim();
+            constantThickness.CustomData[AdapterIdName] = split[0].Trim();
 
-            return bhomLoadCase;
+            if (split[5].Trim() == "YES")
+                Engine.Reflection.Compute.RecordWarning("SurfaceProperty objects do not have offsets implemented so this information will be lost");
+
+            return constantThickness;
         }
 
-        public static void MidasLoadNatureConverter(string midasNature, ref LoadNature nature)
-        {
-            Dictionary<string, LoadNature> converter = new Dictionary<string, LoadNature>
-        {
-            {"D", LoadNature.Dead},
-            {"L", LoadNature.Live},
-            {"W", LoadNature.Wind},
-            {"T", LoadNature.Temperature},
-            {"DC", LoadNature.SuperDead},
-            {"DW", LoadNature.SuperDead},
-            {"PL", LoadNature.SuperDead},
-            {"BL", LoadNature.SuperDead},
-            {"PS", LoadNature.Prestress},
-            {"S", LoadNature.Snow}
-        };
-
-            converter.TryGetValue(midasNature, out nature);
-        }
     }
-
 }
-

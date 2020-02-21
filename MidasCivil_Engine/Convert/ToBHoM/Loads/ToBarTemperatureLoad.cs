@@ -28,21 +28,21 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static AreaTemperatureLoad ToBHoMAreaTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count)
+        public static BarTemperatureLoad ToBarTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
         {
             string[] delimitted = temperatureLoad.Split(',');
-            List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
+            List<Bar> bhomAssociatedBars = new List<Bar>();
 
             Loadcase bhomLoadcase;
             loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
 
             foreach (string associatedFEMesh in associatedFEMeshes)
             {
-                if (femeshDictionary.ContainsKey(associatedFEMesh))
+                if (barDictionary.ContainsKey(associatedFEMesh))
                 {
-                    FEMesh bhomAssociatedFEMesh;
-                    femeshDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedFEMesh);
-                    bhomAssociatedFEMeshes.Add(bhomAssociatedFEMesh);
+                    Bar bhomAssociatedBar;
+                    barDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedBar);
+                    bhomAssociatedBars.Add(bhomAssociatedBar);
                 }
             }
 
@@ -59,18 +59,17 @@ namespace BH.Engine.MidasCivil
                 name = delimitted[1].Trim();
             }
 
-            if (bhomAssociatedFEMeshes.Count!=0)
+            if (bhomAssociatedBars.Count != 0)
             {
-                AreaTemperatureLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaTemperatureLoad(bhomLoadcase, temperature, bhomAssociatedFEMeshes, LoadAxis.Global, false, name);
-                bhomAreaUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomAreaUniformlyDistributedLoad.Name;
-                return bhomAreaUniformlyDistributedLoad;
+                BarTemperatureLoad bhombarUniformlyDistributedLoad = Engine.Structure.Create.BarTemperatureLoad(bhomLoadcase, temperature, bhomAssociatedBars, LoadAxis.Global, false, name);
+                bhombarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhombarUniformlyDistributedLoad.Name;
+                return bhombarUniformlyDistributedLoad;
             }
             else
             {
                 return null;
             }
         }
-
     }
 }
 

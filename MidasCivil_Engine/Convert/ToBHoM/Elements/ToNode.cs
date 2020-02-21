@@ -30,7 +30,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Node ToBHoMNode(this string node, Dictionary<string, Constraint6DOF> supports,
+        public static Node ToNode(this string node, Dictionary<string, Constraint6DOF> supports,
             Dictionary<string, List<int>> supportAssignments, Dictionary<string, List<int>> springAssignments)
         {
             List<string> delimitted = node.Split(',').ToList();

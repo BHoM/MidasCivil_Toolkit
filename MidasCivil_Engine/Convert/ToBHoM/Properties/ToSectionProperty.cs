@@ -31,7 +31,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static ISectionProperty ToBHoMSectionProperty(this string sectionProperty)
+        public static ISectionProperty ToSectionProperty(this string sectionProperty)
         {
             string[] split = sectionProperty.Split(',');
             string shape = split[12].Trim();
@@ -136,7 +136,7 @@ namespace BH.Engine.MidasCivil
             return bhomSection;
         }
 
-        public static ISectionProperty ToBHoMSectionProperty(this string sectionProfile, string sectionProperty1,
+        public static ISectionProperty ToSectionProperty(this string sectionProfile, string sectionProperty1,
             string sectionProperty2, string sectionProperty3)
         {
             IProfile bhomProfile = Engine.MidasCivil.Convert.ToProfile(sectionProfile);

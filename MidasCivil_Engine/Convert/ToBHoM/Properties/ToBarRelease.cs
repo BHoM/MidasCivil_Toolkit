@@ -28,7 +28,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static BarRelease ToBHoMBarRelease(string release, int count)
+        public static BarRelease ToBarRelease(string release, int count)
         {
             List<string> delimitted = release.Split(',').ToList();
 

@@ -29,7 +29,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static RigidLink ToBHoMRigidLink(string rigidLink, Dictionary<string,Node> nodes, int count)
+        public static RigidLink ToRigidLink(string rigidLink, Dictionary<string,Node> nodes, int count)
         {
             string[] delimitted = rigidLink.Split(',');
             List<Node> slaveNodes = new List<Node>();
