@@ -20,33 +20,47 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Structure.SectionProperties;
+using BH.oM.Structure.MaterialFragments;
+using BH.oM.Geometry.ShapeProfiles;
+using BH.Engine.Structure;
 using System;
-using System.Collections.Generic;
-using BH.oM.Structure.Loads;
 using System.Linq;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Loadcase ToLoadcase(this string loadcase)
+        public static ISectionProperty ToConcreteSection(this SteelSection steelSection)
         {
-            List<string> delimitted = loadcase.Split(',').ToList();
-            LoadNature nature = LoadNature.Dead;
-            ToLoadNature(delimitted[1].Trim(), ref nature);
+            ConcreteSection bhomSection = null;
+            string sectionType = steelSection.SectionProfile.GetType().ToString().Split('.').Last();
 
-            Loadcase bhomLoadCase = new Loadcase
+            switch (sectionType)
             {
-                Name = delimitted[0].Trim(),
-                Nature = nature,
-                Number = 0,
-            };
+                case "RectangleProfile":
+                    RectangleProfile rectangle = (RectangleProfile)steelSection.SectionProfile;
+                    bhomSection = Engine.Structure.Create.ConcreteRectangleSection(rectangle.Height, rectangle.Width, null, steelSection.Name);
+                    break;
 
-            bhomLoadCase.CustomData[AdapterIdName] = delimitted[0].Trim();
+                case "CircleProfile":
+                    CircleProfile circle = (CircleProfile)steelSection.SectionProfile;
+                    bhomSection = Engine.Structure.Create.ConcreteCircularSection(circle.Diameter, null, steelSection.Name);
+                    break;
 
-            return bhomLoadCase;
+                case "TSectionProfile":
+                    TSectionProfile tee = (TSectionProfile)steelSection.SectionProfile;
+                    bhomSection = Engine.Structure.Create.ConcreteTSection(tee.Height, tee.WebThickness, tee.Width, tee.FlangeThickness, null, steelSection.Name);
+                    break;
+            }
+
+            if (bhomSection == null)
+            {
+                Engine.Reflection.Compute.RecordError(sectionType + "Concrete section not yet supported in the BHoM");
+            }
+
+            return bhomSection;
         }
 
     }
 }
-

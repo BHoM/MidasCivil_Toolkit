@@ -20,33 +20,38 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Geometry;
 using System.Collections.Generic;
-using BH.oM.Structure.Loads;
 using System.Linq;
 
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static Loadcase ToLoadcase(this string loadcase)
+        public static Panel ToPanel(FEMesh mesh)
         {
-            List<string> delimitted = loadcase.Split(',').ToList();
-            LoadNature nature = LoadNature.Dead;
-            ToLoadNature(delimitted[1].Trim(), ref nature);
+            List<Polyline> polylines = new List<Polyline>();
 
-            Loadcase bhomLoadCase = new Loadcase
+            List<Point> points = new List<Point>();
+
+            foreach (Node node in mesh.Nodes)
             {
-                Name = delimitted[0].Trim(),
-                Nature = nature,
-                Number = 0,
-            };
+                points.Add(node.Position);
+            }
 
-            bhomLoadCase.CustomData[AdapterIdName] = delimitted[0].Trim();
+            points.Add(mesh.Nodes.First().Position);
+            polylines.Add(BH.Engine.Geometry.Create.Polyline(points));
 
-            return bhomLoadCase;
+            List<Panel> panels = BH.Engine.Structure.Create.PanelPlanar(polylines);
+
+            if (mesh.CustomData.ContainsValue(AdapterIdName))
+                panels[0].CustomData[AdapterIdName] = mesh.CustomData[AdapterIdName];
+
+            return panels[0];
         }
 
     }
 }
-

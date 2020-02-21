@@ -39,12 +39,12 @@ namespace BH.Engine.MidasCivil
             List<string> slaves = delimitted[2].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
             List<int> assignments = Engine.MidasCivil.Query.Assignments(slaves);
 
-            bool x = Engine.MidasCivil.Compute.Fixity(fixity.Substring(0, 1));
-            bool y = Engine.MidasCivil.Compute.Fixity(fixity.Substring(1, 1));
-            bool z = Engine.MidasCivil.Compute.Fixity(fixity.Substring(2, 1));
-            bool xx = Engine.MidasCivil.Compute.Fixity(fixity.Substring(3, 1));
-            bool yy = Engine.MidasCivil.Compute.Fixity(fixity.Substring(4, 1));
-            bool zz = Engine.MidasCivil.Compute.Fixity(fixity.Substring(5, 1));
+            bool x = Engine.MidasCivil.Compute.FromFixity(fixity.Substring(0, 1));
+            bool y = Engine.MidasCivil.Compute.FromFixity(fixity.Substring(1, 1));
+            bool z = Engine.MidasCivil.Compute.FromFixity(fixity.Substring(2, 1));
+            bool xx = Engine.MidasCivil.Compute.FromFixity(fixity.Substring(3, 1));
+            bool yy = Engine.MidasCivil.Compute.FromFixity(fixity.Substring(4, 1));
+            bool zz = Engine.MidasCivil.Compute.FromFixity(fixity.Substring(5, 1));
 
             LinkConstraint constraint = new LinkConstraint { XtoX = x, YtoY = y, ZtoZ = z, XXtoXX = xx, YYtoYY = yy, ZZtoZZ = zz };
 

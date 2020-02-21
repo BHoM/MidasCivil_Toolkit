@@ -63,9 +63,9 @@ namespace BH.Engine.MidasCivil.Comparer
             Point centrePoint1 = BH.Engine.Geometry.Query.IPointAtParameter(bar1.Centreline(), 0.5);
             Point centrePoint2 = BH.Engine.Geometry.Query.IPointAtParameter(bar2.Centreline(), 0.5);
 
-            if (nodeComparer.Equals(BH.Engine.MidasCivil.Convert.PointToNode(centrePoint1), BH.Engine.MidasCivil.Convert.PointToNode(centrePoint2)))
+            if (nodeComparer.Equals(BH.Engine.MidasCivil.Convert.ToNode(centrePoint1), BH.Engine.MidasCivil.Convert.ToNode(centrePoint2)))
             {
-                return nodeComparer.Equals(BH.Engine.MidasCivil.Convert.PointToNode(centrePoint1), BH.Engine.MidasCivil.Convert.PointToNode(centrePoint2));
+                return nodeComparer.Equals(BH.Engine.MidasCivil.Convert.ToNode(centrePoint1), BH.Engine.MidasCivil.Convert.ToNode(centrePoint2));
             }
 
             return false;

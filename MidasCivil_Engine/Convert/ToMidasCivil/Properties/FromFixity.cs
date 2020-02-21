@@ -24,7 +24,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Compute
     {
-        internal static bool Fixity(string number)
+        internal static bool FromFixity(string number)
         {
             bool fixity = true;
 

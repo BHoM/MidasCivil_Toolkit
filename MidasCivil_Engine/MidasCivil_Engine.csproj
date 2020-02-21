@@ -93,7 +93,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\ToMidasCivil\Elements\FromPanel.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToLoadNature.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToConcreteSection.cs" />
+    <Compile Include="Convert\ToMidasCivil\Elements\FromFEMesh.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromLoadAxis.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromLoadProjection.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromVector.cs" />
@@ -108,7 +111,7 @@
     <Compile Include="Compute\RangeBySplit.cs" />
     <Compile Include="Convert\AdapterIdName.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToType.cs" />
-    <Compile Include="Convert\Fixity.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromFixity.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToRigidLink.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformlyDistributedLoad.cs" />
@@ -158,7 +161,6 @@
     <Compile Include="Convert\ToMidasCivil\Properties\FromSectionProperty.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromSpring.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromSupport.cs" />
-    <Compile Include="Convert\ToMidasCivil\ToMidasCivil.cs" />
     <Compile Include="Compute\CleanString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
