@@ -22,7 +22,7 @@
 
 namespace BH.Engine.MidasCivil
 {
-    public static partial class Compute
+    public static partial class Convert
     {
         internal static bool FromFixity(string number)
         {
