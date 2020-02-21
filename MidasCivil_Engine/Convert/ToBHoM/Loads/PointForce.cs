@@ -30,9 +30,9 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static PointLoad ToBHoMPointLoad(this string PointLoad, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string,Node> nodeDictionary, int count)
+        public static PointLoad ToBHoMPointLoad(this string pointLoad, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string,Node> nodeDictionary, int count)
         {
-            string[] delimitted = PointLoad.Split(',');
+            string[] delimitted = pointLoad.Split(',');
             List<Node> bhomAssociatedNodes = new List<Node>();
 
             Loadcase bhomLoadcase;

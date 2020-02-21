@@ -29,7 +29,7 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static AreaUniformlyDistributedLoad ToBHoMAreaUniformlyDistributedLoad(string areaUniformlyDistributedLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> FEMeshDictionary, int count)
+        public static AreaUniformlyDistributedLoad ToBHoMAreaUniformlyDistributedLoad(string areaUniformlyDistributedLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count)
         {
             string[] delimitted = areaUniformlyDistributedLoad.Split(',');
             List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
@@ -40,7 +40,7 @@ namespace BH.Engine.MidasCivil
             foreach (string associatedFEMesh in associatedFEMeshes)
             {
                 FEMesh bhomAssociatedFEMesh;
-                FEMeshDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedFEMesh);
+                femeshDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedFEMesh);
                 bhomAssociatedFEMeshes.Add(bhomAssociatedFEMesh);
             }
 
