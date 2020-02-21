@@ -20,12 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Structure.Constraints;
 using System.Collections.Generic;
+using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Query
+    public static partial class Query
     {
         public static string SupportString(Constraint6DOF constraint6DOF)
         {

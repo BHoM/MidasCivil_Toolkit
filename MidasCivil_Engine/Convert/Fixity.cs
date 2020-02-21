@@ -22,7 +22,7 @@
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Compute
+    public static partial class Compute
     {
         internal static bool Fixity(string number)
         {
