@@ -69,8 +69,8 @@ namespace BH.Adapter.MidasCivil
                     {
                         if (i < 3)
                         {
-                            barVaryingDistributedLoad.ForceA = createSingleComponentVector(i, startLoadVectors[i]);
-                            barVaryingDistributedLoad.ForceB = createSingleComponentVector(i, endLoadVectors[i]);
+                            barVaryingDistributedLoad.ForceA = CreateSingleComponentVector(i, startLoadVectors[i]);
+                            barVaryingDistributedLoad.ForceB = CreateSingleComponentVector(i, endLoadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
@@ -79,8 +79,8 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            barVaryingDistributedLoad.MomentA = createSingleComponentVector(i-3, startLoadVectors[i]);
-                            barVaryingDistributedLoad.MomentB = createSingleComponentVector(i-3, endLoadVectors[i]);
+                            barVaryingDistributedLoad.MomentA = CreateSingleComponentVector(i-3, startLoadVectors[i]);
+                            barVaryingDistributedLoad.MomentB = CreateSingleComponentVector(i-3, endLoadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
@@ -98,7 +98,7 @@ namespace BH.Adapter.MidasCivil
             return true;
         }
 
-        public static Vector createSingleComponentVector(int index, double value)
+        public static Vector CreateSingleComponentVector(int index, double value)
         {
             Vector vector = new Vector { X=0, Y=0, Z=0 };
 

@@ -33,7 +33,7 @@ namespace BH.Engine.MidasCivil
         {
             List<string> delimitted = loadcase.Split(',').ToList();
             LoadNature nature = LoadNature.Dead;
-            midasLoadNatureConverter(delimitted[1].Trim(), ref nature);
+            MidasLoadNatureConverter(delimitted[1].Trim(), ref nature);
 
             Loadcase bhomLoadCase = new Loadcase
             {
@@ -47,7 +47,7 @@ namespace BH.Engine.MidasCivil
             return bhomLoadCase;
         }
 
-        public static void midasLoadNatureConverter(string midasNature, ref LoadNature nature)
+        public static void MidasLoadNatureConverter(string midasNature, ref LoadNature nature)
         {
             Dictionary<string, LoadNature> converter = new Dictionary<string, LoadNature>
         {

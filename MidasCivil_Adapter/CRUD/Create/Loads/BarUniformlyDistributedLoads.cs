@@ -60,7 +60,7 @@ namespace BH.Adapter.MidasCivil
                     {
                         if (i < 3)
                         {
-                            barUniformlyDistributedLoad.Force = createSingleComponentVector(i, loadVectors[i]);
+                            barUniformlyDistributedLoad.Force = CreateSingleComponentVector(i, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
@@ -69,7 +69,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            barUniformlyDistributedLoad.Moment = createSingleComponentVector(i - 3, loadVectors[i]);
+                            barUniformlyDistributedLoad.Moment = CreateSingleComponentVector(i - 3, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
