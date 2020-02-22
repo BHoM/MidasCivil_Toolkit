@@ -78,7 +78,7 @@ namespace BH.Adapter.MidasCivil
                             indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
 
                             BarTemperatureLoad bhomBarTemperatureLoad =
-                                Engine.MidasCivil.Convert.ToBHoMBarTemperatureLoad(
+                                Engine.MidasCivil.Convert.ToBarTemperatureLoad(
                                     distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i);
 
                             if (bhomBarTemperatureLoad != null)

@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barUniformlyDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
-                string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(barUniformlyDistributedLoad);
+                string midasLoadGroup = Engine.MidasCivil.Convert.FromLoadGroup(barUniformlyDistributedLoad);
 
                 List<string> assignedBars = barUniformlyDistributedLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
 
@@ -60,20 +60,20 @@ namespace BH.Adapter.MidasCivil
                     {
                         if (i < 3)
                         {
-                            barUniformlyDistributedLoad.Force = createSingleComponentVector(i, loadVectors[i]);
+                            barUniformlyDistributedLoad.Force = CreateSingleComponentVector(i, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Force"));
+                                midasBarLoads.Add(Engine.MidasCivil.Convert.FromBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Force"));
                             }
                         }
                         else
                         {
-                            barUniformlyDistributedLoad.Moment = createSingleComponentVector(i - 3, loadVectors[i]);
+                            barUniformlyDistributedLoad.Moment = CreateSingleComponentVector(i - 3, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Moment"));
+                                midasBarLoads.Add(Engine.MidasCivil.Convert.FromBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Moment"));
                             }
                         }
 

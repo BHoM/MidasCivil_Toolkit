@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Query
+    public static partial class Query
     {
         public static List<int> Assignments(List<string> assignments)
         {
