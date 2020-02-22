@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barPointLoad.Loadcase.Name + "\\BEAMLOAD");
-                string midasLoadGroup = Engine.MidasCivil.Convert.ToMCLoadGroup(barPointLoad);
+                string midasLoadGroup = Engine.MidasCivil.Convert.FromLoadGroup(barPointLoad);
 
                 List<string> assignedBars = barPointLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
 
@@ -60,20 +60,20 @@ namespace BH.Adapter.MidasCivil
                     {
                         if (i < 3)
                         {
-                            barPointLoad.Force = createSingleComponentVector(i, loadVectors[i]);
+                            barPointLoad.Force = CreateSingleComponentVector(i, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarPointLoad(barPointLoad, assignedBar, "Force"));
+                                midasBarLoads.Add(Engine.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Force"));
                             }
                         }
                         else
                         {
-                            barPointLoad.Moment = createSingleComponentVector(i - 3, loadVectors[i]);
+                            barPointLoad.Moment = CreateSingleComponentVector(i - 3, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Engine.MidasCivil.Convert.ToMCBarPointLoad(barPointLoad, assignedBar, "Moment"));
+                                midasBarLoads.Add(Engine.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Moment"));
                             }
                         }
 

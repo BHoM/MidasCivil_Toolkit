@@ -26,7 +26,7 @@ using System.Linq;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Query
+    public static partial class Query
     {
         public static List<double> SpringStiffness(Constraint6DOF constraint6DOF)
         {

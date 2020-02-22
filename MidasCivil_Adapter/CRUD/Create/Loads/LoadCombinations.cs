@@ -36,7 +36,7 @@ namespace BH.Adapter.MidasCivil
             foreach (LoadCombination loadCombination in loadCombinations)
             {
                 loadCombination.CustomData[AdapterIdName] = loadCombination.Name;
-                midasLoadCombinations.AddRange(Engine.MidasCivil.Convert.ToMCLoadCombination(loadCombination, midasCivilVersion));
+                midasLoadCombinations.AddRange(Engine.MidasCivil.Convert.FromLoadCombination(loadCombination, midasCivilVersion));
             }
 
             File.AppendAllLines(path, midasLoadCombinations);

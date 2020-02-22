@@ -26,7 +26,7 @@ using System.Linq;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Compute
+    public static partial class Compute
     {
         public static List<int> RangeBySplit(string text, string split)
         {

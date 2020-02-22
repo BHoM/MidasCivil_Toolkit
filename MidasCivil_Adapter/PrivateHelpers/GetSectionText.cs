@@ -37,7 +37,7 @@ namespace BH.Adapter.MidasCivil
             if (File.Exists(path))
             {
                 sectionText = File.ReadAllLines(path).ToList();
-                Engine.MidasCivil.Modify.CleanString(ref sectionText);
+                Engine.MidasCivil.Compute.CleanString(ref sectionText);
             }
             return sectionText;
         }

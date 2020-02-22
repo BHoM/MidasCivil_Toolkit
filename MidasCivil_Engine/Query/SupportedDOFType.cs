@@ -24,9 +24,9 @@ using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Query
+    public static partial class Query
     {
-        public static bool SupportedDOFTypes(DOFType freedom)
+        public static bool SupportedDOFType(DOFType freedom)
         {
             switch(freedom)
             {

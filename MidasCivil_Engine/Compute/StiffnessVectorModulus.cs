@@ -25,9 +25,9 @@ using BH.oM.Structure.Constraints;
 
 namespace BH.Engine.MidasCivil
 {
-    public partial class Compute
+    public static partial class Compute
     {
-        public static double GetStiffnessVectorModulus(Constraint6DOF support)
+        public static double StiffnessVectorModulus(Constraint6DOF support)
         {
             Vector translationalStiffnessVector = new Vector()
             {
