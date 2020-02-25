@@ -43,11 +43,15 @@ namespace BH.Engine.MidasCivil
                 double webSpacing = System.Convert.ToDouble(split[18]);
                 double webThickness = System.Convert.ToDouble(split[16]);
                 double corbel;
-
-                if (webSpacing==0)
+                if (System.Math.Abs(width / 2 - webSpacing / 2 - webThickness / 2) < oM.Geometry.Tolerance.Distance)
+                {
                     corbel = 0;
+                }
+
                 else
+                {
                     corbel = width / 2 - webSpacing / 2 - webThickness / 2;
+                }
 
                 bhomProfile = Engine.Geometry.Create.GeneralisedFabricatedBoxProfile(
                         System.Convert.ToDouble(split[14]), width, webThickness,
