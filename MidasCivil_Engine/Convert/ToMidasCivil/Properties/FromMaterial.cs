@@ -60,6 +60,19 @@ namespace BH.Engine.MidasCivil
                     isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff + "," +
                     isotropic.Density*9.806 + "," + isotropic.Density
                 );
+
+
+                
+                string s2 = isotropic.Name;
+                int count2 = 0;
+                foreach (char c in s2)
+                {
+                    count2++;
+                }
+                if (count2 > 16)
+                {
+                    Engine.Reflection.Compute.RecordWarning("All names must be under 16 characters");
+                }
             }
             else if(material is IOrthotropic)
             {
@@ -74,6 +87,18 @@ namespace BH.Engine.MidasCivil
                     + iorthotropic.PoissonsRatio.X + "," + iorthotropic.PoissonsRatio.Y + "," + iorthotropic.PoissonsRatio.Z + ","
                     + iorthotropic.Density * 9.806 + "," + iorthotropic.Density
                 );
+
+                string s = iorthotropic.Name;
+                int count = 0;
+                foreach (char c in s)
+                {
+                    count++;
+                }
+
+                if (count > 16)
+                {
+                    Engine.Reflection.Compute.RecordWarning("All names must be under 16 characters");
+                }
             }
             return midasMaterial;
         }
