@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2020, the respective contributors. All rights reserved.
  *
@@ -19,8 +19,8 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-
 using BH.oM.Structure.MaterialFragments;
+using BH.oM.Geometry;
 using System.Linq;
 
 namespace BH.Engine.MidasCivil
@@ -32,6 +32,7 @@ namespace BH.Engine.MidasCivil
             string[] delimited = material.Split(',');
             string type = delimited[1].Trim();
             string name = delimited[2].Trim();
+            string tropic = delimited[9].Trim();
             IMaterialFragment bhomMaterial = null;
 
             bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", name);
@@ -47,21 +48,40 @@ namespace BH.Engine.MidasCivil
                 }
             }
 
-
             if (bhomMaterial == null)
             {
                 switch (type)
                 {
                     case "USER":
-                        bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Steel(
-                             name,
-                             double.Parse(delimited[10].Trim()),
-                             double.Parse(delimited[11].Trim()),
-                             double.Parse(delimited[12].Trim()),
-                             density,
-                             double.Parse(delimited[8].Trim()), 0, 0
-                         );
-                        Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a steel material");
+                        if ((delimited[9].Trim()) == "2")
+
+                        {
+                            bhomMaterial = new GenericIsotropicMaterial()
+                            {
+
+                                Name = name,
+                                YoungsModulus = double.Parse(delimited[10].Trim()),
+                                PoissonsRatio = double.Parse(delimited[11].Trim()),
+                                ThermalExpansionCoeff = double.Parse(delimited[12].Trim()),
+                                Density = density,
+                                DampingRatio = double.Parse(delimited[8].Trim())
+                            };
+                            Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Isotropic material");
+                        }
+                        else if ((delimited[9].Trim()) == "3")
+                            bhomMaterial = new GenericOrthotropicMaterial()
+                            {
+                                Name = name,
+                                YoungsModulus = new Vector() { X = double.Parse(delimited[10].Trim()), Y = double.Parse(delimited[11].Trim()), Z = double.Parse(delimited[12].Trim()) },
+                                PoissonsRatio = new Vector() { X = double.Parse(delimited[19].Trim()), Y = double.Parse(delimited[20].Trim()), Z = double.Parse(delimited[21].Trim()) },
+                                ThermalExpansionCoeff = new Vector() { X = double.Parse(delimited[13].Trim()), Y = double.Parse(delimited[14].Trim()), Z = double.Parse(delimited[15].Trim()) },
+                                ShearModulus = new Vector() { X = double.Parse(delimited[16].Trim()), Y = double.Parse(delimited[17].Trim()), Z = double.Parse(delimited[18].Trim()) },
+                                Density = density,
+
+                                DampingRatio = double.Parse(delimited[8].Trim())
+
+                            };
+                        Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Orthotropic material");
                         break;
                     case "STEEL":
                         if (delimited.Count() == 15)
@@ -101,7 +121,6 @@ namespace BH.Engine.MidasCivil
                             bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "C30/37");
                         }
                         break;
-
                     case "SRC":
                         Reflection.Compute.RecordError("BHoM does not support Reinforced Concrete Sections");
                         break;
@@ -111,5 +130,7 @@ namespace BH.Engine.MidasCivil
             bhomMaterial.CustomData[AdapterIdName] = delimited[0].Trim();
             return bhomMaterial;
         }
+
     }
 }
+
