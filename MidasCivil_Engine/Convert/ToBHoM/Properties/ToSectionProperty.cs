@@ -80,8 +80,8 @@ namespace BH.Engine.MidasCivil
             else if (shape == "T")
             {
                 bhomSection = Engine.Structure.Create.GenericSectionFromProfile(Engine.Structure.Create.TSectionProfile
-                    (System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[16]),
-                    System.Convert.ToDouble(split[15]), System.Convert.ToDouble(split[17]), 0, 0), null);
+                    (System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),
+                    System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]), 0, 0), null);
 
                 //   10, DBUSER    , USER-TSECTION     , CC, 0, 0, 0, 0, 0, 0, YES, NO, T  , 2, 0.3, 0.2, 0.02, 0.05, 0, 0, 0, 0, 0, 0
             }
