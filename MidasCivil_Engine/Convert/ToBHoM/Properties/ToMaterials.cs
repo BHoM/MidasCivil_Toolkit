@@ -48,8 +48,6 @@ namespace BH.Engine.MidasCivil
                 }
             }
 
-
-
             if (bhomMaterial == null)
             {
                 switch (type)
@@ -58,8 +56,6 @@ namespace BH.Engine.MidasCivil
                         if ((delimited[9].Trim()) == "2")
 
                         {
-
-
                             bhomMaterial = new GenericIsotropicMaterial()
                             {
 
@@ -86,14 +82,7 @@ namespace BH.Engine.MidasCivil
 
                             };
                         Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Orthotropic material");
-
-
-
-
-
                         break;
-
-
                     case "STEEL":
                         if (delimited.Count() == 15)
                         {
@@ -132,7 +121,6 @@ namespace BH.Engine.MidasCivil
                             bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "C30/37");
                         }
                         break;
-
                     case "SRC":
                         Reflection.Compute.RecordError("BHoM does not support Reinforced Concrete Sections");
                         break;
@@ -142,6 +130,7 @@ namespace BH.Engine.MidasCivil
             bhomMaterial.CustomData[AdapterIdName] = delimited[0].Trim();
             return bhomMaterial;
         }
+
     }
 }
 
