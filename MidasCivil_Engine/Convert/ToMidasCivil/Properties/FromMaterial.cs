@@ -60,13 +60,46 @@ namespace BH.Engine.MidasCivil
                     isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff + "," +
                     isotropic.Density*9.806 + "," + isotropic.Density
                 );
-            }
-            else
-            {
-                Engine.Reflection.Compute.RecordWarning("MidasCivil_Toolkit currently suports Isotropic materials only. No structural properties for material with name " + material.Name + " have been pushed");
-                return null; ;
-            }
 
+
+                
+                string s2 = isotropic.Name;
+                int count2 = 0;
+                foreach (char c in s2)
+                {
+                    count2++;
+                }
+                if (count2 > 16)
+                {
+                    Engine.Reflection.Compute.RecordWarning("All names must be under 16 characters");
+                }
+            }
+            else if(material is IOrthotropic)
+            {
+                IOrthotropic iorthotropic = material as IOrthotropic;
+                midasMaterial = (
+                     iorthotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
+                    iorthotropic.Name + ",0,0,,C,NO," +
+                    iorthotropic.DampingRatio + ",3," 
+                    + iorthotropic.YoungsModulus.X + ","+ iorthotropic.YoungsModulus.Y + "," + iorthotropic.YoungsModulus.Z + ","
+                    + iorthotropic.ThermalExpansionCoeff.X + "," + iorthotropic.ThermalExpansionCoeff.Y + "," + iorthotropic.ThermalExpansionCoeff.Z + ","
+                    + iorthotropic.ShearModulus.X + "," + iorthotropic.ShearModulus.Y + "," + iorthotropic.ShearModulus.Z + ","
+                    + iorthotropic.PoissonsRatio.X + "," + iorthotropic.PoissonsRatio.Y + "," + iorthotropic.PoissonsRatio.Z + ","
+                    + iorthotropic.Density * 9.806 + "," + iorthotropic.Density
+                );
+
+                string s = iorthotropic.Name;
+                int count = 0;
+                foreach (char c in s)
+                {
+                    count++;
+                }
+
+                if (count > 16)
+                {
+                    Engine.Reflection.Compute.RecordWarning("All names must be under 16 characters");
+                }
+            }
             return midasMaterial;
         }
 

@@ -43,8 +43,20 @@ namespace BH.Engine.MidasCivil
                 string midasSectionProperty = sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
                  sectionProperty.Name + ",CC, 0, 0, 0, 0, 0, 0, YES, NO," +
                  CreateSection(sectionProperty as dynamic);
+
+                string s3 = sectionProperty.Name;
+                int count3 = 0;
+                foreach (char c in s3)
+                {
+                    count3++;
+                }
+                if (count3 > 16)
+                {
+                    Engine.Reflection.Compute.RecordWarning("All names must be under 16 characters");
+                }
                 return midasSectionProperty;
             }
+
         }
 
         /***************************************************/
@@ -61,6 +73,21 @@ namespace BH.Engine.MidasCivil
         /***************************************************/
 
         private static string CreateSection(ConcreteSection sectionProperty)
+        {
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            return midasSectionProperty;
+        }
+        private static string CreateSection(TimberSection sectionProperty)
+        {
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            return midasSectionProperty;
+        }
+        private static string CreateSection(GenericSection sectionProperty)
+        {
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            return midasSectionProperty;
+        }
+        private static string CreateSection(AluminiumSection sectionProperty)
         {
             string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
             return midasSectionProperty;
