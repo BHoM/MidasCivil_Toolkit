@@ -65,6 +65,11 @@
       <HintPath>..\..\BHoM_Engine\Build\Library_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Physical_oM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Physical_oM.dll</HintPath>
@@ -97,6 +102,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\MidasReactions.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToLoadNature.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToConcreteSection.cs" />
@@ -170,6 +176,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modify\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
