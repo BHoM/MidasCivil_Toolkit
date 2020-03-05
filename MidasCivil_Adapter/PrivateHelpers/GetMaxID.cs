@@ -28,7 +28,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private int GetMaxID(string section)
+        private int GetMaxId(string section)
         {
             int maxID = 0;
             
