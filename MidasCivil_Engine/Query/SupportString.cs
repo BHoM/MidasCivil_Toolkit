@@ -37,21 +37,19 @@ namespace BH.Engine.MidasCivil
 
             string support = "";
 
-            foreach(DOFType freedom in freedoms)
+            foreach (DOFType freedom in freedoms)
             {
-                if(Engine.MidasCivil.Query.SupportedDOFType(freedom))
+                if (Engine.MidasCivil.Query.SupportedDOFType(freedom))
                 {
                     if (freedom == DOFType.Fixed)
                     {
                         support = support + "1";
                     }
-                    else 
-                {
-                    support = support + "0";
+                    else
+                    {
+                        support = support + "0";
+                    }
                 }
-                }
-                
-
             }
             return support;
 

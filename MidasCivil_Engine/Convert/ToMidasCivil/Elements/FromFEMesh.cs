@@ -44,11 +44,11 @@ namespace BH.Engine.MidasCivil
                 sectionPropertyId = feMesh.Property.CustomData[AdapterIdName].ToString();
 
                 if (!(feMesh.Property.Material == null))
-            {
-                materialId = feMesh.Property.Material.CustomData[AdapterIdName].ToString();
+                {
+                    materialId = feMesh.Property.Material.CustomData[AdapterIdName].ToString();
+                }
             }
-            }
-         
+
             if (feMesh.Nodes.Count > 4)
             {
                 BH.Engine.Reflection.Compute.RecordError("Cannot push mesh with more than 4 nodes");
@@ -56,13 +56,13 @@ namespace BH.Engine.MidasCivil
 
             if (feMesh.Nodes.Count == 4)
             {
-                    midasElement = (feMesh.CustomData[AdapterIdName].ToString() + ",PLATE," +
-                    sectionPropertyId + "," +
-                    materialId + "," +
-                  feMesh.Nodes[nodeIndices[0]].CustomData[AdapterIdName].ToString() + "," +
-                  feMesh.Nodes[nodeIndices[1]].CustomData[AdapterIdName].ToString() + "," +
-                  feMesh.Nodes[nodeIndices[2]].CustomData[AdapterIdName].ToString() + "," +
-                  feMesh.Nodes[nodeIndices[3]].CustomData[AdapterIdName].ToString() + ",1,0");
+                midasElement = (feMesh.CustomData[AdapterIdName].ToString() + ",PLATE," +
+                sectionPropertyId + "," +
+                materialId + "," +
+              feMesh.Nodes[nodeIndices[0]].CustomData[AdapterIdName].ToString() + "," +
+              feMesh.Nodes[nodeIndices[1]].CustomData[AdapterIdName].ToString() + "," +
+              feMesh.Nodes[nodeIndices[2]].CustomData[AdapterIdName].ToString() + "," +
+              feMesh.Nodes[nodeIndices[3]].CustomData[AdapterIdName].ToString() + ",1,0");
             }
             else
             {
@@ -73,7 +73,7 @@ namespace BH.Engine.MidasCivil
              feMesh.Nodes[nodeIndices[1]].CustomData[AdapterIdName].ToString() + "," +
              feMesh.Nodes[nodeIndices[2]].CustomData[AdapterIdName].ToString() + ",0,1,0");
             }
-                return midasElement;
+            return midasElement;
         }
 
         /***************************************************/
