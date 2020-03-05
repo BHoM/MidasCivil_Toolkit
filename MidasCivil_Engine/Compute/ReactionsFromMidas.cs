@@ -29,74 +29,63 @@ using System.IO;
 using Excel_programme_app = Microsoft.Office.Interop.Excel.Application;
 using Excel_programme_workbook = Microsoft.Office.Interop.Excel.Workbook;
 using Excel_programme_worksheet = Microsoft.Office.Interop.Excel.Worksheet;
+using BH.oM.Structure;
+using BH.oM.Structure.Results;
 
-namespace BH.oM.Structure.Element.Node
+namespace BH.Engine.MidasCivil
 {
-    public class Reactions
+    public static partial class Compute
     {
-        static List<BH.oM.Structure.Element.Node.Reactions> Main(string file_path)
+        public static List<NodeReaction> ReactionsFromMidas(string filePath, bool activate)
         {
+            if (activate){ /* DO NOTHING ? */}
+                string csv_file_path = ExcelToCsv(filePath);
+                string[] csv_file = File.ReadAllLines(csv_file_path);
+                List<NodeReaction> NodeReactions = new List<NodeReaction>();
 
-            string csv_file_path = ExcelToCsv(file_path);
-            string[] csv_file = File.ReadAllLines(csv_file_path);
-            var list = new List<Reactions>();
 
-            foreach (string line in csv_file)
-            {
-                try
+
+                foreach (string line in csv_file)
                 {
-                    string[] line_delminated = line.Split(',');
-                    var Results = new BH.oM.Structure.Element.Node.Reactions(line_delminated);
-                    list.Add(Results);
+                    if (line.Contains("SUMMATION")) { break; }
+                    else
+                    {
+                        string[] line_delminated = line.Split(',');
+                        try
+                        {
+                            NodeReaction Result = NodeReaction(line_delminated);
+                            NodeReactions.Add(Result);
+                        }
+                        catch { /* To Be Debugged Later */ }
+                    }
                 }
-                catch { }
 
-            }
-            return list;
+                return NodeReactions;
         }
 
-        public Reactions(string[] line_delminated)
+        private static NodeReaction NodeReaction(string[] line_delminated)
         {
-            try
+
+            NodeReaction nodeReaction = new NodeReaction()
             {
-                string Name = line_delminated[3];
-                double Node_Number = Convert.ToDouble(line_delminated[2]);
-                double f_x_ = Convert.ToDouble(line_delminated[7]);
-                double f_y_ = Convert.ToDouble(line_delminated[8]);
-                double f_z_ = Convert.ToDouble(line_delminated[9]);
-                double m_x_ = Convert.ToDouble(line_delminated[10]);
-                double m_y_ = Convert.ToDouble(line_delminated[11]);
-                double m_z_ = Convert.ToDouble(line_delminated[12]);
-                double m_b_ = Convert.ToDouble(line_delminated[13]);
+                //ResultCase = line_delminated[3],
+                //ObjectId = System.Convert.ToInt32(line_delminated[2]),
+                FX = System.Convert.ToDouble(line_delminated[7]),
+                FY = System.Convert.ToDouble(line_delminated[8]),
+                FZ = System.Convert.ToDouble(line_delminated[9]),
+                MX = System.Convert.ToDouble(line_delminated[10]),
+                MY = System.Convert.ToDouble(line_delminated[11]),
+                MZ = System.Convert.ToDouble(line_delminated[12])
 
-                this.Name = Name;
-                this.Node = Node_Number;
-                this.Fx = f_x_;
-                this.Fy = f_y_;
-                this.Fz = f_z_;
-                this.Mx = m_x_;
-                this.My = m_y_;
-                this.Mz = m_z_;
-                this.Mb = m_b_;
+            };
+            return nodeReaction;
 
-            }
-            catch { }
 
 
         }
 
 
-        public string Name { get; private set; }
-        public double Node { get; private set; }
-        public double Fx { get; private set; }
-        public double Fy { get; private set; }
-        public double Fz { get; private set; }
-        public double Mx { get; private set; }
-        public double My { get; private set; }
-        public double Mz { get; private set; }
-        public double Mb { get; private set; }
-
-        public static string ExcelToCsv(string file_path)
+        private static string ExcelToCsv(string file_path)
         {
             //Only run function when boolean toggle is true.
             string new_csv_name = new CSV_NAME(file_path).file_path;
