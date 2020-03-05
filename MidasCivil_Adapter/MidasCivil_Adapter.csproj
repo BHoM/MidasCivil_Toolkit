@@ -58,6 +58,10 @@
       <HintPath>..\..\BHoM\Build\Common_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Data_oM">
+      <HintPath>..\..\BHoM\Build\Data_oM.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Dimensional_oM">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM\Build\Dimensional_oM.dll</HintPath>
@@ -143,6 +147,10 @@
     <Compile Include="CRUD\Delete\Properties\BarReleases.cs" />
     <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
+    <Compile Include="CRUD\Read\Results\BarResults.cs" />
+    <Compile Include="CRUD\Read\Results\MeshResults.cs" />
+    <Compile Include="CRUD\Read\Results\NodeResults.cs" />
+    <Compile Include="CRUD\Read\Results\ReadResults.cs" />
     <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
     <Compile Include="PrivateHelpers\GetMaxID.cs" />
     <Compile Include="PrivateHelpers\CreateGroups.cs" />

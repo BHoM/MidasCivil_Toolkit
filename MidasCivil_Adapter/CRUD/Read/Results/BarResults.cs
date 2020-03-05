@@ -57,7 +57,7 @@ namespace BH.Adapter.MidasCivil
                     results = ExtractBarDisplacement(objectIds, loadCases).ToList();
                     break;
                 default:
-                    Engine.Reflection.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the Lusas_Toolkit.");
+                    Engine.Reflection.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the MidasCivil_Toolkit.");
                     results = new List<IResult>();
                     break;
             }
