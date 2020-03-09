@@ -48,7 +48,6 @@ namespace BH.Engine.MidasCivil
                     materialId = feMesh.Property.Material.CustomData[AdapterIdName].ToString();
                 }
             }
-
             if (feMesh.Nodes.Count > 4)
             {
                 BH.Engine.Reflection.Compute.RecordError("Cannot push mesh with more than 4 nodes");
@@ -57,8 +56,8 @@ namespace BH.Engine.MidasCivil
             if (feMesh.Nodes.Count == 4)
             {
                 midasElement = (feMesh.CustomData[AdapterIdName].ToString() + ",PLATE," +
-                sectionPropertyId + "," +
                 materialId + "," +
+                sectionPropertyId + "," +
               feMesh.Nodes[nodeIndices[0]].CustomData[AdapterIdName].ToString() + "," +
               feMesh.Nodes[nodeIndices[1]].CustomData[AdapterIdName].ToString() + "," +
               feMesh.Nodes[nodeIndices[2]].CustomData[AdapterIdName].ToString() + "," +
@@ -67,8 +66,8 @@ namespace BH.Engine.MidasCivil
             else
             {
                 midasElement = (feMesh.CustomData[AdapterIdName].ToString() + ",PLATE," +
-                sectionPropertyId + "," +
                 materialId + "," +
+                sectionPropertyId + "," +
              feMesh.Nodes[nodeIndices[0]].CustomData[AdapterIdName].ToString() + "," +
              feMesh.Nodes[nodeIndices[1]].CustomData[AdapterIdName].ToString() + "," +
              feMesh.Nodes[nodeIndices[2]].CustomData[AdapterIdName].ToString() + ",0,1,0");

@@ -45,8 +45,14 @@ namespace BH.Engine.MidasCivil
                     {
                         support = support + "1";
                     }
+                    else if (freedom == DOFType.Free)
+                    {
+                        support = support + "0";
+                    }
                     else
                     {
+                        Reflection.Compute.RecordWarning(
+                                     "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Free);
                         support = support + "0";
                     }
                 }
