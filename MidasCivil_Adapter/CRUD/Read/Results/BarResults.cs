@@ -40,7 +40,7 @@ namespace BH.Adapter.MidasCivil
         {
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);
-            List<int> loadCases = GetLoadcaseIDs(request);
+            List<string> loadCases = GetLoadcaseIDs(request);
 
             switch (request.ResultType)
             {
@@ -69,28 +69,28 @@ namespace BH.Adapter.MidasCivil
         /**** Private  Methods                          ****/
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<string> loadcaseIds)
         {
             return null;
         }
 
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractBarStress(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractBarStress(List<int> ids, List<string> loadcaseIds)
         {
             return null;
         }
 
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractBarStrain(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractBarStrain(List<int> ids, List<string> loadcaseIds)
         {
             return null;
         }
 
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractBarDisplacement(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractBarDisplacement(List<int> ids, List<string> loadcaseIds)
         {
             return null;
         }

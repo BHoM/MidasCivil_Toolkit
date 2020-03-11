@@ -22,10 +22,12 @@
 
 using BH.oM.Common;
 using BH.oM.Adapter;
+using BH.oM.Structure.Loads;
 using BH.oM.Structure.Requests;
 using BH.oM.Structure.Results;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace BH.Adapter.MidasCivil
@@ -41,8 +43,7 @@ namespace BH.Adapter.MidasCivil
         {
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);
-            List<int> loadCases = GetLoadcaseIDs(request);
-
+            List<string> loadCases = GetLoadcaseIDs(request);
 
             switch (request.ResultType)
             {
@@ -65,12 +66,35 @@ namespace BH.Adapter.MidasCivil
         /**** Private  Methods                          ****/
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractNodeReaction(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractNodeReaction(List<int> ids, List<string> loadcaseIds)
         {
-            return null;
+            string filePath = directory + "\\Reaction(Global).xls";
+            string csvPath = ExcelToCsv(filePath);
+            List<String> nodeReactionText = File.ReadAllLines(csvPath).ToList();
+
+            List<NodeReaction> nodeReactions = new List<NodeReaction>();
+            for (int i = 9; i < nodeReactionText.Count; i++)
+            {
+                List<string> nodeReaction = nodeReactionText[i].Split(',').ToList(); ;
+                if (nodeReactionText[i].Contains("SUMMATION"))
+                {
+                    break;
+                }
+                else
+                {
+                    if (ids.Contains(System.Convert.ToInt32(nodeReaction[2])) && loadcaseIds.Contains(nodeReaction[3]))
+                    {
+                        nodeReactions.Add(Engine.MidasCivil.Convert.ToNodeReaction(nodeReaction));
+                    }
+                }
+
+            }
+
+            return nodeReactions;
+
         }
 
-        private IEnumerable<IResult> ExtractNodeDisplacement(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractNodeDisplacement(List<int> ids, List<string> loadcaseIds)
         {  
             return null;
         }

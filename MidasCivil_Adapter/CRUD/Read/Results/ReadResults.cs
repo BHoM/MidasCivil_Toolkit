@@ -23,6 +23,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using BH.oM.Base;
 using BH.oM.Adapter;
 using BH.oM.Common;
@@ -30,6 +31,9 @@ using BH.oM.Data.Requests;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Requests;
+using Application = Microsoft.Office.Interop.Excel.Application;
+using Workbook = Microsoft.Office.Interop.Excel.Workbook;
+using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
 using System.Linq;
 
 namespace BH.Adapter.MidasCivil
@@ -135,23 +139,31 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        private List<int> GetLoadcaseIDs(IResultRequest request)
+        private List<string> GetLoadcaseIDs(IResultRequest request)
         {
             IList cases = request.Cases;
-            List<int> caseNums = new List<int>();
+
+            List<string> caseNames = new List<string>();
 
             if (cases is List<string>)
-                return (cases as List<string>).Select(x => int.Parse(x)).ToList();
+                return (cases as List<string>);
             else if (cases is List<int>)
-                return cases as List<int>;
+            {
+                Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit Loadcases do not have Ids as int, provide Loadcases or names.");
+                return null;
+            }
+
             else if (cases is List<double>)
-                return (cases as List<double>).Select(x => (int)Math.Round(x)).ToList();
+            {
+                Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit Loadcases do not have Ids as doubles, provide Loadcases or names.");
+                return null;
+            }
 
             else if (cases is List<Loadcase>)
             {
                 for (int i = 0; i < cases.Count; i++)
                 {
-                    caseNums.Add(System.Convert.ToInt32((cases[i] as Loadcase).Number));
+                    caseNames.Add((cases[i] as Loadcase).Name);
                 }
             }
             else if (cases is List<LoadCombination>)
@@ -160,28 +172,62 @@ namespace BH.Adapter.MidasCivil
                 {
                     foreach (Tuple<double, ICase> lCase in (lComb as LoadCombination).LoadCases)
                     {
-                        caseNums.Add(System.Convert.ToInt32(lCase.Item2.Number));
+                        caseNames.Add(lCase.Item2.Name);
                     }
-                    caseNums.Add(System.Convert.ToInt32((lComb as LoadCombination).CustomData[AdapterIdName]));
+                    caseNames.Add((lComb as LoadCombination).Name);
                 }
             }
-
             else
             {
-                List<int> idsOut = new List<int>();
-                foreach (object o in cases)
+                caseNames = GetSectionText("STLDCASE").Select(x => x.Split(',')[0].Trim()).ToList();
+
+                List<string> loadCombinationText = GetSectionText("LOADCOMB");
+                for (int i = 0; i < loadCombinationText.Count; i += 2)
                 {
-                    int id;
-                    if (int.TryParse(o.ToString(), out id))
-                    {
-                        idsOut.Add(id);
-                    }
+                    caseNames.Add(loadCombinationText[i].Split(',')[0].Split('=')[1].Trim());
                 }
-                return idsOut;
             }
 
 
-            return caseNums;
+            return caseNames;
+        }
+
+        /***************************************************/
+
+        private static string ExcelToCsv(string path)
+        {
+            string csvPath = GetCSVFile(path);
+            if (!(File.Exists(csvPath)))
+            {
+                Application excel = new Application();
+                Workbook xlsFile = excel.Workbooks.Open(path);
+                Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)xlsFile.Sheets[1];
+
+                //Save the sheet with the csv name, and as csv file type. Use default for rest.
+                sheet.SaveAs(
+                    csvPath,
+                    Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV,
+                    Type.Missing,
+                    Type.Missing,
+                    Type.Missing,
+                    Type.Missing,
+                    Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                    Type.Missing,
+                    Type.Missing,
+                    Type.Missing
+                );
+
+                //Close the excel file process
+                xlsFile.Close();
+
+            }
+
+            return csvPath;
+        }
+
+        private static string GetCSVFile(string path)
+        {
+            return Path.GetDirectoryName(path) + "\\" + Path.GetFileNameWithoutExtension(path) + ".csv";
         }
 
         /***************************************************/

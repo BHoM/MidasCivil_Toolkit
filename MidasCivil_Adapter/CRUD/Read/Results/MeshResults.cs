@@ -40,7 +40,7 @@ namespace BH.Adapter.MidasCivil
         {
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);
-            List<int> loadCases = GetLoadcaseIDs(request);
+            List<string> loadCases = GetLoadcaseIDs(request);
 
             switch (request.ResultType)
             {
@@ -69,26 +69,26 @@ namespace BH.Adapter.MidasCivil
         /**** Private  Methods                          ****/
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractMeshDisplacement(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractMeshDisplacement(List<int> ids, List<string> loadcaseIds)
         {
             return null;
         }
 
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractMeshForce(List<int> ids, List<int> loadcaseIds)
+        private IEnumerable<IResult> ExtractMeshForce(List<int> ids, List<string> loadcaseIds)
         {
             return null;
         }
 
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<int> loadcaseIds, MeshResultLayer meshResultLayer)
+        private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
         {
             return null;
         }
 
-        private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<int> loadcaseIds, MeshResultLayer meshResultLayer)
+        private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
         {
             return null;
         }

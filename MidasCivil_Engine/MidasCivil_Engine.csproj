@@ -111,7 +111,7 @@
     <Compile Include="Convert\ToMidasCivil\Loads\FromVector.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromVectorDirection.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromDOFType.cs" />
-    <Compile Include="Compute\ReactionsFromMidas.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToNodeReaction.cs" />
     <Compile Include="Objects\ArrayComparer.cs" />
     <Compile Include="Objects\BarMidPointComparer.cs" />
     <Compile Include="Objects\MeshCentreComparer.cs" />
