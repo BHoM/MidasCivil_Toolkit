@@ -32,7 +32,7 @@ namespace BH.Engine.MidasCivil
         {
             List<string> delimitted = support.Split(',').ToList();
             string supportName;
-
+            string support1;
             List<bool> fixity = new List<bool>();
             List<double> stiffness = new List<double>();
 
@@ -94,6 +94,7 @@ namespace BH.Engine.MidasCivil
                                     }
                                 }
                             }
+                        support1 = delimitted[15].Trim();
                             break;
 
                         default:
@@ -119,10 +120,11 @@ namespace BH.Engine.MidasCivil
                                     }
                                 }
                             }
+                            support1 = delimitted[21].Trim();
                             break;
                     }
-
-                    supportName = delimitted[15].Trim();
+                    supportName = support1;
+                    
 
                 }
             }
