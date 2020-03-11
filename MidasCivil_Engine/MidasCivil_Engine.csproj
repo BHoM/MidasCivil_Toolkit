@@ -105,6 +105,7 @@
     <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToLoadNature.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToConcreteSection.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToNodeDisplacement.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromFEMesh.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromLoadAxis.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromLoadProjection.cs" />

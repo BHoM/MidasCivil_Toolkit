@@ -95,8 +95,29 @@ namespace BH.Adapter.MidasCivil
         }
 
         private IEnumerable<IResult> ExtractNodeDisplacement(List<int> ids, List<string> loadcaseIds)
-        {  
-            return null;
+        {
+            string filePath = directory + "\\Displacements(Global).xls";
+            string csvPath = ExcelToCsv(filePath);
+            List<String> nodeDisplacementText = File.ReadAllLines(csvPath).ToList();
+            
+            List<NodeDisplacement> nodeDisplacements = new List<NodeDisplacement>();
+            for (int i = 9; i < nodeDisplacementText.Count; i++)
+            {
+                List<string> nodeDisplacement = nodeDisplacementText[i].Split(',').ToList(); ;
+                if (nodeDisplacementText[i].Contains("SUMMATION"))
+                {
+                    break;
+                }
+                else
+                {
+                    if (ids.Contains(System.Convert.ToInt32(nodeDisplacement[2])) && loadcaseIds.Contains(nodeDisplacement[3]))
+                    {
+                        nodeDisplacements.Add(Engine.MidasCivil.Convert.ToNodeDisplacement(nodeDisplacement));
+                    }
+                }
+            }
+
+            return nodeDisplacements;
         }
 
         /***************************************************/

@@ -29,20 +29,20 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static NodeReaction ToNodeReaction(this List<string> delimitted)
+        public static NodeDisplacement ToNodeDisplacement(this List<string> delimitted)
         {
-            NodeReaction nodeReaction = new NodeReaction()
+            NodeDisplacement nodeDisplacement = new NodeDisplacement()
             {
                 ObjectId = System.Convert.ToInt32(delimitted[2]),
                 ResultCase = delimitted[3],
-                FX = System.Convert.ToDouble(delimitted[7]),
-                FY = System.Convert.ToDouble(delimitted[8]),
-                FZ = System.Convert.ToDouble(delimitted[9]),
-                MX = System.Convert.ToDouble(delimitted[10]),
-                MY = System.Convert.ToDouble(delimitted[11]),
-                MZ = System.Convert.ToDouble(delimitted[12])
+                UX = System.Convert.ToDouble(delimitted[7]),
+                UY = System.Convert.ToDouble(delimitted[8]),
+                UZ = System.Convert.ToDouble(delimitted[9]),
+                RX = System.Convert.ToDouble(delimitted[10]),
+                RY = System.Convert.ToDouble(delimitted[11]),
+                RZ = System.Convert.ToDouble(delimitted[12])
             };
-            return nodeReaction;
+            return nodeDisplacement;
         }
 
     }
