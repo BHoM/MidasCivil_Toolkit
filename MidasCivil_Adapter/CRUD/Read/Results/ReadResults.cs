@@ -101,7 +101,7 @@ namespace BH.Adapter.MidasCivil
             List<int> ids = new List<int>();
             for (int i = 1; i < maxIndex + 1; i++)
             {
-                    ids.Add(i);
+                ids.Add(i);
             }
 
             return ids;
@@ -203,7 +203,6 @@ namespace BH.Adapter.MidasCivil
                 Workbook xlsFile = excel.Workbooks.Open(path);
                 Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)xlsFile.Sheets[1];
 
-                //Save the sheet with the csv name, and as csv file type. Use default for rest.
                 sheet.SaveAs(
                     csvPath,
                     Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV,
@@ -217,13 +216,14 @@ namespace BH.Adapter.MidasCivil
                     Type.Missing
                 );
 
-                //Close the excel file process
                 xlsFile.Close();
 
             }
 
             return csvPath;
         }
+
+        /***************************************************/
 
         private static string GetCSVFile(string path)
         {

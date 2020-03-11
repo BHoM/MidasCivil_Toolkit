@@ -94,12 +94,14 @@ namespace BH.Adapter.MidasCivil
 
         }
 
+        /***************************************************/
+
         private IEnumerable<IResult> ExtractNodeDisplacement(List<int> ids, List<string> loadcaseIds)
         {
             string filePath = directory + "\\Displacements(Global).xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> nodeDisplacementText = File.ReadAllLines(csvPath).ToList();
-            
+
             List<NodeDisplacement> nodeDisplacements = new List<NodeDisplacement>();
             for (int i = 9; i < nodeDisplacementText.Count; i++)
             {
