@@ -100,12 +100,14 @@
     <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToLoadNature.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToConcreteSection.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToNodeDisplacement.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromFEMesh.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromLoadAxis.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromLoadProjection.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromVector.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromVectorDirection.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromDOFType.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToNodeReaction.cs" />
     <Compile Include="Objects\ArrayComparer.cs" />
     <Compile Include="Objects\BarMidPointComparer.cs" />
     <Compile Include="Objects\MeshCentreComparer.cs" />
@@ -169,7 +171,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="External\" />
     <Folder Include="Modify\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

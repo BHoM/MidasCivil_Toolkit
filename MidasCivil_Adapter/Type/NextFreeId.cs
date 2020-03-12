@@ -86,7 +86,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (ExistsSection(section))
                     {
-                        index = GetMaxID(section) + 1;
+                        index = GetMaxId(section) + 1;
                     }
                     else
                     {
@@ -101,7 +101,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (ExistsSection(section))
                     {
-                        index = GetMaxID(section) + 1;
+                        index = GetMaxId(section) + 1;
                     }
                     else
                     {
@@ -116,7 +116,7 @@ namespace BH.Adapter.MidasCivil
                     if (ExistsSection(section))
                     {
 
-                        index = GetMaxID(section) +1;
+                        index = GetMaxId(section) +1;
                     }
                     else
                     {
@@ -130,7 +130,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (ExistsSection(section))
                     {
-                        index = GetMaxID(section) + 1;
+                        index = GetMaxId(section) + 1;
                     }
                     else
                     {
@@ -144,7 +144,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (ExistsSection(section))
                     {
-                        index = GetMaxID(section) + 1;
+                        index = GetMaxId(section) + 1;
                     }
                     else
                     {
