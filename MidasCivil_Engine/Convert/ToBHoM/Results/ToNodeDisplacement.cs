@@ -20,43 +20,31 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections.Generic;
+using BH.oM.Structure.Loads;
+using BH.oM.Structure.Results;
 using System.Linq;
+using System.Collections.Generic;
 
-namespace BH.Adapter.MidasCivil
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public static partial class Convert
     {
-        private int GetMaxId(string section)
+        public static NodeDisplacement ToNodeDisplacement(this List<string> delimitted)
         {
-            int maxID = 0;
-            
-            List<int> allID = new List<int>();
-            List<string> text = GetSectionText(section);
-            List<List<string>> delimitted = new List<List<string>>();
-            text.ForEach(x =>  delimitted.Add(x.Split(',').ToList()));
-
-            if (!(text.Count() == 0))
+            NodeDisplacement nodeDisplacement = new NodeDisplacement()
             {
-                foreach (List<string> line in delimitted)
-                {
-                    if (Int32.TryParse(line[0],out maxID))
-                    {
-                        allID.Add(maxID);
-                    }
-                }
-                allID.Sort();
-                allID.Reverse();
-                maxID = allID[0];
-            }
-            else
-            {
-                maxID = 1;
-            }
-
-            return maxID;
+                ObjectId = System.Convert.ToInt32(delimitted[2]),
+                ResultCase = delimitted[3],
+                UX = System.Convert.ToDouble(delimitted[7]),
+                UY = System.Convert.ToDouble(delimitted[8]),
+                UZ = System.Convert.ToDouble(delimitted[9]),
+                RX = System.Convert.ToDouble(delimitted[10]),
+                RY = System.Convert.ToDouble(delimitted[11]),
+                RZ = System.Convert.ToDouble(delimitted[12])
+            };
+            return nodeDisplacement;
         }
 
     }
 }
+

@@ -20,43 +20,31 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections.Generic;
+using BH.oM.Structure.Loads;
+using BH.oM.Structure.Results;
 using System.Linq;
+using System.Collections.Generic;
 
-namespace BH.Adapter.MidasCivil
+namespace BH.Engine.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public static partial class Convert
     {
-        private int GetMaxId(string section)
+        public static NodeReaction ToNodeReaction(this List<string> delimitted)
         {
-            int maxID = 0;
-            
-            List<int> allID = new List<int>();
-            List<string> text = GetSectionText(section);
-            List<List<string>> delimitted = new List<List<string>>();
-            text.ForEach(x =>  delimitted.Add(x.Split(',').ToList()));
-
-            if (!(text.Count() == 0))
+            NodeReaction nodeReaction = new NodeReaction()
             {
-                foreach (List<string> line in delimitted)
-                {
-                    if (Int32.TryParse(line[0],out maxID))
-                    {
-                        allID.Add(maxID);
-                    }
-                }
-                allID.Sort();
-                allID.Reverse();
-                maxID = allID[0];
-            }
-            else
-            {
-                maxID = 1;
-            }
-
-            return maxID;
+                ObjectId = System.Convert.ToInt32(delimitted[2]),
+                ResultCase = delimitted[3],
+                FX = System.Convert.ToDouble(delimitted[7]),
+                FY = System.Convert.ToDouble(delimitted[8]),
+                FZ = System.Convert.ToDouble(delimitted[9]),
+                MX = System.Convert.ToDouble(delimitted[10]),
+                MY = System.Convert.ToDouble(delimitted[11]),
+                MZ = System.Convert.ToDouble(delimitted[12])
+            };
+            return nodeReaction;
         }
 
     }
 }
+
