@@ -94,7 +94,7 @@ namespace BH.Engine.MidasCivil
                                     }
                                 }
                             }
-                        support1 = delimitted[15].Trim();
+                            support1 = delimitted[21].Trim();
                             break;
 
                         default:
@@ -120,12 +120,10 @@ namespace BH.Engine.MidasCivil
                                     }
                                 }
                             }
-                            support1 = delimitted[21].Trim();
+                            support1 = delimitted[15].Trim();
                             break;
                     }
                     supportName = support1;
-                    
-
                 }
             }
 
