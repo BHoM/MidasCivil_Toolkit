@@ -22,7 +22,8 @@
 
 using BH.oM.Structure.Elements;
 using System.Collections.Generic;
-
+using BH.oM.Structure.MaterialFragments;
+using BH.Engine.Structure;
 namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
@@ -35,35 +36,45 @@ namespace BH.Engine.MidasCivil
         {
             string midasElement = "";
             List<int> nodeIndices = feMesh.Faces[0].NodeListIndices;
+            string sectionPropertyId = "1";
+            string materialId = "1";
 
+            if (!(feMesh.Property == null))
+            {
+                sectionPropertyId = feMesh.Property.CustomData[AdapterIdName].ToString();
+
+                if (!(feMesh.Property.Material == null))
+                {
+                    materialId = feMesh.Property.Material.CustomData[AdapterIdName].ToString();
+                }
+            }
             if (feMesh.Nodes.Count > 4)
             {
                 BH.Engine.Reflection.Compute.RecordError("Cannot push mesh with more than 4 nodes");
             }
-            else if (feMesh.Nodes.Count == 4)
+
+            if (feMesh.Nodes.Count == 4)
             {
                 midasElement = (feMesh.CustomData[AdapterIdName].ToString() + ",PLATE," +
-                    feMesh.Property.CustomData[AdapterIdName].ToString() + "," +
-                    feMesh.Property.Material.CustomData[AdapterIdName] + "," +
-                  feMesh.Nodes[nodeIndices[0]].CustomData[AdapterIdName].ToString() + "," +
-                  feMesh.Nodes[nodeIndices[1]].CustomData[AdapterIdName].ToString() + "," +
-                  feMesh.Nodes[nodeIndices[2]].CustomData[AdapterIdName].ToString() + "," +
-                  feMesh.Nodes[nodeIndices[3]].CustomData[AdapterIdName].ToString() + ",1,0");
+                materialId + "," +
+                sectionPropertyId + "," +
+              feMesh.Nodes[nodeIndices[0]].CustomData[AdapterIdName].ToString() + "," +
+              feMesh.Nodes[nodeIndices[1]].CustomData[AdapterIdName].ToString() + "," +
+              feMesh.Nodes[nodeIndices[2]].CustomData[AdapterIdName].ToString() + "," +
+              feMesh.Nodes[nodeIndices[3]].CustomData[AdapterIdName].ToString() + ",1,0");
             }
             else
             {
                 midasElement = (feMesh.CustomData[AdapterIdName].ToString() + ",PLATE," +
-                    feMesh.Property.CustomData[AdapterIdName].ToString() + "," +
-                    feMesh.Property.Material.CustomData[AdapterIdName] + "," +
-                 feMesh.Nodes[nodeIndices[0]].CustomData[AdapterIdName].ToString() + "," +
-                 feMesh.Nodes[nodeIndices[1]].CustomData[AdapterIdName].ToString() + "," +
-                 feMesh.Nodes[nodeIndices[2]].CustomData[AdapterIdName].ToString() + ",0,1,0");
+                materialId + "," +
+                sectionPropertyId + "," +
+             feMesh.Nodes[nodeIndices[0]].CustomData[AdapterIdName].ToString() + "," +
+             feMesh.Nodes[nodeIndices[1]].CustomData[AdapterIdName].ToString() + "," +
+             feMesh.Nodes[nodeIndices[2]].CustomData[AdapterIdName].ToString() + ",0,1,0");
             }
-
             return midasElement;
         }
 
         /***************************************************/
-
     }
 }

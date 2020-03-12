@@ -37,21 +37,24 @@ namespace BH.Engine.MidasCivil
 
             string support = "";
 
-            foreach(DOFType freedom in freedoms)
+            foreach (DOFType freedom in freedoms)
             {
-                if(Engine.MidasCivil.Query.SupportedDOFType(freedom))
+                if (Engine.MidasCivil.Query.SupportedDOFType(freedom))
                 {
-                    Reflection.Compute.RecordWarning(
-                        "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Free);
-                    support = support + "0";
-                }
-                else if(freedom == DOFType.Free)
-                {
-                    support = support + "0";
-                }
-                else if (freedom == DOFType.Fixed)
-                {
-                    support = support + "1";
+                    if (freedom == DOFType.Fixed)
+                    {
+                        support = support + "1";
+                    }
+                    else if (freedom == DOFType.Free)
+                    {
+                        support = support + "0";
+                    }
+                    else
+                    {
+                        Reflection.Compute.RecordWarning(
+                                     "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Free);
+                        support = support + "0";
+                    }
                 }
             }
             return support;
