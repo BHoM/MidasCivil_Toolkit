@@ -196,28 +196,35 @@ namespace BH.Adapter.MidasCivil
 
         private static string ExcelToCsv(string path)
         {
-            string csvPath = GetCSVFile(path);
-            if (!(File.Exists(csvPath)))
+            string csvPath = GetCSVFile(path); ;
+            if (!(File.Exists(path)))
             {
-                Application excel = new Application();
-                Workbook xlsFile = excel.Workbooks.Open(path);
-                Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)xlsFile.Sheets[1];
+                Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit detects no Excel file, make sure you have exported the results from Midas.");
+            }
+            else
+            {
+                if (!(File.Exists(csvPath)))
+                {
+                    Application excel = new Application();
+                    Workbook xlsFile = excel.Workbooks.Open(path);
+                    Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)xlsFile.Sheets[1];
 
-                sheet.SaveAs(
-                    csvPath,
-                    Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV,
-                    Type.Missing,
-                    Type.Missing,
-                    Type.Missing,
-                    Type.Missing,
-                    Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
-                    Type.Missing,
-                    Type.Missing,
-                    Type.Missing
-                );
+                    sheet.SaveAs(
+                        csvPath,
+                        Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV,
+                        Type.Missing,
+                        Type.Missing,
+                        Type.Missing,
+                        Type.Missing,
+                        Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                        Type.Missing,
+                        Type.Missing,
+                        Type.Missing
+                    );
 
-                xlsFile.Close();
+                    xlsFile.Close();
 
+                }
             }
 
             return csvPath;
