@@ -65,16 +65,16 @@ namespace BH.Adapter.MidasCivil
 
             Dictionary<string, List<int>> barReleaseAssignments = GetBarReleaseAssignments("FRAME-RLS", "barRelease");
 
-            List<List<string>> materialSectionCombos = barText.Select(x => x.Split(',').ToList()[2].Trim()+","+x.Split(',').ToList()[3].Trim())
+            List<List<string>> materialSectionCombos = barText.Select(x => x.Split(',').ToList()[2].Trim() + "," + x.Split(',').ToList()[3].Trim())
                 .Distinct()
-                .Select(x=>x.Split(',').ToList())
+                .Select(x => x.Split(',').ToList())
                 .ToList();
 
             IMaterialFragment material;
             ISectionProperty section;
             Dictionary<string, ISectionProperty> materialSections = new Dictionary<string, ISectionProperty>();
 
-            foreach(List<string> materialSection in materialSectionCombos)
+            foreach (List<string> materialSection in materialSectionCombos)
             {
                 int materialId = System.Convert.ToInt32(materialSection[0].Trim());
                 int sectionPropertyId = System.Convert.ToInt32(materialSection[1].Trim());
