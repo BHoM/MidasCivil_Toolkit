@@ -65,36 +65,45 @@ namespace BH.Adapter.MidasCivil
 
             Dictionary<string, List<int>> barReleaseAssignments = GetBarReleaseAssignments("FRAME-RLS", "barRelease");
 
-            List<string> materialSectionCombos = barText.Select(x => x.Split(',').ToList()[2].Trim()+","+x.Split(',').ToList()[3].Trim()).Distinct().ToList();
+            List<List<string>> materialSectionCombos = barText.Select(x => x.Split(',').ToList()[2].Trim()+","+x.Split(',').ToList()[3].Trim())
+                .Distinct()
+                .Select(x=>x.Split(',').ToList())
+                .ToList();
 
             IMaterialFragment material;
             ISectionProperty section;
             Dictionary<string, ISectionProperty> materialSections = new Dictionary<string, ISectionProperty>();
 
-            foreach(string materialSection in materialSectionCombos)
+            foreach(List<string> materialSection in materialSectionCombos)
             {
-                int materialId = System.Convert.ToInt32(barText[2].Trim());
-                int sectionPropertyId = System.Convert.ToInt32(barText[3].Trim());
+                int materialId = System.Convert.ToInt32(materialSection[0].Trim());
+                int sectionPropertyId = System.Convert.ToInt32(materialSection[1].Trim());
 
                 bhomMaterials.TryGetValue(materialId.ToString(), out material);
                 bhomSectionProperties.TryGetValue(sectionPropertyId.ToString(), out section);
 
+                GenericSection genericSection = (GenericSection)section;
+
                 switch (material.GetType().ToString().Split('.').Last())
                 {
                     case "Concrete":
-                        ConcreteSection concreteSection = (ConcreteSection)section;
+                        ConcreteSection concreteSection = Engine.Structure.Create.ConcreteSectionFromProfile(genericSection.SectionProfile, (Concrete)material);
+                        concreteSection.Name = genericSection.Name;
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), concreteSection);
                         break;
                     case "Steel":
-                        SteelSection steelSection = (SteelSection)section;
+                        SteelSection steelSection = Engine.Structure.Create.SteelSectionFromProfile(genericSection.SectionProfile, (Steel)material);
+                        steelSection.Name = genericSection.Name;
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), steelSection);
                         break;
                     case "Aluminium":
-                        AluminiumSection aluminiumSection = (AluminiumSection)section;
+                        AluminiumSection aluminiumSection = Engine.Structure.Create.AluminiumSectionFromProfile(genericSection.SectionProfile, (Aluminium)material);
+                        aluminiumSection.Name = genericSection.Name;
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), aluminiumSection);
                         break;
                     case "Timber":
-                        TimberSection timberSection = (TimberSection)section;
+                        TimberSection timberSection = Engine.Structure.Create.TimberSectionFromProfile(genericSection.SectionProfile, (Timber)material);
+                        timberSection.Name = genericSection.Name;
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), timberSection);
                         break;
                     default:
