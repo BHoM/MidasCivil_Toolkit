@@ -65,9 +65,47 @@ namespace BH.Adapter.MidasCivil
 
             Dictionary<string, List<int>> barReleaseAssignments = GetBarReleaseAssignments("FRAME-RLS", "barRelease");
 
+            List<string> materialSectionCombos = barText.Select(x => x.Split(',').ToList()[2].Trim()+","+x.Split(',').ToList()[3].Trim()).Distinct().ToList();
+
+            IMaterialFragment material;
+            ISectionProperty section;
+            Dictionary<string, ISectionProperty> materialSections = new Dictionary<string, ISectionProperty>();
+
+            foreach(string materialSection in materialSectionCombos)
+            {
+                int materialId = System.Convert.ToInt32(barText[2].Trim());
+                int sectionPropertyId = System.Convert.ToInt32(barText[3].Trim());
+
+                bhomMaterials.TryGetValue(materialId.ToString(), out material);
+                bhomSectionProperties.TryGetValue(sectionPropertyId.ToString(), out section);
+
+                switch (material.GetType().ToString().Split('.').Last())
+                {
+                    case "Concrete":
+                        ConcreteSection concreteSection = (ConcreteSection)section;
+                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), concreteSection);
+                        break;
+                    case "Steel":
+                        SteelSection steelSection = (SteelSection)section;
+                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), steelSection);
+                        break;
+                    case "Aluminium":
+                        AluminiumSection aluminiumSection = (AluminiumSection)section;
+                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), aluminiumSection);
+                        break;
+                    case "Timber":
+                        TimberSection timberSection = (TimberSection)section;
+                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), timberSection);
+                        break;
+                    default:
+                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), section);
+                        break;
+                }
+            }
+
             foreach (string bar in barText)
             {
-                Bar bhomBar = Engine.MidasCivil.Convert.ToBar(bar, bhomNodes, bhomSectionProperties,bhomMaterials, bhomBarReleases, barReleaseAssignments);
+                Bar bhomBar = Engine.MidasCivil.Convert.ToBar(bar, bhomNodes, materialSections, bhomBarReleases, barReleaseAssignments);
                 int bhomID = System.Convert.ToInt32(bhomBar.CustomData[AdapterIdName]);
                 bhomBar.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomBars.Add(bhomBar);
