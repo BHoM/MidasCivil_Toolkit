@@ -53,12 +53,12 @@ namespace BH.Adapter.MidasCivil
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
                 x => x.CustomData[AdapterIdName].ToString());
 
+            IEnumerable<BarRelease> bhomBarReleaseList = ReadBarReleases();
+            Dictionary<string, BarRelease> bhomBarReleases = bhomBarReleaseList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
+
             IEnumerable<ISectionProperty> bhomSectionPropertyList = ReadSectionProperties();
             Dictionary<string, ISectionProperty> bhomSectionProperties = bhomSectionPropertyList.ToDictionary(
                 x => x.CustomData[AdapterIdName].ToString());
-
-            IEnumerable<BarRelease> bhomBarReleaseList = ReadBarReleases();
-            Dictionary<string, BarRelease> bhomBarReleases = bhomBarReleaseList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
 
             IEnumerable<IMaterialFragment> bhomMaterialList = ReadMaterials();
             Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
@@ -70,47 +70,7 @@ namespace BH.Adapter.MidasCivil
                 .Select(x => x.Split(',').ToList())
                 .ToList();
 
-            IMaterialFragment material;
-            ISectionProperty section;
-            Dictionary<string, ISectionProperty> materialSections = new Dictionary<string, ISectionProperty>();
-
-            foreach (List<string> materialSection in materialSectionCombos)
-            {
-                int materialId = System.Convert.ToInt32(materialSection[0].Trim());
-                int sectionPropertyId = System.Convert.ToInt32(materialSection[1].Trim());
-
-                bhomMaterials.TryGetValue(materialId.ToString(), out material);
-                bhomSectionProperties.TryGetValue(sectionPropertyId.ToString(), out section);
-
-                GenericSection genericSection = (GenericSection)section;
-
-                switch (material.GetType().ToString().Split('.').Last())
-                {
-                    case "Concrete":
-                        ConcreteSection concreteSection = Engine.Structure.Create.ConcreteSectionFromProfile(genericSection.SectionProfile, (Concrete)material);
-                        concreteSection.Name = genericSection.Name;
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), concreteSection);
-                        break;
-                    case "Steel":
-                        SteelSection steelSection = Engine.Structure.Create.SteelSectionFromProfile(genericSection.SectionProfile, (Steel)material);
-                        steelSection.Name = genericSection.Name;
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), steelSection);
-                        break;
-                    case "Aluminium":
-                        AluminiumSection aluminiumSection = Engine.Structure.Create.AluminiumSectionFromProfile(genericSection.SectionProfile, (Aluminium)material);
-                        aluminiumSection.Name = genericSection.Name;
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), aluminiumSection);
-                        break;
-                    case "Timber":
-                        TimberSection timberSection = Engine.Structure.Create.TimberSectionFromProfile(genericSection.SectionProfile, (Timber)material);
-                        timberSection.Name = genericSection.Name;
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), timberSection);
-                        break;
-                    default:
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), section);
-                        break;
-                }
-            }
+            Dictionary<string, ISectionProperty> materialSections = SectionMaterialCombinations(materialSectionCombos, bhomMaterials, bhomSectionProperties);
 
             foreach (string bar in barText)
             {
