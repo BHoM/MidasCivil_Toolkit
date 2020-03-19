@@ -69,9 +69,20 @@ namespace BH.Adapter.MidasCivil
                         timberSection.Name = genericSection.Name;
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), timberSection);
                         break;
+                    case "GenericIsotropicMaterial":
+                        GenericSection genericIsoptropicSection = 
+                            Engine.Structure.Create.GenericSectionFromProfile(genericSection.SectionProfile, (GenericIsotropicMaterial)material);
+                        genericIsoptropicSection.Name = genericSection.Name;
+                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericIsoptropicSection);
+                        break;
+                    case "GenericOrthotropicMaterial":
+                        GenericSection genericOrthotropicSection =
+                            Engine.Structure.Create.GenericSectionFromProfile(genericSection.SectionProfile, (GenericOrthotropicMaterial)material);
+                        genericOrthotropicSection.Name = genericSection.Name;
+                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericOrthotropicSection);
+                        break;
                     default:
-                        genericSection.Material = material;
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericSection);
+                        Engine.Reflection.Compute.RecordError(material.GetType().ToString().Split('.').Last() + "not recognised");
                         break;
                 }
             }
