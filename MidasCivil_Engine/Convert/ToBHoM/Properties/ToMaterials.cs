@@ -54,7 +54,6 @@ namespace BH.Engine.MidasCivil
                 {
                     case "USER":
                         if ((delimited[9].Trim()) == "2")
-
                         {
                             bhomMaterial = new GenericIsotropicMaterial()
                             {
@@ -69,6 +68,7 @@ namespace BH.Engine.MidasCivil
                             Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Isotropic material");
                         }
                         else if ((delimited[9].Trim()) == "3")
+                        {
                             bhomMaterial = new GenericOrthotropicMaterial()
                             {
                                 Name = name,
@@ -81,7 +81,8 @@ namespace BH.Engine.MidasCivil
                                 DampingRatio = double.Parse(delimited[8].Trim())
 
                             };
-                        Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Orthotropic material");
+                            Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Orthotropic material");
+                        }
                         break;
                     case "STEEL":
                         if (delimited.Count() == 15)
@@ -117,8 +118,7 @@ namespace BH.Engine.MidasCivil
                         }
                         else
                         {
-                            Reflection.Compute.RecordWarning("Material not found in BHoM Library: C30/37 Concrete properties assumed");
-                            bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "C30/37");
+                            Reflection.Compute.RecordWarning("Material not found in BHoM Library.");
                         }
                         break;
                     case "SRC":
