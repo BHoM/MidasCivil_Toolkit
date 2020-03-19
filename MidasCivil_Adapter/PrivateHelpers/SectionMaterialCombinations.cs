@@ -70,7 +70,8 @@ namespace BH.Adapter.MidasCivil
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), timberSection);
                         break;
                     default:
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), section);
+                        genericSection.Material = material;
+                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericSection);
                         break;
                 }
             }
