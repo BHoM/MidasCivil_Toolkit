@@ -145,7 +145,7 @@ namespace BH.Engine.MidasCivil
 
             bhomProfile = Engine.Structure.Compute.Integrate(bhomProfile, oM.Geometry.Tolerance.MicroDistance).Item1;
 
-            SteelSection bhomSection = new SteelSection(
+            GenericSection bhomSection = new GenericSection(
                 bhomProfile, area, rgy, rgz, j, iy, iz, iw,
                 wely, welz, wply, wplz, centreZ, centreY, zt, zb, yt, yb, asy, asz);
 
