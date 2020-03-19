@@ -165,6 +165,7 @@
     <Compile Include="PrivateHelpers\GetSectionText.cs" />
     <Compile Include="CRUD\Create\Create.cs" />
     <Compile Include="CRUD\Delete\Delete.cs" />
+    <Compile Include="PrivateHelpers\SectionMaterialCombinations.cs" />
     <Compile Include="Type\NextFreeId.cs" />
     <Compile Include="PrivateHelpers\GetPropertyAssignments.cs" />
     <Compile Include="PrivateHelpers\CompareGroup.cs" />
