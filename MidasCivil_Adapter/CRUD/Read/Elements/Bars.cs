@@ -53,21 +53,28 @@ namespace BH.Adapter.MidasCivil
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
                 x => x.CustomData[AdapterIdName].ToString());
 
+            IEnumerable<BarRelease> bhomBarReleaseList = ReadBarReleases();
+            Dictionary<string, BarRelease> bhomBarReleases = bhomBarReleaseList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
+
             IEnumerable<ISectionProperty> bhomSectionPropertyList = ReadSectionProperties();
             Dictionary<string, ISectionProperty> bhomSectionProperties = bhomSectionPropertyList.ToDictionary(
                 x => x.CustomData[AdapterIdName].ToString());
-
-            IEnumerable<BarRelease> bhomBarReleaseList = ReadBarReleases();
-            Dictionary<string, BarRelease> bhomBarReleases = bhomBarReleaseList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
 
             IEnumerable<IMaterialFragment> bhomMaterialList = ReadMaterials();
             Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
 
             Dictionary<string, List<int>> barReleaseAssignments = GetBarReleaseAssignments("FRAME-RLS", "barRelease");
 
+            List<List<string>> materialSectionCombos = barText.Select(x => x.Split(',').ToList()[2].Trim() + "," + x.Split(',').ToList()[3].Trim())
+                .Distinct()
+                .Select(x => x.Split(',').ToList())
+                .ToList();
+
+            Dictionary<string, ISectionProperty> materialSections = SectionMaterialCombinations(materialSectionCombos, bhomMaterials, bhomSectionProperties);
+
             foreach (string bar in barText)
             {
-                Bar bhomBar = Engine.MidasCivil.Convert.ToBar(bar, bhomNodes, bhomSectionProperties,bhomMaterials, bhomBarReleases, barReleaseAssignments);
+                Bar bhomBar = Engine.MidasCivil.Convert.ToBar(bar, bhomNodes, materialSections, bhomBarReleases, barReleaseAssignments);
                 int bhomID = System.Convert.ToInt32(bhomBar.CustomData[AdapterIdName]);
                 bhomBar.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomBars.Add(bhomBar);

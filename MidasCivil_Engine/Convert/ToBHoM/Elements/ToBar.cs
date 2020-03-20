@@ -32,7 +32,7 @@ namespace BH.Engine.MidasCivil
     public static partial class Convert
     {
         public static Bar ToBar(this string bar, Dictionary<string, Node> bhomNodes,
-            Dictionary<string, ISectionProperty> bhomSectionProperties, Dictionary<string, IMaterialFragment> bhomMaterials,
+            Dictionary<string, ISectionProperty> bhomSectionProperties,
             Dictionary<string, BarRelease> barReleases, Dictionary<string, List<int>> barReleaseAssignments)
         {
             List<string> delimitted = bar.Split(',').ToList();
@@ -47,19 +47,7 @@ namespace BH.Engine.MidasCivil
 
             if (!(bhomSectionProperties.Count() == 0))
             {
-                bhomSectionProperties.TryGetValue(delimitted[3].Trim(), out sectionProperty);
-                if (!(bhomMaterials.Count() == 0))
-                {
-                    IMaterialFragment bhommMaterial;
-                    bhomMaterials.TryGetValue(delimitted[2].Trim(), out bhommMaterial);
-
-                    if (bhommMaterial.GetType().ToString().Split('.').Last() == "Concrete")
-                    {
-                        sectionProperty = ToConcreteSection((SteelSection)sectionProperty);
-                    }
-
-                    sectionProperty.Material = bhommMaterial;
-                }
+                bhomSectionProperties.TryGetValue(delimitted[2].Trim()+","+delimitted[3].Trim(), out sectionProperty);
             }
 
             switch (delimitted[1].Trim())
