@@ -199,7 +199,8 @@ namespace BH.Adapter.MidasCivil
             string csvPath = GetCSVFile(path); ;
             if (!(File.Exists(path)))
             {
-                Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit detects no Excel file, make sure you have exported the results from Midas.");
+                Engine.Reflection.Compute.RecordError("No Excel file detected, please make sure you have exported the results from MidasCivil.");
+                return null;
             }
             else
             {
