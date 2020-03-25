@@ -26,6 +26,8 @@ using BH.oM.Structure.Requests;
 using BH.oM.Structure.Results;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.IO;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -69,10 +71,6 @@ namespace BH.Adapter.MidasCivil
         /**** Private  Methods                          ****/
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<string> loadcaseIds)
-        {
-            return null;
-        }
 
         /***************************************************/
 
@@ -93,6 +91,40 @@ namespace BH.Adapter.MidasCivil
         private IEnumerable<IResult> ExtractBarDisplacement(List<int> ids, List<string> loadcaseIds)
         {
             return null;
+        }
+
+        /***************************************************/
+
+
+
+        private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<string> loadcaseIds)
+        {
+
+
+
+
+            /***************************************************/
+            string filePath = directory + "\\Beam Force.xls";
+            string csvPath = ExcelToCsv(filePath);
+            List<String> BarForceText = File.ReadAllLines(csvPath).ToList();
+
+            List<BarForce> Barforces = new List<BarForce>();
+            for (int i = 9; i < BarForceText.Count; i++)
+            {
+                List<string> BarForce = BarForceText[i].Split(',').ToList(); ;
+                if (BarForceText[i].Contains("SUMMATION"))
+                {
+                    break;
+                }
+                else
+                {
+                    if (ids.Contains(System.Convert.ToInt32(BarForce[2])) && loadcaseIds.Contains(BarForce[3]))
+                    {
+                        Barforces.Add(Engine.MidasCivil.Convert.ToBarForce(BarForce));
+                    }
+                }
+            }
+            return Barforces;
         }
 
         /***************************************************/
