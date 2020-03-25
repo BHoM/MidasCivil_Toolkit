@@ -29,40 +29,6 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static NodeReaction ToNodeReaction(this List<string> delimitted)
-        {
-            NodeReaction nodeReaction = new NodeReaction()
-            {
-                ObjectId = System.Convert.ToInt32(delimitted[2]),
-                ResultCase = delimitted[3],
-                FX = System.Convert.ToDouble(delimitted[7]),
-                FY = System.Convert.ToDouble(delimitted[8]),
-                FZ = System.Convert.ToDouble(delimitted[9]),
-                MX = System.Convert.ToDouble(delimitted[10]),
-                MY = System.Convert.ToDouble(delimitted[11]),
-                MZ = System.Convert.ToDouble(delimitted[12])
-            };
-            return nodeReaction;
-        }
-
-    }
-    public static partial class Convert
-    {
-        public static BarForce ToBarForce(this List<string> delimitted)
-        {
-            BarForce barforce = new BarForce()
-            {
-                ObjectId = System.Convert.ToInt32(delimitted[4]),
-                ResultCase = delimitted[5],
-                FX = System.Convert.ToDouble(delimitted[12]),
-                FY = System.Convert.ToDouble(delimitted[13]),
-                FZ = System.Convert.ToDouble(delimitted[14]),
-                MX = System.Convert.ToDouble(delimitted[15]),
-                MY = System.Convert.ToDouble(delimitted[16]),
-                MZ = System.Convert.ToDouble(delimitted[17])
-            };
-            return barforce;
-        }
         public static BarStress ToBarStress(this List<string> delimitted)
         {
             double position = 0;
@@ -99,9 +65,12 @@ namespace BH.Engine.MidasCivil
 
 
             };
+
+            BarStress barstress = new BarStress { };
             return barstress;
         }
 
     }
 }
+
 
