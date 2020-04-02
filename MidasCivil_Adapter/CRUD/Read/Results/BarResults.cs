@@ -76,7 +76,33 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractBarStress(List<int> ids, List<string> loadcaseIds)
         {
-            return null;
+
+
+
+
+            /***************************************************/
+            string filePath = directory + "\\Beam Stress.xls";
+            string csvPath = ExcelToCsv(filePath);
+            List<String> BarstressText = File.ReadAllLines(csvPath).ToList();
+
+            List<BarStress> Barstress = new List<BarStress>();
+            for (int i = 9; i < BarstressText.Count; i++)
+            {
+                List<string> BarStress = BarstressText[i].Split(',').ToList(); ;
+                if (BarstressText[i].Contains("SUMMATION"))
+                {
+                    break;
+                }
+                else
+                {
+                    if (ids.Contains(System.Convert.ToInt32(BarStress[2])) && loadcaseIds.Contains(BarStress[3]))
+                    {
+                        Barstress.Add(Engine.MidasCivil.Convert.ToBarStress(BarStress));
+                    }
+                }
+            }
+            return Barstress;
+
         }
 
         /***************************************************/
