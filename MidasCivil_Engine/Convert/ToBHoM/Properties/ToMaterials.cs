@@ -23,7 +23,7 @@ using BH.oM.Structure.MaterialFragments;
 using BH.oM.Geometry;
 using System.Linq;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Convert
     {

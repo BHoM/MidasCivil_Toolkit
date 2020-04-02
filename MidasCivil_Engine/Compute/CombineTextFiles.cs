@@ -27,7 +27,7 @@ using System.IO;
 using System.ComponentModel;
 using BH.oM.Reflection.Attributes;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Compute
     {
@@ -70,7 +70,7 @@ namespace BH.Engine.MidasCivil
                 }
                 else
                 {
-                    types.ForEach(x => typeNames.Add(Engine.MidasCivil.Convert.ToType(x.ToString())));
+                    types.ForEach(x => typeNames.Add(Engine.External.MidasCivil.Convert.ToType(x.ToString())));
 
                     if (!typeNames.Contains("LOADCASE"))
                     {

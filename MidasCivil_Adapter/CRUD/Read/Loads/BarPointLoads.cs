@@ -107,7 +107,7 @@ namespace BH.Adapter.MidasCivil
                             List<string> matchingBars = new List<string>();
                             indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
 
-                            BarPointLoad bhomBarPointLoad = Engine.MidasCivil.Convert.ToBarPointLoad(distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, j);
+                            BarPointLoad bhomBarPointLoad = Engine.External.MidasCivil.Convert.ToBarPointLoad(distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, j);
                             bhomBarPointLoads.Add(bhomBarPointLoad);
 
                             if (String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[22]))

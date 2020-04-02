@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
                         Select(x=>x.Trim()).
                         Where(x => !string.IsNullOrEmpty(x)).
                         ToList();
-                    itemAssignment = Engine.MidasCivil.Query.Assignments(assignments);
+                    itemAssignment = Engine.External.MidasCivil.Query.Assignments(assignments);
                 }
                 else
                 {

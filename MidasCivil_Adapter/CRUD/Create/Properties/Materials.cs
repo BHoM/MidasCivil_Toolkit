@@ -35,7 +35,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (IMaterialFragment material in materials)
             {
-                midasMaterials.Add(Engine.MidasCivil.Convert.FromMaterial(material));
+                midasMaterials.Add(Engine.External.MidasCivil.Convert.FromMaterial(material));
             }
 
             File.AppendAllLines(path, midasMaterials);

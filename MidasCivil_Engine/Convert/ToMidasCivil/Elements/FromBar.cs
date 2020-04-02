@@ -23,7 +23,7 @@
 using BH.oM.Structure.Elements;
 using System.Collections.Generic;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Convert
     {

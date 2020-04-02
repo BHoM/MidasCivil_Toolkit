@@ -35,7 +35,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (string material in materialText)
             {
-                IMaterialFragment bhomMaterial = Engine.MidasCivil.Convert.ToMaterial(material);
+                IMaterialFragment bhomMaterial = Engine.External.MidasCivil.Convert.ToMaterial(material);
                 bhomMaterials.Add(bhomMaterial);
             }
 

@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using BH.oM.Structure.Loads;
 using System.Linq;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Convert
     {

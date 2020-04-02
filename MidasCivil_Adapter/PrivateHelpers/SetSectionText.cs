@@ -66,7 +66,7 @@ namespace BH.Adapter.MidasCivil
                     continue;
                 }
 
-                string sectionName = Engine.MidasCivil.Query.SectionName(sectionHeader);
+                string sectionName = Engine.External.MidasCivil.Query.SectionName(sectionHeader);
                 List<string> sectionText = midasText.GetRange(sectionStart, sectionEnd - sectionStart);
 
                 if (loadcaseStarts.Contains(sectionStart))
@@ -88,7 +88,7 @@ namespace BH.Adapter.MidasCivil
                         {
                             continue;
                         }
-                        string loadName = Engine.MidasCivil.Query.SectionName(midasText[loadStart]);
+                        string loadName = Engine.External.MidasCivil.Query.SectionName(midasText[loadStart]);
                         WriteSectionText(loadText, loadName, path);
                     }
                 }

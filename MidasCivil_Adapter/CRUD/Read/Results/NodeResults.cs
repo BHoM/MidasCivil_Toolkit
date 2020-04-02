@@ -83,7 +83,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (ids.Contains(System.Convert.ToInt32(nodeReaction[2])) && loadcaseIds.Contains(nodeReaction[3]))
                     {
-                        nodeReactions.Add(Engine.MidasCivil.Convert.ToNodeReaction(nodeReaction));
+                        nodeReactions.Add(Engine.External.MidasCivil.Convert.ToNodeReaction(nodeReaction));
                     }
                 }
 
@@ -112,7 +112,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (ids.Contains(System.Convert.ToInt32(nodeDisplacement[2])) && loadcaseIds.Contains(nodeDisplacement[3]))
                     {
-                        nodeDisplacements.Add(Engine.MidasCivil.Convert.ToNodeDisplacement(nodeDisplacement));
+                        nodeDisplacements.Add(Engine.External.MidasCivil.Convert.ToNodeDisplacement(nodeDisplacement));
                     }
                 }
             }

@@ -23,7 +23,7 @@
 using BH.oM.Structure.Constraints;
 using System.Collections.Generic;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Query
     {
@@ -39,7 +39,7 @@ namespace BH.Engine.MidasCivil
 
             foreach (DOFType freedom in freedoms)
             {
-                if (!(Engine.MidasCivil.Query.SupportedDOFType(freedom)))
+                if (!(Engine.External.MidasCivil.Query.SupportedDOFType(freedom)))
                 {
                     Reflection.Compute.RecordWarning(
                         "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Fixed);

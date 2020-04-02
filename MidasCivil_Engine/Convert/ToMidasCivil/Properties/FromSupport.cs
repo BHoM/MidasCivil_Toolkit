@@ -22,7 +22,7 @@
 
 using System.IO;
 using BH.oM.Structure.Constraints;
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Convert
     {
@@ -30,7 +30,7 @@ namespace BH.Engine.MidasCivil
         {
                string midasSupport = (
                     " " + "," +
-                    Engine.MidasCivil.Query.SupportString(constraint6DOF) + "," +
+                    Engine.External.MidasCivil.Query.SupportString(constraint6DOF) + "," +
                     constraint6DOF.Name
                     );
 
