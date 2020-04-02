@@ -51,10 +51,10 @@ namespace BH.Adapter.MidasCivil
                     Where(x => !string.IsNullOrEmpty(x)).
                     ToList();
 
-                List<int> assignments = Engine.MidasCivil.Query.Assignments(assignmentRanges);
+                List<int> assignments = Engine.External.MidasCivil.Query.Assignments(assignmentRanges);
                 assignments.Add(int.Parse(bhomID));
 
-                split[0] = Engine.MidasCivil.Compute.AssignmentString(assignments);
+                split[0] = Engine.External.MidasCivil.Compute.AssignmentString(assignments);
             }
             else
             {
@@ -104,10 +104,10 @@ namespace BH.Adapter.MidasCivil
                         Where(x => !string.IsNullOrEmpty(x)).
                         ToList();
                 }
-                List<int> assignments = Engine.MidasCivil.Query.Assignments(assignmentRanges);
+                List<int> assignments = Engine.External.MidasCivil.Query.Assignments(assignmentRanges);
                 assignments.Add(int.Parse(bhomID));
 
-                split[0] = Engine.MidasCivil.Compute.AssignmentString(assignments);
+                split[0] = Engine.External.MidasCivil.Compute.AssignmentString(assignments);
             }
             else
             {

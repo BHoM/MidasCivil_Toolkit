@@ -33,7 +33,7 @@ using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
-using BH.Engine.MidasCivil.Comparer;
+using BH.Engine.External.MidasCivil.Comparer;
 
 
 namespace BH.Adapter.MidasCivil
@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
         public MidasCivilAdapter(string filePath, bool active = false, string version = "")
-        { 
+        {
             if (active)
             {
                 AdapterIdName = "MidasCivil_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine

@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
             {
                 loadcase.CustomData[AdapterIdName] = loadcase.Name;
                 Directory.CreateDirectory(directory + "\\TextFiles\\" + loadcase.Name);
-                midasLoadCases.Add(Engine.MidasCivil.Convert.FromLoadcase(loadcase));
+                midasLoadCases.Add(Engine.External.MidasCivil.Convert.FromLoadcase(loadcase));
             }
 
             File.AppendAllLines(path, midasLoadCases);

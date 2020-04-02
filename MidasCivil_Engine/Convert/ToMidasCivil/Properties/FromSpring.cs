@@ -23,20 +23,20 @@
 using System.Collections.Generic;
 using BH.oM.Structure.Constraints;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Convert
     {
         public static string FromSpring(this Constraint6DOF constraint6DOF, string version)
         {
-            List<double> stiffness = Engine.MidasCivil.Query.SpringStiffness(constraint6DOF);
+            List<double> stiffness = Engine.External.MidasCivil.Query.SpringStiffness(constraint6DOF);
 
             string midasSpring = "";
 
             switch(version)
             {
                 case "8.8.5":
-                    string springFixity = Engine.MidasCivil.Query.SpringFixity(constraint6DOF);
+                    string springFixity = Engine.External.MidasCivil.Query.SpringFixity(constraint6DOF);
                     midasSpring = (
                         " " + "," + "LINEAR" + "," + springFixity +
                         stiffness[0] + "," + stiffness[1] + "," + stiffness[2] + "," +

@@ -22,7 +22,7 @@
 
 using BH.oM.Geometry.ShapeProfiles;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Convert
     {

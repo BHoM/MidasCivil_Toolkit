@@ -74,7 +74,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (string bar in barText)
             {
-                Bar bhomBar = Engine.MidasCivil.Convert.ToBar(bar, bhomNodes, materialSections, bhomBarReleases, barReleaseAssignments);
+                Bar bhomBar = Engine.External.MidasCivil.Convert.ToBar(bar, bhomNodes, materialSections, bhomBarReleases, barReleaseAssignments);
                 int bhomID = System.Convert.ToInt32(bhomBar.CustomData[AdapterIdName]);
                 bhomBar.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomBars.Add(bhomBar);

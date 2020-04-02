@@ -25,7 +25,7 @@ using BH.oM.Geometry;
 using BH.Engine.Structure;
 using System.Collections.Generic;
 
-namespace BH.Engine.MidasCivil.Comparer
+namespace BH.Engine.External.MidasCivil.Comparer
 {
     public class ArrayComparer : IEqualityComparer<double[]>
     {

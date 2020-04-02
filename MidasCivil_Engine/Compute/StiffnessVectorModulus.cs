@@ -23,7 +23,7 @@
 using BH.oM.Geometry;
 using BH.oM.Structure.Constraints;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Compute
     {
@@ -43,8 +43,8 @@ namespace BH.Engine.MidasCivil
                 Z = support.RotationalStiffnessZ
             };
 
-            return Engine.MidasCivil.Compute.Modulus(translationalStiffnessVector) + 
-                Engine.MidasCivil.Compute.Modulus(rotationalStiffnessVector);
+            return Engine.External.MidasCivil.Compute.Modulus(translationalStiffnessVector) + 
+                Engine.External.MidasCivil.Compute.Modulus(rotationalStiffnessVector);
         }
     }
 }

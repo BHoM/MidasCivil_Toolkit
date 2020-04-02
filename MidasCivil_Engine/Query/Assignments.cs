@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Engine.External.MidasCivil
 {
     public static partial class Query
     {
@@ -35,11 +35,11 @@ namespace BH.Engine.MidasCivil
             {
                 if (assignment.Contains("by"))
                 {
-                    propertyAssignment.AddRange(Engine.MidasCivil.Compute.RangeBySplit(assignment, "to", "by"));
+                    propertyAssignment.AddRange(Engine.External.MidasCivil.Compute.RangeBySplit(assignment, "to", "by"));
                 }
                 else if (assignment.Contains("to"))
                 {
-                    propertyAssignment.AddRange(Engine.MidasCivil.Compute.RangeBySplit(assignment, "to"));
+                    propertyAssignment.AddRange(Engine.External.MidasCivil.Compute.RangeBySplit(assignment, "to"));
                 }
                 else
                 {
