@@ -33,14 +33,14 @@ namespace BH.Engine.MidasCivil
         {
             BarForce barforce = new BarForce()
             {
-                ObjectId = System.Convert.ToInt32(delimitted[4]),
-                ResultCase = delimitted[5],
-                FX = System.Convert.ToDouble(delimitted[12]),
-                FY = System.Convert.ToDouble(delimitted[13]),
-                FZ = System.Convert.ToDouble(delimitted[14]),
-                MX = System.Convert.ToDouble(delimitted[15]),
-                MY = System.Convert.ToDouble(delimitted[16]),
-                MZ = System.Convert.ToDouble(delimitted[17])
+                ObjectId = System.Convert.ToInt32(delimitted[3]),
+                ResultCase = delimitted[4],
+                FX = System.Convert.ToDouble(delimitted[11]),
+                FY = System.Convert.ToDouble(delimitted[12]),
+                FZ = System.Convert.ToDouble(delimitted[13]),
+                MX = System.Convert.ToDouble(delimitted[14]),
+                MY = System.Convert.ToDouble(delimitted[15]),
+                MZ = System.Convert.ToDouble(delimitted[16])
             };
             return barforce;
         }
