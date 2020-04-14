@@ -47,26 +47,20 @@ namespace BH.Engine.MidasCivil
 
             BarStress barstress = new BarStress()
             {
-                ObjectId = System.Convert.ToInt32(delimitted[3]),
-                ResultCase = delimitted[4],
-                Axial = System.Convert.ToDouble(delimitted[11]),
-                BendingY_Bot = System.Convert.ToDouble(delimitted[15]),
-                BendingY_Top = System.Convert.ToDouble(delimitted[14]),
-                BendingZ_Bot = System.Convert.ToDouble(delimitted[17]),
-                BendingZ_Top = System.Convert.ToDouble(delimitted[16]),
-                CombAxialBendingNeg = System.Convert.ToDouble(delimitted[16]),
-                CombAxialBendingPos = System.Convert.ToDouble(0),
-                ShearY = 0,
-                ShearZ = 0,
+                ObjectId = System.Convert.ToInt32(delimitted[2]),
+                ResultCase = delimitted[3],
+                Axial = System.Convert.ToDouble(delimitted[10]),
+                ShearY = System.Convert.ToDouble(delimitted[11]),
+                ShearZ = System.Convert.ToDouble(delimitted[12]),
+                BendingY_Bot = System.Convert.ToDouble(delimitted[14]),
+                BendingY_Top = System.Convert.ToDouble(delimitted[13]),
+                BendingZ_Bot = System.Convert.ToDouble(delimitted[16]),
+                BendingZ_Top = System.Convert.ToDouble(delimitted[15]),
                 Position = position,
                 Divisions = 0
 
-
-
-
             };
-
-            BarStress barstress = new BarStress { };
+           
             return barstress;
         }
 

@@ -85,23 +85,15 @@ namespace BH.Adapter.MidasCivil
             string csvPath = ExcelToCsv(filePath);
             List<String> BarstressText = File.ReadAllLines(csvPath).ToList();
 
-            List<BarStress> Barstress = new List<BarStress>();
-            for (int i = 9; i < BarstressText.Count; i++)
+            List<BarStress> Barstresss = new List<BarStress>();
+            for (int i = 14; i < BarstressText.Count; i++)
             {
                 List<string> BarStress = BarstressText[i].Split(',').ToList(); ;
-                if (BarstressText[i].Contains("SUMMATION"))
-                {
-                    break;
-                }
-                else
-                {
-                    if (ids.Contains(System.Convert.ToInt32(BarStress[2])) && loadcaseIds.Contains(BarStress[3]))
-                    {
-                        Barstress.Add(Engine.MidasCivil.Convert.ToBarStress(BarStress));
-                    }
-                }
+
+                Barstresss.Add(Engine.MidasCivil.Convert.ToBarStress(BarStress));
+                
             }
-            return Barstress;
+            return Barstresss;
 
         }
 
@@ -135,20 +127,13 @@ namespace BH.Adapter.MidasCivil
             List<String> BarForceText = File.ReadAllLines(csvPath).ToList();
 
             List<BarForce> Barforces = new List<BarForce>();
-            for (int i = 9; i < BarForceText.Count; i++)
+            for (int i = 11; i < BarForceText.Count; i++)
             {
                 List<string> BarForce = BarForceText[i].Split(',').ToList(); ;
-                if (BarForceText[i].Contains("SUMMATION"))
-                {
-                    break;
-                }
-                else
-                {
-                    if (ids.Contains(System.Convert.ToInt32(BarForce[2])) && loadcaseIds.Contains(BarForce[3]))
-                    {
+
                         Barforces.Add(Engine.MidasCivil.Convert.ToBarForce(BarForce));
-                    }
-                }
+                    
+                
             }
             return Barforces;
         }
