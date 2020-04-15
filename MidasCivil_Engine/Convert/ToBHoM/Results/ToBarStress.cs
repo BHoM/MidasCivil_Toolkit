@@ -58,9 +58,7 @@ namespace BH.Engine.MidasCivil
                 BendingZ_Top = System.Convert.ToDouble(delimitted[15]),
                 Position = position,
                 Divisions = 0
-
             };
-           
             return barstress;
         }
 

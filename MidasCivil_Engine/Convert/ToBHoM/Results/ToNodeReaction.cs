@@ -42,7 +42,6 @@ namespace BH.Engine.MidasCivil
                 MY = System.Convert.ToDouble(delimitted[11]),
                 MZ = System.Convert.ToDouble(delimitted[12])
             };
-
             return nodeReaction;
         }
 
