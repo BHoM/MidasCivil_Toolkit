@@ -22,11 +22,13 @@
 
 using BH.oM.Common;
 using BH.oM.Adapter;
+using BH.oM.Structure.Loads;
 using BH.oM.Structure.Requests;
 using BH.oM.Structure.Results;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
@@ -78,9 +80,23 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractMeshForce(List<int> ids, List<string> loadcaseIds)
         {
-            return null;
-        }
+            
+            /***************************************************/
+            string filePath = directory + "\\Plate Force(UL_Local).xls";
+            string csvPath = ExcelToCsv(filePath);
+            List <string> MeshForceText = File.ReadAllLines(csvPath).ToList();
 
+            List<MeshForce> Meshforces = new List<MeshForce>();
+            for (int i = 16; i < MeshForceText.Count; i++)
+            {
+                List<string> MeshForce = MeshForceText[i].Split(',').ToList(); ;
+
+                Meshforces.Add(Engine.MidasCivil.Convert.ToMeshForce(MeshForce));
+
+
+            }
+            return Meshforces;
+        }
         /***************************************************/
 
         private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
