@@ -76,10 +76,6 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractBarStress(List<int> ids, List<string> loadcaseIds)
         {
-
-
-
-
             /***************************************************/
             string filePath = directory + "\\Beam Stress.xls";
             string csvPath = ExcelToCsv(filePath);
@@ -88,15 +84,11 @@ namespace BH.Adapter.MidasCivil
             List<BarStress> Barstresss = new List<BarStress>();
             for (int i = 14; i < BarstressText.Count; i++)
             {
-                List<string> BarStress = BarstressText[i].Split(',').ToList(); ;
-
+                List<string> BarStress = BarstressText[i].Split(',').ToList();
                 Barstresss.Add(Engine.MidasCivil.Convert.ToBarStress(BarStress));
-                
             }
             return Barstresss;
-
         }
-
         /***************************************************/
 
         private IEnumerable<IResult> ExtractBarStrain(List<int> ids, List<string> loadcaseIds)
@@ -118,9 +110,6 @@ namespace BH.Adapter.MidasCivil
         private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<string> loadcaseIds)
         {
 
-
-
-
             /***************************************************/
             string filePath = directory + "\\Beam Force.xls";
             string csvPath = ExcelToCsv(filePath);
@@ -129,11 +118,8 @@ namespace BH.Adapter.MidasCivil
             List<BarForce> Barforces = new List<BarForce>();
             for (int i = 11; i < BarForceText.Count; i++)
             {
-                List<string> BarForce = BarForceText[i].Split(',').ToList(); ;
-
-                        Barforces.Add(Engine.MidasCivil.Convert.ToBarForce(BarForce));
-                    
-                
+                List<string> BarForce = BarForceText[i].Split(',').ToList();
+                Barforces.Add(Engine.MidasCivil.Convert.ToBarForce(BarForce));
             }
             return Barforces;
         }

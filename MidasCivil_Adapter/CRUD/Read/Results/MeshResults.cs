@@ -80,20 +80,15 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractMeshForce(List<int> ids, List<string> loadcaseIds)
         {
-            
             /***************************************************/
             string filePath = directory + "\\Plate Force(UL_Local).xls";
             string csvPath = ExcelToCsv(filePath);
-            List <string> MeshForceText = File.ReadAllLines(csvPath).ToList();
-
+            List<string> MeshForceText = File.ReadAllLines(csvPath).ToList();
             List<MeshForce> Meshforces = new List<MeshForce>();
             for (int i = 16; i < MeshForceText.Count; i++)
             {
-                List<string> MeshForce = MeshForceText[i].Split(',').ToList(); ;
-
+                List<string> MeshForce = MeshForceText[i].Split(',').ToList();
                 Meshforces.Add(Engine.MidasCivil.Convert.ToMeshForce(MeshForce));
-
-
             }
             return Meshforces;
         }

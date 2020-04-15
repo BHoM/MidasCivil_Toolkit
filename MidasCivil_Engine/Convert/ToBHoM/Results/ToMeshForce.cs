@@ -32,15 +32,12 @@ namespace BH.Engine.MidasCivil
 
         public static MeshForce ToMeshForce(this List<string> delimitted)
         {
-        
-            MeshForce Meshforce = new MeshForce (System.Convert.ToInt32(delimitted[2]), delimitted[7], 0,
-            delimitted[3], 0,MeshResultLayer.Middle,0.5,MeshResultSmoothingType.None,null,
+            MeshForce Meshforce = new MeshForce(System.Convert.ToInt32(delimitted[2]), delimitted[7], 0,
+            delimitted[3], 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.None, null,
             System.Convert.ToDouble(delimitted[9]), System.Convert.ToDouble(delimitted[10]), System.Convert.ToDouble(delimitted[11]),
-            System.Convert.ToDouble(delimitted[15]), System.Convert.ToDouble(delimitted[16]), System.Convert.ToDouble(delimitted[17]), System.Convert.ToDouble(delimitted[21]), System.Convert.ToDouble(delimitted[22]))
-            ;
-           
+            System.Convert.ToDouble(delimitted[15]), System.Convert.ToDouble(delimitted[16]), System.Convert.ToDouble(delimitted[17]),
+            System.Convert.ToDouble(delimitted[21]), System.Convert.ToDouble(delimitted[22]));
             return Meshforce;
         }
-
     }
 }
