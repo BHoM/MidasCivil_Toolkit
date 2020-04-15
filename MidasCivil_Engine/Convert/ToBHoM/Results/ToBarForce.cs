@@ -31,6 +31,23 @@ namespace BH.Engine.MidasCivil
     {
         public static BarForce ToBarForce(this List<string> delimitted)
         {
+            double position = 0;
+            if (delimitted[9].Contains('4'))
+            {
+                    position = 1;
+            }
+            else if (delimitted[9].Contains('3'))
+            {
+                position = 0.75;
+            }
+            else if (delimitted[9].Contains('2'))
+            {
+                position = 0.5;
+            }
+            else if (delimitted[9].Contains('1'))
+            {
+                position = 0.25;
+            }
             BarForce barforce = new BarForce()
             {
                 ObjectId = System.Convert.ToInt32(delimitted[3]),
@@ -40,7 +57,9 @@ namespace BH.Engine.MidasCivil
                 FZ = System.Convert.ToDouble(delimitted[13]),
                 MX = System.Convert.ToDouble(delimitted[14]),
                 MY = System.Convert.ToDouble(delimitted[15]),
-                MZ = System.Convert.ToDouble(delimitted[16])
+                MZ = System.Convert.ToDouble(delimitted[16]),
+                Position = position
+
             };
             return barforce;
         }
