@@ -102,6 +102,7 @@
     <Compile Include="Convert\ToBHoM\Properties\ToConcreteSection.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToBarForce.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToBarStress.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToMeshForce.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToNodeDisplacement.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromFEMesh.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromLoadAxis.cs" />
