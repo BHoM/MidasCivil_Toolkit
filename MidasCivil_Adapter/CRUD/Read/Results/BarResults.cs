@@ -80,7 +80,6 @@ namespace BH.Adapter.MidasCivil
             string filePath = directory + "\\Beam Stress.xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> BarstressText = File.ReadAllLines(csvPath).ToList();
-
             List<BarStress> Barstresss = new List<BarStress>();
             for (int i = 14; i < BarstressText.Count; i++)
             {
@@ -114,7 +113,6 @@ namespace BH.Adapter.MidasCivil
             string filePath = directory + "\\Beam Force.xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> BarForceText = File.ReadAllLines(csvPath).ToList();
-
             List<BarForce> Barforces = new List<BarForce>();
             for (int i = 11; i < BarForceText.Count; i++)
             {
