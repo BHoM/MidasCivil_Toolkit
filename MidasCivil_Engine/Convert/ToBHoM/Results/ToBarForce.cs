@@ -22,6 +22,7 @@
 
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Results;
+
 using System.Linq;
 using System.Collections.Generic;
 
@@ -29,21 +30,10 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
+
         public static BarForce ToBarForce(this List<string> delimitted)
         {
-            double position = 0;
-            if (delimitted[8].Contains('['))
-            {
-                if (delimitted[8].Split('[')[0].Trim() == "J")
-                {
-                    position = 1;
-                }
-            }
-            else if (delimitted[8].Contains('/'))
-            {
-                List<string> splitPosition = delimitted[8].Split('/').ToList();
-                position = System.Convert.ToDouble(splitPosition[0]) / System.Convert.ToDouble(splitPosition[1]);
-            }
+            double position = GetBarResultPosition(delimitted[8]);
             BarForce barforce = new BarForce()
             {
                 ObjectId = System.Convert.ToInt32(delimitted[3]),
@@ -58,6 +48,29 @@ namespace BH.Engine.MidasCivil
             };
 
             return barforce;
+        }
+
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private static double GetBarResultPosition(string delimitted)
+        {
+            double position = 0;
+            if (delimitted.Contains('['))
+            {
+                if (delimitted.Split('[')[0].Trim() == "J")
+                {
+                    position = 1;
+                }
+            }
+            else if (delimitted.Contains('/'))
+            {
+                List<string> splitPosition = delimitted.Split('/').ToList();
+                position = System.Convert.ToDouble(splitPosition[0]) / System.Convert.ToDouble(splitPosition[1]);
+            }
+
+            return position;
         }
 
     }
