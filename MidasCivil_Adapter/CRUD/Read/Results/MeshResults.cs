@@ -83,14 +83,15 @@ namespace BH.Adapter.MidasCivil
             /***************************************************/
             string filePath = directory + "\\Plate Force(UL_Local).xls";
             string csvPath = ExcelToCsv(filePath);
-            List<string> MeshForceText = File.ReadAllLines(csvPath).ToList();
-            List<MeshForce> Meshforces = new List<MeshForce>();
-            for (int i = 16; i < MeshForceText.Count; i++)
+            List<string> meshForceText = File.ReadAllLines(csvPath).ToList();
+            List<MeshForce> meshForces = new List<MeshForce>();
+            for (int i = 16; i < meshForceText.Count; i++)
             {
-                List<string> MeshForce = MeshForceText[i].Split(',').ToList();
-                Meshforces.Add(Engine.MidasCivil.Convert.ToMeshForce(MeshForce));
+                List<string> meshForce = meshForceText[i].Split(',').ToList();
+                meshForces.Add(Engine.MidasCivil.Convert.ToMeshForce(meshForce));
             }
-            return Meshforces;
+
+            return meshForces;
         }
         /***************************************************/
 
