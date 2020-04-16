@@ -31,19 +31,8 @@ namespace BH.Engine.MidasCivil
     {
         public static BarStress ToBarStress(this List<string> delimitted)
         {
-            double position = 0;
-            if (delimitted[7].Contains('['))
-            {
-                if (delimitted[7].Split('[')[0].Trim() == "J")
-                {
-                    position = 1;
-                }
-            }
-            else if (delimitted[7].Contains('/'))
-            {
-                List<string> splitPosition = delimitted[7].Split('/').ToList();
-                position = System.Convert.ToDouble(splitPosition[0]) / System.Convert.ToDouble(splitPosition[1]);
-            }
+            double position = GetBarResultPosition(delimitted[7]);
+
             BarStress barstress = new BarStress()
             {
                 ObjectId = System.Convert.ToInt32(delimitted[2]),
