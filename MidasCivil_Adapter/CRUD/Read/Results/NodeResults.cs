@@ -71,7 +71,6 @@ namespace BH.Adapter.MidasCivil
             string filePath = directory + "\\Reaction(Global).xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> nodeReactionText = File.ReadAllLines(csvPath).ToList();
-
             List<NodeReaction> nodeReactions = new List<NodeReaction>();
             for (int i = 9; i < nodeReactionText.Count; i++)
             {
@@ -91,7 +90,6 @@ namespace BH.Adapter.MidasCivil
             }
 
             return nodeReactions;
-
         }
 
         /***************************************************/

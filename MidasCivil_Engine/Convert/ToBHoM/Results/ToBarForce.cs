@@ -22,28 +22,55 @@
 
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Results;
+
 using System.Linq;
 using System.Collections.Generic;
 
-namespace BH.Engine.External.MidasCivil
+namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
-        public static NodeReaction ToNodeReaction(this List<string> delimitted)
+
+        public static BarForce ToBarForce(this List<string> delimitted)
         {
-            NodeReaction nodeReaction = new NodeReaction()
+            double position = GetBarResultPosition(delimitted[8]);
+            BarForce barforce = new BarForce()
             {
-                ObjectId = System.Convert.ToInt32(delimitted[2]),
-                ResultCase = delimitted[3],
-                FX = System.Convert.ToDouble(delimitted[7]),
-                FY = System.Convert.ToDouble(delimitted[8]),
-                FZ = System.Convert.ToDouble(delimitted[9]),
-                MX = System.Convert.ToDouble(delimitted[10]),
-                MY = System.Convert.ToDouble(delimitted[11]),
-                MZ = System.Convert.ToDouble(delimitted[12])
+                ObjectId = System.Convert.ToInt32(delimitted[3]),
+                ResultCase = delimitted[4],
+                FX = System.Convert.ToDouble(delimitted[11]),
+                FY = System.Convert.ToDouble(delimitted[12]),
+                FZ = System.Convert.ToDouble(delimitted[13]),
+                MX = System.Convert.ToDouble(delimitted[14]),
+                MY = System.Convert.ToDouble(delimitted[15]),
+                MZ = System.Convert.ToDouble(delimitted[16]),
+                Position = position
             };
 
-            return nodeReaction;
+            return barforce;
+        }
+
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private static double GetBarResultPosition(string delimitted)
+        {
+            double position = 0;
+            if (delimitted.Contains('['))
+            {
+                if (delimitted.Split('[')[0].Trim() == "J")
+                {
+                    position = 1;
+                }
+            }
+            else if (delimitted.Contains('/'))
+            {
+                List<string> splitPosition = delimitted.Split('/').ToList();
+                position = System.Convert.ToDouble(splitPosition[0]) / System.Convert.ToDouble(splitPosition[1]);
+            }
+
+            return position;
         }
 
     }

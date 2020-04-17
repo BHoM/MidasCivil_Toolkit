@@ -26,6 +26,8 @@ using BH.oM.Structure.Requests;
 using BH.oM.Structure.Results;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.IO;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -35,7 +37,6 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
         /**** Public method - Read override             ****/
         /***************************************************/
-
         public IEnumerable<IResult> ReadResults(BarResultRequest request, ActionConfig actionConfig)
         {
             List<IResult> results;
@@ -69,16 +70,20 @@ namespace BH.Adapter.MidasCivil
         /**** Private  Methods                          ****/
         /***************************************************/
 
-        private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<string> loadcaseIds)
-        {
-            return null;
-        }
-
-        /***************************************************/
-
         private IEnumerable<IResult> ExtractBarStress(List<int> ids, List<string> loadcaseIds)
         {
-            return null;
+
+            string filePath = directory + "\\Beam Stress.xls";
+            string csvPath = ExcelToCsv(filePath);
+            List<String> barStressText = File.ReadAllLines(csvPath).ToList();
+            List<BarStress> barStresses = new List<BarStress>();
+            for (int i = 14; i < barStressText.Count; i++)
+            {
+                List<string> barStress = barStressText[i].Split(',').ToList();
+                barStresses.Add(Engine.MidasCivil.Convert.ToBarStress(barStress));
+            }
+
+            return barStresses;
         }
 
         /***************************************************/
@@ -93,6 +98,24 @@ namespace BH.Adapter.MidasCivil
         private IEnumerable<IResult> ExtractBarDisplacement(List<int> ids, List<string> loadcaseIds)
         {
             return null;
+        }
+
+        /***************************************************/
+
+        private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<string> loadcaseIds)
+        {
+
+            string filePath = directory + "\\Beam Force.xls";
+            string csvPath = ExcelToCsv(filePath);
+            List<String> barForceText = File.ReadAllLines(csvPath).ToList();
+            List<BarForce> barForces = new List<BarForce>();
+            for (int i = 11; i < barForceText.Count; i++)
+            {
+                List<string> barForce = barForceText[i].Split(',').ToList();
+                barForces.Add(Engine.MidasCivil.Convert.ToBarForce(barForce));
+            }
+
+            return barForces;
         }
 
         /***************************************************/
