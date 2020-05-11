@@ -8,8 +8,11 @@ https://en.midasuser.com/product/civil_overview.asp
 
 ### Known Versions of Software Supported
 MidasCivil 2018
+
 MidasCivil 2019
+
 MidasCivil 2020 
+
 
 ### Documentation
 For more information about functionality see the [MidasCivil_Toolkit Wiki](https://github.com/BHoM/MidasCivil_Toolkit/wiki)
