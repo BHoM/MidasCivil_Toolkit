@@ -95,6 +95,7 @@
     </Reference>
     <Reference Include="Reflection_oM">
       <HintPath>..\..\BHoM\Build\Reflection_oM.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Structure_AdapterModules">
       <HintPath>..\..\BHoM_Adapter\Build\Structure_AdapterModules.dll</HintPath>
