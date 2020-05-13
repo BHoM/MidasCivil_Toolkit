@@ -37,9 +37,9 @@ namespace BH.Adapter.MidasCivil
                 List<string> midasGravityLoads = new List<string>();
                 string gravityLoadPath = CreateSectionFile(gravityLoad.Loadcase.Name + "\\SELFWEIGHT");
 
-                string midasLoadGroup = Engine.External.MidasCivil.Convert.FromLoadGroup(gravityLoad);
+                string midasLoadGroup = Adapter.External.MidasCivil.Convert.FromLoadGroup(gravityLoad);
 
-                midasGravityLoads.AddRange(Engine.External.MidasCivil.Convert.FromGravityLoad(gravityLoad));
+                midasGravityLoads.AddRange(Adapter.External.MidasCivil.Convert.FromGravityLoad(gravityLoad));
 
                 string[] exisitingGravityLoads = File.ReadAllLines(gravityLoadPath);
                 bool containsGravity = false;

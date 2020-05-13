@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
                         ToList();
                 }
 
-                List<int> propertyAssignment = Engine.External.MidasCivil.Query.Assignments(geometryAssignments);
+                List<int> propertyAssignment = MidasCivilAdapter.GetAssignmentIds(geometryAssignments);
 
                 propertyAssignments.Add(namePrefix + "_" + (i+1), propertyAssignment);
             }
@@ -75,7 +75,7 @@ namespace BH.Adapter.MidasCivil
                         ToList();
                 }
 
-                List<int> propertyAssignment = Engine.External.MidasCivil.Query.Assignments(geometryAssignments);
+                List<int> propertyAssignment = MidasCivilAdapter.GetAssignmentIds(geometryAssignments);
 
                 string key = sectionText[i + 1].Split(',')[7].Trim();
 

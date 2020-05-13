@@ -75,6 +75,10 @@
       <HintPath>..\..\BHoM\Build\Geometry_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Library_Engine">
+      <HintPath>..\..\BHoM_Engine\Build\Library_Engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -88,6 +92,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\BHoM_Engine\Build\Reflection_Engine.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Reflection_oM">
+      <HintPath>..\..\BHoM\Build\Reflection_oM.dll</HintPath>
     </Reference>
     <Reference Include="Structure_AdapterModules">
       <HintPath>..\..\BHoM_Adapter\Build\Structure_AdapterModules.dll</HintPath>
@@ -113,6 +120,63 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Convert\AdapterIdName.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ToFEMesh.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
+    <Compile Include="Convert\ToBHoM\Elements\ToRigidLink.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToAreaTemperatureLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformlyDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToBarPointLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToBarTemperatureLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToBarUniformlyDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToBarVaryingDistributedLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToGravityLoad.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToLoadcase.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToLoadCombination.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToLoadNature.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToPointForce.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToBarRelease.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToConcreteSection.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToConstraint6DOF.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToMaterials.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToProfile.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToSectionProperty.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToSurfaceProperty.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToBarForce.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToBarStress.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToMeshForce.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToNodeDisplacement.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToNodeReaction.cs" />
+    <Compile Include="Convert\ToMidasCivil\Elements\FromBar.cs" />
+    <Compile Include="Convert\ToMidasCivil\Elements\FromFEMesh.cs" />
+    <Compile Include="Convert\ToMidasCivil\Elements\FromNode.cs" />
+    <Compile Include="Convert\ToMidasCivil\Elements\FromRigidLink.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromAreaTemperatureLoad.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromAreaUniformlyDistributedLoad.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromBarPointLoad.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromBarTemperatureLoad.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromBarUniformlyDistributedLoad.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromBarVaryingDistributedLoad.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromGravityLoad.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromLoadAxis.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromLoadcase.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromLoadCombination.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromLoadGroup.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromLoadProjection.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromPointForce.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromVector.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromVectorDirection.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromBarRelease.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromDOFType.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromFixity.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromMaterial.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromSectionProperty.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromSpring.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromSupport.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromSurfaceProperty.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromTag.cs" />
     <Compile Include="CRUD\Create\Elements\RigidLink.cs" />
     <Compile Include="CRUD\Create\Elements\Element.cs" />
     <Compile Include="CRUD\Create\Elements\Node.cs" />
@@ -155,9 +219,11 @@
     <Compile Include="CRUD\Read\Results\MeshResults.cs" />
     <Compile Include="CRUD\Read\Results\NodeResults.cs" />
     <Compile Include="CRUD\Read\Results\ReadResults.cs" />
+    <Compile Include="PrivateHelpers\GetAssignmentIds.cs" />
     <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
     <Compile Include="PrivateHelpers\GetMaxID.cs" />
     <Compile Include="PrivateHelpers\CreateGroups.cs" />
+    <Compile Include="PrivateHelpers\GetSupportedDOFType.cs" />
     <Compile Include="PrivateHelpers\ReadTags.cs" />
     <Compile Include="PrivateHelpers\PropertyAssignment.cs" />
     <Compile Include="PrivateHelpers\CreateSectionText.cs" />
@@ -166,6 +232,7 @@
     <Compile Include="CRUD\Create\Create.cs" />
     <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="PrivateHelpers\SectionMaterialCombinations.cs" />
+    <Compile Include="PrivateHelpers\StiffnessVectorModulus.cs" />
     <Compile Include="Type\NextFreeId.cs" />
     <Compile Include="PrivateHelpers\GetPropertyAssignments.cs" />
     <Compile Include="PrivateHelpers\CompareGroup.cs" />

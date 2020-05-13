@@ -35,7 +35,7 @@ namespace BH.Engine.External.MidasCivil
         [Input("filePath", "The same filepath used for the adapter (pointing to an mcb file)")]
         [Input("types", "BHoM object types to specify the text files to be combined. A null value will combine all text files.")]
         [Input("active", "Execute the method")]
-        [Output("success","Was the execution successful?")]
+        [Output("success", "Was the execution successful?")]
 
         public static bool CombineTextFiles(string filePath, List<Type> types = null, bool active = false)
         {
@@ -70,7 +70,7 @@ namespace BH.Engine.External.MidasCivil
                 }
                 else
                 {
-                    types.ForEach(x => typeNames.Add(Engine.External.MidasCivil.Convert.ToType(x.ToString())));
+                    types.ForEach(x => typeNames.Add(ToType(x.ToString())));
 
                     if (!typeNames.Contains("LOADCASE"))
                     {
@@ -124,7 +124,7 @@ namespace BH.Engine.External.MidasCivil
                         {
                             if (typeNames.Contains(independent))
                             {
-                                if (new FileInfo(directory + "\\" + independent + ".txt").Length !=0)
+                                if (new FileInfo(directory + "\\" + independent + ".txt").Length != 0)
                                 {
                                     var input = File.OpenRead(directory + "\\" + independent + ".txt");
                                     input.CopyTo(combined);
@@ -163,7 +163,7 @@ namespace BH.Engine.External.MidasCivil
                                     }
                                 }
 
-                                ESCAPE:
+                            ESCAPE:
 
                                 loadNames.Remove("USE-STLD.txt");
                                 writer.Write("*USE-STLD, " + loadcaseName);
@@ -212,7 +212,30 @@ namespace BH.Engine.External.MidasCivil
             }
 
             return success;
+        }
 
+        private static string ToType(string type)
+        {
+
+            string[] delimited = type.Split('.');
+            type = delimited[delimited.Count() - 1];
+
+            Dictionary<string, string> conversion = new Dictionary<string, string>
+            {
+                {"Node", "NODE" },
+                {"Bar", "ELEMENT" },
+                {"FEMesh", "ELEMENT" },
+                {"Constraint6DOF", "CONSTRAINT" },
+                {"Material", "MATERIAL" },
+                {"SteelSection", "SECTION" },
+                {"ConcreteSection", "SECTION" },
+                {"ConstantThickness", "THICKNESS" },
+                {"Loadcase", "LOADCASE" },
+            };
+
+            string midasVersion;
+            conversion.TryGetValue(type, out midasVersion);
+            return midasVersion;
         }
 
     }

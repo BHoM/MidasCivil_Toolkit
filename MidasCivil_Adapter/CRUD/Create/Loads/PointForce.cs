@@ -37,13 +37,13 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasPointLoads = new List<string>();
                 string PointLoadPath = CreateSectionFile(PointLoad.Loadcase.Name + "\\CONLOAD");
-                string midasLoadGroup = Engine.External.MidasCivil.Convert.FromLoadGroup(PointLoad);
+                string midasLoadGroup = Adapter.External.MidasCivil.Convert.FromLoadGroup(PointLoad);
 
                 List<string> assignedNodes = PointLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
 
                 foreach (string assignedNode in assignedNodes)
                 {
-                   midasPointLoads.Add(Engine.External.MidasCivil.Convert.FromPointLoad(PointLoad, assignedNode));
+                   midasPointLoads.Add(Adapter.External.MidasCivil.Convert.FromPointLoad(PointLoad, assignedNode));
                 }
 
                 RemoveLoadEnd(PointLoadPath);

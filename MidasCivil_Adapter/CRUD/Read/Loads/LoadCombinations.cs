@@ -40,7 +40,7 @@ namespace BH.Adapter.MidasCivil
 
             for (int i=0; i<loadCombinationText.Count; i+=2)
             {
-                LoadCombination bhomLoadCombination = Engine.External.MidasCivil.Convert.ToLoadCombination(loadCombinationText[i], loadCombinationText[i+1], bhomLoadCaseDictionary);
+                LoadCombination bhomLoadCombination = Adapter.External.MidasCivil.Convert.ToLoadCombination(loadCombinationText[i], loadCombinationText[i+1], bhomLoadCaseDictionary);
                 bhomLoadCombinations.Add(bhomLoadCombination);
             }
 

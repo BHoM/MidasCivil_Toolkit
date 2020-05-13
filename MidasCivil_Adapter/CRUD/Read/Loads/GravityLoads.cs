@@ -62,7 +62,7 @@ namespace BH.Adapter.MidasCivil
                         List<string> delimitted = gravityLoad.Split(',').ToList();
                         delimitted.RemoveAt(0);
                         gravityLoads.Add(String.Join(",", delimitted));
-                        GravityLoad bhomGravityLoad = Engine.External.MidasCivil.Convert.ToGravityLoad(
+                        GravityLoad bhomGravityLoad = Adapter.External.MidasCivil.Convert.ToGravityLoad(
                             objects, gravityLoad, loadcase, loadcaseDictionary, i);
                         bhomGravityLoads.Add(bhomGravityLoad);
 

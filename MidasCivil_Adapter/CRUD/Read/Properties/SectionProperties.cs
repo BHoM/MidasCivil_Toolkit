@@ -48,7 +48,7 @@ namespace BH.Adapter.MidasCivil
                     string sectionProperties2 = sectionProperties[i + 2];
                     string sectionProperties3 = sectionProperties[i + 3];
 
-                    bhomSectionProperty = Engine.External.MidasCivil.Convert.ToSectionProperty(
+                    bhomSectionProperty = Adapter.External.MidasCivil.Convert.ToSectionProperty(
                         sectionProfile,sectionProperties1,sectionProperties2,sectionProperties3);
 
                     i = i + 3;
@@ -63,7 +63,7 @@ namespace BH.Adapter.MidasCivil
                     }
                     else
                     {
-                        bhomSectionProperty = Engine.External.MidasCivil.Convert.ToSectionProperty(
+                        bhomSectionProperty = Adapter.External.MidasCivil.Convert.ToSectionProperty(
                             sectionProperty);
                     }
 
