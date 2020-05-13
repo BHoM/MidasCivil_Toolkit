@@ -53,7 +53,7 @@
     </Reference>
     <Reference Include="Geometry_Engine">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\BHoM_Engine\Geometry_Engine\obj\Debug\Geometry_Engine.dll</HintPath>
+      <HintPath>..\..\BHoM_Engine\Build\Geometry_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Geometry_oM">
