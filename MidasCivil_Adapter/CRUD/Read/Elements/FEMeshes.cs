@@ -36,7 +36,7 @@ namespace BH.Adapter.MidasCivil
 
             List<string> elementsText = GetSectionText("ELEMENT");
             List<string> meshText = elementsText.Where(x => x.Contains("PLATE")).ToList();
-            Dictionary<string, List<int>> elementGroups = ReadTags("GROUP", 2);
+            Dictionary<string, List<int>> elementGroups = GetTags("GROUP", 2);
 
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(

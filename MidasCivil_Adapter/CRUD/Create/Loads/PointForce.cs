@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
                    midasPointLoads.Add(Adapter.External.MidasCivil.Convert.FromPointLoad(PointLoad, assignedNode));
                 }
 
-                RemoveLoadEnd(PointLoadPath);
+                RemoveEndOfDataString(PointLoadPath);
                 CompareLoadGroup(midasLoadGroup,loadGroupPath);
                 File.AppendAllLines(PointLoadPath, midasPointLoads);
             }

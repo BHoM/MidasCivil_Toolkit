@@ -28,7 +28,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public void PropertyAssignment(string bhomID, string propertyName, string section)
+        public void AssignProperty(string bhomID, string propertyName, string section)
         {
             string path = directory + "\\TextFiles\\" + section + ".txt";
 
@@ -54,7 +54,7 @@ namespace BH.Adapter.MidasCivil
                 List<int> assignments = MidasCivilAdapter.GetAssignmentIds(assignmentRanges);
                 assignments.Add(int.Parse(bhomID));
 
-                split[0] = AssignmentString(assignments);
+                split[0] = MidasCivilAdapter.CreateAssignmentString(assignments);
             }
             else
             {
@@ -78,71 +78,6 @@ namespace BH.Adapter.MidasCivil
                 }
                 sectionText.Close();
             }
-        }
-
-        public void BarReleaseAssignment(string bhomID, string propertyName, string section)
-        {
-            string path = directory + "\\TextFiles\\" + section + ".txt";
-
-            List<string> propertyText = File.ReadAllLines(path).ToList();
-
-            int index = propertyText.FindIndex(x => x.Contains(propertyName)) - 1;
-
-            string constraint = propertyText[index];
-
-            string[] split = constraint.Split(',');
-
-            string assignmentList = split[0];
-
-            if (!(string.IsNullOrWhiteSpace(assignmentList)))
-            {
-                List<string> assignmentRanges = new List<string>();
-                if (assignmentList.Contains(" "))
-                {
-                    assignmentRanges = assignmentList.Split(' ').
-                        Select(x => x.Trim()).
-                        Where(x => !string.IsNullOrEmpty(x)).
-                        ToList();
-                }
-                List<int> assignments = MidasCivilAdapter.GetAssignmentIds(assignmentRanges);
-                assignments.Add(int.Parse(bhomID));
-
-                split[0] = AssignmentString(assignments);
-            }
-            else
-            {
-                split[0] = bhomID;
-            }
-
-            string updatedProperty = split[0];
-
-            for (int i = 1; i < split.Count(); i++)
-            {
-                updatedProperty = updatedProperty + "," + split[i];
-            }
-
-            propertyText[index] = updatedProperty;
-
-            using (StreamWriter sectionText = File.CreateText(path))
-            {
-                foreach (string property in propertyText)
-                {
-                    sectionText.WriteLine(property);
-                }
-                sectionText.Close();
-            }
-        }
-
-        private static string AssignmentString(List<int> assignmentIndexes)
-        {
-            string indexes = "";
-
-            foreach (int index in assignmentIndexes)
-            {
-                indexes = indexes + " " + index;
-            }
-
-            return indexes;
         }
     }
 

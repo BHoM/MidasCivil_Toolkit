@@ -44,7 +44,7 @@ namespace BH.Adapter.MidasCivil
 
                 if (!(bar.Release == null) && bar.Release.Name!="FixFix")
                 {
-                        BarReleaseAssignment(bar.CustomData[AdapterIdName].ToString(), bar.Release.Name, "FRAME-RLS");
+                        AssignBarRelease(bar.CustomData[AdapterIdName].ToString(), bar.Release.Name, "FRAME-RLS");
                 }
 
                 midasElements.Add(Adapter.External.MidasCivil.Convert.FromBar(bar));

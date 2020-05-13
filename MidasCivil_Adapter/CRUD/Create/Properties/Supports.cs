@@ -45,7 +45,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Constraint6DOF constraint6DOF in supports)
             {
-                if (MidasCivilAdapter.StiffnessVectorModulus(constraint6DOF) > 0)
+                if (MidasCivilAdapter.GetStiffnessVectorModulus(constraint6DOF) > 0)
                 {
                     midasSprings.Add(Adapter.External.MidasCivil.Convert.FromSpring(constraint6DOF, midasCivilVersion));
                     

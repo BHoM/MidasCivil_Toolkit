@@ -55,7 +55,7 @@ namespace BH.Adapter.MidasCivil
                 else
                 {
                     CompareLoadGroup(midasLoadGroup, loadGroupPath);
-                    RemoveLoadEnd(gravityLoadPath);
+                    RemoveEndOfDataString(gravityLoadPath);
                     File.AppendAllLines(gravityLoadPath, midasGravityLoads);
                 }
             }

@@ -20,44 +20,27 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public Dictionary<string,List<int>> ReadTags(string section, int position)
+        private void RemoveEndOfDataString(string path)
         {
-            List<string> sectionText = GetSectionText(section);
+            string[] loads = File.ReadAllLines(path);
 
-            Dictionary<string, List<int>> itemAssignments = new Dictionary<string, List<int>>();
-
-            for (int i = 0; i < sectionText.Count(); i++)
+            for (int i = 0; i < loads.Length; i++)
             {
-                string name = sectionText[i].Split(',')[0].Trim();
-                string items = sectionText[i].Split(',')[position];
-
-                List<int> itemAssignment = new List<int>();
-
-                if (items.Contains(" ") || string.IsNullOrWhiteSpace(items))
-                {
-                    List<string> assignments = items.Split(' ').
-                        Select(x=>x.Trim()).
-                        Where(x => !string.IsNullOrEmpty(x)).
-                        ToList();
-                    itemAssignment = MidasCivilAdapter.GetAssignmentIds(assignments);
-                }
-                else
-                {
-                    itemAssignment.Add(int.Parse(items));
-                }
-
-                itemAssignments.Add(name, itemAssignment);
+                if (loads[i].Contains("; End of data"))
+                    loads[i] = "";
             }
 
-            return itemAssignments;
-        }
+            loads = loads.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
+            File.Delete(path);
+            File.AppendAllLines(path, loads);
+        }
     }
 }

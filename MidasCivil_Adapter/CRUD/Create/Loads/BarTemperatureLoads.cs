@@ -54,7 +54,7 @@ namespace BH.Adapter.MidasCivil
                 }
 
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
-                RemoveLoadEnd(barLoadPath);
+                RemoveEndOfDataString(barLoadPath);
                 File.AppendAllLines(barLoadPath, midasTemperatureLoads);
             }
 
