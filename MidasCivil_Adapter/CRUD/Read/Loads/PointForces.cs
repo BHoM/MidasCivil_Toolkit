@@ -74,7 +74,7 @@ namespace BH.Adapter.MidasCivil
                                                    .ToList();
                         List<string> matchingNodes = new List<string>();
                         indexMatches.ForEach(x => matchingNodes.Add(PointLoadNodes[x]));
-                        PointLoad bhomPointLoad = Engine.External.MidasCivil.Convert.ToPointLoad(distinctPointLoad, matchingNodes, loadcase, loadcaseDictionary, nodeDictionary, i);
+                        PointLoad bhomPointLoad = Adapter.External.MidasCivil.Convert.ToPointLoad(distinctPointLoad, matchingNodes, loadcase, loadcaseDictionary, nodeDictionary, i);
                         bhomPointLoads.Add(bhomPointLoad);
 
                         if (String.IsNullOrWhiteSpace(distinctPointLoad.Split(',').ToList()[6]))

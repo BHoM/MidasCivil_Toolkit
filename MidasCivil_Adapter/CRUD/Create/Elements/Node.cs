@@ -40,7 +40,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if(!(node.Support==null))
                 {
-                    if(Engine.External.MidasCivil.Compute.StiffnessVectorModulus(node.Support)>0)
+                    if(MidasCivilAdapter.StiffnessVectorModulus(node.Support)>0)
                     {
                         PropertyAssignment(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "SPRING");
                     }
@@ -50,7 +50,7 @@ namespace BH.Adapter.MidasCivil
                     }
                     
                 }
-                midasNodes.Add(Engine.External.MidasCivil.Convert.FromNode(node));
+                midasNodes.Add(Adapter.External.MidasCivil.Convert.FromNode(node));
             }
 
             File.AppendAllLines(nodePath, midasNodes);
