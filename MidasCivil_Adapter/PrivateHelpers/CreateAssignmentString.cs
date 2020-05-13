@@ -20,27 +20,25 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private void RemoveLoadEnd(string path)
+        private static string CreateAssignmentString(List<int> assignmentIndexes)
         {
-            string[] loads = File.ReadAllLines(path);
+            string indexes = "";
 
-            for (int i = 0; i < loads.Length; i++)
+            foreach (int index in assignmentIndexes)
             {
-                if (loads[i].Contains("; End of data"))
-                    loads[i] = "";
+                indexes = indexes + " " + index;
             }
 
-            loads = loads.Where(x => !string.IsNullOrEmpty(x)).ToArray();
-
-            File.Delete(path);
-            File.AppendAllLines(path, loads);
+            return indexes;
         }
     }
+
 }

@@ -29,7 +29,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private static Dictionary<string, ISectionProperty> SectionMaterialCombinations(
+        private static Dictionary<string, ISectionProperty> GetSectionMaterialCombinations(
             List<List<string>> combinations, Dictionary<string, IMaterialFragment> materials,
             Dictionary<string, ISectionProperty> sectionProperties)
         {

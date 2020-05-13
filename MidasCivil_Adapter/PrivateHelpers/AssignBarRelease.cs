@@ -22,38 +22,65 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public Dictionary<string,List<int>> GetPropertyAssignments(string section, string namePrefix)
+        public void AssignBarRelease(string bhomID, string propertyName, string section)
         {
-            List<string> sectionText = GetSectionText(section);
+            string path = directory + "\\TextFiles\\" + section + ".txt";
 
-            Dictionary<string, List<int>> propertyAssignments = new Dictionary<string, List<int>>();
+            List<string> propertyText = File.ReadAllLines(path).ToList();
 
-            for (int i = 0; i < sectionText.Count(); i++)
+            int index = propertyText.FindIndex(x => x.Contains(propertyName)) - 1;
+
+            string constraint = propertyText[index];
+
+            string[] split = constraint.Split(',');
+
+            string assignmentList = split[0];
+
+            if (!(string.IsNullOrWhiteSpace(assignmentList)))
             {
-                string splitSection = sectionText[i].Split(',')[0];
-
-                List<string> geometryAssignments = new List<string>();
-
-                if(splitSection.Contains(" "))
+                List<string> assignmentRanges = new List<string>();
+                if (assignmentList.Contains(" "))
                 {
-                    geometryAssignments= splitSection.Split(' ').
-                        Select(x=>x.Trim()).
+                    assignmentRanges = assignmentList.Split(' ').
+                        Select(x => x.Trim()).
                         Where(x => !string.IsNullOrEmpty(x)).
                         ToList();
                 }
+                List<int> assignments = MidasCivilAdapter.GetAssignmentIds(assignmentRanges);
+                assignments.Add(int.Parse(bhomID));
 
-                List<int> propertyAssignment = MidasCivilAdapter.GetAssignmentIds(geometryAssignments);
-
-                propertyAssignments.Add(namePrefix + "_" + (i+1), propertyAssignment);
+                split[0] = MidasCivilAdapter.CreateAssignmentString(assignments);
+            }
+            else
+            {
+                split[0] = bhomID;
             }
 
-            return propertyAssignments;
+            string updatedProperty = split[0];
+
+            for (int i = 1; i < split.Count(); i++)
+            {
+                updatedProperty = updatedProperty + "," + split[i];
+            }
+
+            propertyText[index] = updatedProperty;
+
+            using (StreamWriter sectionText = File.CreateText(path))
+            {
+                foreach (string property in propertyText)
+                {
+                    sectionText.WriteLine(property);
+                }
+                sectionText.Close();
+            }
         }
 
     }
+
 }

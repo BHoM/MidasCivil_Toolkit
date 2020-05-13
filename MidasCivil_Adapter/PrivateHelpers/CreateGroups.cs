@@ -31,8 +31,8 @@ namespace BH.Adapter.MidasCivil
     {
         public void CreateGroups(IEnumerable<Node> nodes)
         {
-            Dictionary<string, List<int>> existingNodeGroups = ReadTags("GROUP", 1);
-            Dictionary<string, List<int>> existingElementGroups = ReadTags("GROUP", 2);
+            Dictionary<string, List<int>> existingNodeGroups = GetTags("GROUP", 1);
+            Dictionary<string, List<int>> existingElementGroups = GetTags("GROUP", 2);
             Dictionary<string, string> groupsToAdd = new Dictionary<string, string>();
             Dictionary<string, string> existingStringElementGroups = new Dictionary<string, string>();
             List<string> groups = existingNodeGroups.Keys.ToList();
@@ -112,8 +112,8 @@ namespace BH.Adapter.MidasCivil
 
         public void CreateGroups(IEnumerable<Bar> bars)
         {
-            Dictionary<string, List<int>> existingNodeGroups = ReadTags("GROUP", 1);
-            Dictionary<string, List<int>> existingElementGroups = ReadTags("GROUP", 2);
+            Dictionary<string, List<int>> existingNodeGroups = GetTags("GROUP", 1);
+            Dictionary<string, List<int>> existingElementGroups = GetTags("GROUP", 2);
             Dictionary<string, string> groupsToAdd = new Dictionary<string, string>();
             Dictionary<string, string> existingStringNodeGroups = new Dictionary<string, string>();
             List<string> groups = existingNodeGroups.Keys.ToList();
@@ -193,8 +193,8 @@ namespace BH.Adapter.MidasCivil
 
         public void CreateGroups(IEnumerable<FEMesh> meshes)
         {
-            Dictionary<string, List<int>> existingNodeGroups = ReadTags("GROUP", 1);
-            Dictionary<string, List<int>> existingElementGroups = ReadTags("GROUP", 2);
+            Dictionary<string, List<int>> existingNodeGroups = GetTags("GROUP", 1);
+            Dictionary<string, List<int>> existingElementGroups = GetTags("GROUP", 2);
             Dictionary<string, string> groupsToAdd = new Dictionary<string, string>();
             Dictionary<string, string> existingStringNodeGroups = new Dictionary<string, string>();
             List<string> groups = existingNodeGroups.Keys.ToList();

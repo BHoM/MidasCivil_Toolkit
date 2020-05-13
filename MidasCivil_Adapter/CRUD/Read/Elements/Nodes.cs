@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
             List<string> supportText = GetSectionText("CONSTRAINT");
             List<string> springText = GetSectionText("SPRING");
 
-            Dictionary<string, List<int>> nodeGroups = ReadTags("GROUP", 1);
+            Dictionary<string, List<int>> nodeGroups = GetTags("GROUP", 1);
 
             List<Constraint6DOF> supportsList = Read6DOFConstraints();
             Dictionary<string, Constraint6DOF> supports = supportsList.ToDictionary(x => x.Name.ToString());

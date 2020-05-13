@@ -20,42 +20,40 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Structure.Elements;
-using System.Collections.Generic;
-using System.IO;
-
+using BH.oM.Geometry;
+using BH.oM.Structure.Constraints;
+using System;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private bool CreateCollection(IEnumerable<Node> nodes)
+        internal static double GetStiffnessVectorModulus(Constraint6DOF support)
         {
-            string nodePath = CreateSectionFile("NODE");
-            List<string> midasNodes = new List<string>();
-
-            CreateGroups(nodes);
-
-            foreach (Node node in nodes)
+            Vector translationalStiffnessVector = new Vector()
             {
-                if(!(node.Support==null))
-                {
-                    if(MidasCivilAdapter.GetStiffnessVectorModulus(node.Support)>0)
-                    {
-                        AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "SPRING");
-                    }
-                    else
-                    {
-                        AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "CONSTRAINT");
-                    }
-                    
-                }
-                midasNodes.Add(Adapter.External.MidasCivil.Convert.FromNode(node));
-            }
+                X = support.TranslationalStiffnessX,
+                Y = support.TranslationalStiffnessY,
+                Z = support.TranslationalStiffnessZ
+            };
 
-            File.AppendAllLines(nodePath, midasNodes);
+            Vector rotationalStiffnessVector = new Vector()
+            {
+                X = support.RotationalStiffnessX,
+                Y = support.RotationalStiffnessY,
+                Z = support.RotationalStiffnessZ
+            };
 
-                return true;
+            return Modulus(translationalStiffnessVector) + 
+                Modulus(rotationalStiffnessVector);
+        }
+
+        private static double Modulus(Vector vector)
+        {
+            return
+                Math.Sqrt(Math.Pow(vector.X, 2) +
+                Math.Pow(vector.Y, 2) +
+                Math.Pow(vector.Z, 2));
         }
 
     }

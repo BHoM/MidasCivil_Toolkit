@@ -20,40 +20,48 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry;
-using BH.oM.Structure.Constraints;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        internal static double StiffnessVectorModulus(Constraint6DOF support)
+        public Dictionary<string, List<int>> GetBarReleaseAssignments(string section, string namePrefix)
         {
-            Vector translationalStiffnessVector = new Vector()
+            List<string> sectionText = GetSectionText(section);
+
+            Dictionary<string, List<int>> propertyAssignments = new Dictionary<string, List<int>>();
+
+            for (int i = 0; i < sectionText.Count(); i += 2)
             {
-                X = support.TranslationalStiffnessX,
-                Y = support.TranslationalStiffnessY,
-                Z = support.TranslationalStiffnessZ
-            };
+                string splitSection = sectionText[i].Split(',')[0];
 
-            Vector rotationalStiffnessVector = new Vector()
-            {
-                X = support.RotationalStiffnessX,
-                Y = support.RotationalStiffnessY,
-                Z = support.RotationalStiffnessZ
-            };
+                List<string> geometryAssignments = new List<string>();
 
-            return Modulus(translationalStiffnessVector) + 
-                Modulus(rotationalStiffnessVector);
-        }
+                if (splitSection.Contains(" "))
+                {
+                    geometryAssignments = splitSection.Split(' ').
+                        Select(x => x.Trim()).
+                        Where(x => !string.IsNullOrEmpty(x)).
+                        ToList();
+                }
 
-        private static double Modulus(Vector vector)
-        {
-            return
-                Math.Sqrt(Math.Pow(vector.X, 2) +
-                Math.Pow(vector.Y, 2) +
-                Math.Pow(vector.Z, 2));
+                List<int> propertyAssignment = MidasCivilAdapter.GetAssignmentIds(geometryAssignments);
+
+                string key = sectionText[i + 1].Split(',')[7].Trim();
+
+                if (propertyAssignments.ContainsKey(key))
+                {
+                    propertyAssignments[key].AddRange(propertyAssignment);
+                }
+                else
+                {
+                    propertyAssignments.Add(key, propertyAssignment);
+                }
+            }
+
+            return propertyAssignments;
         }
 
     }

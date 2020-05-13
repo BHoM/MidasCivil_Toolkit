@@ -20,42 +20,43 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Structure.Elements;
 using System.Collections.Generic;
-using System.IO;
-
+using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private bool CreateCollection(IEnumerable<Node> nodes)
+        public Dictionary<string,List<int>> GetTags(string section, int position)
         {
-            string nodePath = CreateSectionFile("NODE");
-            List<string> midasNodes = new List<string>();
+            List<string> sectionText = GetSectionText(section);
 
-            CreateGroups(nodes);
+            Dictionary<string, List<int>> itemAssignments = new Dictionary<string, List<int>>();
 
-            foreach (Node node in nodes)
+            for (int i = 0; i < sectionText.Count(); i++)
             {
-                if(!(node.Support==null))
+                string name = sectionText[i].Split(',')[0].Trim();
+                string items = sectionText[i].Split(',')[position];
+
+                List<int> itemAssignment = new List<int>();
+
+                if (items.Contains(" ") || string.IsNullOrWhiteSpace(items))
                 {
-                    if(MidasCivilAdapter.GetStiffnessVectorModulus(node.Support)>0)
-                    {
-                        AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "SPRING");
-                    }
-                    else
-                    {
-                        AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "CONSTRAINT");
-                    }
-                    
+                    List<string> assignments = items.Split(' ').
+                        Select(x=>x.Trim()).
+                        Where(x => !string.IsNullOrEmpty(x)).
+                        ToList();
+                    itemAssignment = MidasCivilAdapter.GetAssignmentIds(assignments);
                 }
-                midasNodes.Add(Adapter.External.MidasCivil.Convert.FromNode(node));
+                else
+                {
+                    itemAssignment.Add(int.Parse(items));
+                }
+
+                itemAssignments.Add(name, itemAssignment);
             }
 
-            File.AppendAllLines(nodePath, midasNodes);
-
-                return true;
+            return itemAssignments;
         }
 
     }

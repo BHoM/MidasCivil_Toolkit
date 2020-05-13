@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
             List<string> barText = new List<string>();
 
             List<string> elementsText = GetSectionText("ELEMENT");
-            Dictionary<string, List<int>> elementGroups = ReadTags("GROUP", 2);
+            Dictionary<string, List<int>> elementGroups = GetTags("GROUP", 2);
 
             foreach (string element in elementsText)
             {
@@ -70,7 +70,7 @@ namespace BH.Adapter.MidasCivil
                 .Select(x => x.Split(',').ToList())
                 .ToList();
 
-            Dictionary<string, ISectionProperty> materialSections = SectionMaterialCombinations(materialSectionCombos, bhomMaterials, bhomSectionProperties);
+            Dictionary<string, ISectionProperty> materialSections = GetSectionMaterialCombinations(materialSectionCombos, bhomMaterials, bhomSectionProperties);
 
             foreach (string bar in barText)
             {
