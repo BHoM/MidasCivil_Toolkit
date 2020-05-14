@@ -107,7 +107,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="External\" />
     <Folder Include="Modify\" />
     <Folder Include="Query\" />
   </ItemGroup>

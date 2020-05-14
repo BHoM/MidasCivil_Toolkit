@@ -40,9 +40,9 @@ namespace BH.Adapter.MidasCivil
 
             foreach (RigidLink link in links)
             {
-                string midasBoundaryGroup = Adapter.External.MidasCivil.Convert.FromTag(link.Name);
+                string midasBoundaryGroup = Adapter.Adapters.MidasCivil.Convert.FromTag(link.Name);
                 CompareGroup(midasBoundaryGroup, boundaryGroupPath);
-                midasRigidLinks.Add(Adapter.External.MidasCivil.Convert.FromRigidLink(link));
+                midasRigidLinks.Add(Adapter.Adapters.MidasCivil.Convert.FromRigidLink(link));
             }
 
             File.AppendAllLines(path, midasRigidLinks);

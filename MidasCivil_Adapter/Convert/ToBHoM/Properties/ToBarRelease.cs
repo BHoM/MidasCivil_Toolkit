@@ -24,7 +24,7 @@ using BH.oM.Structure.Constraints;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BH.Adapter.External.MidasCivil
+namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
@@ -46,8 +46,8 @@ namespace BH.Adapter.External.MidasCivil
 
             for (int i = 0; i < 6; i++)
             {
-                bhomStartFixity.Add(Adapter.External.MidasCivil.Convert.FromFixity(startFixity.Substring(i, 1)));
-                bhomEndFixity.Add(Adapter.External.MidasCivil.Convert.FromFixity(endFixity.Substring(i, 1)));
+                bhomStartFixity.Add(Adapter.Adapters.MidasCivil.Convert.FromFixity(startFixity.Substring(i, 1)));
+                bhomEndFixity.Add(Adapter.Adapters.MidasCivil.Convert.FromFixity(endFixity.Substring(i, 1)));
             }
 
             Constraint6DOF startConstraint = BH.Engine.Structure.Create.Constraint6DOF(bhomStartFixity[0], bhomStartFixity[1], bhomStartFixity[2],

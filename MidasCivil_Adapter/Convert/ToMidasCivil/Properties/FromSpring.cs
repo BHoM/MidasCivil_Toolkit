@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using BH.Adapter.MidasCivil;
 using BH.oM.Structure.Constraints;
 
-namespace BH.Adapter.External.MidasCivil
+namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {

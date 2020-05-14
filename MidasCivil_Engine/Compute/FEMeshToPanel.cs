@@ -25,7 +25,7 @@ using BH.oM.Geometry;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BH.Engine.External.MidasCivil
+namespace BH.Engine.Adapters.MidasCivil
 {
     public static partial class Compute
     {

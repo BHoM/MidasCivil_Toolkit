@@ -22,7 +22,7 @@
 
 using System.IO;
 using BH.oM.Structure.Constraints;
-namespace BH.Adapter.External.MidasCivil
+namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
