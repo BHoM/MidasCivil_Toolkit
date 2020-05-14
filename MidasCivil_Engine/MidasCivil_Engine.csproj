@@ -102,7 +102,6 @@
     <Compile Include="Objects\ArrayComparer.cs" />
     <Compile Include="Objects\BarMidPointComparer.cs" />
     <Compile Include="Objects\MeshCentreComparer.cs" />
-    <Compile Include="Compute\CombineLoads.cs" />
     <Compile Include="Compute\CombineTextFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

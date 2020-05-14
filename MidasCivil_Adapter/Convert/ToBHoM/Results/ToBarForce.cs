@@ -26,7 +26,7 @@ using BH.oM.Structure.Results;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace BH.Engine.MidasCivil
+namespace BH.Adapter.MidasCivil
 {
     public static partial class Convert
     {

@@ -81,7 +81,7 @@ namespace BH.Adapter.MidasCivil
             for (int i = 14; i < barStressText.Count; i++)
             {
                 List<string> barStress = barStressText[i].Split(',').ToList();
-                barStresses.Add(Engine.MidasCivil.Convert.ToBarStress(barStress));
+                barStresses.Add(Convert.ToBarStress(barStress));
             }
 
             return barStresses;
@@ -113,7 +113,7 @@ namespace BH.Adapter.MidasCivil
             for (int i = 11; i < barForceText.Count; i++)
             {
                 List<string> barForce = barForceText[i].Split(',').ToList();
-                barForces.Add(Engine.MidasCivil.Convert.ToBarForce(barForce));
+                barForces.Add(Convert.ToBarForce(barForce));
             }
 
             return barForces;

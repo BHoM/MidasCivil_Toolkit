@@ -40,10 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="eNum\ForceUnit.cs" />
-    <Compile Include="eNum\HeatUnit.cs" />
-    <Compile Include="eNum\LengthUnit.cs" />
-    <Compile Include="eNum\TemperatureUnit.cs" />
+    <Compile Include="Enum\ForceUnit.cs" />
+    <Compile Include="Enum\HeatUnit.cs" />
+    <Compile Include="Enum\LengthUnit.cs" />
+    <Compile Include="Enum\TemperatureUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

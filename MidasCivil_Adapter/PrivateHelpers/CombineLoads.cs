@@ -26,21 +26,21 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 
-namespace BH.Engine.Adapters.MidasCivil
+namespace BH.Adapter.MidasCivil
 {
-    public static partial class Compute
+    public partial class MidasCivilAdapter
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /**** Private Methods                           ****/
         /***************************************************/
 
-        public static List<ILoad> CombineLoads(List<BarUniformlyDistributedLoad> loads, List<Bar> bars)
+        private static List<ILoad> CombineLoads(List<BarUniformlyDistributedLoad> loads, List<Bar> bars)
         {
             List<ILoad> resultant = new List<ILoad>();
             var groupedByLoadCase = loads.GroupBy(x => x.Loadcase);
 
             Dictionary<string, Bar> barDictionary = bars.ToDictionary(
-                x => x.CustomData[Convert.AdapterIdName].ToString());
+                x => x.CustomData[Engine.Adapters.MidasCivil.Convert.AdapterIdName].ToString());
 
             foreach (var loadcaseGroup in groupedByLoadCase)
             {
@@ -82,7 +82,7 @@ namespace BH.Engine.Adapters.MidasCivil
 
                         foreach (var element in load.Objects.Elements)
                         {
-                            loadBar.Add(element.CustomData[Convert.AdapterIdName].ToString());
+                            loadBar.Add(element.CustomData[Engine.Adapters.MidasCivil.Convert.AdapterIdName].ToString());
                         }
 
                         loadBars.Add(loadBar);
@@ -118,12 +118,12 @@ namespace BH.Engine.Adapters.MidasCivil
                     }
 
                     // Get distinct resultant loads for each bar and extract all bars that have that distinct load
-                    List<double[]> distinctLoads = vectors.Distinct(new Comparer.ArrayComparer()).ToList();
+                    List<double[]> distinctLoads = vectors.Distinct(new Engine.Adapters.MidasCivil.Comparer.ArrayComparer()).ToList();
                     List<List<string>> matchingBars = new List<List<string>>();
 
                     foreach (double[] distinctLoad in distinctLoads)
                     {
-                        Comparer.ArrayComparer comparer = new Comparer.ArrayComparer();
+                        Engine.Adapters.MidasCivil.Comparer.ArrayComparer comparer = new Engine.Adapters.MidasCivil.Comparer.ArrayComparer();
 
                         var distinctMatches = vectors.Select((v, i) => new { v, i })
                             .Where(x => comparer.Equals(x.v, distinctLoad));
