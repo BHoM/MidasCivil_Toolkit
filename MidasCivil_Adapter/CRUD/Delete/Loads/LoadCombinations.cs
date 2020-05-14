@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteLoadCombinations(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteLoadCombinations(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -44,7 +48,7 @@ namespace BH.Adapter.MidasCivil
 
                     List<string> loadCombinationNames = new List<string>();
 
-                    for (int i=0; i<loadCombinations.Count; i++)
+                    for (int i = 0; i < loadCombinations.Count; i++)
                     {
                         if (loadCombinations[i].Contains(";") || loadCombinations[i].Contains("*") || string.IsNullOrWhiteSpace(loadCombinations[i]))
                         {
@@ -84,5 +88,8 @@ namespace BH.Adapter.MidasCivil
             }
             return success;
         }
+
+        /***************************************************/
+
     }
 }

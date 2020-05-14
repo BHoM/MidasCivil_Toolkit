@@ -28,6 +28,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<RigidLink> links)
         {
             string path = CreateSectionFile("RIGIDLINK");
@@ -45,5 +49,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
+
     }
 }

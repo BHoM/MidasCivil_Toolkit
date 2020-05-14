@@ -30,7 +30,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public bool CreateCollection(IEnumerable<BarPointLoad> barPointLoads)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<BarPointLoad> barPointLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
 
@@ -87,6 +91,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
 
     }
 }

@@ -31,6 +31,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadGravityLoads(List<string> ids = null)
         {
             List<ILoad> bhomGravityLoads = new List<ILoad>();
@@ -76,6 +80,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomGravityLoads;
         }
+
+        /***************************************************/
 
     }
 }

@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteLoadGroups(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteLoadGroups(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -74,5 +78,8 @@ namespace BH.Adapter.MidasCivil
             }
             return success;
         }
+
+        /***************************************************/
+
     }
 }

@@ -29,6 +29,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static void ToLoadNature(string midasNature, ref LoadNature nature)
         {
             Dictionary<string, LoadNature> converter = new Dictionary<string, LoadNature>
@@ -47,6 +51,8 @@ namespace BH.Adapter.External.MidasCivil
 
             converter.TryGetValue(midasNature, out nature);
         }
+
+        /***************************************************/
 
     }
 }

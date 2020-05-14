@@ -28,6 +28,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<BarRelease> releases)
         {
             string path = CreateSectionFile("FRAME-RLS");
@@ -36,7 +40,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarRelease release in releases)
             {
-                if (release.Name!="FixFix")
+                if (release.Name != "FixFix")
                 {
                     string midasBoundaryGroup = Adapter.External.MidasCivil.Convert.FromTag(release.Name);
                     CompareGroup(midasBoundaryGroup, boundaryGroupPath);
@@ -48,5 +52,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
+
     }
 }

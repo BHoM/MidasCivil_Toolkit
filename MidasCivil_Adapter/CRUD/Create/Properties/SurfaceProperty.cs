@@ -28,6 +28,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<ISurfaceProperty> surfaceProperties)
         {
             string path = CreateSectionFile("THICKNESS");
@@ -42,6 +46,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
 
     }
 }

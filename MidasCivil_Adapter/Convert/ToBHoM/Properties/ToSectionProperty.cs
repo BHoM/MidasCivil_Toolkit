@@ -31,6 +31,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static ISectionProperty ToSectionProperty(this string sectionProperty)
         {
             string[] split = sectionProperty.Split(',');
@@ -43,22 +47,22 @@ namespace BH.Adapter.External.MidasCivil
                 //    2, DBUSER    , USER-RECTANGLE    , CC, 0, 0, 0, 0, 0, 0, YES, NO, SB , 2, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0
                 bhomSection = Engine.Structure.Create.GenericSectionFromProfile(Engine.Structure.Create.RectangleProfile
                     (System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15], null), 0), null);
-     
+
             }
             else if (shape == "B")
             {
                 //    4, DBUSER    , USER-BOX          , CC, 0, 0, 0, 0, 0, 0, YES, NO, B  , 2, 0.5, 0.2, 0.01, 0.02, 0.19, 0.02, 0, 0, 0, 0
                 bhomSection = Engine.Structure.Create.GenericSectionFromProfile(Adapter.External.MidasCivil.Convert.ToProfile(sectionProperty), null
                     );
-  
-                    
+
+
             }
             else if (shape == "P")
             {
                 //    6, DBUSER    , CHS 114.3x9.83    , CC, 0, 0, 0, 0, 0, 0, YES, NO, P  , 1, BS, CHS 114.3x9.83
                 bhomSection = Engine.Structure.Create.GenericSectionFromProfile(
                     Engine.Structure.Create.TubeProfile(System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]))
-                    ,null);
+                    , null);
 
             }
             else if (shape == "SR")
@@ -73,7 +77,7 @@ namespace BH.Adapter.External.MidasCivil
                 bhomSection = Engine.Structure.Create.GenericSectionFromProfile(Engine.Structure.Create.FabricatedISectionProfile
                     (System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[16]),
                     System.Convert.ToDouble(split[15]), System.Convert.ToDouble(split[17]),
-                    System.Convert.ToDouble(split[18]), System.Convert.ToDouble(split[19]),0), null);
+                    System.Convert.ToDouble(split[18]), System.Convert.ToDouble(split[19]), 0), null);
 
                 //    8, DBUSER    , USER-ISECTION     , CC, 0, 0, 0, 0, 0, 0, YES, NO, H  , 2, 1, 0.3, 0.03, 0.025, 0.5, 0.02, 0.01, 0.01, 0, 0
             }
@@ -111,6 +115,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomSection;
         }
+
+        /***************************************************/
 
         public static ISectionProperty ToSectionProperty(this string sectionProfile, string sectionProperty1,
             string sectionProperty2, string sectionProperty3)
@@ -156,6 +162,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomSection;
         }
+
+        /***************************************************/
 
     }
 }

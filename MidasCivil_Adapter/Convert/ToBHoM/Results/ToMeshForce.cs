@@ -29,6 +29,10 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static MeshForce ToMeshForce(this List<string> delimitted)
         {
             MeshForce Meshforce = new MeshForce(System.Convert.ToInt32(delimitted[2]), delimitted[7], 0,
@@ -39,5 +43,8 @@ namespace BH.Engine.MidasCivil
 
             return Meshforce;
         }
+
+        /***************************************************/
+
     }
 }

@@ -35,9 +35,10 @@ namespace BH.Adapter.MidasCivil
     {
 
         /***************************************************/
-        /**** Public method - Read override             ****/
+        /**** Private method - Read override            ****/
         /***************************************************/
-        public IEnumerable<IResult> ReadResults(BarResultRequest request, ActionConfig actionConfig)
+
+        private IEnumerable<IResult> ReadResults(BarResultRequest request, ActionConfig actionConfig)
         {
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);

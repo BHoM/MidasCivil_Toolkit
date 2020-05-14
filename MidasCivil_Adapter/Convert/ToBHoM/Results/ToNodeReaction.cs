@@ -29,6 +29,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static NodeReaction ToNodeReaction(this List<string> delimitted)
         {
             NodeReaction nodeReaction = new NodeReaction()
@@ -45,6 +49,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return nodeReaction;
         }
+
+        /***************************************************/
 
     }
 }

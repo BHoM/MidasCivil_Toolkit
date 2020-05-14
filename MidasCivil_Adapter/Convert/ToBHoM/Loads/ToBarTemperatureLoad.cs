@@ -30,6 +30,10 @@ namespace BH.Adapter.External.MidasCivil
     {
         public static BarTemperatureLoad ToBarTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
         {
+            /***************************************************/
+            /**** Public Methods                            ****/
+            /***************************************************/
+
             string[] delimitted = temperatureLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
 
@@ -70,6 +74,9 @@ namespace BH.Adapter.External.MidasCivil
                 return null;
             }
         }
+
+        /***************************************************/
+
     }
 }
 

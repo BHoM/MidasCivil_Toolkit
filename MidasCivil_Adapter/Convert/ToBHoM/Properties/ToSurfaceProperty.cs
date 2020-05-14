@@ -28,14 +28,18 @@ namespace BH.Adapter.External.MidasCivil
     {
         public static ISurfaceProperty ToSurfaceProperty(this string surfaceProperty, string version)
         {
+            /***************************************************/
+            /**** Public Methods                            ****/
+            /***************************************************/
+
             string[] split = surfaceProperty.Split(',');
 
             ISurfaceProperty constantThickness = null;
 
-            switch(version)
+            switch (version)
             {
                 case "8.8.5":
-                    constantThickness = Engine.Structure.Create.ConstantThickness(System.Convert.ToDouble(split[4].Trim()),null,split[1]);
+                    constantThickness = Engine.Structure.Create.ConstantThickness(System.Convert.ToDouble(split[4].Trim()), null, split[1]);
                     break;
                 default:
                     constantThickness = Engine.Structure.Create.ConstantThickness(System.Convert.ToDouble(split[3].Trim()));
@@ -50,6 +54,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return constantThickness;
         }
+
+        /***************************************************/
 
     }
 }

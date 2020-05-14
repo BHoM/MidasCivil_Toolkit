@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public bool CreateCollection(IEnumerable<LoadCombination> loadCombinations)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<LoadCombination> loadCombinations)
         {
             string path = CreateSectionFile("LOADCOMB");
             List<string> midasLoadCombinations = new List<string>();
@@ -43,6 +47,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
 
     }
 }

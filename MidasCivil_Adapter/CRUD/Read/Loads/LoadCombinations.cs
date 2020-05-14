@@ -29,6 +29,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<LoadCombination> ReadLoadCombinations(List<string> ids = null)
         {
             List<LoadCombination> bhomLoadCombinations = new List<LoadCombination>();
@@ -38,14 +42,16 @@ namespace BH.Adapter.MidasCivil
             Dictionary<string, Loadcase> bhomLoadCaseDictionary = bhomLoadCases.ToDictionary(
                 x => x.CustomData[AdapterIdName].ToString());
 
-            for (int i=0; i<loadCombinationText.Count; i+=2)
+            for (int i = 0; i < loadCombinationText.Count; i += 2)
             {
-                LoadCombination bhomLoadCombination = Adapter.External.MidasCivil.Convert.ToLoadCombination(loadCombinationText[i], loadCombinationText[i+1], bhomLoadCaseDictionary);
+                LoadCombination bhomLoadCombination = Adapter.External.MidasCivil.Convert.ToLoadCombination(loadCombinationText[i], loadCombinationText[i + 1], bhomLoadCaseDictionary);
                 bhomLoadCombinations.Add(bhomLoadCombination);
             }
 
             return bhomLoadCombinations;
         }
+
+        /***************************************************/
 
     }
 }

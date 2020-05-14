@@ -27,6 +27,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static IMaterialFragment ToMaterial(this string material)
         {
             string[] delimited = material.Split(',');
@@ -130,6 +134,8 @@ namespace BH.Adapter.External.MidasCivil
             bhomMaterial.CustomData[AdapterIdName] = delimited[0].Trim();
             return bhomMaterial;
         }
+
+        /***************************************************/
 
     }
 }

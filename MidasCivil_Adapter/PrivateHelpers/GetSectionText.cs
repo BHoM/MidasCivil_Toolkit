@@ -28,9 +28,12 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public List<string> GetSectionText(string section)
-        {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
 
+        private List<string> GetSectionText(string section)
+        {
             string path = directory + "\\TextFiles\\" + section + ".txt";
             List<string> sectionText = new List<string>();
 
@@ -41,6 +44,8 @@ namespace BH.Adapter.MidasCivil
             }
             return sectionText;
         }
+
+        /***************************************************/
 
         private static void CleanString(ref List<string> sectionText)
         {
@@ -83,6 +88,8 @@ namespace BH.Adapter.MidasCivil
 
             sectionText = cleanString;
         }
+
+        /***************************************************/
 
     }
 }

@@ -27,6 +27,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private void WriteSectionText(List<string> sectionText, string section)
         {
             string path = directory + "\\TextFiles\\" + section + ".txt";
@@ -41,6 +45,8 @@ namespace BH.Adapter.MidasCivil
             }
         }
 
+        /***************************************************/
+
         private void WriteSectionText(List<string> sectionText, string section, string subDirectory)
         {
             string path = subDirectory + "\\" + section + ".txt";
@@ -54,6 +60,8 @@ namespace BH.Adapter.MidasCivil
                 sectionFile.Close();
             }
         }
+
+        /***************************************************/
 
     }
 }

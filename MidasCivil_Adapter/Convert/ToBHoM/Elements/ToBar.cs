@@ -31,6 +31,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Bar ToBar(this string bar, Dictionary<string, Node> bhomNodes,
             Dictionary<string, ISectionProperty> bhomSectionProperties,
             Dictionary<string, BarRelease> barReleases, Dictionary<string, List<int>> barReleaseAssignments)
@@ -47,7 +51,7 @@ namespace BH.Adapter.External.MidasCivil
 
             if (!(bhomSectionProperties.Count() == 0))
             {
-                bhomSectionProperties.TryGetValue(delimitted[2].Trim()+","+delimitted[3].Trim(), out sectionProperty);
+                bhomSectionProperties.TryGetValue(delimitted[2].Trim() + "," + delimitted[3].Trim(), out sectionProperty);
             }
 
             switch (delimitted[1].Trim())
@@ -94,6 +98,9 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomBar;
         }
+
+        /***************************************************/
+
     }
 }
 

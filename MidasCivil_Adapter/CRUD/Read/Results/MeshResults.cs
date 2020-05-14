@@ -35,10 +35,10 @@ namespace BH.Adapter.MidasCivil
     {
 
         /***************************************************/
-        /**** Public method - Read override             ****/
+        /**** Private method - Read override            ****/
         /***************************************************/
 
-        public IEnumerable<IResult> ReadResults(MeshResultRequest request, ActionConfig actionConfig)
+        private IEnumerable<IResult> ReadResults(MeshResultRequest request, ActionConfig actionConfig)
         {
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);
@@ -93,6 +93,7 @@ namespace BH.Adapter.MidasCivil
 
             return meshForces;
         }
+
         /***************************************************/
 
         private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)

@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteSectionProperties(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteSectionProperties(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -36,7 +40,7 @@ namespace BH.Adapter.MidasCivil
             {
                 string path = directory + "\\TextFiles\\" + "SECTION" + ".txt";
 
-                if(File.Exists(path))
+                if (File.Exists(path))
                 {
                     List<string> stringIndex = ids.Cast<string>().ToList();
 
@@ -76,5 +80,8 @@ namespace BH.Adapter.MidasCivil
             }
             return success;
         }
+
+        /***************************************************/
+
     }
 }

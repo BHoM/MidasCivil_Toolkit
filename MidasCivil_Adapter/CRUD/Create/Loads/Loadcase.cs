@@ -29,6 +29,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<Loadcase> loadcases)
         {
             string path = CreateSectionFile("STLDCASE");
@@ -45,6 +49,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
 
     }
 }

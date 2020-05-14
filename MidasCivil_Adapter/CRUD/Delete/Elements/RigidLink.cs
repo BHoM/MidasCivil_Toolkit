@@ -28,15 +28,19 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteRigidLinks(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteRigidLinks(IEnumerable<object> ids)
         {
             int success = 1;
 
-            if (ids.Count()!=0)
+            if (ids.Count() != 0)
             {
                 string path = directory + "\\TextFiles\\" + "RIGIDLINK" + ".txt";
 
-                if(File.Exists(path))
+                if (File.Exists(path))
                 {
                     List<string> names = ids.Cast<string>().ToList();
                     List<string> links = File.ReadAllLines(path).ToList();
@@ -80,6 +84,8 @@ namespace BH.Adapter.MidasCivil
             }
             return success;
         }
+
+        /***************************************************/
 
     }
 }

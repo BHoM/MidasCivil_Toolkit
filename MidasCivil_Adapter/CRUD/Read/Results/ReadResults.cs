@@ -40,7 +40,6 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-
         /***************************************************/
         /**** Adapter  Methods                          ****/
         /***************************************************/
@@ -93,6 +92,8 @@ namespace BH.Adapter.MidasCivil
                 }
             }
         }
+
+        /***************************************************/
 
         private List<int> GetAllIds(NodeResultRequest request)
         {

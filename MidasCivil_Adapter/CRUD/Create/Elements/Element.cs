@@ -28,6 +28,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<Bar> bars)
         {
             string path = CreateSectionFile("ELEMENT");
@@ -37,14 +41,14 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Bar bar in bars)
             {
-                if (bar.Release.Name != "FixFix" && bar.FEAType==BarFEAType.TensionOnly)
+                if (bar.Release.Name != "FixFix" && bar.FEAType == BarFEAType.TensionOnly)
                 {
                     Engine.Reflection.Compute.RecordError("Tension only elements cannot support bar releases in Midas");
                 }
 
-                if (!(bar.Release == null) && bar.Release.Name!="FixFix")
+                if (!(bar.Release == null) && bar.Release.Name != "FixFix")
                 {
-                        AssignBarRelease(bar.CustomData[AdapterIdName].ToString(), bar.Release.Name, "FRAME-RLS");
+                    AssignBarRelease(bar.CustomData[AdapterIdName].ToString(), bar.Release.Name, "FRAME-RLS");
                 }
 
                 midasElements.Add(Adapter.External.MidasCivil.Convert.FromBar(bar));
@@ -54,6 +58,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
 
         private bool CreateCollection(IEnumerable<FEMesh> meshes)
         {
@@ -71,6 +77,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
 
     }
 }

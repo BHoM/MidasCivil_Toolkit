@@ -29,6 +29,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<Node> nodes)
         {
             string nodePath = CreateSectionFile("NODE");
@@ -38,9 +42,9 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Node node in nodes)
             {
-                if(!(node.Support==null))
+                if (!(node.Support == null))
                 {
-                    if(MidasCivilAdapter.GetStiffnessVectorModulus(node.Support)>0)
+                    if (MidasCivilAdapter.GetStiffnessVectorModulus(node.Support) > 0)
                     {
                         AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "SPRING");
                     }
@@ -48,15 +52,17 @@ namespace BH.Adapter.MidasCivil
                     {
                         AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "CONSTRAINT");
                     }
-                    
+
                 }
                 midasNodes.Add(Adapter.External.MidasCivil.Convert.FromNode(node));
             }
 
             File.AppendAllLines(nodePath, midasNodes);
 
-                return true;
+            return true;
         }
+
+        /***************************************************/
 
     }
 }

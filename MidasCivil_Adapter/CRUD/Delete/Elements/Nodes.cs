@@ -29,7 +29,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteNodes(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteNodes(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -37,7 +41,7 @@ namespace BH.Adapter.MidasCivil
             {
                 string path = directory + "\\TextFiles\\" + "NODE" + ".txt";
 
-                if(File.Exists(path))
+                if (File.Exists(path))
                 {
                     List<string> stringIndex = ids.Select(x => x.ToString()).ToList();
 
@@ -77,6 +81,8 @@ namespace BH.Adapter.MidasCivil
             }
             return success;
         }
+
+        /***************************************************/
 
     }
 }

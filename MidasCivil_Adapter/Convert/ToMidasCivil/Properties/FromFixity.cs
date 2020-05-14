@@ -24,17 +24,23 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         internal static bool FromFixity(string number)
         {
             bool fixity = true;
 
-            if (int.Parse(number)==1)
+            if (int.Parse(number) == 1)
             {
                 fixity = false;
             }
 
             return fixity;
         }
+
+        /***************************************************/
 
     }
 }

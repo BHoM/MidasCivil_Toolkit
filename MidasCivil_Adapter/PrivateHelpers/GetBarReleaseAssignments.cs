@@ -27,7 +27,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public Dictionary<string, List<int>> GetBarReleaseAssignments(string section, string namePrefix)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private Dictionary<string, List<int>> GetBarReleaseAssignments(string section, string namePrefix)
         {
             List<string> sectionText = GetSectionText(section);
 
@@ -63,6 +67,8 @@ namespace BH.Adapter.MidasCivil
 
             return propertyAssignments;
         }
+
+        /***************************************************/
 
     }
 }

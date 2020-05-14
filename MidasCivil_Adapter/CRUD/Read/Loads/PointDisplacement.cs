@@ -28,10 +28,16 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<BarPointLoad> ReadPointDisplacements(List<string> ids = null)
         {
             throw new NotImplementedException();
         }
+
+        /***************************************************/
 
     }
 }

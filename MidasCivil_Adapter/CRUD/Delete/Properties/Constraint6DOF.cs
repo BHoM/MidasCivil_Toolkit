@@ -29,7 +29,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteConstraints(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteConstraints(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -58,7 +62,7 @@ namespace BH.Adapter.MidasCivil
                             {
                                 if (path.Contains("CONSTRAINT"))
                                     constraintNames.Add(constraint.Split(',').Reverse().First().Trim());
-                                else 
+                                else
                                     constraintNames.Add(constraint.Split(',')[15].Trim());
                             }
                         }
@@ -81,5 +85,8 @@ namespace BH.Adapter.MidasCivil
             }
             return success;
         }
+
+        /***************************************************/
+
     }
 }

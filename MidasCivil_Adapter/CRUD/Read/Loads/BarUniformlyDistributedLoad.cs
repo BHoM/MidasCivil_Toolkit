@@ -31,6 +31,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadBarUniformlyDistributedLoads(List<string> ids = null)
         {
             List<ILoad> bhomBarUniformlyDistributedLoads = new List<ILoad>();
@@ -94,7 +98,7 @@ namespace BH.Adapter.MidasCivil
                             List<string> matchingBars = new List<string>();
                             indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
 
-                            BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad = 
+                            BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
                                 Adapter.External.MidasCivil.Convert.ToBarUniformlyDistributedLoad(
                                     distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i);
                             bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
@@ -106,13 +110,15 @@ namespace BH.Adapter.MidasCivil
                             }
 
                         }
-                        
+
                     }
                 }
             }
 
             return bhomBarUniformlyDistributedLoads;
         }
+
+        /***************************************************/
 
     }
 }

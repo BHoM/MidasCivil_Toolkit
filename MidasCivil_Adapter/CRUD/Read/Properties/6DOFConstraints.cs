@@ -27,6 +27,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<Constraint6DOF> Read6DOFConstraints(List<string> ids = null)
         {
             List<Constraint6DOF> bhom6DOFConstraints = new List<Constraint6DOF>();
@@ -47,7 +51,7 @@ namespace BH.Adapter.MidasCivil
             {
                 Constraint6DOF bhomConstraint6DOF = Adapter.External.MidasCivil.Convert.ToConstraint6DOF(
                     springs[i], midasCivilVersion);
-                if(!(bhomConstraint6DOF==null))
+                if (!(bhomConstraint6DOF == null))
                 {
                     bhom6DOFConstraints.Add(bhomConstraint6DOF);
                 }
@@ -55,6 +59,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhom6DOFConstraints;
         }
+
+        /***************************************************/
 
     }
 }

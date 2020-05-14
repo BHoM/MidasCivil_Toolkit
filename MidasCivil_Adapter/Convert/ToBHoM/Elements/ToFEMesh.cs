@@ -31,10 +31,14 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static FEMesh ToFEMesh(
-            this string feMesh, 
-            Dictionary<string, Node> bhomNodes, 
-            Dictionary<string,ISurfaceProperty> bhomSurfaceProperties,
+            this string feMesh,
+            Dictionary<string, Node> bhomNodes,
+            Dictionary<string, ISurfaceProperty> bhomSurfaceProperties,
             Dictionary<string, IMaterialFragment> bhomMaterials)
         {
             List<string> delimitted = feMesh.Split(',').ToList();
@@ -48,7 +52,7 @@ namespace BH.Adapter.External.MidasCivil
 
             if (!(bhomSurfaceProperties.Count() == 0))
             {
-                bhomSurfaceProperties.TryGetValue(delimitted[3].Replace(" ",""), out bhomSurfaceProperty);
+                bhomSurfaceProperties.TryGetValue(delimitted[3].Replace(" ", ""), out bhomSurfaceProperty);
 
                 if (!(bhomMaterials.Count() == 0))
                 {
@@ -90,6 +94,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomFEMesh;
         }
+
+        /***************************************************/
 
     }
 }

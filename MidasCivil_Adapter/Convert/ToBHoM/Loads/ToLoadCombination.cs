@@ -31,18 +31,22 @@ namespace BH.Adapter.External.MidasCivil
     {
         public static LoadCombination ToLoadCombination(string loadCombination1, string loadCombination2, Dictionary<string, Loadcase> bhomLoadCaseDictionary)
         {
+            /***************************************************/
+            /**** Public Methods                            ****/
+            /***************************************************/
+
             List<string> delimittedLine1 = loadCombination1.Split(',').ToList();
             List<string> delimittedLine2 = loadCombination2.Split(',').ToList();
 
             List<Loadcase> associatedLoadcases = new List<Loadcase>();
             List<double> loadFactors = new List<double>();
 
-            for (int i=1; i<delimittedLine2.Count; i+=3)
+            for (int i = 1; i < delimittedLine2.Count; i += 3)
             {
                 Loadcase bhomLoadcase;
                 bhomLoadCaseDictionary.TryGetValue(delimittedLine2[i].Trim(), out bhomLoadcase);
                 associatedLoadcases.Add(bhomLoadcase);
-                loadFactors.Add(double.Parse(delimittedLine2[i+1].Trim()));
+                loadFactors.Add(double.Parse(delimittedLine2[i + 1].Trim()));
             }
 
             string name = delimittedLine1[0].Split('=')[1].Trim();
@@ -53,6 +57,9 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomLoadCombination;
         }
+
+        /***************************************************/
+
     }
 }
 

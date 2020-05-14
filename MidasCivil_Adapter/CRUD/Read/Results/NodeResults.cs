@@ -36,7 +36,7 @@ namespace BH.Adapter.MidasCivil
     {
 
         /***************************************************/
-        /**** Public method - Read override             ****/
+        /**** Private method - Read override            ****/
         /***************************************************/
 
         public IEnumerable<IResult> ReadResults(NodeResultRequest request, ActionConfig actionConfig)

@@ -26,6 +26,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private bool ExistsSection(string section)
         {
             string path = directory + "\\TextFiles\\" + section + ".txt";
@@ -37,6 +41,8 @@ namespace BH.Adapter.MidasCivil
 
             return false;
         }
+
+        /***************************************************/
 
     }
 }

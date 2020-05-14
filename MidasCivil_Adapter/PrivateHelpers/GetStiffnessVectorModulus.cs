@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        internal static double GetStiffnessVectorModulus(Constraint6DOF support)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private static double GetStiffnessVectorModulus(Constraint6DOF support)
         {
             Vector translationalStiffnessVector = new Vector()
             {
@@ -44,9 +48,11 @@ namespace BH.Adapter.MidasCivil
                 Z = support.RotationalStiffnessZ
             };
 
-            return Modulus(translationalStiffnessVector) + 
+            return Modulus(translationalStiffnessVector) +
                 Modulus(rotationalStiffnessVector);
         }
+
+        /***************************************************/
 
         private static double Modulus(Vector vector)
         {
@@ -55,6 +61,8 @@ namespace BH.Adapter.MidasCivil
                 Math.Pow(vector.Y, 2) +
                 Math.Pow(vector.Z, 2));
         }
+
+        /***************************************************/
 
     }
 }

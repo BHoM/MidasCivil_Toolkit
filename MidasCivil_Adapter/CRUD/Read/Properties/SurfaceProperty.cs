@@ -28,6 +28,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ISurfaceProperty> ReadSurfaceProperties(List<string> ids = null)
         {
             List<ISurfaceProperty> bhomSurfaceProperties = new List<ISurfaceProperty>();
@@ -65,6 +69,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomSurfaceProperties;
         }
+
+        /***************************************************/
 
     }
 }

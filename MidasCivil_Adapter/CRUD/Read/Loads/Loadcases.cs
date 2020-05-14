@@ -27,6 +27,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<Loadcase> ReadLoadcases(List<string> ids = null)
         {
             List<Loadcase> bhomLoadCases = new List<Loadcase>();
@@ -40,6 +44,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomLoadCases;
         }
+
+        /***************************************************/
 
     }
 }

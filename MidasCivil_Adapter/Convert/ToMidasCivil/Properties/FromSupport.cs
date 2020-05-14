@@ -29,16 +29,24 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static string FromSupport(this Constraint6DOF constraint6DOF)
         {
-               string midasSupport = (
-                    " " + "," +
-                    SupportString(constraint6DOF) + "," +
-                    constraint6DOF.Name
-                    );
+            string midasSupport = (
+                 " " + "," +
+                 SupportString(constraint6DOF) + "," +
+                 constraint6DOF.Name
+                 );
 
             return midasSupport;
         }
+
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
 
         private static string SupportString(Constraint6DOF constraint6DOF)
         {
@@ -73,6 +81,8 @@ namespace BH.Adapter.External.MidasCivil
             return support;
 
         }
+
+        /***************************************************/
 
     }
 }

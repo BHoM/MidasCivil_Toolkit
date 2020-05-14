@@ -29,7 +29,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public void CreateGroups(IEnumerable<Node> nodes)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private void CreateGroups(IEnumerable<Node> nodes)
         {
             Dictionary<string, List<int>> existingNodeGroups = GetTags("GROUP", 1);
             Dictionary<string, List<int>> existingElementGroups = GetTags("GROUP", 2);
@@ -37,7 +41,7 @@ namespace BH.Adapter.MidasCivil
             Dictionary<string, string> existingStringElementGroups = new Dictionary<string, string>();
             List<string> groups = existingNodeGroups.Keys.ToList();
 
-            if(groups.Count!=0)
+            if (groups.Count != 0)
             {
                 List<string> keys = existingNodeGroups.Keys.ToList();
 
@@ -92,7 +96,7 @@ namespace BH.Adapter.MidasCivil
             List<string> totalKeys = groupsToAdd.Keys.ToList();
             File.Delete(directory + "\\TextFiles\\GROUP.txt");
             string path = CreateSectionFile("GROUP");
-           
+
 
             using (StreamWriter sw = File.AppendText(path))
             {
@@ -110,7 +114,9 @@ namespace BH.Adapter.MidasCivil
             }
         }
 
-        public void CreateGroups(IEnumerable<Bar> bars)
+        /***************************************************/
+
+        private void CreateGroups(IEnumerable<Bar> bars)
         {
             Dictionary<string, List<int>> existingNodeGroups = GetTags("GROUP", 1);
             Dictionary<string, List<int>> existingElementGroups = GetTags("GROUP", 2);
@@ -191,7 +197,7 @@ namespace BH.Adapter.MidasCivil
             }
         }
 
-        public void CreateGroups(IEnumerable<FEMesh> meshes)
+        private void CreateGroups(IEnumerable<FEMesh> meshes)
         {
             Dictionary<string, List<int>> existingNodeGroups = GetTags("GROUP", 1);
             Dictionary<string, List<int>> existingElementGroups = GetTags("GROUP", 2);

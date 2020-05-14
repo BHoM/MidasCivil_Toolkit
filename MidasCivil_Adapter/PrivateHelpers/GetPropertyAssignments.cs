@@ -27,7 +27,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public Dictionary<string,List<int>> GetPropertyAssignments(string section, string namePrefix)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private Dictionary<string, List<int>> GetPropertyAssignments(string section, string namePrefix)
         {
             List<string> sectionText = GetSectionText(section);
 
@@ -39,21 +43,23 @@ namespace BH.Adapter.MidasCivil
 
                 List<string> geometryAssignments = new List<string>();
 
-                if(splitSection.Contains(" "))
+                if (splitSection.Contains(" "))
                 {
-                    geometryAssignments= splitSection.Split(' ').
-                        Select(x=>x.Trim()).
+                    geometryAssignments = splitSection.Split(' ').
+                        Select(x => x.Trim()).
                         Where(x => !string.IsNullOrEmpty(x)).
                         ToList();
                 }
 
                 List<int> propertyAssignment = MidasCivilAdapter.GetAssignmentIds(geometryAssignments);
 
-                propertyAssignments.Add(namePrefix + "_" + (i+1), propertyAssignment);
+                propertyAssignments.Add(namePrefix + "_" + (i + 1), propertyAssignment);
             }
 
             return propertyAssignments;
         }
+
+        /***************************************************/
 
     }
 }

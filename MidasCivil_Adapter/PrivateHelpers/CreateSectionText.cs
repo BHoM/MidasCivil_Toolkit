@@ -28,15 +28,19 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Prviate Methods                           ****/
+        /***************************************************/
+
         private string CreateSectionFile(string section)
         {
             string newFolder = directory + "\\TextFiles\\";
             System.IO.Directory.CreateDirectory(newFolder);
-            string path =  newFolder + "\\" + section + ".txt";
+            string path = newFolder + "\\" + section + ".txt";
 
             if (section.Contains("\\"))
             {
-                string [] delimitted = section.Split('\\');
+                string[] delimitted = section.Split('\\');
                 section = delimitted[delimitted.Count() - 1];
             }
 
@@ -54,7 +58,7 @@ namespace BH.Adapter.MidasCivil
             else
             {
                 List<string> readSection = File.ReadAllLines(path).ToList();
-                if(readSection.Count!=0)
+                if (readSection.Count != 0)
                 {
                     if (!(readSection[0].Contains("*" + section)))
                     {
@@ -72,6 +76,8 @@ namespace BH.Adapter.MidasCivil
 
             return path;
         }
+
+        /***************************************************/
 
     }
 }

@@ -30,6 +30,9 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
         public static BarForce ToBarForce(this List<string> delimitted)
         {
@@ -72,6 +75,8 @@ namespace BH.Engine.MidasCivil
 
             return position;
         }
+
+        /***************************************************/
 
     }
 }

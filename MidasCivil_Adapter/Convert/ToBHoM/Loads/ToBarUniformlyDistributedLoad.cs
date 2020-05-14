@@ -31,6 +31,10 @@ namespace BH.Adapter.External.MidasCivil
     {
         public static BarUniformlyDistributedLoad ToBarUniformlyDistributedLoad(string barUniformlyDistributedLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
         {
+            /***************************************************/
+            /**** Public Methods                            ****/
+            /***************************************************/
+
             string[] delimitted = barUniformlyDistributedLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
 
@@ -113,6 +117,9 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomBarUniformlyDistributedLoad;
         }
+
+        /***************************************************/
+
     }
 }
 

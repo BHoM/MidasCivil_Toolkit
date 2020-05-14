@@ -26,6 +26,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private void CompareLoadGroup(string loadGroup, string path)
         {
             string[] loadGroups = File.ReadAllLines(path);
@@ -42,12 +46,14 @@ namespace BH.Adapter.MidasCivil
 
             if (!existing)
             {
-                using (StreamWriter sw = new StreamWriter(path, append:true))
+                using (StreamWriter sw = new StreamWriter(path, append: true))
                 {
                     sw.WriteLine(loadGroup);
                 }
             }
         }
+
+        /***************************************************/
 
     }
 }

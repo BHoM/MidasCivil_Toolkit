@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public bool CreateCollection(IEnumerable<GravityLoad> gravityLoads)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<GravityLoad> gravityLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
 
@@ -51,7 +55,7 @@ namespace BH.Adapter.MidasCivil
                 }
 
                 if (containsGravity)
-                    BH.Engine.Reflection.Compute.RecordError("Midas only supports one GravityLoad per loadcase");
+                    Engine.Reflection.Compute.RecordError("Midas only supports one GravityLoad per loadcase");
                 else
                 {
                     CompareLoadGroup(midasLoadGroup, loadGroupPath);
@@ -62,6 +66,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
 
     }
 }
