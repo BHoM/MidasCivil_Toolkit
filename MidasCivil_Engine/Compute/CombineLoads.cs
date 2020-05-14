@@ -26,7 +26,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 
-namespace BH.Engine.External.MidasCivil
+namespace BH.Engine.Adapters.MidasCivil
 {
     public static partial class Compute
     {

@@ -27,14 +27,14 @@ using System.IO;
 using System.ComponentModel;
 using BH.oM.Reflection.Attributes;
 
-namespace BH.Engine.External.MidasCivil
+namespace BH.Engine.Adapters.MidasCivil
 {
-    /***************************************************/
-    /**** Public Methods                            ****/
-    /***************************************************/
-
     public static partial class Compute
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         [Description("Combines all text files specified by type in to a single MidasCivilText (MCT) to be loaded in to MidasCivil")]
         [Input("filePath", "The same filepath used for the adapter (pointing to an mcb file)")]
         [Input("types", "BHoM object types to specify the text files to be combined. A null value will combine all text files.")]
@@ -218,6 +218,8 @@ namespace BH.Engine.External.MidasCivil
             return success;
         }
 
+        /***************************************************/
+        /**** Private Methods                           ****/
         /***************************************************/
 
         private static string ToType(string type)

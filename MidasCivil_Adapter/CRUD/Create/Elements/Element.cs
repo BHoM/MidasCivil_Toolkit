@@ -51,7 +51,7 @@ namespace BH.Adapter.MidasCivil
                     AssignBarRelease(bar.CustomData[AdapterIdName].ToString(), bar.Release.Name, "FRAME-RLS");
                 }
 
-                midasElements.Add(Adapter.External.MidasCivil.Convert.FromBar(bar));
+                midasElements.Add(Adapter.Adapters.MidasCivil.Convert.FromBar(bar));
             }
 
             File.AppendAllLines(path, midasElements);
@@ -70,7 +70,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (FEMesh mesh in meshes)
             {
-                midasElements.Add(Adapter.External.MidasCivil.Convert.FromFEMesh(mesh));
+                midasElements.Add(Adapter.Adapters.MidasCivil.Convert.FromFEMesh(mesh));
             }
 
             File.AppendAllLines(path, midasElements);

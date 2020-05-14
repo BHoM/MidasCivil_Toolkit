@@ -21,7 +21,7 @@
  */
 
 
-namespace BH.oM.External.MidasCivil
+namespace BH.oM.Adapters.MidasCivil
 {
     /***************************************************/
     /**** Public Enums                              ****/

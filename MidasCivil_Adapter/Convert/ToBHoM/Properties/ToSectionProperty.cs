@@ -27,7 +27,7 @@ using BH.Engine.Structure;
 using System;
 using System.Linq;
 
-namespace BH.Adapter.External.MidasCivil
+namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
@@ -52,7 +52,7 @@ namespace BH.Adapter.External.MidasCivil
             else if (shape == "B")
             {
                 //    4, DBUSER    , USER-BOX          , CC, 0, 0, 0, 0, 0, 0, YES, NO, B  , 2, 0.5, 0.2, 0.01, 0.02, 0.19, 0.02, 0, 0, 0, 0
-                bhomSection = Engine.Structure.Create.GenericSectionFromProfile(Adapter.External.MidasCivil.Convert.ToProfile(sectionProperty), null
+                bhomSection = Engine.Structure.Create.GenericSectionFromProfile(Adapter.Adapters.MidasCivil.Convert.ToProfile(sectionProperty), null
                     );
 
 
@@ -93,7 +93,7 @@ namespace BH.Adapter.External.MidasCivil
             {
                 //   12, DBUSER    , USER-CHANNEL      , CC, 0, 0, 0, 0, 0, 0, YES, NO, C  , 2, 0.9, 0.5, 0.02, 0.02, 0.5, 0.02, 0, 0, 0, 0
 
-                bhomSection = Engine.Structure.Create.GenericSectionFromProfile(Adapter.External.MidasCivil.Convert.ToProfile(sectionProperty), null);
+                bhomSection = Engine.Structure.Create.GenericSectionFromProfile(Adapter.Adapters.MidasCivil.Convert.ToProfile(sectionProperty), null);
 
 
                 Engine.Reflection.Compute.RecordWarning(bhomSection.SectionProfile.GetType().ToString() +
@@ -103,7 +103,7 @@ namespace BH.Adapter.External.MidasCivil
             {
                 //    1, DBUSER    , USERANGLE         , CC, 0, 0, 0, 0, 0, 0, YES, NO, L  , 2, 0.5, 0.25, 0.01, 0.03, 0, 0, 0, 0, 0, 0
                 bhomSection = Engine.Structure.Create.GenericSectionFromProfile(
-                        Adapter.External.MidasCivil.Convert.ToProfile(sectionProperty), null);
+                        Adapter.Adapters.MidasCivil.Convert.ToProfile(sectionProperty), null);
             }
             else
             {
@@ -121,7 +121,7 @@ namespace BH.Adapter.External.MidasCivil
         public static ISectionProperty ToSectionProperty(this string sectionProfile, string sectionProperty1,
             string sectionProperty2, string sectionProperty3)
         {
-            IProfile bhomProfile = Adapter.External.MidasCivil.Convert.ToProfile(sectionProfile);
+            IProfile bhomProfile = Adapter.Adapters.MidasCivil.Convert.ToProfile(sectionProfile);
 
             string[] split0 = sectionProfile.Split(',');
             string[] split1 = sectionProperty1.Split(',');

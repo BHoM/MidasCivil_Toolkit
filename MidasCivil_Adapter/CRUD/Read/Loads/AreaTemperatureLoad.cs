@@ -78,7 +78,7 @@ namespace BH.Adapter.MidasCivil
                             indexMatches.ForEach(x => matchingFEMeshes.Add(loadedFEMeshes[x]));
 
                             AreaTemperatureLoad bhomAreaTemperatureLoad =
-                                Adapter.External.MidasCivil.Convert.ToAreaTemperatureLoad(
+                                Adapter.Adapters.MidasCivil.Convert.ToAreaTemperatureLoad(
                                     distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i);
 
                             if (bhomAreaTemperatureLoad!=null)

@@ -23,7 +23,7 @@
 using System;
 using BH.oM.Structure.SurfaceProperties;
 
-namespace BH.Adapter.External.MidasCivil
+namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {

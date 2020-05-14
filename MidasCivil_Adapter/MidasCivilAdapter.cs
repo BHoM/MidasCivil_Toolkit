@@ -33,7 +33,7 @@ using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
-using BH.Engine.External.MidasCivil.Comparer;
+using BH.Engine.Adapters.MidasCivil.Comparer;
 
 
 namespace BH.Adapter.MidasCivil

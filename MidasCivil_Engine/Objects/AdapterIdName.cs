@@ -26,7 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BH.Engine.External.MidasCivil
+namespace BH.Engine.Adapters.MidasCivil
 {
     public static partial class Convert
     {

@@ -42,9 +42,9 @@ namespace BH.Adapter.MidasCivil
             {
                 if (release.Name != "FixFix")
                 {
-                    string midasBoundaryGroup = Adapter.External.MidasCivil.Convert.FromTag(release.Name);
+                    string midasBoundaryGroup = Adapter.Adapters.MidasCivil.Convert.FromTag(release.Name);
                     CompareGroup(midasBoundaryGroup, boundaryGroupPath);
-                    midasBarReleases.AddRange(Adapter.External.MidasCivil.Convert.FromBarRelease(release));
+                    midasBarReleases.AddRange(Adapter.Adapters.MidasCivil.Convert.FromBarRelease(release));
                 }
             }
 
