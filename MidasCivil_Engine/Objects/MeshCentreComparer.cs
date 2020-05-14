@@ -29,6 +29,10 @@ namespace BH.Engine.External.MidasCivil.Comparer
 {
     public class MeshCentreComparer : IEqualityComparer<FEMesh>
     {
+        /***************************************************/
+        /**** Constructors                              ****/
+        /***************************************************/
+
         public MeshCentreComparer()
         {
             nodeComparer = new NodeDistanceComparer();
@@ -38,6 +42,11 @@ namespace BH.Engine.External.MidasCivil.Comparer
         {
             nodeComparer = new NodeDistanceComparer(decimals);
         }
+
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public bool Equals(FEMesh mesh1, FEMesh mesh2)
         {
             if (ReferenceEquals(mesh1, mesh2)) return true;
@@ -48,7 +57,7 @@ namespace BH.Engine.External.MidasCivil.Comparer
             if (mesh1.BHoM_Guid == mesh2.BHoM_Guid)
                 return true;
 
-            Panel panel1 = Compute.FEMeshToPanel (mesh1);
+            Panel panel1 = Compute.FEMeshToPanel(mesh1);
             Panel panel2 = Compute.FEMeshToPanel(mesh2);
             List<Point> controlPoints1 = BH.Engine.Structure.Query.ControlPoints(panel1, true);
             List<Point> controlPoints2 = BH.Engine.Structure.Query.ControlPoints(panel2, true);
@@ -60,12 +69,22 @@ namespace BH.Engine.External.MidasCivil.Comparer
 
             return false;
         }
+
+        /***************************************************/
+
         public int GetHashCode(FEMesh mesh)
         {
             return mesh.GetHashCode();
         }
 
+        /***************************************************/
+        /**** Private Fields                            ****/
+        /***************************************************/
+
         private NodeDistanceComparer nodeComparer;
+
+        /***************************************************/
+
     }
 }
 

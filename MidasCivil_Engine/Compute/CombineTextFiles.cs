@@ -29,6 +29,10 @@ using BH.oM.Reflection.Attributes;
 
 namespace BH.Engine.External.MidasCivil
 {
+    /***************************************************/
+    /**** Public Methods                            ****/
+    /***************************************************/
+
     public static partial class Compute
     {
         [Description("Combines all text files specified by type in to a single MidasCivilText (MCT) to be loaded in to MidasCivil")]
@@ -214,6 +218,8 @@ namespace BH.Engine.External.MidasCivil
             return success;
         }
 
+        /***************************************************/
+
         private static string ToType(string type)
         {
 
@@ -237,6 +243,8 @@ namespace BH.Engine.External.MidasCivil
             conversion.TryGetValue(type, out midasVersion);
             return midasVersion;
         }
+
+        /***************************************************/
 
     }
 }
