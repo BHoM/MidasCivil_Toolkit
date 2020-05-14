@@ -43,8 +43,6 @@ namespace BH.Engine.Adapters.MidasCivil
 
         public static bool CombineTextFiles(string filePath, List<Type> types = null, bool active = false)
         {
-            bool success = true;
-
             if (active)
             {
                 string directory;
@@ -213,9 +211,11 @@ namespace BH.Engine.Adapters.MidasCivil
                     }
                     combined.Close();
                 }
+
+                return true;
             }
 
-            return success;
+            return false;
         }
 
         /***************************************************/
