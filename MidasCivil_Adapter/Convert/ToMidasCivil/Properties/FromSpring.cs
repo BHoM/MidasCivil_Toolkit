@@ -28,13 +28,17 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static string FromSpring(this Constraint6DOF constraint6DOF, string version)
         {
             List<double> stiffness = SpringStiffness(constraint6DOF);
 
             string midasSpring = "";
 
-            switch(version)
+            switch (version)
             {
                 case "8.8.5":
                     string springFixity = SpringFixity(constraint6DOF);
@@ -59,8 +63,12 @@ namespace BH.Adapter.External.MidasCivil
                     break;
             }
 
-           return midasSpring;
+            return midasSpring;
         }
+
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
 
         private static List<double> SpringStiffness(Constraint6DOF constraint6DOF)
         {
@@ -110,6 +118,8 @@ namespace BH.Adapter.External.MidasCivil
             return stiffness;
         }
 
+        /***************************************************/
+
         private static string SpringFixity(Constraint6DOF constraint6DOF)
         {
             List<DOFType> freedoms = new List<DOFType>
@@ -141,5 +151,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return support;
         }
+
+        /***************************************************/
+
     }
 }

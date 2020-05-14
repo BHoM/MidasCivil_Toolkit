@@ -31,6 +31,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadBarVaryingDistributedLoads(List<string> ids = null)
         {
             List<ILoad> bhomBarVaryingDistributedLoads = new List<ILoad>();
@@ -105,6 +109,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomBarVaryingDistributedLoads;
         }
+
+        /***************************************************/
 
     }
 }

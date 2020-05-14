@@ -28,13 +28,17 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteGravityLoads(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteGravityLoads(IEnumerable<object> ids)
         {
             int success = 1;
 
             if (ids.Count() != 0)
             {
-                string[] loadcaseNames = Directory.GetDirectories(directory+ "\\TextFiles\\");
+                string[] loadcaseNames = Directory.GetDirectories(directory + "\\TextFiles\\");
 
                 foreach (string loadcaseName in loadcaseNames)
                 {
@@ -48,7 +52,7 @@ namespace BH.Adapter.MidasCivil
                         List<string> loadNames = new List<string>();
                         foreach (string load in loads)
                         {
-                            if (load.Contains(";")|| string.IsNullOrWhiteSpace(load))
+                            if (load.Contains(";") || string.IsNullOrWhiteSpace(load))
                             {
                                 loadNames.Add("0");
                             }
@@ -78,5 +82,8 @@ namespace BH.Adapter.MidasCivil
 
             return success;
         }
+
+        /***************************************************/
+
     }
 }

@@ -26,7 +26,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public static bool GetSupportedDOFType(DOFType freedom)
+        /***************************************************/
+        /**** Internal Methods                          ****/
+        /***************************************************/
+
+        internal static bool GetSupportedDOFType(DOFType freedom)
         {
             switch (freedom)
             {
@@ -39,5 +43,8 @@ namespace BH.Adapter.MidasCivil
                     return false;
             }
         }
+
+        /***************************************************/
+
     }
 }

@@ -28,6 +28,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private static string CreateAssignmentString(List<int> assignmentIndexes)
         {
             string indexes = "";
@@ -39,6 +43,8 @@ namespace BH.Adapter.MidasCivil
 
             return indexes;
         }
-    }
 
+        /***************************************************/
+
+    }
 }

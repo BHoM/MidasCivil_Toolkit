@@ -31,6 +31,10 @@ namespace BH.Adapter.External.MidasCivil
     {
         public static BarVaryingDistributedLoad ToBarVaryingDistributedLoad(string barVaryingDistributedLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
         {
+            /***************************************************/
+            /**** Public Methods                            ****/
+            /***************************************************/
+
             string[] delimitted = barVaryingDistributedLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
 
@@ -104,7 +108,7 @@ namespace BH.Adapter.External.MidasCivil
             double distA = double.Parse(delimitted[9].Trim());
             double distB = double.Parse(delimitted[11].Trim());
 
-            if (double.Parse(delimitted[13].Trim())!=0 || double.Parse(delimitted[15].Trim())!= 0)
+            if (double.Parse(delimitted[13].Trim()) != 0 || double.Parse(delimitted[15].Trim()) != 0)
             {
                 Engine.Reflection.Compute.RecordWarning("BHoM Bar Varying Distributed Load does not support non trapezoidal varying loads");
             }
@@ -135,6 +139,9 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomBarVaryingDistributedLoad;
         }
+
+        /***************************************************/
+
     }
 }
 

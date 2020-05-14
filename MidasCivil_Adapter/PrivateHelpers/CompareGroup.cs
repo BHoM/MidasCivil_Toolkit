@@ -26,6 +26,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private void CompareGroup(string group, string path)
         {
             string[] groups = File.ReadAllLines(path);
@@ -33,7 +37,7 @@ namespace BH.Adapter.MidasCivil
 
             for (int i = 0; i < groups.Length; i++)
             {
-                if (groups[i].Replace(" ","").Contains(group))
+                if (groups[i].Replace(" ", "").Contains(group))
                 {
                     existing = true;
                     break;
@@ -42,11 +46,14 @@ namespace BH.Adapter.MidasCivil
 
             if (!existing)
             {
-                using (StreamWriter sw = new StreamWriter(path, append:true))
+                using (StreamWriter sw = new StreamWriter(path, append: true))
                 {
                     sw.WriteLine(group);
                 }
             }
         }
+
+        /***************************************************/
+
     }
 }

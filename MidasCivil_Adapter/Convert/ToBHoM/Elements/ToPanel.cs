@@ -31,6 +31,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Panel ToPanel(FEMesh mesh)
         {
             List<Polyline> polylines = new List<Polyline>();
@@ -52,6 +56,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return panels[0];
         }
+
+        /***************************************************/
 
     }
 }

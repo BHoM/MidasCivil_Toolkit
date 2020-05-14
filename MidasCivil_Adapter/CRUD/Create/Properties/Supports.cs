@@ -28,6 +28,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private bool CreateCollection(IEnumerable<Constraint6DOF> supports)
         {
             string boundaryGroupPath = CreateSectionFile("BNDR-GROUP");
@@ -48,7 +52,7 @@ namespace BH.Adapter.MidasCivil
                 if (MidasCivilAdapter.GetStiffnessVectorModulus(constraint6DOF) > 0)
                 {
                     midasSprings.Add(Adapter.External.MidasCivil.Convert.FromSpring(constraint6DOF, midasCivilVersion));
-                    
+
                 }
                 else
                 {
@@ -61,6 +65,8 @@ namespace BH.Adapter.MidasCivil
 
             return true;
         }
+
+        /***************************************************/
 
     }
 }

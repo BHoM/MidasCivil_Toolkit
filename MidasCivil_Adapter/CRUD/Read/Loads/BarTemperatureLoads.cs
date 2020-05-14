@@ -31,6 +31,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadBarTemperatureLoads(List<string> ids = null)
         {
             List<ILoad> bhomBarTemperatureLoads = new List<ILoad>();
@@ -96,5 +100,8 @@ namespace BH.Adapter.MidasCivil
             }
             return bhomBarTemperatureLoads;
         }
+
+        /***************************************************/
+
     }
 }

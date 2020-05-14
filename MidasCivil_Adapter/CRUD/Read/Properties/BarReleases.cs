@@ -29,6 +29,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<BarRelease> ReadBarReleases(List<string> ids = null)
         {
             List<BarRelease> bhomBarReleases = new List<BarRelease>();
@@ -74,6 +78,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomBarReleases;
         }
+
+        /***************************************************/
 
     }
 }

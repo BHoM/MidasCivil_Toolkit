@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private HashSet<string> GetGroupAssignments(Dictionary<string,List<int>> dictionary, int id)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private HashSet<string> GetGroupAssignments(Dictionary<string, List<int>> dictionary, int id)
         {
             HashSet<string> groups = new HashSet<string>();
             List<string> keys = dictionary.Keys.ToList();
@@ -42,6 +46,8 @@ namespace BH.Adapter.MidasCivil
 
             return groups;
         }
+
+        /***************************************************/
 
     }
 }

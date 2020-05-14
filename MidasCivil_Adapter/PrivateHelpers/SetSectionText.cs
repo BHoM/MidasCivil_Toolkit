@@ -27,6 +27,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         public void SetSectionText()
         {
             List<int> sectionIndexes = midasText.Select((value, index) => new { value, index })
@@ -49,7 +53,7 @@ namespace BH.Adapter.MidasCivil
             for (int j = 0; j < loadcaseStarts.Count(); j++)
             {
                 loadcaseRange.AddRange(Enumerable.Range(
-                    loadcaseStarts[j] +1, loadcaseEnds[j] - loadcaseStarts[j] + 1));
+                    loadcaseStarts[j] + 1, loadcaseEnds[j] - loadcaseStarts[j] + 1));
             }
 
             List<int> loadSectionIndexes = loadcaseRange.Where(x => sectionIndexes.Contains(x)).ToList();
@@ -71,14 +75,14 @@ namespace BH.Adapter.MidasCivil
 
                 if (loadcaseStarts.Contains(sectionStart))
                 {
-                    string loadcaseName = sectionHeader.Split(',')[1].Replace(" ","");
+                    string loadcaseName = sectionHeader.Split(',')[1].Replace(" ", "");
                     string path = directory + "\\TextFiles\\" + loadcaseName;
                     System.IO.Directory.CreateDirectory(path);
                     WriteSectionText(sectionText, sectionName, path);
 
                     int loadcaseEnd = loadcaseEnds[loadcaseStarts.IndexOf(sectionStart)];
 
-                    for(int k = i+1; sectionIndexes[k] < loadcaseEnd; k++)
+                    for (int k = i + 1; sectionIndexes[k] < loadcaseEnd; k++)
                     {
                         int loadStart = sectionIndexes[k];
                         int loadEnd = sectionIndexes[k + 1] - 1;
@@ -100,6 +104,8 @@ namespace BH.Adapter.MidasCivil
             }
         }
 
+        /***************************************************/
+
         private static string SectionName(string text)
         {
             if (text.Contains(","))
@@ -115,6 +121,8 @@ namespace BH.Adapter.MidasCivil
                 return text.Split('*')[1];
             }
         }
+
+        /***************************************************/
 
     }
 }

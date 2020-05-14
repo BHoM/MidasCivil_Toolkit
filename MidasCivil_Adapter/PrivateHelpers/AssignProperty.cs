@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public void AssignProperty(string bhomID, string propertyName, string section)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private void AssignProperty(string bhomID, string propertyName, string section)
         {
             string path = directory + "\\TextFiles\\" + section + ".txt";
 
@@ -79,6 +83,8 @@ namespace BH.Adapter.MidasCivil
                 sectionText.Close();
             }
         }
-    }
 
+        /***************************************************/
+
+    }
 }

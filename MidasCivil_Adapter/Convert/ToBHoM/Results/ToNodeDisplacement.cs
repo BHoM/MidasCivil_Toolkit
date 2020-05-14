@@ -29,6 +29,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static NodeDisplacement ToNodeDisplacement(this List<string> delimitted)
         {
             NodeDisplacement nodeDisplacement = new NodeDisplacement()
@@ -44,6 +48,8 @@ namespace BH.Adapter.External.MidasCivil
             };
             return nodeDisplacement;
         }
+
+        /***************************************************/
 
     }
 }

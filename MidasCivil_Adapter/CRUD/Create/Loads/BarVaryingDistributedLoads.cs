@@ -30,7 +30,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public bool CreateCollection(IEnumerable<BarVaryingDistributedLoad> barVaryingDistributedLoads)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<BarVaryingDistributedLoad> barVaryingDistributedLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
 
@@ -79,8 +83,8 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            barVaryingDistributedLoad.MomentA = CreateSingleComponentVector(i-3, startLoadVectors[i]);
-                            barVaryingDistributedLoad.MomentB = CreateSingleComponentVector(i-3, endLoadVectors[i]);
+                            barVaryingDistributedLoad.MomentA = CreateSingleComponentVector(i - 3, startLoadVectors[i]);
+                            barVaryingDistributedLoad.MomentB = CreateSingleComponentVector(i - 3, endLoadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
@@ -98,9 +102,11 @@ namespace BH.Adapter.MidasCivil
             return true;
         }
 
-        public static Vector CreateSingleComponentVector(int index, double value)
+        /***************************************************/
+
+        private static Vector CreateSingleComponentVector(int index, double value)
         {
-            Vector vector = new Vector { X=0, Y=0, Z=0 };
+            Vector vector = new Vector { X = 0, Y = 0, Z = 0 };
 
             switch (index)
             {
@@ -117,6 +123,8 @@ namespace BH.Adapter.MidasCivil
 
             return vector;
         }
+
+        /***************************************************/
 
     }
 }

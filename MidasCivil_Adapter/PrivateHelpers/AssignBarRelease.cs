@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public void AssignBarRelease(string bhomID, string propertyName, string section)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private void AssignBarRelease(string bhomID, string propertyName, string section)
         {
             string path = directory + "\\TextFiles\\" + section + ".txt";
 
@@ -81,6 +85,7 @@ namespace BH.Adapter.MidasCivil
             }
         }
 
-    }
+        /***************************************************/
 
+    }
 }

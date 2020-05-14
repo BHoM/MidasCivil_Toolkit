@@ -27,6 +27,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<IMaterialFragment> ReadMaterials(List<string> ids = null)
         {
             List<IMaterialFragment> bhomMaterials = new List<IMaterialFragment>();
@@ -41,6 +45,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomMaterials;
         }
+
+        /***************************************************/
 
     }
 }

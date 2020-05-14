@@ -28,13 +28,17 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteBarPointLoads(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteBarPointLoads(IEnumerable<object> ids)
         {
             int success = 1;
 
-            if (ids.Count()!=0)
+            if (ids.Count() != 0)
             {
-                string[] loadcaseNames = Directory.GetDirectories(directory+ "\\TextFiles\\");
+                string[] loadcaseNames = Directory.GetDirectories(directory + "\\TextFiles\\");
 
                 foreach (string loadcaseName in loadcaseNames)
                 {
@@ -90,5 +94,8 @@ namespace BH.Adapter.MidasCivil
 
             return success;
         }
+
+        /***************************************************/
+
     }
 }

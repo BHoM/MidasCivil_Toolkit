@@ -30,6 +30,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<Node> ReadNodes(List<string> ids = null)
         {
             List<Node> bhomNodes = new List<Node>();
@@ -43,7 +47,7 @@ namespace BH.Adapter.MidasCivil
             List<Constraint6DOF> supportsList = Read6DOFConstraints();
             Dictionary<string, Constraint6DOF> supports = supportsList.ToDictionary(x => x.Name.ToString());
 
-            Dictionary<string, List<int>> supportAssignments = GetPropertyAssignments("CONSTRAINT","Support");
+            Dictionary<string, List<int>> supportAssignments = GetPropertyAssignments("CONSTRAINT", "Support");
             Dictionary<string, List<int>> springAssignments = GetPropertyAssignments("SPRING", "Spring");
 
             foreach (string node in nodesText)
@@ -56,6 +60,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomNodes;
         }
+
+        /***************************************************/
 
     }
 }

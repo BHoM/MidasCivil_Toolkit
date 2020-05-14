@@ -28,6 +28,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ISectionProperty> ReadSectionProperties(List<string> ids = null)
         {
             List<ISectionProperty> bhomSectionProperties = new List<ISectionProperty>();
@@ -37,7 +41,7 @@ namespace BH.Adapter.MidasCivil
             for (int i = 0; i < sectionProperties.Count; i++)
             {
                 string sectionProperty = sectionProperties[i];
-                string type = sectionProperty.Split(',')[1].Replace(" ","");
+                string type = sectionProperty.Split(',')[1].Replace(" ", "");
 
                 ISectionProperty bhomSectionProperty = null;
 
@@ -49,7 +53,7 @@ namespace BH.Adapter.MidasCivil
                     string sectionProperties3 = sectionProperties[i + 3];
 
                     bhomSectionProperty = Adapter.External.MidasCivil.Convert.ToSectionProperty(
-                        sectionProfile,sectionProperties1,sectionProperties2,sectionProperties3);
+                        sectionProfile, sectionProperties1, sectionProperties2, sectionProperties3);
 
                     i = i + 3;
                 }
@@ -57,7 +61,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     int numberColumns = sectionProperty.Split(',').Count();
 
-                    if(numberColumns == 16)
+                    if (numberColumns == 16)
                     {
                         Engine.Reflection.Compute.RecordWarning("Library sections are not yet supported in the MidasCivil_Toolkit");
                     }
@@ -73,12 +77,14 @@ namespace BH.Adapter.MidasCivil
                     Engine.Reflection.Compute.RecordWarning(type + " not supported in the MidasCivil_Toolkit");
                 }
 
-                if (bhomSectionProperty!=null)
+                if (bhomSectionProperty != null)
                     bhomSectionProperties.Add(bhomSectionProperty);
             }
 
             return bhomSectionProperties;
         }
+
+        /***************************************************/
 
     }
 }

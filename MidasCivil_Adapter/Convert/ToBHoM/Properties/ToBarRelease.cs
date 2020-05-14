@@ -28,6 +28,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static BarRelease ToBarRelease(string release, int count)
         {
             List<string> delimitted = release.Split(',').ToList();
@@ -40,7 +44,7 @@ namespace BH.Adapter.External.MidasCivil
             List<bool> bhomStartFixity = new List<bool>();
             List<bool> bhomEndFixity = new List<bool>();
 
-            for (int i=0; i<6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 bhomStartFixity.Add(Adapter.External.MidasCivil.Convert.FromFixity(startFixity.Substring(i, 1)));
                 bhomEndFixity.Add(Adapter.External.MidasCivil.Convert.FromFixity(endFixity.Substring(i, 1)));
@@ -65,6 +69,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomBarRelease;
         }
+
+        /***************************************************/
 
     }
 }

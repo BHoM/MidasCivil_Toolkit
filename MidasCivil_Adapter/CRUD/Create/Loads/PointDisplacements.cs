@@ -27,10 +27,16 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public bool CreateCollection(IEnumerable<PointDisplacement> pointDisplacements)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private bool CreateCollection(IEnumerable<PointDisplacement> pointDisplacements)
         {
             return true;
         }
+
+        /***************************************************/
 
     }
 }

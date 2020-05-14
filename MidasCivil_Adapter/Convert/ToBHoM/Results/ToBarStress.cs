@@ -29,6 +29,10 @@ namespace BH.Engine.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static BarStress ToBarStress(this List<string> delimitted)
         {
             double position = GetBarResultPosition(delimitted[7]);
@@ -50,6 +54,8 @@ namespace BH.Engine.MidasCivil
 
             return barstress;
         }
+
+        /***************************************************/
 
     }
 }

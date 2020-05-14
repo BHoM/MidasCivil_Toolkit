@@ -30,6 +30,13 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Constants                          ****/
+        /***************************************************/
+
         public const string AdapterIdName = "MidasCivil_id";
+
+        /***************************************************/
+
     }
 }

@@ -30,6 +30,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Node ToNode(this string node, Dictionary<string, Constraint6DOF> supports,
             Dictionary<string, List<int>> supportAssignments, Dictionary<string, List<int>> springAssignments)
         {
@@ -80,10 +84,7 @@ namespace BH.Adapter.External.MidasCivil
             return bhomNode;
         }
 
-        public static Node ToNode (Point point)
-        {
-            Node node = new Node { Position = point };
-            return node;
-        }
+        /***************************************************/
+
     }
 }

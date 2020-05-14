@@ -30,13 +30,17 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
-        public static RigidLink ToRigidLink(string rigidLink, Dictionary<string,Node> nodes, int count)
+        public static RigidLink ToRigidLink(string rigidLink, Dictionary<string, Node> nodes, int count)
         {
+            /***************************************************/
+            /**** Public Methods                            ****/
+            /***************************************************/
+
             string[] delimitted = rigidLink.Split(',');
             List<Node> slaveNodes = new List<Node>();
 
             string master = delimitted[0].Trim();
-            string fixity = delimitted[1].Replace(" ","");
+            string fixity = delimitted[1].Replace(" ", "");
             List<string> slaves = delimitted[2].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
             List<int> assignments = MidasCivilAdapter.GetAssignmentIds(slaves);
 
@@ -76,6 +80,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomRigidLink;
         }
+
+        /***************************************************/
 
     }
 }

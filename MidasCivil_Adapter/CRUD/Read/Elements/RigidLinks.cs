@@ -30,6 +30,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<RigidLink> ReadRigidLinks(List<string> ids = null)
         {
             List<RigidLink> bhomRigidLinks = new List<RigidLink>();
@@ -51,6 +55,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomRigidLinks;
         }
+
+        /***************************************************/
 
     }
 }

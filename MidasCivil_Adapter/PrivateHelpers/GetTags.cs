@@ -27,7 +27,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public Dictionary<string,List<int>> GetTags(string section, int position)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        public Dictionary<string, List<int>> GetTags(string section, int position)
         {
             List<string> sectionText = GetSectionText(section);
 
@@ -43,7 +47,7 @@ namespace BH.Adapter.MidasCivil
                 if (items.Contains(" ") || string.IsNullOrWhiteSpace(items))
                 {
                     List<string> assignments = items.Split(' ').
-                        Select(x=>x.Trim()).
+                        Select(x => x.Trim()).
                         Where(x => !string.IsNullOrEmpty(x)).
                         ToList();
                     itemAssignment = MidasCivilAdapter.GetAssignmentIds(assignments);
@@ -58,6 +62,8 @@ namespace BH.Adapter.MidasCivil
 
             return itemAssignments;
         }
+
+        /***************************************************/
 
     }
 }

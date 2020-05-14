@@ -31,6 +31,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<ILoad> ReadPointLoads(List<string> ids = null)
         {
             List<ILoad> bhomPointLoads = new List<ILoad>();
@@ -88,6 +92,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomPointLoads;
         }
+
+        /***************************************************/
 
     }
 }

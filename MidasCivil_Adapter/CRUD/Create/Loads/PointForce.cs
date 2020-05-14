@@ -29,6 +29,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         public bool CreateCollection(IEnumerable<PointLoad> pointLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
@@ -43,18 +47,18 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedNode in assignedNodes)
                 {
-                   midasPointLoads.Add(Adapter.External.MidasCivil.Convert.FromPointLoad(PointLoad, assignedNode));
+                    midasPointLoads.Add(Adapter.External.MidasCivil.Convert.FromPointLoad(PointLoad, assignedNode));
                 }
 
                 RemoveEndOfDataString(PointLoadPath);
-                CompareLoadGroup(midasLoadGroup,loadGroupPath);
+                CompareLoadGroup(midasLoadGroup, loadGroupPath);
                 File.AppendAllLines(PointLoadPath, midasPointLoads);
             }
 
-            
-
             return true;
         }
+
+        /***************************************************/
 
     }
 }

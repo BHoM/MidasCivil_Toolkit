@@ -31,6 +31,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static ISectionProperty ToConcreteSection(this SteelSection steelSection)
         {
             ConcreteSection bhomSection = null;
@@ -61,6 +65,8 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomSection;
         }
+
+        /***************************************************/
 
     }
 }

@@ -30,6 +30,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private List<FEMesh> ReadFEMeshes(List<string> ids = null)
         {
             List<FEMesh> bhomMeshes = new List<FEMesh>();
@@ -51,7 +55,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (string mesh in meshText)
             {
-                FEMesh bhomMesh = Adapter.External.MidasCivil.Convert.ToFEMesh(mesh, bhomNodes,bhomSuraceProperties, bhomMaterials);
+                FEMesh bhomMesh = Adapter.External.MidasCivil.Convert.ToFEMesh(mesh, bhomNodes, bhomSuraceProperties, bhomMaterials);
                 int bhomID = System.Convert.ToInt32(bhomMesh.CustomData[AdapterIdName]);
                 bhomMesh.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomMeshes.Add(bhomMesh);
@@ -59,6 +63,8 @@ namespace BH.Adapter.MidasCivil
 
             return bhomMeshes;
         }
+
+        /***************************************************/
 
     }
 }

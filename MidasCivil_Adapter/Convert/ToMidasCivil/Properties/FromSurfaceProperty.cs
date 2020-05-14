@@ -44,7 +44,7 @@ namespace BH.Adapter.External.MidasCivil
 
         private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty, string version)
         {
-            if (bhomSurfaceProperty.Thickness==0)
+            if (bhomSurfaceProperty.Thickness == 0)
             {
                 return null;
             }

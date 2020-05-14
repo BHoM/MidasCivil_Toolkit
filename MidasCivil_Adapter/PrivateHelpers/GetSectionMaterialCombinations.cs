@@ -29,6 +29,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private static Dictionary<string, ISectionProperty> GetSectionMaterialCombinations(
             List<List<string>> combinations, Dictionary<string, IMaterialFragment> materials,
             Dictionary<string, ISectionProperty> sectionProperties)
@@ -70,7 +74,7 @@ namespace BH.Adapter.MidasCivil
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), timberSection);
                         break;
                     case "GenericIsotropicMaterial":
-                        GenericSection genericIsoptropicSection = 
+                        GenericSection genericIsoptropicSection =
                             Engine.Structure.Create.GenericSectionFromProfile(genericSection.SectionProfile, (GenericIsotropicMaterial)material);
                         genericIsoptropicSection.Name = genericSection.Name;
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericIsoptropicSection);
@@ -89,6 +93,8 @@ namespace BH.Adapter.MidasCivil
 
             return materialSections;
         }
+
+        /***************************************************/
 
     }
 }

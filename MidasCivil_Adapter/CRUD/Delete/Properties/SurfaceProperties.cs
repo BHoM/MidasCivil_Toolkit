@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteSurfaceProperties(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteSurfaceProperties(IEnumerable<object> ids)
         {
             int success = 1;
 
@@ -46,7 +50,7 @@ namespace BH.Adapter.MidasCivil
 
                     List<int> thicknessIndexes = new List<int>();
 
-                    for (int i=0; i<thicknesses.Count; i++)
+                    for (int i = 0; i < thicknesses.Count; i++)
                     {
                         if (thicknesses[i].Contains(";") || thicknesses[i].Contains("*") || string.IsNullOrWhiteSpace(thicknesses[i]))
                         {
@@ -85,6 +89,8 @@ namespace BH.Adapter.MidasCivil
             }
             return success;
         }
+
+        /***************************************************/
 
     }
 }

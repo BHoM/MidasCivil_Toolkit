@@ -26,6 +26,10 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static IProfile ToProfile(string sectionProfile)
         {
             string[] split = sectionProfile.Split(',');
@@ -35,7 +39,7 @@ namespace BH.Adapter.External.MidasCivil
             if (shape == "SB")
             {
                 bhomProfile = Engine.Geometry.Create.RectangleProfile(
-                    System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),0);
+                    System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]), 0);
             }
             else if (shape == "B")
             {
@@ -71,15 +75,15 @@ namespace BH.Adapter.External.MidasCivil
             else if (shape == "H")
             {
                 bhomProfile = Engine.Geometry.Create.FabricatedISectionProfile(
-                    System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]), System.Convert.ToDouble(split[18]), 
-                    System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]), System.Convert.ToDouble(split[19]),0);
+                    System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]), System.Convert.ToDouble(split[18]),
+                    System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]), System.Convert.ToDouble(split[19]), 0);
             }
             else if (shape == "T")
             {
                 bhomProfile = Engine.Geometry.Create.TSectionProfile(
                     System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),
                     System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]),
-                    0,0
+                    0, 0
                     );
             }
             else if (shape == "C")
@@ -94,11 +98,13 @@ namespace BH.Adapter.External.MidasCivil
                 bhomProfile = Engine.Geometry.Create.AngleProfile(
                         System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),
                         System.Convert.ToDouble(split[16]), System.Convert.ToDouble(split[17]),
-                        0,0,false,true);
+                        0, 0, false, true);
             }
 
             return bhomProfile;
-            /***************************************************/
         }
+
+        /***************************************************/
+
     }
 }

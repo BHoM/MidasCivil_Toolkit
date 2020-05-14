@@ -28,7 +28,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public static List<int> GetAssignmentIds(List<string> assignments)
+        /***************************************************/
+        /**** Internal Methods                          ****/
+        /***************************************************/
+
+        internal static List<int> GetAssignmentIds(List<string> assignments)
         {
             List<int> propertyAssignment = new List<int>();
 
@@ -52,6 +56,8 @@ namespace BH.Adapter.MidasCivil
             return propertyAssignment;
         }
 
+        /***************************************************/
+
         private static List<int> RangeBySplit(string text, string split)
         {
             string[] splitStringTo = text.Split(new[] { split }, StringSplitOptions.RemoveEmptyEntries);
@@ -61,6 +67,8 @@ namespace BH.Adapter.MidasCivil
 
             return range;
         }
+
+        /***************************************************/
 
         private static List<int> RangeBySplit(string text, string split1, string split2)
         {
@@ -74,6 +82,8 @@ namespace BH.Adapter.MidasCivil
 
             return range;
         }
+
+        /***************************************************/
 
     }
 }

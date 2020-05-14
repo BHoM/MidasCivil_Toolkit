@@ -27,6 +27,10 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
         private void RemoveEndOfDataString(string path)
         {
             string[] loads = File.ReadAllLines(path);
@@ -42,5 +46,8 @@ namespace BH.Adapter.MidasCivil
             File.Delete(path);
             File.AppendAllLines(path, loads);
         }
+
+        /***************************************************/
+
     }
 }

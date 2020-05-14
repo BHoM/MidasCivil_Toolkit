@@ -30,7 +30,11 @@ namespace BH.Adapter.External.MidasCivil
 {
     public static partial class Convert
     {
-        public static PointLoad ToPointLoad(this string pointLoad, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string,Node> nodeDictionary, int count)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static PointLoad ToPointLoad(this string pointLoad, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Node> nodeDictionary, int count)
         {
             string[] delimitted = pointLoad.Split(',');
             List<Node> bhomAssociatedNodes = new List<Node>();
@@ -61,14 +65,14 @@ namespace BH.Adapter.External.MidasCivil
 
             string name;
 
-            if(string.IsNullOrWhiteSpace(delimitted[6]))
+            if (string.IsNullOrWhiteSpace(delimitted[6]))
             {
                 name = "PF" + count;
             }
             else
             {
                 name = delimitted[6].Trim();
-            } 
+            }
 
             IEnumerable<Node> nodes = bhomAssociatedNodes;
 
@@ -77,6 +81,9 @@ namespace BH.Adapter.External.MidasCivil
 
             return bhomPointLoad;
         }
+
+        /***************************************************/
+
     }
 }
 

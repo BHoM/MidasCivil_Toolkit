@@ -28,21 +28,25 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteBarReleases(IEnumerable<object> ids)
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
+
+        private int DeleteBarReleases(IEnumerable<object> ids)
         {
             int success = 1;
 
-            if (ids.Count()!=0)
+            if (ids.Count() != 0)
             {
                 string path = directory + "\\TextFiles\\" + "FRAME-RLS" + ".txt";
 
-                if(File.Exists(path))
+                if (File.Exists(path))
                 {
                     List<string> names = ids.Cast<string>().ToList();
                     List<string> releases = File.ReadAllLines(path).ToList();
                     List<string> releaseNames = new List<string>();
 
-                    for (int i=0; i<releases.Count; i++)
+                    for (int i = 0; i < releases.Count; i++)
                     {
                         if (releases[i].Contains("*") || releases[i].Contains(";") || string.IsNullOrWhiteSpace(releases[i]))
                         {
@@ -51,7 +55,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            string clone = releases[i+1].Split(',')[7].Trim();
+                            string clone = releases[i + 1].Split(',')[7].Trim();
                             releaseNames.Add(clone);
                             releaseNames.Add(clone);
                             i++;
@@ -82,6 +86,8 @@ namespace BH.Adapter.MidasCivil
             }
             return success;
         }
+
+        /***************************************************/
 
     }
 }
