@@ -221,6 +221,7 @@
     <Compile Include="CRUD\Read\Results\NodeResults.cs" />
     <Compile Include="CRUD\Read\Results\ReadResults.cs" />
     <Compile Include="PrivateHelpers\AssignBarRelease.cs" />
+    <Compile Include="PrivateHelpers\CombineLoads.cs" />
     <Compile Include="PrivateHelpers\CreateAssignmentString.cs" />
     <Compile Include="PrivateHelpers\GetAssignmentIds.cs" />
     <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
