@@ -1,0 +1,18 @@
+{
+  "Namespace": {
+    "ToNew": {
+      "BH.Engine.MidasCivil":  "BH.Engine.Adapters.MidasCivil",
+    },
+    "ToOld": {
+	  "BH.Engine.Adapters.MidasCivil": "BH.Engine.MidasCivil"
+    }
+  },
+  "Type": {
+    "ToNew": {
+      
+    },
+    "ToOld": {
+      
+    }
+  }
+}
