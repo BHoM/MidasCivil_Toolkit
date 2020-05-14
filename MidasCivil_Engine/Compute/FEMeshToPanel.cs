@@ -29,6 +29,10 @@ namespace BH.Engine.External.MidasCivil
 {
     public static partial class Compute
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Panel FEMeshToPanel(FEMesh mesh)
         {
             List<Polyline> polylines = new List<Polyline>();
@@ -50,5 +54,8 @@ namespace BH.Engine.External.MidasCivil
 
             return panels[0];
         }
+
+        /***************************************************/
+
     }
 }
