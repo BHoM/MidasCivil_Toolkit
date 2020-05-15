@@ -103,41 +103,48 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    System.Diagnostics.Process.Start(filePath);
-                    directory = Path.GetDirectoryName(filePath);
-                    string fileName = Path.GetFileNameWithoutExtension(filePath);
-                    string txtFile = directory + "\\" + fileName + ".txt";
-                    string mctFile = directory + "\\" + fileName + ".mct";
+                    if (File.Exists(filePath))
+                    {
+                        System.Diagnostics.Process.Start(filePath);
+                        directory = Path.GetDirectoryName(filePath);
+                        string fileName = Path.GetFileNameWithoutExtension(filePath);
+                        string txtFile = directory + "\\" + fileName + ".txt";
+                        string mctFile = directory + "\\" + fileName + ".mct";
 
-                    if (File.Exists(txtFile))
-                    {
-                        midasText = File.ReadAllLines(txtFile).ToList();
-                        SetSectionText();
-                    }
-                    else if (File.Exists(mctFile))
-                    {
-                        midasText = File.ReadAllLines(mctFile).ToList();
-                        SetSectionText();
-                    }
-                    string versionFile = directory + "\\TextFiles\\" + "VERSION" + ".txt";
-                    midasCivilVersion = "8.8.1";
-
-                    if (!(version == ""))
-                    {
-                        midasCivilVersion = version.Trim();
-                        if(File.Exists(versionFile))
+                        if (File.Exists(txtFile))
                         {
-                            Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + midasCivilVersion);
+                            midasText = File.ReadAllLines(txtFile).ToList();
+                            SetSectionText();
                         }
-                    }
-                    else if (File.Exists(versionFile))
-                    {
-                        List<string> versionText = GetSectionText("VERSION");
-                        midasCivilVersion  = versionText[0].Trim();
+                        else if (File.Exists(mctFile))
+                        {
+                            midasText = File.ReadAllLines(mctFile).ToList();
+                            SetSectionText();
+                        }
+                        string versionFile = directory + "\\TextFiles\\" + "VERSION" + ".txt";
+                        midasCivilVersion = "8.8.1";
+
+                        if (!(version == ""))
+                        {
+                            midasCivilVersion = version.Trim();
+                            if (File.Exists(versionFile))
+                            {
+                                Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + midasCivilVersion);
+                            }
+                        }
+                        else if (File.Exists(versionFile))
+                        {
+                            List<string> versionText = GetSectionText("VERSION");
+                            midasCivilVersion = versionText[0].Trim();
+                        }
+                        else
+                        {
+                            Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + midasCivilVersion);
+                        }
                     }
                     else
                     {
-                        Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + midasCivilVersion);
+                        throw new Exception(".mcb file does not exist, please reference a file that exists at the path specified");
                     }
                 }
             }
