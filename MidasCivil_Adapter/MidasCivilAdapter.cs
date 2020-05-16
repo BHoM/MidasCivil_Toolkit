@@ -103,9 +103,14 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    if (File.Exists(filePath))
+                    try
                     {
                         System.Diagnostics.Process.Start(filePath);
+                    }
+                    catch(System.ComponentModel.Win32Exception)
+                    {
+                        throw new Exception("File does not exist, please reference an .mcb file");
+                    }
                         directory = Path.GetDirectoryName(filePath);
                         string fileName = Path.GetFileNameWithoutExtension(filePath);
                         string txtFile = directory + "\\" + fileName + ".txt";
@@ -141,11 +146,6 @@ namespace BH.Adapter.MidasCivil
                         {
                             Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + midasCivilVersion);
                         }
-                    }
-                    else
-                    {
-                        throw new Exception(".mcb file does not exist, please reference a file that exists at the path specified");
-                    }
                 }
             }
         }
