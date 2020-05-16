@@ -61,9 +61,15 @@ namespace BH.Engine.Adapters.MidasCivil
 
                 if (types.Count == 0)
                 {
-                    typeNames = Directory.GetFiles(directory, "*.txt")
-                        .Select(Path.GetFileName)
-                        .ToList();
+                    try
+                    {
+                        typeNames = Directory.GetFiles(directory, "*.txt").Select(Path.GetFileName).ToList();
+                    }
+                    catch(DirectoryNotFoundException)
+                    {
+                        throw new Exception("Directory not found, please specify a valid file path to an .mcb file");
+                    }
+
 
                     for (int i = 0; i < typeNames.Count; i++)
                     {
