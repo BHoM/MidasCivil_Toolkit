@@ -107,45 +107,59 @@ namespace BH.Adapter.MidasCivil
                     {
                         System.Diagnostics.Process.Start(filePath);
                     }
-                    catch(System.ComponentModel.Win32Exception)
+                    catch (System.ComponentModel.Win32Exception)
                     {
                         throw new Exception("File does not exist, please reference an .mcb file");
                     }
-                        directory = Path.GetDirectoryName(filePath);
-                        string fileName = Path.GetFileNameWithoutExtension(filePath);
-                        string txtFile = directory + "\\" + fileName + ".txt";
-                        string mctFile = directory + "\\" + fileName + ".mct";
+                    directory = Path.GetDirectoryName(filePath);
+                    string fileName = Path.GetFileNameWithoutExtension(filePath);
+                    string txtFile = directory + "\\" + fileName + ".txt";
+                    string mctFile = directory + "\\" + fileName + ".mct";
 
-                        if (File.Exists(txtFile))
-                        {
-                            midasText = File.ReadAllLines(txtFile).ToList();
-                            SetSectionText();
-                        }
-                        else if (File.Exists(mctFile))
-                        {
-                            midasText = File.ReadAllLines(mctFile).ToList();
-                            SetSectionText();
-                        }
-                        string versionFile = directory + "\\TextFiles\\" + "VERSION" + ".txt";
-                        midasCivilVersion = "8.8.1";
+                    if (File.Exists(txtFile))
+                    {
+                        midasText = File.ReadAllLines(txtFile).ToList();
+                        SetSectionText();
+                    }
+                    else if (File.Exists(mctFile))
+                    {
+                        midasText = File.ReadAllLines(mctFile).ToList();
+                        SetSectionText();
+                    }
+                    string versionFile = directory + "\\TextFiles\\" + "VERSION" + ".txt";
+                    midasCivilVersion = "8.8.1";
 
-                        if (!(version == ""))
+                    if (!(version == ""))
+                    {
+                        midasCivilVersion = version.Trim();
+                        if (File.Exists(versionFile))
                         {
-                            midasCivilVersion = version.Trim();
-                            if (File.Exists(versionFile))
-                            {
-                                Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + midasCivilVersion);
-                            }
+                            Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + midasCivilVersion);
                         }
-                        else if (File.Exists(versionFile))
-                        {
-                            List<string> versionText = GetSectionText("VERSION");
-                            midasCivilVersion = versionText[0].Trim();
-                        }
-                        else
-                        {
-                            Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + midasCivilVersion);
-                        }
+                    }
+                    else if (File.Exists(versionFile))
+                    {
+                        List<string> versionText = GetSectionText("VERSION");
+                        midasCivilVersion = versionText[0].Trim();
+                    }
+                    else
+                    {
+                        Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + midasCivilVersion);
+                    }
+
+                    try
+                    {
+                        List<string> units = GetSectionText("UNITS");
+                        forceUnit = units[0].Split(',')[0].Trim();
+                        lengthUnit = units[1].Split(',')[0].Trim();
+                        heatUnit = units[2].Split(',')[0].Trim();
+                        temperatureUnit = units[3].Split(',')[0].Trim();
+                    }
+                    catch(DirectoryNotFoundException)
+                    {
+                        Engine.Reflection.Compute.RecordWarning(
+                            "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius");
+                    }
                 }
             }
         }
@@ -158,7 +172,12 @@ namespace BH.Adapter.MidasCivil
         public List<string> midasText;
         public string directory;
         public string midasCivilVersion;
+        public string forceUnit;
+        public string lengthUnit;
+        public string heatUnit;
+        public string temperatureUnit;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
+
 
         /***************************************************/
         /**** Private  Fields                           ****/

@@ -20,8 +20,14 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Adapter.MidasCivil;
+using BH.oM.Geometry;
+using BH.Engine.Reflection;
+using BH.oM.Structure.Constraints;
 using BH.oM.Structure.Elements;
 using BH.Engine.Units;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -31,17 +37,31 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromNode(this Node node)
+        public static double LengthFromSI(this double length, string lengthUnit)
         {
-            string midasNode = 
-                (
-                    node.CustomData[AdapterIdName].ToString() + "," +
-                    node.Position.X.ToString() + "," +
-                    node.Position.Y.ToString() + "," +
-                    node.Position.Z.ToString()
-                );
+            switch (lengthUnit)
+            {
+                case "M":
+                    break;
+                case "CM":
+                    length.ToCentimetre();
+                    break;
+                case "MM":
+                    length.ToMillimetre();
+                    break;
+                case "FT":
+                    length.ToFoot();
+                    break;
+                case "IN":
+                    length.ToInch();
+                    break;
+                default:
+                    Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres");
+                    break;
+            }
 
-            return midasNode;
+            return length;
+            
         }
 
         /***************************************************/
