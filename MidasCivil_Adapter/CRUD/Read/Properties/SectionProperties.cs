@@ -52,8 +52,8 @@ namespace BH.Adapter.MidasCivil
                     string sectionProperties2 = sectionProperties[i + 2];
                     string sectionProperties3 = sectionProperties[i + 3];
 
-                    bhomSectionProperty = Adapter.Adapters.MidasCivil.Convert.ToSectionProperty(
-                        sectionProfile, sectionProperties1, sectionProperties2, sectionProperties3);
+                    bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(
+                        sectionProfile, sectionProperties1, sectionProperties2, sectionProperties3, lengthUnit);
 
                     i = i + 3;
                 }
@@ -67,8 +67,8 @@ namespace BH.Adapter.MidasCivil
                     }
                     else
                     {
-                        bhomSectionProperty = Adapter.Adapters.MidasCivil.Convert.ToSectionProperty(
-                            sectionProperty);
+                        bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(
+                            sectionProperty, lengthUnit);
                     }
 
                 }

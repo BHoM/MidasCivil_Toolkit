@@ -182,6 +182,16 @@
     <Compile Include="Convert\ToMidasCivil\Properties\FromSupport.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromSurfaceProperty.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromTag.cs" />
+    <Compile Include="Convert\Units\AreaMomentOfInertiaToSI.cs" />
+    <Compile Include="Convert\Units\AreaToSI.cs" />
+    <Compile Include="Convert\Units\AreaFromSI.cs" />
+    <Compile Include="Convert\Units\AreaMomentOfInertiaFromSI.cs" />
+    <Compile Include="Convert\Units\VolumeToSI.cs" />
+    <Compile Include="Convert\Units\VolumeFromSI.cs" />
+    <Compile Include="Convert\Units\MomentFromSI.cs" />
+    <Compile Include="Convert\Units\MomentToSI.cs" />
+    <Compile Include="Convert\Units\ForceToSI.cs" />
+    <Compile Include="Convert\Units\ForceFromSI.cs" />
     <Compile Include="Convert\Units\LengthToSI.cs" />
     <Compile Include="Convert\Units\LengthFromSI.cs" />
     <Compile Include="CRUD\Create\Elements\RigidLink.cs" />

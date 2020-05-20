@@ -34,7 +34,8 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static PointLoad ToPointLoad(this string pointLoad, List<string> associatedNodes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Node> nodeDictionary, int count)
+        public static PointLoad ToPointLoad(this string pointLoad, List<string> associatedNodes, string loadcase,
+            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Node> nodeDictionary, int count, string forceUnit, string lengthUnit)
         {
             string[] delimitted = pointLoad.Split(',');
             List<Node> bhomAssociatedNodes = new List<Node>();
@@ -51,17 +52,19 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             Vector forceVector = new Vector
             {
-                X = double.Parse(delimitted[0].Trim()),
-                Y = double.Parse(delimitted[1].Trim()),
-                Z = double.Parse(delimitted[2].Trim())
+                X = double.Parse(delimitted[0].Trim()).ForceToSI(forceUnit),
+                Y = double.Parse(delimitted[1].Trim()).ForceToSI(forceUnit),
+                Z = double.Parse(delimitted[2].Trim()).ForceToSI(forceUnit)
             };
 
             Vector momentVector = new Vector
             {
-                X = double.Parse(delimitted[3].Trim()),
-                Y = double.Parse(delimitted[4].Trim()),
-                Z = double.Parse(delimitted[5].Trim())
+                X = double.Parse(delimitted[3].Trim()).MomentToSI(forceUnit, lengthUnit),
+                Y = double.Parse(delimitted[4].Trim()).MomentToSI(forceUnit, lengthUnit),
+                Z = double.Parse(delimitted[5].Trim()).MomentToSI(forceUnit, lengthUnit)
             };
+
+
 
             string name;
 

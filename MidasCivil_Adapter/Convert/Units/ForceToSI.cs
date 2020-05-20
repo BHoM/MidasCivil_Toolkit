@@ -20,8 +20,14 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Adapter.MidasCivil;
+using BH.oM.Geometry;
+using BH.Engine.Reflection;
+using BH.oM.Structure.Constraints;
 using BH.oM.Structure.Elements;
 using BH.Engine.Units;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -31,17 +37,33 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromNode(this Node node, string lengthUnit)
+        public static double ForceToSI(this double force, string forceUnit)
         {
-            string midasNode =
-                (
-                    node.CustomData[AdapterIdName].ToString() + "," +
-                    node.Position.X.LengthFromSI(lengthUnit).ToString() + "," +
-                    node.Position.Y.LengthFromSI(lengthUnit).ToString() + "," +
-                    node.Position.Z.LengthFromSI(lengthUnit).ToString()
-                );
+            switch (forceUnit)
+            {
+                case "N":
+                    break;
+                case "KN":
+                    force.FromKilonewton();
+                    break;
+                case "KGF":
+                    force.FromKilogramForce();
+                    break;
+                case "TONF":
+                    force.FromTonneForce();
+                    break;
+                case "LBF":
+                    force.FromPoundForce();
+                    break;
+                case "KIPS":
+                    force.FromKilopoundForce();
+                    break;
+                default:
+                    Compute.RecordWarning("No firce unit detected, MidasCivil force unit assumed to be set to metres. Therefore no unit conversion will occur. ");
+                    break;
+            }
 
-            return midasNode;
+            return force;
         }
 
         /***************************************************/

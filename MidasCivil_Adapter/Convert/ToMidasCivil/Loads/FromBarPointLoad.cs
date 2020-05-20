@@ -32,7 +32,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromBarPointLoad(this BarPointLoad barLoad, string assignedBar, string loadType)
+        public static string FromBarPointLoad(this BarPointLoad barLoad, string assignedBar, string loadType, string lengthUnit, string forceUnit)
         {
             string midasBarLoad = null;
             if (loadType == "Force")
@@ -41,7 +41,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasBarLoad = assignedBar + ",BEAM,CONLOAD," + FromLoadAxis(barLoad.Axis) + direction +
                                                                     "," + FromLoadProjection(barLoad.Projected) +
                                                                     ",NO,aDir[1], , , ," + barLoad.DistanceFromA.ToString() + "," +
-                                                                    FromVectorDirection(barLoad.Force, direction) +
+                                                                    FromVectorDirection(barLoad.Force, direction).ForceFromSI(lengthUnit).ToString() +
                                                                     ",0,0,0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
             }
             else
@@ -50,7 +50,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasBarLoad = assignedBar + ",BEAM,CONMOMENT," + FromLoadAxis(barLoad.Axis) + direction +
                                                                     "," + FromLoadProjection(barLoad.Projected) +
                                                                     ",NO,aDir[1], , , ," + barLoad.DistanceFromA.ToString() + "," +
-                                                                    FromVectorDirection(barLoad.Moment, direction) +
+                                                                    FromVectorDirection(barLoad.Moment, direction).MomentFromSI(forceUnit, lengthUnit).ToString() +
                                                                     ",0,0,0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
             }
 

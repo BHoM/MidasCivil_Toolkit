@@ -68,7 +68,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Adapter.Adapters.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Force"));
+                                midasBarLoads.Add(Adapter.Adapters.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Force", lengthUnit, forceUnit));
                             }
                         }
                         else
@@ -77,7 +77,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Adapter.Adapters.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Moment"));
+                                midasBarLoads.Add(Adapter.Adapters.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Moment", lengthUnit, forceUnit));
                             }
                         }
 

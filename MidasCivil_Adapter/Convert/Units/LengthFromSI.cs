@@ -61,7 +61,6 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
 
             return length;
-            
         }
 
         /***************************************************/
