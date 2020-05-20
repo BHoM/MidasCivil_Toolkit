@@ -31,9 +31,9 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromSurfaceProperty(this ISurfaceProperty surfaceProperty, string version)
+        public static string FromSurfaceProperty(this ISurfaceProperty surfaceProperty, string version, string lengthUnit)
         {
-            string midasSurfaceProperty = CreateSurfaceProfile(surfaceProperty as dynamic, version);
+            string midasSurfaceProperty = CreateSurfaceProfile(surfaceProperty as dynamic, version, lengthUnit);
 
             return midasSurfaceProperty;
         }
@@ -42,7 +42,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty, string version)
+        private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty, string version, string lengthUnit)
         {
             if (bhomSurfaceProperty.Thickness == 0)
             {
@@ -56,11 +56,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                     case "8.8.5":
                         midasSurfaceProperty =
-                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + "," + bhomSurfaceProperty.Name + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
+                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + "," + bhomSurfaceProperty.Name + ",VALUE,Yes," +
+                        bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,Yes,0,0";
                         break;
                     default:
                         midasSurfaceProperty =
-                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + ",VALUE,Yes," + bhomSurfaceProperty.Thickness + ",0,Yes,0,0";
+                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + ",VALUE,Yes," +
+                        bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,Yes,0,0";
                         break;
                 }
 
@@ -70,7 +72,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateSurfaceProfile(LoadingPanelProperty bhomSurfaceProperty)
+        private static string CreateSurfaceProfile(LoadingPanelProperty bhomSurfaceProperty, string lengthUnit)
         {
             Engine.Reflection.Compute.RecordError("LoadingPanelProperty not supported in MidasCivil_Toolkit");
             return null;
@@ -78,7 +80,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateSurfaceProfile(Ribbed bhomSurfaceProperty)
+        private static string CreateSurfaceProfile(Ribbed bhomSurfaceProperty, string lengthUnit)
         {
             Engine.Reflection.Compute.RecordError("Ribbed not supported in MidasCivil_Toolkit");
             return null;
@@ -86,7 +88,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateSurfaceProfile(Waffle bhomSurfaceProperty)
+        private static string CreateSurfaceProfile(Waffle bhomSurfaceProperty, string lengthUnit)
         {
             Engine.Reflection.Compute.RecordError("Waffle not supported in MidasCivil_Toolkit");
             return null;
