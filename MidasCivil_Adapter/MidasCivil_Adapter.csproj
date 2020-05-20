@@ -186,6 +186,8 @@
     <Compile Include="Convert\Units\AreaToSI.cs" />
     <Compile Include="Convert\Units\AreaFromSI.cs" />
     <Compile Include="Convert\Units\AreaMomentOfInertiaFromSI.cs" />
+    <Compile Include="Convert\Units\PressureToSI.cs" />
+    <Compile Include="Convert\Units\PressureFromSI.cs" />
     <Compile Include="Convert\Units\VolumeToSI.cs" />
     <Compile Include="Convert\Units\VolumeFromSI.cs" />
     <Compile Include="Convert\Units\MomentFromSI.cs" />

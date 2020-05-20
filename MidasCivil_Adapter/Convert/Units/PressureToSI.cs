@@ -39,7 +39,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static double MomentToSI(this double moment, string forceUnit, string lengthUnit)
+        public static double PressureToSI(this double pressure, string forceUnit, string lengthUnit)
         {
             switch (forceUnit)
             {
@@ -49,17 +49,17 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "M":
                             break;
                         case "CM":
-                            moment.FromNewtonCentimetre();
+                            pressure.FromNewtonPerSquareCentimetre();
                             break;
                         case "MM":
-                            moment.FromNewtonMillimetre();
+                            pressure.FromNewtonPerMillimetre();
                             break;
                         case "FT":
-                            throw new Exception("No conversion method found for"+forceUnit+ " " +lengthUnit);
+                            throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "IN":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         default:
-                            Compute.RecordWarning("No length unit detected, MidasCivil moment unit assumed to be set to Newton-metres.Therefore no unit conversion will occur.");
+                            Compute.RecordWarning("No length unit detected, MidasCivil pressure unit assumed to be set to Newtons per square metre.Therefore no unit conversion will occur.");
                             break;
                     }
                     break;
@@ -67,13 +67,13 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
-                            moment.FromKilonewtonCentimetre();
+                            pressure.FromKilonewtonPerSquareMetre();
                             break;
                         case "CM":
-                            moment.FromKilonewtonCentimetre();
+                            pressure.FromKilonewtonPerSquareCentimetre();
                             break;
                         case "MM":
-                            moment.FromKilonewtonMillimetre();
+                            pressure.FromKilonewtonPerSquareMillimetre();
                             break;
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
@@ -81,7 +81,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.ToKilonewton();
+                            pressure.FromKilonewton();
                             break;
                     }
                     break;
@@ -89,13 +89,13 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
-                            moment.FromKilogramForceMetre();
+                            pressure.FromKilogramForcePerMetre();
                             break;
                         case "CM":
-                            moment.FromKilogramForceCentimetre();
+                            pressure.FromKilogramForcePerSquareCentimetre();
                             break;
                         case "MM":
-                            moment.FromKilogramForceMillimetre();
+                            pressure.FromKilogramForcePerSquareMillimetre();
                             break;
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
@@ -103,7 +103,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.ToKilogramForce();
+                            pressure.FromKilogramForce();
                             break;
                     }
                     break;
@@ -111,13 +111,13 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
-                            moment.FromTonneForceMetre();
+                            pressure.FromTonneForcePerSquareMetre();
                             break;
                         case "CM":
-                            moment.FromTonneForceCentimetre();
+                            pressure.FromTonneForcePerSquareCentimetre();
                             break;
                         case "MM":
-                            moment.FromTonneForceMillimetre();
+                            pressure.FromTonneForcePerSquareMillimetre();
                             break;
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
@@ -125,7 +125,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.FromTonneForce();
+                            pressure.FromTonneForce();
                             break;
                     }
                     break;
@@ -139,14 +139,14 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "MM":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "FT":
-                            moment.FromPoundForceFoot();
+                            pressure.FromPoundForcePerSquareFoot();
                             break;
                         case "IN":
-                            moment.FromPoundForceInch();
+                            pressure.FromPoundForcePerSquareInch();
                             break;
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.FromPoundForce();
+                            pressure.FromPoundForce();
                             break;
                     }
                     break;
@@ -160,14 +160,14 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "MM":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "FT":
-                            moment.FromKilopoundForceFoot();
+                            pressure.FromKilopoundForcePerSquareFoot();
                             break;
                         case "IN":
-                            moment.FromKilopoundForceInch();
+                            pressure.FromKilopoundForcePerSquareInch();
                             break;
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.FromKilopoundForce();
+                            pressure.FromKilopoundForce();
                             break;
                     }
                     break;
@@ -176,7 +176,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     break;
             }
 
-            return moment;
+            return pressure;
         }
 
         /***************************************************/
