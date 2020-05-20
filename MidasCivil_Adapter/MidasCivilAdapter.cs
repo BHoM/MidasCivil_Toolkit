@@ -158,7 +158,7 @@ namespace BH.Adapter.MidasCivil
                     catch(DirectoryNotFoundException)
                     {
                         Engine.Reflection.Compute.RecordWarning(
-                            "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius");
+                            "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                     }
                 }
             }

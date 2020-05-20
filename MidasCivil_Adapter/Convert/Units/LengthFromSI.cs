@@ -56,7 +56,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     length.ToInch();
                     break;
                 default:
-                    Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres");
+                    Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres. Therefore no unit conversion will occur. ");
                     break;
             }
 
