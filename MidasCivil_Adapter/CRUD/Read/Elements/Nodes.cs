@@ -52,7 +52,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (string node in nodesText)
             {
-                Node bhomNode = Adapter.Adapters.MidasCivil.Convert.ToNode(node, supports, supportAssignments, springAssignments);
+                Node bhomNode = Adapter.Adapters.MidasCivil.Convert.ToNode(node, supports, supportAssignments, springAssignments, lengthUnit);
                 int bhomID = System.Convert.ToInt32(bhomNode.CustomData[AdapterIdName]);
                 bhomNode.Tags = GetGroupAssignments(nodeGroups, bhomID);
                 bhomNodes.Add(bhomNode);

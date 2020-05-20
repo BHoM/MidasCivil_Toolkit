@@ -52,7 +52,7 @@ namespace BH.Adapter.MidasCivil
             {
                 AdapterIdName = "MidasCivil_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
 
-                BH.Adapter.Modules.Structure.ModuleLoader.LoadModules(this);
+                Modules.Structure.ModuleLoader.LoadModules(this);
 
                 AdapterComparers = new Dictionary<Type, object>
                 {

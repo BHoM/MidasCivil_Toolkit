@@ -31,14 +31,14 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromNode(this Node node)
+        public static string FromNode(this Node node, string lengthUnit)
         {
             string midasNode = 
                 (
                     node.CustomData[AdapterIdName].ToString() + "," +
-                    node.Position.X.ToString() + "," +
-                    node.Position.Y.ToString() + "," +
-                    node.Position.Z.ToString()
+                    node.Position.X.LengthFromSI(lengthUnit).ToString() + "," +
+                    node.Position.Y.LengthFromSI(lengthUnit).ToString() + "," +
+                    node.Position.Z.LengthFromSI(lengthUnit).ToString()
                 );
 
             return midasNode;
