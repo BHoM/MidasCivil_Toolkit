@@ -186,6 +186,14 @@
     <Compile Include="Convert\Units\AreaToSI.cs" />
     <Compile Include="Convert\Units\AreaFromSI.cs" />
     <Compile Include="Convert\Units\AreaMomentOfInertiaFromSI.cs" />
+    <Compile Include="Convert\Units\DeltaTemperatureToSI.cs" />
+    <Compile Include="Convert\Units\DensityFromSI.cs" />
+    <Compile Include="Convert\Units\DensityToSI.cs" />
+    <Compile Include="Convert\Units\DeltaTemperatureFromSI.cs" />
+    <Compile Include="Convert\Units\InverseTemperatureToSI.cs" />
+    <Compile Include="Convert\Units\InverseTemperatureFromSI.cs" />
+    <Compile Include="Convert\Units\TemperatureToSI.cs" />
+    <Compile Include="Convert\Units\TemperatureFromSI.cs" />
     <Compile Include="Convert\Units\PressureToSI.cs" />
     <Compile Include="Convert\Units\PressureFromSI.cs" />
     <Compile Include="Convert\Units\VolumeToSI.cs" />
