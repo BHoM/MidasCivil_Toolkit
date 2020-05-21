@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (IMaterialFragment material in materials)
             {
-                midasMaterials.Add(Adapter.Adapters.MidasCivil.Convert.FromMaterial(material));
+                midasMaterials.Add(Adapter.Adapters.MidasCivil.Convert.FromMaterial(material, forceUnit, lengthUnit, temperatureUnit));
             }
 
             File.AppendAllLines(path, midasMaterials);
