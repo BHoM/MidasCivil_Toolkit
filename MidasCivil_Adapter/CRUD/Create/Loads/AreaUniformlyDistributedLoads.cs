@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasPressureLoads = new List<string>();
                 string FEMeshLoadPath = CreateSectionFile(areaUniformlyDistributedLoad.Loadcase.Name + "\\PRESSURE");
-                string midasLoadGroup = Adapter.Adapters.MidasCivil.Convert.FromLoadGroup(areaUniformlyDistributedLoad);
+                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(areaUniformlyDistributedLoad);
 
                 List<IAreaElement> assignedElements = areaUniformlyDistributedLoad.Objects.Elements;
 

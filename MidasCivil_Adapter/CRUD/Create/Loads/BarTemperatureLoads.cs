@@ -41,7 +41,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasTemperatureLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barTemperatureLoad.Loadcase.Name + "\\ELTEMPER");
-                string midasLoadGroup = Adapter.Adapters.MidasCivil.Convert.FromLoadGroup(barTemperatureLoad);
+                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barTemperatureLoad);
 
                 List<Bar> assignedElements = barTemperatureLoad.Objects.Elements;
 

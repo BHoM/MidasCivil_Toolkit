@@ -41,7 +41,7 @@ namespace BH.Adapter.MidasCivil
                 List<string> midasGravityLoads = new List<string>();
                 string gravityLoadPath = CreateSectionFile(gravityLoad.Loadcase.Name + "\\SELFWEIGHT");
 
-                string midasLoadGroup = Adapter.Adapters.MidasCivil.Convert.FromLoadGroup(gravityLoad);
+                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(gravityLoad);
 
                 midasGravityLoads.AddRange(Adapter.Adapters.MidasCivil.Convert.FromGravityLoad(gravityLoad));
 

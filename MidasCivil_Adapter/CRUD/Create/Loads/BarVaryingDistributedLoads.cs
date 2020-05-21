@@ -42,7 +42,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barVaryingDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
-                string midasLoadGroup = Adapter.Adapters.MidasCivil.Convert.FromLoadGroup(barVaryingDistributedLoad);
+                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barVaryingDistributedLoad);
 
                 List<string> assignedBars = barVaryingDistributedLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
 

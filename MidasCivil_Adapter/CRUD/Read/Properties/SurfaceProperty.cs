@@ -62,7 +62,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else if (type == "VALUE")
                 {
-                    bhomSurfaceProperty = Adapter.Adapters.MidasCivil.Convert.ToSurfaceProperty(surfaceProperty, midasCivilVersion, lengthUnit);
+                    bhomSurfaceProperty = Adapters.MidasCivil.Convert.ToSurfaceProperty(surfaceProperty, midasCivilVersion, lengthUnit);
                     bhomSurfaceProperties.Add(bhomSurfaceProperty);
                 }
             }

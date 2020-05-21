@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (string link in linkText)
             {
-                RigidLink bhomRigidLink = Adapter.Adapters.MidasCivil.Convert.ToRigidLink(link, nodeDictionary, count);
+                RigidLink bhomRigidLink = Adapters.MidasCivil.Convert.ToRigidLink(link, nodeDictionary, count);
                 bhomRigidLinks.Add(bhomRigidLink);
 
                 if (string.IsNullOrWhiteSpace(link.Split(',')[3].Trim()))
