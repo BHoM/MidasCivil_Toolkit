@@ -68,7 +68,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Adapter.Adapters.MidasCivil.Convert.FromBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Force"));
+                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Force"));
                             }
                         }
                         else
@@ -77,7 +77,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Adapter.Adapters.MidasCivil.Convert.FromBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Moment"));
+                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarUniformlyDistributedLoad(barUniformlyDistributedLoad, assignedBar, "Moment"));
                             }
                         }
 

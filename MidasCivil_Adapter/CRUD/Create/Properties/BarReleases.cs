@@ -44,7 +44,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(release.Name);
                     CompareGroup(midasBoundaryGroup, boundaryGroupPath);
-                    midasBarReleases.AddRange(Adapter.Adapters.MidasCivil.Convert.FromBarRelease(release));
+                    midasBarReleases.AddRange(Adapters.MidasCivil.Convert.FromBarRelease(release));
                 }
             }
 
