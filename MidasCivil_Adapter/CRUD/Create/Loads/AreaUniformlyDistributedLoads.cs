@@ -65,7 +65,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedFEMesh in assignedFEMeshes)
                             {
-                                midasPressureLoads.Add(Adapter.Adapters.MidasCivil.Convert.FromAreaUniformlyDistributedLoad(areaUniformlyDistributedLoad, assignedFEMesh));
+                                midasPressureLoads.Add(Adapters.MidasCivil.Convert.FromAreaUniformlyDistributedLoad(areaUniformlyDistributedLoad, assignedFEMesh, forceUnit, lengthUnit));
                             }
                     }
                 }

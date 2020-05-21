@@ -30,11 +30,11 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromAreaTemperatureLoad(this AreaTemperatureLoad femeshLoad, string assignedFEMesh)
+        public static string FromAreaTemperatureLoad(this AreaTemperatureLoad femeshLoad, string assignedFEMesh, string temperatureUnit)
         {
             string midasFEMeshLoad = null;
 
-            midasFEMeshLoad = assignedFEMesh + "," + femeshLoad.TemperatureChange.ToString() + "," + femeshLoad.Name;
+            midasFEMeshLoad = assignedFEMesh + "," + femeshLoad.TemperatureChange.DeltaTemperatureFromSI(temperatureUnit).ToString() + "," + femeshLoad.Name;
 
             return midasFEMeshLoad;
         }

@@ -54,7 +54,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedBar in assignedBars)
                 {
-                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromBarTemperatureLoad(barTemperatureLoad, assignedBar));
+                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromBarTemperatureLoad(barTemperatureLoad, assignedBar, temperatureUnit));
                 }
 
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);

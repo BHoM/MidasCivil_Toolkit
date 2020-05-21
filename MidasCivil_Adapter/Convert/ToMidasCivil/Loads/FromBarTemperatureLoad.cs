@@ -30,11 +30,11 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromBarTemperatureLoad(this BarTemperatureLoad barLoad, string assignedBar)
+        public static string FromBarTemperatureLoad(this BarTemperatureLoad barLoad, string assignedBar, string temperatureUnit)
         {
             string midasBarLoad = null;
 
-            midasBarLoad = assignedBar + "," + barLoad.TemperatureChange.ToString() + "," + barLoad.Name;
+            midasBarLoad = assignedBar + "," + barLoad.TemperatureChange.TemperatureFromSI(temperatureUnit).ToString() + "," + barLoad.Name;
 
             return midasBarLoad;
         }

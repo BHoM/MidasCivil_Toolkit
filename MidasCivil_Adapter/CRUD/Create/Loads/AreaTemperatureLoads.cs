@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
             {
                 List<string> midasTemperatureLoads = new List<string>();
                 string FEMeshLoadPath = CreateSectionFile(areaTemperatureLoad.Loadcase.Name + "\\ELTEMPER");
-                string midasLoadGroup = Adapter.Adapters.MidasCivil.Convert.FromLoadGroup(areaTemperatureLoad);
+                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(areaTemperatureLoad);
 
                 List<IAreaElement> assignedElements = areaTemperatureLoad.Objects.Elements;
 
@@ -52,7 +52,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedFEMesh in assignedFEMeshes)
                 {
-                    midasTemperatureLoads.Add(Adapter.Adapters.MidasCivil.Convert.FromAreaTemperatureLoad(areaTemperatureLoad, assignedFEMesh));
+                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromAreaTemperatureLoad(areaTemperatureLoad, assignedFEMesh, temperatureUnit));
                 }
 
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
