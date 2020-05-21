@@ -79,7 +79,7 @@ namespace BH.Adapter.MidasCivil
 
                             AreaUniformlyDistributedLoad bhomAreaUniformlyDistributedLoad =
                                 Adapter.Adapters.MidasCivil.Convert.ToAreaUniformlyDistributedLoad(
-                                    distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i);
+                                    distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i, forceUnit, lengthUnit);
 
                             bhomAreaUniformlyDistributedLoads.Add(bhomAreaUniformlyDistributedLoad);
 

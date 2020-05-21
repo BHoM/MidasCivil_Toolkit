@@ -28,7 +28,8 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static BarTemperatureLoad ToBarTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
+        public static BarTemperatureLoad ToBarTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase,
+            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count, string temperatureUnit)
         {
             /***************************************************/
             /**** Public Methods                            ****/
@@ -40,17 +41,17 @@ namespace BH.Adapter.Adapters.MidasCivil
             Loadcase bhomLoadcase;
             loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
 
+            Bar bhomAssociatedBar;
             foreach (string associatedFEMesh in associatedFEMeshes)
             {
                 if (barDictionary.ContainsKey(associatedFEMesh))
                 {
-                    Bar bhomAssociatedBar;
                     barDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedBar);
                     bhomAssociatedBars.Add(bhomAssociatedBar);
                 }
             }
 
-            double temperature = double.Parse(delimitted[0].Trim());
+            double temperature = double.Parse(delimitted[0].Trim()).DeltaTemperatureToSI(temperatureUnit);
 
             string name;
 

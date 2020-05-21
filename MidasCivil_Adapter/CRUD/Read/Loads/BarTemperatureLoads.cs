@@ -83,7 +83,7 @@ namespace BH.Adapter.MidasCivil
 
                             BarTemperatureLoad bhomBarTemperatureLoad =
                                 Adapter.Adapters.MidasCivil.Convert.ToBarTemperatureLoad(
-                                    distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i);
+                                    distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i, temperatureUnit);
 
                             if (bhomBarTemperatureLoad != null)
                                 bhomBarTemperatureLoads.Add(bhomBarTemperatureLoad);

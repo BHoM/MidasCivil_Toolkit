@@ -59,7 +59,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 name = delimitted[4].Trim();
             }
 
-            GravityLoad bhomGravityLoad = BH.Engine.Structure.Create.GravityLoad(bhomLoadcase, direction, objects, name);
+            GravityLoad bhomGravityLoad = Engine.Structure.Create.GravityLoad(bhomLoadcase, direction, objects, name);
             bhomGravityLoad.CustomData[AdapterIdName] = bhomGravityLoad.Name;
 
             return bhomGravityLoad;

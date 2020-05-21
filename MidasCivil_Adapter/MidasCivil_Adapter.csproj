@@ -190,8 +190,12 @@
     <Compile Include="Convert\Units\DensityFromSI.cs" />
     <Compile Include="Convert\Units\DensityToSI.cs" />
     <Compile Include="Convert\Units\DeltaTemperatureFromSI.cs" />
+    <Compile Include="Convert\Units\MomentPerLengthFromSI.cs" />
+    <Compile Include="Convert\Units\MomentPerLengthToSI.cs" />
+    <Compile Include="Convert\Units\ForcePerLengthToSI.cs" />
     <Compile Include="Convert\Units\InverseTemperatureToSI.cs" />
     <Compile Include="Convert\Units\InverseTemperatureFromSI.cs" />
+    <Compile Include="Convert\Units\ForcePerLengthFromSI.cs" />
     <Compile Include="Convert\Units\TemperatureToSI.cs" />
     <Compile Include="Convert\Units\TemperatureFromSI.cs" />
     <Compile Include="Convert\Units\PressureToSI.cs" />

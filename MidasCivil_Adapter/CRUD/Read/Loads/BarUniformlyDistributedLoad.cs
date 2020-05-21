@@ -100,7 +100,7 @@ namespace BH.Adapter.MidasCivil
 
                             BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
                                 Adapter.Adapters.MidasCivil.Convert.ToBarUniformlyDistributedLoad(
-                                    distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i);
+                                    distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i, forceUnit, lengthUnit);
                             bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
 
 
