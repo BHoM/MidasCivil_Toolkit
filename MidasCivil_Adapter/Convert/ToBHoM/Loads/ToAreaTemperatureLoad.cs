@@ -28,6 +28,10 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static AreaTemperatureLoad ToAreaTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase,
             Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count, string temperatureUnit)
         {
@@ -72,6 +76,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                 return null;
             }
         }
+
+        /***************************************************/
 
     }
 }

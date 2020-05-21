@@ -29,13 +29,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static BarVaryingDistributedLoad ToBarVaryingDistributedLoad(string barVaryingDistributedLoad, List<string> associatedBars, string loadcase,
             Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count, string forceUnit, string lengthUnit)
         {
-            /***************************************************/
-            /**** Public Methods                            ****/
-            /***************************************************/
-
             string[] delimitted = barVaryingDistributedLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
 

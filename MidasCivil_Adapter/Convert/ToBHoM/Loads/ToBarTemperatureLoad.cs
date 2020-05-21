@@ -28,13 +28,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static BarTemperatureLoad ToBarTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase,
             Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count, string temperatureUnit)
         {
-            /***************************************************/
-            /**** Public Methods                            ****/
-            /***************************************************/
-
             string[] delimitted = temperatureLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
 

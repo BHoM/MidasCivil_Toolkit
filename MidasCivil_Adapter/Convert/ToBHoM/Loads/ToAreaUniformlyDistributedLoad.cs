@@ -29,6 +29,10 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributedLoad(string areaUniformlyDistributedLoad, List<string> associatedFEMeshes,
             string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count, string forceUnit, string lengthUnit)
         {
@@ -104,6 +108,8 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             return bhomAreaUniformlyDistributedLoad;
         }
+
+        /***************************************************/
 
     }
 }

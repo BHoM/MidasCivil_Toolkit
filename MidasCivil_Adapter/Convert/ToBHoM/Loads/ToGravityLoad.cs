@@ -31,12 +31,12 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static GravityLoad ToGravityLoad(List<BHoMObject> objects, string gravityLoad, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, int count)
         {
-            /***************************************************/
-            /**** Public Methods                            ****/
-            /***************************************************/
-
             string[] delimitted = gravityLoad.Split(',');
 
             Loadcase bhomLoadcase;

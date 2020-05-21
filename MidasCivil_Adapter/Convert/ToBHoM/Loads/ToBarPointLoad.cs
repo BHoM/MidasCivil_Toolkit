@@ -29,6 +29,10 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static BarPointLoad ToBarPointLoad(string barPointLoad, List<string> associatedBars, string loadcase,
             Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count, string forceUnit, string lengthUnit)
         {
@@ -119,6 +123,9 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             return bhomBarPointLoad;
         }
+
+        /***************************************************/
+
     }
 }
 
