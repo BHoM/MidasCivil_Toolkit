@@ -102,11 +102,11 @@ namespace BH.Adapter.MidasCivil
             string filePath = directory + "\\Plate Stress(L).xls";
             string csvPath = ExcelToCsv(filePath);
             List<string> meshStressText = File.ReadAllLines(csvPath).ToList();
-            List<MeshForce> meshStresses = new List<MeshForce>();
+            List<MeshStress> meshStresses = new List<MeshStress>();
             for (int i = 16; i < meshStressText.Count; i++)
             {
                 List<string> meshStress = meshStressText[i].Split(',').ToList();
-                meshStresses.Add(Convert.ToMeshForce(meshStress));
+                meshStresses.Add(Convert.ToMeshStress(meshStress));
             }
 
             return meshStresses;
