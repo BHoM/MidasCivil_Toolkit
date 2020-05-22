@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
         /**** Private method - Read override            ****/
         /***************************************************/
 
-        private IEnumerable<IResult> ReadResults(MeshResultRequest request, ActionConfig actionConfig)
+        public IEnumerable<IResult> ReadResults(MeshResultRequest request, ActionConfig actionConfig)
         {
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);
@@ -103,7 +103,7 @@ namespace BH.Adapter.MidasCivil
             string csvPath = ExcelToCsv(filePath);
             List<string> meshStressText = File.ReadAllLines(csvPath).ToList();
             List<MeshStress> meshStresses = new List<MeshStress>();
-            for (int i = 16; i < meshStressText.Count; i++)
+            for (int i = 10; i < meshStressText.Count; i++)
             {
                 List<string> meshStress = meshStressText[i].Split(',').ToList();
                 meshStresses.Add(Convert.ToMeshStress(meshStress));
