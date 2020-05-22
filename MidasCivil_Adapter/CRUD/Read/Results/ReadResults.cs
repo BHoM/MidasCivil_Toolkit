@@ -34,6 +34,7 @@ using BH.oM.Structure.Requests;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Workbook = Microsoft.Office.Interop.Excel.Workbook;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
+using Microsoft.Office.Interop.Excel;
 using System.Linq;
 
 namespace BH.Adapter.MidasCivil
@@ -210,7 +211,15 @@ namespace BH.Adapter.MidasCivil
                     Application excel = new Application();
                     Workbook xlsFile = excel.Workbooks.Open(path);
                     Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)xlsFile.Sheets[1];
-
+                    Range sheetRange = sheet.Range["A1:X999"];
+                        foreach(Range cell in sheetRange)
+                        {
+                            if (cell.MergeCells) { }
+                        Range cellarea = cell.MergeArea;
+                            cellarea.UnMerge();
+                            cellarea.Formula = cell.Formula();
+                        }
+                                   
                     sheet.SaveAs(
                         csvPath,
                         Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV,
