@@ -98,7 +98,18 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
         {
-            return null;
+            /***************************************************/
+            string filePath = directory + "\\Plate Stress(L).xls";
+            string csvPath = ExcelToCsv(filePath);
+            List<string> meshStressText = File.ReadAllLines(csvPath).ToList();
+            List<MeshForce> meshStresses = new List<MeshForce>();
+            for (int i = 16; i < meshStressText.Count; i++)
+            {
+                List<string> meshStress = meshStressText[i].Split(',').ToList();
+                meshStresses.Add(Convert.ToMeshForce(meshStress));
+            }
+
+            return meshStresses;
         }
 
         private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
