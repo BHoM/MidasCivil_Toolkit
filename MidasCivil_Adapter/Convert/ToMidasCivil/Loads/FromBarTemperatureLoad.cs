@@ -34,7 +34,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             string midasBarLoad = null;
 
-            midasBarLoad = assignedBar + "," + barLoad.TemperatureChange.TemperatureFromSI(temperatureUnit).ToString() + "," + barLoad.Name;
+            midasBarLoad = assignedBar + "," + barLoad.TemperatureChange.DeltaTemperatureFromSI(temperatureUnit).ToString() + "," + barLoad.Name;
 
             return midasBarLoad;
         }

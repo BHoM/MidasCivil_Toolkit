@@ -40,9 +40,9 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             string direction = FromVector(femeshLoad.Pressure);
             string midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
-                                                                    ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) +
-                                                                    ", " + FromVectorDirection(femeshLoad.Pressure, direction).PressureFromSI(forceUnit, lengthUnit).ToString() +
-                                                                    ", 0, 0, 0, 0, " + femeshLoad.Name;
+                                    ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) + ", " +
+                                    FromVectorDirection(femeshLoad.Pressure, direction).PressureFromSI(forceUnit, lengthUnit).ToString() +
+                                    ", 0, 0, 0, 0, " + femeshLoad.Name;
 
             return midasFEMeshLoad;
         }
