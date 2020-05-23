@@ -89,6 +89,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
+                            moment.ToKilogramForceMetre();
                             break;
                         case "CM":
                             moment.ToKilogramForceCentimetre();

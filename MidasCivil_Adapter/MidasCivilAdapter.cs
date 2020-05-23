@@ -149,11 +149,11 @@ namespace BH.Adapter.MidasCivil
 
                     try
                     {
-                        List<string> units = GetSectionText("UNITS");
-                        forceUnit = units[0].Split(',')[0].Trim();
-                        lengthUnit = units[1].Split(',')[0].Trim();
-                        heatUnit = units[2].Split(',')[0].Trim();
-                        temperatureUnit = units[3].Split(',')[0].Trim();
+                        List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
+                        forceUnit = units[0].Trim();
+                        lengthUnit = units[1].Trim();
+                        heatUnit = units[2].Trim();
+                        temperatureUnit = units[3].Trim();
                     }
                     catch(DirectoryNotFoundException)
                     {

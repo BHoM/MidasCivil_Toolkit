@@ -49,7 +49,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "M":
                             break;
                         case "CM":
-                            throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
+                            forcePerLength.ToCentimetre();
+                            break;
                         case "MM":
                             forcePerLength.FromNewtonPerMillimetre();
                             break;
@@ -69,7 +70,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                             forcePerLength.FromKilonewtonPerMetre();
                             break;
                         case "CM":
-                            throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
+                            forcePerLength.FromKilonewton().ToCentimetre();
+                            break;
                         case "MM":
                             forcePerLength.FromKilonewtonPerMillimetre();
                             break;
@@ -90,9 +92,11 @@ namespace BH.Adapter.Adapters.MidasCivil
                             forcePerLength.FromKilogramForcePerMetre();
                             break;
                         case "CM":
-                            throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
+                            forcePerLength.FromKilogramForce().ToCentimetre();
+                            break;
                         case "MM":
-                            throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
+                            forcePerLength.FromKilogramForce().ToMillimetre();
+                            break;
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "IN":
@@ -107,11 +111,14 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
-                            throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
+                            forcePerLength.FromTonneForce();
+                            break;
                         case "CM":
-                            throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
+                            forcePerLength.FromTonneForce().ToCentimetre();
+                            break;
                         case "MM":
-                            throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
+                            forcePerLength.FromTonneForce().ToMillimetre();
+                            break;
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "IN":
@@ -127,7 +134,6 @@ namespace BH.Adapter.Adapters.MidasCivil
                     {
                         case "M":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
-                            break;
                         case "CM":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "MM":
@@ -157,7 +163,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                             forcePerLength.FromKilopoundForcePerFoot();
                             break;
                         case "IN":
-                            throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
+                            forcePerLength.FromKilopoundForce().ToInch();
+                            break;
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
                             forcePerLength.FromKilopoundForce();
