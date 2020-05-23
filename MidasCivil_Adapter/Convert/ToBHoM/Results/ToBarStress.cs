@@ -24,6 +24,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.Results;
 using System.Linq;
 using System.Collections.Generic;
+using BH.Adapter.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -33,7 +34,7 @@ namespace BH.Adapter.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static BarStress ToBarStress(this List<string> delimitted)
+        public static BarStress ToBarStress(this List<string> delimitted, string forceUnit, string lengthUnit)
         {
             double position = GetBarResultPosition(delimitted[7]);
 
@@ -41,13 +42,13 @@ namespace BH.Adapter.MidasCivil
             {
                 ObjectId = System.Convert.ToInt32(delimitted[2]),
                 ResultCase = delimitted[3],
-                Axial = System.Convert.ToDouble(delimitted[10]),
-                ShearY = System.Convert.ToDouble(delimitted[11]),
-                ShearZ = System.Convert.ToDouble(delimitted[12]),
-                BendingY_Bot = System.Convert.ToDouble(delimitted[14]),
-                BendingY_Top = System.Convert.ToDouble(delimitted[13]),
-                BendingZ_Bot = System.Convert.ToDouble(delimitted[16]),
-                BendingZ_Top = System.Convert.ToDouble(delimitted[15]),
+                Axial = System.Convert.ToDouble(delimitted[10]).ForceToSI(forceUnit),
+                ShearY = System.Convert.ToDouble(delimitted[11]).ForceToSI(forceUnit),
+                ShearZ = System.Convert.ToDouble(delimitted[12]).ForceToSI(forceUnit),
+                BendingY_Bot = System.Convert.ToDouble(delimitted[14]).MomentToSI(forceUnit, lengthUnit),
+                BendingY_Top = System.Convert.ToDouble(delimitted[13]).MomentToSI(forceUnit, lengthUnit),
+                BendingZ_Bot = System.Convert.ToDouble(delimitted[16]).MomentToSI(forceUnit, lengthUnit),
+                BendingZ_Top = System.Convert.ToDouble(delimitted[15]).MomentToSI(forceUnit, lengthUnit),
                 Position = position,
                 Divisions = 0
             };

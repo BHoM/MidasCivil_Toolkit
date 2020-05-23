@@ -33,18 +33,18 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static NodeReaction ToNodeReaction(this List<string> delimitted)
+        public static NodeReaction ToNodeReaction(this List<string> delimitted, string forceUnit, string lengthUnit)
         {
             NodeReaction nodeReaction = new NodeReaction()
             {
                 ObjectId = System.Convert.ToInt32(delimitted[2]),
                 ResultCase = delimitted[3],
-                FX = System.Convert.ToDouble(delimitted[7]),
-                FY = System.Convert.ToDouble(delimitted[8]),
-                FZ = System.Convert.ToDouble(delimitted[9]),
-                MX = System.Convert.ToDouble(delimitted[10]),
-                MY = System.Convert.ToDouble(delimitted[11]),
-                MZ = System.Convert.ToDouble(delimitted[12])
+                FX = System.Convert.ToDouble(delimitted[7]).ForceToSI(forceUnit),
+                FY = System.Convert.ToDouble(delimitted[8]).ForceToSI(forceUnit),
+                FZ = System.Convert.ToDouble(delimitted[9]).ForceToSI(forceUnit),
+                MX = System.Convert.ToDouble(delimitted[10]).MomentToSI(forceUnit, lengthUnit),
+                MY = System.Convert.ToDouble(delimitted[11]).MomentToSI(forceUnit, lengthUnit),
+                MZ = System.Convert.ToDouble(delimitted[12]).MomentToSI(forceUnit, lengthUnit)
             };
 
             return nodeReaction;

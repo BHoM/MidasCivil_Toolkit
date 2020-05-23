@@ -25,6 +25,7 @@ using BH.oM.Structure.Results;
 
 using System.Linq;
 using System.Collections.Generic;
+using BH.Adapter.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -34,19 +35,19 @@ namespace BH.Adapter.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static BarForce ToBarForce(this List<string> delimitted)
+        public static BarForce ToBarForce(this List<string> delimitted, string forceUnit, string lengthUnit)
         {
             double position = GetBarResultPosition(delimitted[8]);
             BarForce barforce = new BarForce()
             {
                 ObjectId = System.Convert.ToInt32(delimitted[3]),
                 ResultCase = delimitted[4],
-                FX = System.Convert.ToDouble(delimitted[11]),
-                FY = System.Convert.ToDouble(delimitted[12]),
-                FZ = System.Convert.ToDouble(delimitted[13]),
-                MX = System.Convert.ToDouble(delimitted[14]),
-                MY = System.Convert.ToDouble(delimitted[15]),
-                MZ = System.Convert.ToDouble(delimitted[16]),
+                FX = System.Convert.ToDouble(delimitted[11]).ForceToSI(forceUnit),
+                FY = System.Convert.ToDouble(delimitted[12]).ForceToSI(forceUnit),
+                FZ = System.Convert.ToDouble(delimitted[13]).ForceToSI(forceUnit),
+                MX = System.Convert.ToDouble(delimitted[14]).MomentToSI(forceUnit, lengthUnit),
+                MY = System.Convert.ToDouble(delimitted[15]).MomentToSI(forceUnit, lengthUnit),
+                MZ = System.Convert.ToDouble(delimitted[16]).MomentToSI(forceUnit, lengthUnit),
                 Position = position
             };
 
