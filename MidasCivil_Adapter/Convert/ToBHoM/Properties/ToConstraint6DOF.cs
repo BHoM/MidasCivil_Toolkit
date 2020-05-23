@@ -28,7 +28,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static Constraint6DOF ToConstraint6DOF(this string support, string version)
+        public static Constraint6DOF ToConstraint6DOF(this string support, string version, string forceUnit, string lengthUnit)
         {
             List<string> delimitted = support.Split(',').ToList();
             string supportName;
@@ -67,7 +67,6 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 else
                 {
-
                     switch(version)
                     {
                         case "8.8.5":
@@ -80,7 +79,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 }
                                 else if(delimitted[i].Trim() == "NO")
                                 {
-                                    double spring = double.Parse(delimitted[i+6]);
+                                    double spring = double.Parse(delimitted[i+6]).ForcePerLengthToSI(forceUnit, lengthUnit);
                                     if (spring == 1E+016 || spring == 100000)
                                     {
                                         fixity.Add(true);
@@ -106,7 +105,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 }
                                 else
                                 {
-                                    double spring = double.Parse(delimitted[i]);
+                                    double spring = double.Parse(delimitted[i]).ForcePerLengthToSI(forceUnit, lengthUnit);
                                     if (spring == 1E+016 || spring == 100000)
                                     {
                                         fixity.Add(true);

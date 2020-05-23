@@ -39,10 +39,12 @@ namespace BH.Adapter.Adapters.MidasCivil
             switch (version)
             {
                 case "8.8.5":
-                    constantThickness = Engine.Structure.Create.ConstantThickness(System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit), null, split[1]);
+                    constantThickness = Engine.Structure.Create.ConstantThickness(
+                        System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit), null, split[1]);
                     break;
                 default:
-                    constantThickness = Engine.Structure.Create.ConstantThickness(System.Convert.ToDouble(split[3].Trim()).LengthToSI(lengthUnit));
+                    constantThickness = Engine.Structure.Create.ConstantThickness(
+                        System.Convert.ToDouble(split[3].Trim()).LengthToSI(lengthUnit));
                     constantThickness.Name = "t = " + split[3].Trim();
                     break;
             }

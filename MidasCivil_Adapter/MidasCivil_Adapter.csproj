@@ -143,7 +143,6 @@
     <Compile Include="Convert\ToBHoM\Loads\ToLoadNature.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToPointForce.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToBarRelease.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToConcreteSection.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToConstraint6DOF.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToMaterials.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToProfile.cs" />

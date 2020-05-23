@@ -35,7 +35,8 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static GravityLoad ToGravityLoad(List<BHoMObject> objects, string gravityLoad, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, int count)
+        public static GravityLoad ToGravityLoad(List<BHoMObject> objects, string gravityLoad, string loadcase, 
+            Dictionary<string, Loadcase> loadcaseDictionary, int count)
         {
             string[] delimitted = gravityLoad.Split(',');
 

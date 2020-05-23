@@ -69,7 +69,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 //14, DBUSER    , USER - CIRCLE       , CC, 0, 0, 0, 0, 0, 0, YES, NO, SR , 2, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0
                 bhomSection = Create.GenericSectionFromProfile(
-                    Engine.Structure.Create.CircleProfile(System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit)), null);
+                    Create.CircleProfile(System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit)), null);
 
             }
             else if (shape == "H")
@@ -93,7 +93,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 //   12, DBUSER    , USER-CHANNEL      , CC, 0, 0, 0, 0, 0, 0, YES, NO, C  , 2, 0.9, 0.5, 0.02, 0.02, 0.5, 0.02, 0, 0, 0, 0
 
-                bhomSection = Create.GenericSectionFromProfile(ToProfile(sectionProperty,lengthUnit), null);
+                bhomSection = Create.GenericSectionFromProfile(ToProfile(sectionProperty, lengthUnit), null);
 
 
                 Engine.Reflection.Compute.RecordWarning(bhomSection.SectionProfile.GetType().ToString() +
@@ -102,7 +102,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             else if (shape == "L")
             {
                 //    1, DBUSER    , USERANGLE         , CC, 0, 0, 0, 0, 0, 0, YES, NO, L  , 2, 0.5, 0.25, 0.01, 0.03, 0, 0, 0, 0, 0, 0
-                bhomSection = Engine.Structure.Create.GenericSectionFromProfile(
+                bhomSection = Create.GenericSectionFromProfile(
                         ToProfile(sectionProperty, lengthUnit), null);
             }
             else
@@ -128,10 +128,9 @@ namespace BH.Adapter.Adapters.MidasCivil
             string[] split2 = sectionProperty2.Split(',');
             string[] split3 = sectionProperty3.Split(',');
 
-            double area = System.Convert.ToDouble(split1[0]);
-
+            double area = System.Convert.ToDouble(split1[0]).AreaToSI(lengthUnit);
             double j = System.Convert.ToDouble(split1[3]).AreaMomentOfInertiaToSI(lengthUnit);
-            double iz = System.Convert.ToDouble(split1[5]).AreaMomentOfInertiaToSI(lengthUnit); 
+            double iz = System.Convert.ToDouble(split1[5]).AreaMomentOfInertiaToSI(lengthUnit);
             double iy = System.Convert.ToDouble(split1[4]).AreaMomentOfInertiaToSI(lengthUnit);
             double iw = bhomProfile.IWarpingConstant().AreaMomentOfInertiaToSI(lengthUnit);
             double wply = System.Convert.ToDouble(split3[8]).VolumeToSI(lengthUnit);

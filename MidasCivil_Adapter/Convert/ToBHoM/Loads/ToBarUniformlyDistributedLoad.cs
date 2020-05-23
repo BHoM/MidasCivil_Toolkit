@@ -34,8 +34,9 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static BarUniformlyDistributedLoad ToBarUniformlyDistributedLoad(string barUniformlyDistributedLoad, List<string> associatedBars, string loadcase,
-            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count, string forceUnit, string lengthUnit)
+        public static BarUniformlyDistributedLoad ToBarUniformlyDistributedLoad(string barUniformlyDistributedLoad, List<string> associatedBars,
+            string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary,
+            int count, string forceUnit, string lengthUnit)
         {
             string[] delimitted = barUniformlyDistributedLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
@@ -116,12 +117,14 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             if (loadType == "UNILOAD")
             {
-                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(bhomLoadcase, bhomAssociatedBars, loadVector, null, axis, loadProjection, name);
+                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    bhomLoadcase, bhomAssociatedBars, loadVector, null, axis, loadProjection, name);
                 bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
             }
             else
             {
-                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(bhomLoadcase, bhomAssociatedBars, null, loadVector, axis, loadProjection, name);
+                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    bhomLoadcase, bhomAssociatedBars, null, loadVector, axis, loadProjection, name);
                 bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
             }
 

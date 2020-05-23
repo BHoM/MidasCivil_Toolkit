@@ -66,7 +66,8 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             if (bhomAssociatedFEMeshes.Count != 0)
             {
-                AreaTemperatureLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaTemperatureLoad(bhomLoadcase, temperature.DeltaTemperatureToSI(temperatureUnit),
+                AreaTemperatureLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaTemperatureLoad(
+                    bhomLoadcase, temperature.DeltaTemperatureToSI(temperatureUnit),
                     bhomAssociatedFEMeshes, LoadAxis.Global, false, name);
                 bhomAreaUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomAreaUniformlyDistributedLoad.Name;
                 return bhomAreaUniformlyDistributedLoad;
