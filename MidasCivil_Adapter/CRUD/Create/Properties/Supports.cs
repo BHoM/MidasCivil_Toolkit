@@ -51,7 +51,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if (MidasCivilAdapter.GetStiffnessVectorModulus(constraint6DOF) > 0)
                 {
-                    midasSprings.Add(Adapters.MidasCivil.Convert.FromSpring(constraint6DOF, midasCivilVersion));
+                    midasSprings.Add(Adapters.MidasCivil.Convert.FromSpring(constraint6DOF, midasCivilVersion, forceUnit, lengthUnit));
 
                 }
                 else
