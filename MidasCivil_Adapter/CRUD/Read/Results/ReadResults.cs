@@ -211,14 +211,6 @@ namespace BH.Adapter.MidasCivil
                     Application excel = new Application();
                     Workbook xlsFile = excel.Workbooks.Open(path);
                     Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)xlsFile.Sheets[1];
-                    Range sheetRange = sheet.Range["A1:X999"];
-                        foreach(Range cell in sheetRange)
-                        {
-                            if (cell.MergeCells) { }
-                        Range cellarea = cell.MergeArea;
-                            cellarea.UnMerge();
-                            cellarea.Formula = cell.Formula();
-                        }
                                    
                     sheet.SaveAs(
                         csvPath,
