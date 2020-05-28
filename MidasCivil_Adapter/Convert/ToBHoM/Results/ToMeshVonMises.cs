@@ -37,13 +37,15 @@ namespace BH.Adapter.MidasCivil
         public static MeshVonMises ToMeshVonMises(this List<string> delimitted)
         {
             double LayerPosition = 1;
+            MeshResultLayer meshResultLayer = MeshResultLayer.Upper;
 
             if (delimitted[8].Contains("Bot"))
             {
                 LayerPosition = 0;
+                meshResultLayer = MeshResultLayer.Lower;
             }
             MeshVonMises MeshVonMises = new MeshVonMises(System.Convert.ToInt32(delimitted[2]), delimitted[7], 0,
-            delimitted[3], 0, MeshResultLayer.Middle, LayerPosition, MeshResultSmoothingType.None, null,0,0, System.Convert.ToDouble(delimitted[15])
+            delimitted[3], 0, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,0,0, System.Convert.ToDouble(delimitted[15])
             );
 
             return MeshVonMises;
