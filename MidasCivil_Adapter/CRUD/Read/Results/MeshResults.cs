@@ -111,7 +111,7 @@ namespace BH.Adapter.MidasCivil
             for (int i = 11; i < meshStressText.Count; i++)
             {
                 meshStress = meshStressText[i].Split(',').ToList();
-                InitialmeshStress= meshStressText[i-1].Split(',').ToList();
+                InitialmeshStress = meshStressText[i - 1].Split(',').ToList();
                 for (int j = 0; j < meshStress.Count; j++)
                 {
                     if (meshStress[2] == "")
@@ -121,6 +121,7 @@ namespace BH.Adapter.MidasCivil
                         meshStress[7] = InitialmeshStress[7];
                     }
                 }
+
                 meshStresses.Add(Convert.ToMeshStress(meshStress));
 
             }
@@ -135,15 +136,15 @@ namespace BH.Adapter.MidasCivil
             string csvPath = ExcelToCsv(filePath);
             List<string> meshVonMisesText = File.ReadAllLines(csvPath).ToList();
             List<MeshVonMises> meshVonMiseses = new List<MeshVonMises>();
-            
+
             List<string> meshVonMises = meshVonMisesText[10].Split(',').ToList();
-         List<string> InitialmeshVonMises = meshVonMises;
+            List<string> InitialmeshVonMises = meshVonMises;
             meshVonMiseses.Add(Convert.ToMeshVonMises(meshVonMises));
 
             for (int i = 11; i < meshVonMisesText.Count; i++)
             {
                 meshVonMises = meshVonMisesText[i].Split(',').ToList();
-                InitialmeshVonMises = meshVonMisesText[i-1].Split(',').ToList();
+                InitialmeshVonMises = meshVonMisesText[i - 1].Split(',').ToList();
                 for (int j = 0; j < meshVonMises.Count; j++)
                 {
                     if (meshVonMises[2] == "")
