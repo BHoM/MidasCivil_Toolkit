@@ -111,11 +111,14 @@ namespace BH.Adapter.MidasCivil
             for (int i = 11; i < meshStressText.Count; i++)
             {
                 meshStress = meshStressText[i].Split(',').ToList();
+                InitialmeshStress= meshStressText[i-1].Split(',').ToList();
                 for (int j = 0; j < meshStress.Count; j++)
                 {
-                    if (meshStress[j] == "")
+                    if (meshStress[2] == "")
                     {
-                        meshStress[j] = InitialmeshStress[j];
+                        meshStress[2] = InitialmeshStress[2];
+                        meshStress[3] = InitialmeshStress[3];
+                        meshStress[7] = InitialmeshStress[7];
                     }
                 }
                 meshStresses.Add(Convert.ToMeshStress(meshStress));
@@ -132,19 +135,22 @@ namespace BH.Adapter.MidasCivil
             string csvPath = ExcelToCsv(filePath);
             List<string> meshVonMisesText = File.ReadAllLines(csvPath).ToList();
             List<MeshVonMises> meshVonMiseses = new List<MeshVonMises>();
-
+            
             List<string> meshVonMises = meshVonMisesText[10].Split(',').ToList();
-            List<string> InitialmeshVonMises = meshVonMises;
+         List<string> InitialmeshVonMises = meshVonMises;
             meshVonMiseses.Add(Convert.ToMeshVonMises(meshVonMises));
 
             for (int i = 11; i < meshVonMisesText.Count; i++)
             {
                 meshVonMises = meshVonMisesText[i].Split(',').ToList();
+                InitialmeshVonMises = meshVonMisesText[i-1].Split(',').ToList();
                 for (int j = 0; j < meshVonMises.Count; j++)
                 {
-                    if (meshVonMises[j] == "")
+                    if (meshVonMises[2] == "")
                     {
-                        meshVonMises[j] = InitialmeshVonMises[j];
+                        meshVonMises[2] = InitialmeshVonMises[2];
+                        meshVonMises[7] = InitialmeshVonMises[7];
+                        meshVonMises[3] = InitialmeshVonMises[3];
                     }
                 }
 
