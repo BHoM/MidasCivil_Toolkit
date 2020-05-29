@@ -98,12 +98,54 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
         {
-            return null;
+            /***************************************************/
+            string filePath = directory + "\\Plate Stress(L).xls";
+            string csvPath = ExcelToCsv(filePath);
+            List<string> meshStressText = File.ReadAllLines(csvPath).ToList();
+            List<MeshStress> meshStresses = new List<MeshStress>();
+            List<string> initialmeshStress = new List<string>();
+
+            for (int i = 10; i < meshStressText.Count; i++)
+            {
+                List<string> meshStress = meshStressText[i].Split(',').ToList();
+                    if (meshStress[2] == "")
+                    {
+                        meshStress[2] = initialmeshStress[2];
+                        meshStress[3] = initialmeshStress[3];
+                        meshStress[7] = initialmeshStress[7];
+                    }
+                meshStresses.Add(Convert.ToMeshStress(meshStress));
+                initialmeshStress = meshStressText[i].Split(',').ToList();
+            }
+
+            return meshStresses;
         }
+        
+        /***************************************************/
 
         private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
         {
-            return null;
+            /***************************************************/
+            string filePath = directory + "\\Plate Stress(L).xls";
+            string csvPath = ExcelToCsv(filePath);
+            List<string> meshVonMisesText = File.ReadAllLines(csvPath).ToList();
+            List<MeshVonMises> meshVonMiseses = new List<MeshVonMises>();
+            List<string> initialmeshVonMises = new List<string>();
+
+            for (int i = 10; i < meshVonMisesText.Count; i++)
+            {
+               List<string> meshVonMises = meshVonMisesText[i].Split(',').ToList();
+                    if (meshVonMises[2] == "")
+                    {
+                        meshVonMises[2] = initialmeshVonMises[2];
+                        meshVonMises[7] = initialmeshVonMises[7];
+                        meshVonMises[3] = initialmeshVonMises[3];
+                    }
+                meshVonMiseses.Add(Convert.ToMeshVonMises(meshVonMises));
+                initialmeshVonMises = meshVonMisesText[i].Split(',').ToList();
+            }
+
+            return meshVonMiseses;
         }
 
         /***************************************************/

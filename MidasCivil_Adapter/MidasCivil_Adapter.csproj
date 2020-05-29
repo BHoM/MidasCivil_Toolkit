@@ -148,6 +148,8 @@
     <Compile Include="Convert\ToBHoM\Properties\ToProfile.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToSectionProperty.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToSurfaceProperty.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToMeshVonMises.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToMeshStress.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToBarForce.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToBarStress.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToMeshForce.cs" />
