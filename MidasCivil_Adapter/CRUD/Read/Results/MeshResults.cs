@@ -103,31 +103,25 @@ namespace BH.Adapter.MidasCivil
             string csvPath = ExcelToCsv(filePath);
             List<string> meshStressText = File.ReadAllLines(csvPath).ToList();
             List<MeshStress> meshStresses = new List<MeshStress>();
+            List<string> initialmeshStress = new List<string>();
 
-            List<string> meshStress = meshStressText[10].Split(',').ToList();
-            List<string> InitialmeshStress = meshStress;
-            meshStresses.Add(Convert.ToMeshStress(meshStress));
-
-            for (int i = 11; i < meshStressText.Count; i++)
+            for (int i = 10; i < meshStressText.Count; i++)
             {
-                meshStress = meshStressText[i].Split(',').ToList();
-                InitialmeshStress = meshStressText[i - 1].Split(',').ToList();
-                for (int j = 0; j < meshStress.Count; j++)
+                List<string> meshStress = meshStressText[i].Split(',').ToList();
+                if (meshStress[2] == "")
                 {
-                    if (meshStress[2] == "")
-                    {
-                        meshStress[2] = InitialmeshStress[2];
-                        meshStress[3] = InitialmeshStress[3];
-                        meshStress[7] = InitialmeshStress[7];
-                    }
+                    meshStress[2] = initialmeshStress[2];
+                    meshStress[3] = initialmeshStress[3];
+                    meshStress[7] = initialmeshStress[7];
                 }
-
                 meshStresses.Add(Convert.ToMeshStress(meshStress));
-
+                initialmeshStress = meshStressText[i].Split(',').ToList();
             }
 
             return meshStresses;
         }
+        
+        /***************************************************/
 
         private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
         {
@@ -136,26 +130,19 @@ namespace BH.Adapter.MidasCivil
             string csvPath = ExcelToCsv(filePath);
             List<string> meshVonMisesText = File.ReadAllLines(csvPath).ToList();
             List<MeshVonMises> meshVonMiseses = new List<MeshVonMises>();
+            List<string> InitialmeshVonMises = new List<string>();
 
-            List<string> meshVonMises = meshVonMisesText[10].Split(',').ToList();
-            List<string> InitialmeshVonMises = meshVonMises;
-            meshVonMiseses.Add(Convert.ToMeshVonMises(meshVonMises));
-
-            for (int i = 11; i < meshVonMisesText.Count; i++)
+            for (int i = 10; i < meshVonMisesText.Count; i++)
             {
-                meshVonMises = meshVonMisesText[i].Split(',').ToList();
-                InitialmeshVonMises = meshVonMisesText[i - 1].Split(',').ToList();
-                for (int j = 0; j < meshVonMises.Count; j++)
-                {
+               List<string> meshVonMises = meshVonMisesText[i].Split(',').ToList();
                     if (meshVonMises[2] == "")
                     {
                         meshVonMises[2] = InitialmeshVonMises[2];
                         meshVonMises[7] = InitialmeshVonMises[7];
                         meshVonMises[3] = InitialmeshVonMises[3];
                     }
-                }
-
                 meshVonMiseses.Add(Convert.ToMeshVonMises(meshVonMises));
+                InitialmeshVonMises = meshVonMisesText[i].Split(',').ToList();
             }
 
             return meshVonMiseses;
