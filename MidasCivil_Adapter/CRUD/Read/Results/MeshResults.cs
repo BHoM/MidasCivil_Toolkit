@@ -103,19 +103,19 @@ namespace BH.Adapter.MidasCivil
             string csvPath = ExcelToCsv(filePath);
             List<string> meshStressText = File.ReadAllLines(csvPath).ToList();
             List<MeshStress> meshStresses = new List<MeshStress>();
-            List<string> initialmeshStress = new List<string>();
+            List<string> InitialmeshStress = new List<string>();
 
             for (int i = 10; i < meshStressText.Count; i++)
             {
                 List<string> meshStress = meshStressText[i].Split(',').ToList();
-                if (meshStress[2] == "")
-                {
-                    meshStress[2] = initialmeshStress[2];
-                    meshStress[3] = initialmeshStress[3];
-                    meshStress[7] = initialmeshStress[7];
-                }
+                    if (meshStress[2] == "")
+                    {
+                        meshStress[2] = InitialmeshStress[2];
+                        meshStress[3] = InitialmeshStress[3];
+                        meshStress[7] = InitialmeshStress[7];
+                    }
                 meshStresses.Add(Convert.ToMeshStress(meshStress));
-                initialmeshStress = meshStressText[i].Split(',').ToList();
+                InitialmeshStress = meshStressText[i].Split(',').ToList();
             }
 
             return meshStresses;
