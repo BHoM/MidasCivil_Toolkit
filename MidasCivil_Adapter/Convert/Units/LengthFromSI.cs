@@ -20,14 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter.MidasCivil;
-using BH.oM.Geometry;
 using BH.Engine.Reflection;
-using BH.oM.Structure.Constraints;
-using BH.oM.Structure.Elements;
 using BH.Engine.Units;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {

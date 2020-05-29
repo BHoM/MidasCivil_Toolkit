@@ -194,8 +194,8 @@
     <Compile Include="Convert\Units\MomentPerLengthFromSI.cs" />
     <Compile Include="Convert\Units\MomentPerLengthToSI.cs" />
     <Compile Include="Convert\Units\ForcePerLengthToSI.cs" />
-    <Compile Include="Convert\Units\InverseTemperatureToSI.cs" />
-    <Compile Include="Convert\Units\InverseTemperatureFromSI.cs" />
+    <Compile Include="Convert\Units\InverseDeltaTemperatureToSI.cs" />
+    <Compile Include="Convert\Units\InverseDeltaTemperatureFromSI.cs" />
     <Compile Include="Convert\Units\ForcePerLengthFromSI.cs" />
     <Compile Include="Convert\Units\TemperatureToSI.cs" />
     <Compile Include="Convert\Units\TemperatureFromSI.cs" />

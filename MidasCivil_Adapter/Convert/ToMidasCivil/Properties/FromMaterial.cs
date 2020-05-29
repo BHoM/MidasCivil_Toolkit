@@ -58,7 +58,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     isotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
                     isotropic.Name + ",0,0,,C,NO," +
                     isotropic.DampingRatio + ",2," + isotropic.YoungsModulus.PressureFromSI(forceUnit, lengthUnit) + "," +
-                    isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff.InverseTemperatureFromSI(temperatureUnit) + "," +
+                    isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff.InverseDeltaTemperatureFromSI(temperatureUnit) + "," +
                     isotropic.Density.DensityFromSI(forceUnit, lengthUnit) * 9.806 + "," + isotropic.Density.DensityFromSI(forceUnit, lengthUnit)
                 );
 
@@ -85,9 +85,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                     +   iorthotropic.YoungsModulus.X.PressureFromSI(forceUnit, lengthUnit) + "," + 
                         iorthotropic.YoungsModulus.Y.PressureFromSI(forceUnit, lengthUnit) + "," + 
                         iorthotropic.YoungsModulus.Z.PressureFromSI(forceUnit, lengthUnit) + ","
-                    +   iorthotropic.ThermalExpansionCoeff.X.InverseTemperatureFromSI(temperatureUnit) + "," + 
-                        iorthotropic.ThermalExpansionCoeff.Y.InverseTemperatureFromSI(temperatureUnit) + "," + 
-                        iorthotropic.ThermalExpansionCoeff.Z.InverseTemperatureFromSI(temperatureUnit) + ","
+                    +   iorthotropic.ThermalExpansionCoeff.X.InverseDeltaTemperatureFromSI(temperatureUnit) + "," + 
+                        iorthotropic.ThermalExpansionCoeff.Y.InverseDeltaTemperatureFromSI(temperatureUnit) + "," + 
+                        iorthotropic.ThermalExpansionCoeff.Z.InverseDeltaTemperatureFromSI(temperatureUnit) + ","
                     +   iorthotropic.ShearModulus.X.PressureFromSI(forceUnit, lengthUnit) + "," + 
                         iorthotropic.ShearModulus.Y.PressureFromSI(forceUnit, lengthUnit) + "," + 
                         iorthotropic.ShearModulus.Z.PressureFromSI(forceUnit, lengthUnit) + ","

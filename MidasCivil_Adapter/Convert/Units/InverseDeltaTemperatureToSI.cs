@@ -37,7 +37,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static double InverseTemperatureToSI(this double coefficientOfThermalExpansion, string temperatureUnit)
+        public static double InverseDeltaTemperatureToSI(this double coefficientOfThermalExpansion, string temperatureUnit)
         {
             switch (temperatureUnit)
             {

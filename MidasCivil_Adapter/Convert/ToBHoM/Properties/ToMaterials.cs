@@ -63,7 +63,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 Name = name,
                                 YoungsModulus = double.Parse(delimited[10].Trim()).PressureToSI(forceUnit, lengthUnit),
                                 PoissonsRatio = double.Parse(delimited[11].Trim()),
-                                ThermalExpansionCoeff = double.Parse(delimited[12].Trim()).InverseTemperatureToSI(temperatureUnit),
+                                ThermalExpansionCoeff = double.Parse(delimited[12].Trim()).InverseDeltaTemperatureToSI(temperatureUnit),
                                 Density = density,
                                 DampingRatio = double.Parse(delimited[8].Trim())
                             };
@@ -83,9 +83,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 PoissonsRatio = new Vector() { X = double.Parse(delimited[19].Trim()), Y = double.Parse(delimited[20].Trim()), Z = double.Parse(delimited[21].Trim()) },
                                 ThermalExpansionCoeff = new Vector()
                                 {
-                                    X = double.Parse(delimited[13].Trim()).InverseTemperatureToSI(temperatureUnit),
-                                    Y = double.Parse(delimited[14].Trim()).InverseTemperatureToSI(temperatureUnit),
-                                    Z = double.Parse(delimited[15].Trim()).InverseTemperatureToSI(temperatureUnit)
+                                    X = double.Parse(delimited[13].Trim()).InverseDeltaTemperatureToSI(temperatureUnit),
+                                    Y = double.Parse(delimited[14].Trim()).InverseDeltaTemperatureToSI(temperatureUnit),
+                                    Z = double.Parse(delimited[15].Trim()).InverseDeltaTemperatureToSI(temperatureUnit)
                                 },
                                 ShearModulus = new Vector()
                                 {
@@ -108,7 +108,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 name,
                                 double.Parse(delimited[10].Trim()).PressureToSI(forceUnit, lengthUnit),
                                 double.Parse(delimited[11].Trim()),
-                                double.Parse(delimited[12].Trim()).InverseTemperatureToSI(temperatureUnit),
+                                double.Parse(delimited[12].Trim()).InverseDeltaTemperatureToSI(temperatureUnit),
                                 density,
                                 double.Parse(delimited[8].Trim()), 0, 0
                             );
@@ -127,7 +127,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 name,
                                 double.Parse(delimited[10].Trim()).PressureToSI(forceUnit, lengthUnit),
                                 double.Parse(delimited[11].Trim()),
-                                double.Parse(delimited[12].Trim()).InverseTemperatureToSI(temperatureUnit),
+                                double.Parse(delimited[12].Trim()).InverseDeltaTemperatureToSI(temperatureUnit),
                                 density,
                                 double.Parse(delimited[8].Trim()), 0, 0
                             );
