@@ -20,7 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Common;
+using BH.oM.Analytical.Results;
 using BH.oM.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Requests;
