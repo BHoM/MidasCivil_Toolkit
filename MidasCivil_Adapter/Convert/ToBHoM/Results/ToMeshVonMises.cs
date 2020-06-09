@@ -44,8 +44,12 @@ namespace BH.Adapter.MidasCivil
                 LayerPosition = 0;
                 meshResultLayer = MeshResultLayer.Lower;
             }
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+
             MeshVonMises MeshVonMises = new MeshVonMises(System.Convert.ToInt32(delimitted[2]), delimitted[7], 0,
-            delimitted[3], 0, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,0,0, System.Convert.ToDouble(delimitted[15])
+            delimitted[3], mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,0,0, System.Convert.ToDouble(delimitted[15])
             );
 
             return MeshVonMises;

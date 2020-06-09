@@ -44,8 +44,12 @@ namespace BH.Adapter.MidasCivil
                 LayerPosition = 0;
                 meshResultLayer = MeshResultLayer.Lower;
             }
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+
             MeshStress Meshstress = new MeshStress(System.Convert.ToInt32(delimitted[2]), delimitted[7], 0,
-            delimitted[3], 0, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,
+            delimitted[3], mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,
             System.Convert.ToDouble(delimitted[9]), System.Convert.ToDouble(delimitted[10]), 0,
             System.Convert.ToDouble(delimitted[11]), System.Convert.ToDouble(delimitted[11]), System.Convert.ToDouble(delimitted[12]),
             System.Convert.ToDouble(delimitted[13]), 0);

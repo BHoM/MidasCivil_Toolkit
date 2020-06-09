@@ -35,17 +35,24 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static NodeDisplacement ToNodeDisplacement(this List<string> delimitted)
         {
-            NodeDisplacement nodeDisplacement = new NodeDisplacement()
-            {
-                ObjectId = System.Convert.ToInt32(delimitted[2]),
-                ResultCase = delimitted[3],
-                UX = System.Convert.ToDouble(delimitted[7]),
-                UY = System.Convert.ToDouble(delimitted[8]),
-                UZ = System.Convert.ToDouble(delimitted[9]),
-                RX = System.Convert.ToDouble(delimitted[10]),
-                RY = System.Convert.ToDouble(delimitted[11]),
-                RZ = System.Convert.ToDouble(delimitted[12])
-            };
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+
+            NodeDisplacement nodeDisplacement = new NodeDisplacement(
+                System.Convert.ToInt32(delimitted[2]),
+                delimitted[3],
+                mode,
+                timeStep,
+                oM.Geometry.Basis.XY,
+                System.Convert.ToDouble(delimitted[7]),
+                System.Convert.ToDouble(delimitted[8]),
+                System.Convert.ToDouble(delimitted[9]),
+                System.Convert.ToDouble(delimitted[10]),
+                System.Convert.ToDouble(delimitted[11]),
+                System.Convert.ToDouble(delimitted[12])
+                );
+
             return nodeDisplacement;
         }
 

@@ -37,19 +37,25 @@ namespace BH.Adapter.MidasCivil
         public static BarForce ToBarForce(this List<string> delimitted)
         {
             double position = GetBarResultPosition(delimitted[8]);
-            BarForce barforce = new BarForce()
-            {
-                ObjectId = System.Convert.ToInt32(delimitted[3]),
-                ResultCase = delimitted[4],
-                FX = System.Convert.ToDouble(delimitted[11]),
-                FY = System.Convert.ToDouble(delimitted[12]),
-                FZ = System.Convert.ToDouble(delimitted[13]),
-                MX = System.Convert.ToDouble(delimitted[14]),
-                MY = System.Convert.ToDouble(delimitted[15]),
-                MZ = System.Convert.ToDouble(delimitted[16]),
-                Position = position
-            };
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+            int divisions = 0;
 
+            BarForce barforce = new BarForce(
+                System.Convert.ToInt32(delimitted[3]),
+                delimitted[4],
+                mode,
+                timeStep,
+                position,
+                divisions,
+                System.Convert.ToDouble(delimitted[11]),
+                System.Convert.ToDouble(delimitted[12]),
+                System.Convert.ToDouble(delimitted[13]),
+                System.Convert.ToDouble(delimitted[14]),
+                System.Convert.ToDouble(delimitted[15]),
+                System.Convert.ToDouble(delimitted[16])
+                );
             return barforce;
         }
 
