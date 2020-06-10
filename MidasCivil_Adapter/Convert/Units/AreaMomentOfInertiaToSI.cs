@@ -44,17 +44,13 @@ namespace BH.Adapter.Adapters.MidasCivil
                 case "M":
                     break;
                 case "CM":
-                    areaMomentOfInertia.FromCentimetreToTheFourth();
-                    break;
+                    return areaMomentOfInertia.FromCentimetreToTheFourth();
                 case "MM":
-                    areaMomentOfInertia.FromMillimetreToTheFourth();
-                    break;
+                    return areaMomentOfInertia.FromMillimetreToTheFourth();
                 case "FT":
-                    areaMomentOfInertia.FromFootToTheFourth();
-                    break;
+                    return areaMomentOfInertia.FromFootToTheFourth();
                 case "IN":
-                    areaMomentOfInertia.FromInchToTheFourth();
-                    break;
+                    return areaMomentOfInertia.FromInchToTheFourth();
                 default:
                     Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres. Therefore no unit conversion will occur.");
                     break;

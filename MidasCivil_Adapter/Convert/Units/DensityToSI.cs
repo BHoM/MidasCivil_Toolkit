@@ -49,11 +49,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "M":
                             break;
                         case "CM":
-                            density.FromKilogramPerCubicCentimetre();
-                            break;
+                            return density.FromKilogramPerCubicCentimetre();
                         case "MM":
-                            density.FromKilogramPerCubicMillimetre();
-                            break;
+                            return density.FromKilogramPerCubicMillimetre();
                         case "FT":
                             throw new Exception("No conversion method found for"+forceUnit+ " " +lengthUnit);
                         case "IN":
@@ -67,128 +65,95 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
-                            density.FromTonnePerCubicMetre();
-                            break;
+                            return density.FromTonnePerCubicMetre();
                         case "CM":
-                            density.FromTonnePerCubicCentimetre();
-                            break;
+                            return density.FromTonnePerCubicCentimetre();
                         case "MM":
-                            density.FromTonnePerCubicMillimetre();
-                            break;
+                            return density.FromTonnePerCubicMillimetre();
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "IN":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            density.ToKilonewton();
-                            break;
+                            return density.ToKilonewton();
                     }
-                    break;
                 case "KGF":
                     switch (lengthUnit)
                     {
                         //The ToCubicLengthUnit is used because the volume quantity is on the denominator
                         //Recall density is mass/length^3
                         case "M":
-                            density.FromKilogramForce();
-                            break;
+                            return density.FromKilogramForce();
                         case "CM":
-                            density.FromKilogramForce().ToCubicCentimetre();
-                            break;
+                            return density.FromKilogramForce().ToCubicCentimetre();
                         case "MM":
-                            density.FromKilogramForce().ToCubicMillimetre();
-                            break;
+                            return density.FromKilogramForce().ToCubicMillimetre();
                         case "FT":
-                            density.FromKilogramForce().ToFootPerSecondSquared().ToCubicFoot();
-                            break;
+                            return density.FromKilogramForce().ToFootPerSecondSquared().ToCubicFoot();
                         case "IN":
-                            density.FromKilogramForce().ToFootPerSecondSquared().ToCubicInch();
-                            break;
+                            return density.FromKilogramForce().ToFootPerSecondSquared().ToCubicInch();
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            density.FromKilogramForce();
-                            break;
+                            return density.FromKilogramForce();
                     }
-                    break;
                 case "TONF":
                     switch (lengthUnit)
                     {
                         //The ToCubicLengthUnit is used because the volume quantity is on the denominator
                         //Recall density is mass/length^3
                         case "M":
-                            density.FromTonneForce();
-                            break;
+                            return density.FromTonneForce();
                         case "CM":
-                            density.FromTonneForce().ToCubicCentimetre();
-                            break;
+                            return density.FromTonneForce().ToCubicCentimetre();
                         case "MM":
-                            density.FromTonneForce().ToCubicMillimetre();
-                            break;
+                            return density.FromTonneForce().ToCubicMillimetre();
                         case "FT":
-                            density.FromTonneForce().ToFootPerSecondSquared().ToCubicFoot();
-                            break;
+                            return density.FromTonneForce().ToFootPerSecondSquared().ToCubicFoot();
                         case "IN":
-                            density.FromTonneForce().ToFootPerSecondSquared().ToCubicInch();
-                            break;
+                            return density.FromTonneForce().ToFootPerSecondSquared().ToCubicInch();
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            density.FromTonneForce();
-                            break;
+                            return density.FromTonneForce();
                     }
-                    break;
                 case "LBF":
                     switch (lengthUnit)
                     {
                         //The ToCubicLengthUnit is used because the volume quantity is on the denominator
                         //Recall density is mass/length^3
                         case "M":
-                            density.FromPoundForce();
-                            break;
+                            return density.FromPoundForce();
                         case "CM":
-                            density.FromPoundForce().ToCubicCentimetre();
-                            break;
+                            return density.FromPoundForce().ToCubicCentimetre();
                         case "MM":
-                            density.FromPoundForce().ToCubicMillimetre();
-                            break;
+                            return density.FromPoundForce().ToCubicMillimetre();
                         case "FT":
-                            density.FromPoundForce().ToFootPerSecondSquared().ToCubicFoot();
-                            break;
+                            return density.FromPoundForce().ToFootPerSecondSquared().ToCubicFoot();
                         case "IN":
-                            density.FromPoundForce().ToFootPerSecondSquared().ToCubicInch();
-                            break;
+                            return density.FromPoundForce().ToFootPerSecondSquared().ToCubicInch();
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            density.FromPoundForce();
-                            break;
+                            return density.FromPoundForce();
                     }
-                    break;
                 case "KIPS":
                     switch (lengthUnit)
                     {
                         //The ToCubicLengthUnit is used because the volume quantity is on the denominator
                         //Recall density is mass/length^3
                         case "M":
-                            density.FromKilopoundForce();
-                            break;
+                            return density.FromKilopoundForce();
                         case "CM":
-                            density.FromKilopoundForce().ToCubicCentimetre();
-                            break;
+                            return density.FromKilopoundForce().ToCubicCentimetre();
                         case "MM":
-                            density.FromKilopoundForce().ToCubicMillimetre();
-                            break;
+                            return density.FromKilopoundForce().ToCubicMillimetre();
                         case "FT":
-                            density.FromKilopoundForce().ToFootPerSecondSquared().ToCubicFoot();
-                            break;
+                            return density.FromKilopoundForce().ToFootPerSecondSquared().ToCubicFoot();
                         case "IN":
-                            density.FromKilopoundForce().ToFootPerSecondSquared().ToCubicInch();
-                            break;
+                            return density.FromKilopoundForce().ToFootPerSecondSquared().ToCubicInch();
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            density.FromKilopoundForce();
-                            break;
+                            return density.FromKilopoundForce();
                     }
-                    break;
                 default:
                     Compute.RecordWarning("No force unit detected, MidasCivil force unit assumed to be set to Newtons. Therefore no unit conversion will occur. ");
                     break;

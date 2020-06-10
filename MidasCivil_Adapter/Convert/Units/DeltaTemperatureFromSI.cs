@@ -42,13 +42,11 @@ namespace BH.Adapter.Adapters.MidasCivil
             switch (temperatureUnit)
             {
                 case "C":
-                    deltaTemperature.ToDeltaDegreeCelsius();
-                    break;
+                    return deltaTemperature.ToDeltaDegreeCelsius();
                 case "F":
-                    deltaTemperature.ToDeltaDegreeFahrenheit();
-                    break;
+                    return deltaTemperature.ToDeltaDegreeFahrenheit();
                 default:
-                    Compute.RecordWarning("No temperature unit detected, MidasCivil length unit assumed to be set to degrees Celcius. Therefore no unit conversion will occur. ");
+                    Compute.RecordWarning("No temperature unit detected, MidasCivil temperature unit assumed to be set to degrees Celcius. Therefore no unit conversion will occur. ");
                     break;
             }
 

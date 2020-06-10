@@ -44,17 +44,13 @@ namespace BH.Adapter.Adapters.MidasCivil
                 case "M":
                     break;
                 case "CM":
-                    area.ToSquareCentimetre();
-                    break;
+                    return area.ToSquareCentimetre();
                 case "MM":
-                    area.ToSquareMillimetre();
-                    break;
+                    return area.ToSquareMillimetre();
                 case "FT":
-                    area.ToSquareFoot();
-                    break;
+                    return area.ToSquareFoot();
                 case "IN":
-                    area.ToSquareInch();
-                    break;
+                    return area.ToSquareInch();
                 default:
                     Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres. Therefore no unit conversion will occur. ");
                     break;

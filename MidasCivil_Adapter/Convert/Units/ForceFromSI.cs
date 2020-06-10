@@ -44,20 +44,15 @@ namespace BH.Adapter.Adapters.MidasCivil
                 case "N":
                     break;
                 case "KN":
-                    force.ToKilonewton();
-                    break;
+                    return force.ToKilonewton();
                 case "KGF":
-                    force.ToKilogramForce();
-                    break;
+                    return force.ToKilogramForce();
                 case "TONF":
-                    force.ToTonneForce();
-                    break;
+                    return force.ToTonneForce();
                 case "LBF":
-                    force.ToPoundForce();
-                    break;
+                    return force.ToPoundForce();
                 case "KIPS":
-                    force.ToKilopoundForce();
-                    break;
+                    return force.ToKilopoundForce();
                 default:
                     Compute.RecordWarning("No force unit detected, MidasCivil force unit assumed to be set to metres. Therefore no unit conversion will occur. ");
                     break;

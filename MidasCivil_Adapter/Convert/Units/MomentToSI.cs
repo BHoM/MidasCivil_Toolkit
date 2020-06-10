@@ -49,11 +49,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "M":
                             break;
                         case "CM":
-                            moment.FromNewtonCentimetre();
-                            break;
+                            return moment.FromNewtonCentimetre();
                         case "MM":
-                            moment.FromNewtonMillimetre();
-                            break;
+                            return moment.FromNewtonMillimetre();
                         case "FT":
                             throw new Exception("No conversion method found for"+forceUnit+ " " +lengthUnit);
                         case "IN":
@@ -67,68 +65,53 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
-                            moment.FromKilonewtonCentimetre();
-                            break;
+                            return moment.FromKilonewtonCentimetre();
                         case "CM":
-                            moment.FromKilonewtonCentimetre();
-                            break;
+                            return moment.FromKilonewtonCentimetre();
                         case "MM":
-                            moment.FromKilonewtonMillimetre();
-                            break;
+                            return moment.FromKilonewtonMillimetre();
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "IN":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.ToKilonewton();
-                            break;
+                            return moment.ToKilonewton();
                     }
-                    break;
                 case "KGF":
                     switch (lengthUnit)
                     {
                         case "M":
-                            moment.FromKilogramForceMetre();
-                            break;
+                            return moment.FromKilogramForceMetre();
                         case "CM":
-                            moment.FromKilogramForceCentimetre();
-                            break;
+                            return moment.FromKilogramForceCentimetre();
                         case "MM":
-                            moment.FromKilogramForceMillimetre();
-                            break;
+                            return moment.FromKilogramForceMillimetre();
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "IN":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.ToKilogramForce();
-                            break;
+                            return moment.ToKilogramForce();
                     }
-                    break;
                 case "TONF":
                     switch (lengthUnit)
                     {
                         case "M":
-                            moment.FromTonneForceMetre();
-                            break;
+                            return moment.FromTonneForceMetre();
                         case "CM":
-                            moment.FromTonneForceCentimetre();
-                            break;
+                            return moment.FromTonneForceCentimetre();
                         case "MM":
-                            moment.FromTonneForceMillimetre();
-                            break;
+                            return moment.FromTonneForceMillimetre();
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "IN":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.FromTonneForce();
-                            break;
+                            return moment.FromTonneForce();
                     }
-                    break;
                 case "LBF":
                     switch (lengthUnit)
                     {
@@ -139,17 +122,13 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "MM":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "FT":
-                            moment.FromPoundForceFoot();
-                            break;
+                            return moment.FromPoundForceFoot();
                         case "IN":
-                            moment.FromPoundForceInch();
-                            break;
+                            return moment.FromPoundForceInch();
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.FromPoundForce();
-                            break;
+                            return moment.FromPoundForce();
                     }
-                    break;
                 case "KIPS":
                     switch (lengthUnit)
                     {
@@ -160,17 +139,13 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "MM":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "FT":
-                            moment.FromKilopoundForceFoot();
-                            break;
+                            return moment.FromKilopoundForceFoot();
                         case "IN":
-                            moment.FromKilopoundForceInch();
-                            break;
+                            return moment.FromKilopoundForceInch();
                         default:
                             Compute.RecordWarning("No length unit detected, MidasCivil length unit assumed to be set to metres.");
-                            moment.FromKilopoundForce();
-                            break;
+                            return moment.FromKilopoundForce();
                     }
-                    break;
                 default:
                     Compute.RecordWarning("No force unit detected, MidasCivil force unit assumed to be set to Newtons. Therefore no unit conversion will occur. ");
                     break;

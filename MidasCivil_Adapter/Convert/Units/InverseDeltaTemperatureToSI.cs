@@ -42,11 +42,9 @@ namespace BH.Adapter.Adapters.MidasCivil
             switch (temperatureUnit)
             {
                 case "C":
-                    coefficientOfThermalExpansion.FromInverseDeltaDegreeCelsius();
-                    break;
+                    return coefficientOfThermalExpansion.FromInverseDeltaDegreeCelsius();
                 case "F":
-                    coefficientOfThermalExpansion.FromInverseDeltaDegreeFahrenheit();
-                    break;
+                    return coefficientOfThermalExpansion.FromInverseDeltaDegreeFahrenheit();
                 default:
                     Compute.RecordWarning("No temperature unit detected, MidasCivil length unit assumed to be set to degrees Celcius. Therefore no unit conversion will occur. ");
                     break;
