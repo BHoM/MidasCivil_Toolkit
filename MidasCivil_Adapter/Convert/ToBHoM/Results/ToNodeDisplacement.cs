@@ -35,17 +35,24 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static NodeDisplacement ToNodeDisplacement(this List<string> delimitted, string lengthUnit)
         {
-            NodeDisplacement nodeDisplacement = new NodeDisplacement()
-            {
-                ObjectId = System.Convert.ToInt32(delimitted[2]),
-                ResultCase = delimitted[3],
-                UX = System.Convert.ToDouble(delimitted[7]).LengthToSI(lengthUnit),
-                UY = System.Convert.ToDouble(delimitted[8]).LengthToSI(lengthUnit),
-                UZ = System.Convert.ToDouble(delimitted[9]).LengthToSI(lengthUnit),
-                RX = System.Convert.ToDouble(delimitted[10]).LengthToSI(lengthUnit),
-                RY = System.Convert.ToDouble(delimitted[11]).LengthToSI(lengthUnit),
-                RZ = System.Convert.ToDouble(delimitted[12]).LengthToSI(lengthUnit)
-            };
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+
+            NodeDisplacement nodeDisplacement = new NodeDisplacement(
+                System.Convert.ToInt32(delimitted[2]),
+                delimitted[3],
+                mode,
+                timeStep,
+                oM.Geometry.Basis.XY,
+                System.Convert.ToDouble(delimitted[7]).LengthToSI(lengthUnit),
+                System.Convert.ToDouble(delimitted[8]).LengthToSI(lengthUnit),
+                System.Convert.ToDouble(delimitted[9]).LengthToSI(lengthUnit),
+                System.Convert.ToDouble(delimitted[10]).LengthToSI(lengthUnit),
+                System.Convert.ToDouble(delimitted[11]).LengthToSI(lengthUnit),
+                System.Convert.ToDouble(delimitted[12]).LengthToSI(lengthUnit)
+                );
+
             return nodeDisplacement;
         }
 

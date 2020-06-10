@@ -35,17 +35,23 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static NodeReaction ToNodeReaction(this List<string> delimitted, string forceUnit, string lengthUnit)
         {
-            NodeReaction nodeReaction = new NodeReaction()
-            {
-                ObjectId = System.Convert.ToInt32(delimitted[2]),
-                ResultCase = delimitted[3],
-                FX = System.Convert.ToDouble(delimitted[7]).ForceToSI(forceUnit),
-                FY = System.Convert.ToDouble(delimitted[8]).ForceToSI(forceUnit),
-                FZ = System.Convert.ToDouble(delimitted[9]).ForceToSI(forceUnit),
-                MX = System.Convert.ToDouble(delimitted[10]).MomentToSI(forceUnit, lengthUnit),
-                MY = System.Convert.ToDouble(delimitted[11]).MomentToSI(forceUnit, lengthUnit),
-                MZ = System.Convert.ToDouble(delimitted[12]).MomentToSI(forceUnit, lengthUnit)
-            };
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+
+            NodeReaction nodeReaction = new NodeReaction(
+                System.Convert.ToInt32(delimitted[2]),
+                delimitted[3],
+                mode,
+                timeStep,
+                oM.Geometry.Basis.XY,
+                System.Convert.ToDouble(delimitted[7]).ForceToSI(forceUnit),
+                System.Convert.ToDouble(delimitted[8]).ForceToSI(forceUnit),
+                System.Convert.ToDouble(delimitted[9]).ForceToSI(forceUnit),
+                System.Convert.ToDouble(delimitted[10]).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(delimitted[11]).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(delimitted[12]).MomentToSI(forceUnit, lengthUnit)
+                );
 
             return nodeReaction;
         }

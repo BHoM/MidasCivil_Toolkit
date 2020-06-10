@@ -37,8 +37,11 @@ namespace BH.Adapter.MidasCivil
 
         public static MeshForce ToMeshForce(this List<string> delimitted, string forceUnit, string lengthUnit)
         {
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
             MeshForce Meshforce = new MeshForce(System.Convert.ToInt32(delimitted[2]), delimitted[7], 0,
-            delimitted[3], 0, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.None, null,
+            delimitted[3], mode, timeStep, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.None, null,
             System.Convert.ToDouble(delimitted[9]).ForcePerLengthToSI(forceUnit, lengthUnit),
             System.Convert.ToDouble(delimitted[10]).ForcePerLengthToSI(forceUnit, lengthUnit),
             System.Convert.ToDouble(delimitted[11]).ForcePerLengthToSI(forceUnit, lengthUnit),
@@ -47,7 +50,7 @@ namespace BH.Adapter.MidasCivil
             System.Convert.ToDouble(delimitted[17]).MomentPerLengthToSI(forceUnit, lengthUnit),
             System.Convert.ToDouble(delimitted[21]).MomentPerLengthToSI(forceUnit, lengthUnit),
             System.Convert.ToDouble(delimitted[22]).MomentPerLengthToSI(forceUnit, lengthUnit));
-
+			
             return Meshforce;
         }
 

@@ -37,22 +37,29 @@ namespace BH.Adapter.MidasCivil
         public static BarStress ToBarStress(this List<string> delimitted, string forceUnit, string lengthUnit)
         {
             double position = GetBarResultPosition(delimitted[7]);
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+            int divisions = 0;
 
-            BarStress barstress = new BarStress()
-            {
-                ObjectId = System.Convert.ToInt32(delimitted[2]),
-                ResultCase = delimitted[3],
-                Axial = System.Convert.ToDouble(delimitted[10]).ForceToSI(forceUnit),
-                ShearY = System.Convert.ToDouble(delimitted[11]).ForceToSI(forceUnit),
-                ShearZ = System.Convert.ToDouble(delimitted[12]).ForceToSI(forceUnit),
-                BendingY_Bot = System.Convert.ToDouble(delimitted[14]).MomentToSI(forceUnit, lengthUnit),
-                BendingY_Top = System.Convert.ToDouble(delimitted[13]).MomentToSI(forceUnit, lengthUnit),
-                BendingZ_Bot = System.Convert.ToDouble(delimitted[16]).MomentToSI(forceUnit, lengthUnit),
-                BendingZ_Top = System.Convert.ToDouble(delimitted[15]).MomentToSI(forceUnit, lengthUnit),
-                Position = position,
-                Divisions = 0
-            };
-
+            BarStress barstress = new BarStress(
+                System.Convert.ToInt32(delimitted[2]),
+                delimitted[3],
+                mode,
+                timeStep,
+                position,
+                divisions,
+                System.Convert.ToDouble(delimitted[10]).ForceToSI(forceUnit),
+                System.Convert.ToDouble(delimitted[11]).ForceToSI(forceUnit),
+                System.Convert.ToDouble(delimitted[12]).ForceToSI(forceUnit),
+                System.Convert.ToDouble(delimitted[14]).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(delimitted[13]).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(delimitted[16]).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(delimitted[15]).MomentToSI(forceUnit, lengthUnit),
+                0,
+                0
+                );
+				
             return barstress;
         }
 
