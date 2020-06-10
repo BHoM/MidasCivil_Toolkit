@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedNode in assignedNodes)
                 {
-                    midasPointLoads.Add(Adapters.MidasCivil.Convert.FromPointLoad(PointLoad, assignedNode, lengthUnit, forceUnit));
+                    midasPointLoads.Add(Adapters.MidasCivil.Convert.FromPointLoad(PointLoad, assignedNode, forceUnit, lengthUnit));
                 }
 
                 RemoveEndOfDataString(PointLoadPath);

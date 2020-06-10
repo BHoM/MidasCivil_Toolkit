@@ -32,7 +32,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromBarPointLoad(this BarPointLoad barLoad, string assignedBar, string loadType, string lengthUnit, string forceUnit)
+        public static string FromBarPointLoad(this BarPointLoad barLoad, string assignedBar, string loadType, string forceUnit, string lengthUnit)
         {
             string midasBarLoad = null;
             if (loadType == "Force")
@@ -41,7 +41,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasBarLoad = assignedBar + ",BEAM,CONLOAD," + FromLoadAxis(barLoad.Axis) + direction +
                                 "," + FromLoadProjection(barLoad.Projected) +
                                 ",NO,aDir[1], , , ," + barLoad.DistanceFromA.ToString() + "," +
-                                FromVectorDirection(barLoad.Force, direction).ForceFromSI(lengthUnit).ToString() +
+                                FromVectorDirection(barLoad.Force, direction).ForceFromSI(forceUnit).ToString() +
                                 ",0,0,0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
             }
             else
