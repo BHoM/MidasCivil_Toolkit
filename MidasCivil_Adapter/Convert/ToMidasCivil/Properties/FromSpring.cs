@@ -45,8 +45,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                     midasSpring = (
                         " " + "," + "LINEAR" + "," + springFixity +
                         stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
-                        stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
-                        stiffness[4].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[5].ForcePerLengthFromSI(forceUnit, lengthUnit)
+                        stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
+                        stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
                         + "," + "NO, 0, 0, 0, 0, 0, 0," + constraint6DOF.Name + "," + "0, 0, 0, 0, 0"
                         );
                     break;
@@ -54,8 +54,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                     midasSpring = (
                         " " + "," + "LINEAR" + "," +
                         stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
-                        stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
-                        stiffness[4].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[5].ForcePerLengthFromSI(forceUnit, lengthUnit)
+                        stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
+                        stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
                         + "," + "NO, 0, 0, 0, 0, 0, 0," + constraint6DOF.Name + "," + "0, 0, 0, 0, 0"
                         );
                     break;

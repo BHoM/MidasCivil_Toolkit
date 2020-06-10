@@ -36,7 +36,6 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<double> stiffness = new List<double>();
 
             int constraint = 0;
-
             string assignment = delimitted[1].Replace(" ",string.Empty);
 
             if(int.TryParse(assignment, out constraint))
@@ -79,8 +78,16 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 }
                                 else if(delimitted[i].Trim() == "NO")
                                 {
-                                    double spring = double.Parse(delimitted[i+6]).ForcePerLengthToSI(forceUnit, lengthUnit);
-                                    if (spring == 1E+016 || spring == 100000)
+                                    double spring;
+                                    if(i < 5)
+                                    {
+                                        spring = double.Parse(delimitted[i + 6]).ForcePerLengthToSI(forceUnit, lengthUnit);
+                                    }
+                                    else
+                                    {
+                                        spring = double.Parse(delimitted[i + 6]).MomentToSI(forceUnit, lengthUnit);
+                                    }
+                                    if (spring > 1E+014.ForcePerLengthFromSI(forceUnit,lengthUnit) || spring > 1E5.MomentFromSI(forceUnit, lengthUnit))
                                     {
                                         fixity.Add(true);
                                         stiffness.Add(0);
@@ -105,8 +112,16 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 }
                                 else
                                 {
-                                    double spring = double.Parse(delimitted[i]).ForcePerLengthToSI(forceUnit, lengthUnit);
-                                    if (spring == 1E+016 || spring == 100000)
+                                    double spring;
+                                    if (i < 5)
+                                    {
+                                        spring = double.Parse(delimitted[i]).ForcePerLengthToSI(forceUnit, lengthUnit);
+                                    }
+                                    else
+                                    {
+                                        spring = double.Parse(delimitted[i]).MomentToSI(forceUnit, lengthUnit);
+                                    }
+                                    if (spring > 1E+014.ForcePerLengthFromSI(forceUnit, lengthUnit) || spring > 1E5.MomentFromSI(forceUnit, lengthUnit))
                                     {
                                         fixity.Add(true);
                                         stiffness.Add(0);
