@@ -104,7 +104,7 @@ namespace BH.Adapter.MidasCivil
                             bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
 
 
-                            if ((distinctBarLoad.Split(',').ToList()[22].ToString() == " "))
+                            if (String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[17]))
                             {
                                 i = i + 1;
                             }
