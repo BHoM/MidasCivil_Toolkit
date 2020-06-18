@@ -22,6 +22,8 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -37,9 +39,15 @@ namespace BH.Adapter.MidasCivil
 
             using (StreamWriter sectionFile = File.CreateText(path))
             {
+                string trimText = "";
                 foreach (string text in sectionText)
                 {
-                    sectionFile.WriteLine(text);
+                    trimText = text;
+                    if(!(text.Contains("*")) && !(text.Contains(";")))
+                    {
+                        trimText = string.Join(",",text.Split(',').Select(x => x!= null ? x.Trim() : null));
+                    }    
+                    sectionFile.WriteLine(trimText);
                 }
                 sectionFile.Close();
             }
@@ -53,11 +61,16 @@ namespace BH.Adapter.MidasCivil
 
             using (StreamWriter sectionFile = File.CreateText(path))
             {
+                string trimText = "";
                 foreach (string text in sectionText)
                 {
-                    sectionFile.WriteLine(text);
+                    trimText = text;
+                    if (!(text.Contains("*")) && !(text.Contains(";")))
+                    {
+                        trimText = string.Join(",", text.Split(',').Select(x => x != null ? x.Trim() : null));
+                    }
+                    sectionFile.WriteLine(trimText);
                 }
-                sectionFile.Close();
             }
         }
 
