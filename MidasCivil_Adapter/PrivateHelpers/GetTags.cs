@@ -44,7 +44,7 @@ namespace BH.Adapter.MidasCivil
 
                 List<int> itemAssignment = new List<int>();
 
-                if (items.Contains(" ") || string.IsNullOrWhiteSpace(items))
+                if (items.Contains(" ") || string.IsNullOrWhiteSpace(items) || items.Contains("to") || items.Contains("by"))
                 {
                     List<string> assignments = items.Split(' ').
                         Select(x => x.Trim()).
