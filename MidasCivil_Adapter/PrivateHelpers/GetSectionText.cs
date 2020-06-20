@@ -51,11 +51,6 @@ namespace BH.Adapter.MidasCivil
         {
             List<string> cleanString = new List<string>();
 
-            if (sectionText[0].Contains("SELFWEIGHT"))
-            {
-                cleanString.Add(sectionText[0].Split('*')[1]);
-            }
-
             for (int i = 0; i < sectionText.Count; i++)
             {
                 if (!(sectionText[i].Contains(";")) && !(sectionText[i].Contains("*")) && !(string.IsNullOrEmpty(sectionText[i])))
