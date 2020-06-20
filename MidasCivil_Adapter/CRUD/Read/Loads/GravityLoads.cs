@@ -63,14 +63,11 @@ namespace BH.Adapter.MidasCivil
 
                     foreach (string gravityLoad in gravityLoadText)
                     {
-                        List<string> delimitted = gravityLoad.Split(',').ToList();
-                        delimitted.RemoveAt(0);
-                        gravityLoads.Add(String.Join(",", delimitted));
-                        GravityLoad bhomGravityLoad = Adapter.Adapters.MidasCivil.Convert.ToGravityLoad(
+                        GravityLoad bhomGravityLoad = Adapters.MidasCivil.Convert.ToGravityLoad(
                             objects, gravityLoad, loadcase, loadcaseDictionary, i);
                         bhomGravityLoads.Add(bhomGravityLoad);
 
-                        if (String.IsNullOrWhiteSpace(delimitted[3]))
+                        if (String.IsNullOrWhiteSpace(gravityLoad.Split(',')[3]))
                         {
                             i = i + 1;
                         }
