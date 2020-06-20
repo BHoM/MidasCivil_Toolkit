@@ -74,10 +74,10 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             else if (shape == "H")
             {
-                bhomSection = Engine.Structure.Create.GenericSectionFromProfile(Engine.Structure.Create.FabricatedISectionProfile
-                    (System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[16]),
-                    System.Convert.ToDouble(split[15]), System.Convert.ToDouble(split[17]),
-                    System.Convert.ToDouble(split[18]), System.Convert.ToDouble(split[19]), 0), null);
+                bhomSection = Create.GenericSectionFromProfile(Engine.Geometry.Create.FabricatedISectionProfile
+                    (System.Convert.ToDouble(split[14]), System.Convert.ToDouble(split[15]),
+                    System.Convert.ToDouble(split[18]), System.Convert.ToDouble(split[16]),
+                    System.Convert.ToDouble(split[17]), System.Convert.ToDouble(split[19]), 0), null);
 
                 //    8, DBUSER    , USER-ISECTION     , CC, 0, 0, 0, 0, 0, 0, YES, NO, H  , 2, 1, 0.3, 0.03, 0.025, 0.5, 0.02, 0.01, 0.01, 0, 0
             }
