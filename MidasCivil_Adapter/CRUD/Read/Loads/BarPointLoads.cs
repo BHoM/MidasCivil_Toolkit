@@ -110,7 +110,7 @@ namespace BH.Adapter.MidasCivil
                             BarPointLoad bhomBarPointLoad = Adapter.Adapters.MidasCivil.Convert.ToBarPointLoad(distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, j);
                             bhomBarPointLoads.Add(bhomBarPointLoad);
 
-                            if (String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[22]))
+                            if (String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[17]))
 
                             {
                                 j = j + 1;
