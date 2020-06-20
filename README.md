@@ -7,7 +7,6 @@ This toolkit allows interoperability between the BHoM and MidasCivil. It enables
 https://en.midasuser.com/product/civil_overview.asp
 
 ### Known Versions of Software Supported
-MidasCivil 2018
 
 MidasCivil 2019
 
