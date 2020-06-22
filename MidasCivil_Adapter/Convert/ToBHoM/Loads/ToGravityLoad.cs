@@ -45,19 +45,19 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             Vector direction = new Vector
             {
-                X = double.Parse(delimitted[1].Trim()),
-                Y = double.Parse(delimitted[2].Trim()),
-                Z = double.Parse(delimitted[3].Trim())
+                X = double.Parse(delimitted[0].Trim()),
+                Y = double.Parse(delimitted[1].Trim()),
+                Z = double.Parse(delimitted[2].Trim())
             };
             string name;
 
-            if (string.IsNullOrWhiteSpace(delimitted[4]))
+            if (string.IsNullOrWhiteSpace(delimitted[3]))
             {
                 name = "GL" + count;
             }
             else
             {
-                name = delimitted[4].Trim();
+                name = delimitted[3].Trim();
             }
 
             GravityLoad bhomGravityLoad = Engine.Structure.Create.GravityLoad(bhomLoadcase, direction, objects, name);

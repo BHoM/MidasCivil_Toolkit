@@ -103,8 +103,7 @@ namespace BH.Adapter.MidasCivil
                                     distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i, forceUnit, lengthUnit);
                             bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
 
-
-                            if (String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[17]))
+                            if(String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[17]))
                             {
                                 i = i + 1;
                             }
