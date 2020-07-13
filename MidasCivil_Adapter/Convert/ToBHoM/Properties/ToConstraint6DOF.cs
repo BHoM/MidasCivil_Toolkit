@@ -87,7 +87,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                     {
                                         spring = double.Parse(delimitted[i + 6]).MomentToSI(forceUnit, lengthUnit);
                                     }
-                                    if (spring > 1E+014.ForcePerLengthFromSI(forceUnit,lengthUnit) || spring > 1E5.MomentFromSI(forceUnit, lengthUnit))
+                                    if (spring > 1E+017.ForcePerLengthToSI(forceUnit,lengthUnit) || spring > 1E+19.MomentToSI(forceUnit, lengthUnit))
                                     {
                                         fixity.Add(true);
                                         stiffness.Add(0);
@@ -121,7 +121,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                     {
                                         spring = double.Parse(delimitted[i]).MomentToSI(forceUnit, lengthUnit);
                                     }
-                                    if (spring > 1E+014.ForcePerLengthFromSI(forceUnit, lengthUnit) || spring > 1E5.MomentFromSI(forceUnit, lengthUnit))
+                                    if (spring > 1E+017.ForcePerLengthFromSI(forceUnit, lengthUnit) || spring > 1E+19.MomentFromSI(forceUnit, lengthUnit))
                                     {
                                         fixity.Add(true);
                                         stiffness.Add(0);
