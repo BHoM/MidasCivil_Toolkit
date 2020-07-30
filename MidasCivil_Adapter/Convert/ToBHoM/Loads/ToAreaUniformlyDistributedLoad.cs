@@ -29,7 +29,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributedLoad(string areaUniformlyDistributedLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributedLoad(string areaUniformlyDistributedLoad, List<string> associatedFEMeshes,
+            string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, 
+            int count, string forceUnit, string lengthUnit)
         {
             string[] delimitted = areaUniformlyDistributedLoad.Split(',');
             List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
@@ -64,7 +70,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             double XLoad = 0;
             double YLoad = 0;
             double ZLoad = 0;
-            double force = double.Parse(delimitted[8].Trim());
+            double force = double.Parse(delimitted[8].Trim()).PressureToSI(forceUnit, lengthUnit);
 
             switch (direction)
             {
@@ -97,11 +103,14 @@ namespace BH.Adapter.Adapters.MidasCivil
                 name = delimitted[13].Trim();
             }
 
-            AreaUniformlyDistributedLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformlyDistributedLoad(bhomLoadcase, loadVector, bhomAssociatedFEMeshes, axis, loadProjection, name);
+            AreaUniformlyDistributedLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformlyDistributedLoad(
+                bhomLoadcase, loadVector,bhomAssociatedFEMeshes, axis, loadProjection, name);
             bhomAreaUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomAreaUniformlyDistributedLoad.Name;
 
             return bhomAreaUniformlyDistributedLoad;
         }
+
+        /***************************************************/
 
     }
 }

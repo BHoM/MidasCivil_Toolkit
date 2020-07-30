@@ -26,6 +26,7 @@ using System.Linq;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using System.IO;
+using Microsoft.Office.Interop.Excel;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -78,7 +79,7 @@ namespace BH.Adapter.MidasCivil
                                                    .ToList();
                         List<string> matchingNodes = new List<string>();
                         indexMatches.ForEach(x => matchingNodes.Add(PointLoadNodes[x]));
-                        PointLoad bhomPointLoad = Adapter.Adapters.MidasCivil.Convert.ToPointLoad(distinctPointLoad, matchingNodes, loadcase, loadcaseDictionary, nodeDictionary, i);
+                        PointLoad bhomPointLoad = Adapters.MidasCivil.Convert.ToPointLoad(distinctPointLoad, matchingNodes, loadcase, loadcaseDictionary, nodeDictionary, i, forceUnit, lengthUnit);
                         bhomPointLoads.Add(bhomPointLoad);
 
                         if (String.IsNullOrWhiteSpace(distinctPointLoad.Split(',').ToList()[6]))

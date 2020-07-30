@@ -29,7 +29,12 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static BarPointLoad ToBarPointLoad(string barPointLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static BarPointLoad ToBarPointLoad(string barPointLoad, List<string> associatedBars, string loadcase,
+            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count, string forceUnit, string lengthUnit)
         {
             string[] delimitted = barPointLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
@@ -55,10 +60,20 @@ namespace BH.Adapter.Adapters.MidasCivil
                 axis = LoadAxis.Local;
             }
 
+            double load = 0;
+            if (loadType == "CONLOAD")
+            {
+                load = double.Parse(delimitted[10].Trim()).ForceToSI(forceUnit);
+            }
+            else
+            {
+                load = double.Parse(delimitted[10].Trim()).MomentToSI(forceUnit, lengthUnit);
+            }
+
+
             double XLoad = 0;
             double YLoad = 0;
             double ZLoad = 0;
-            double load = double.Parse(delimitted[10].Trim());
 
             switch (direction)
             {
@@ -97,7 +112,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             if (loadType == "CONLOAD")
             {
-                bhomBarPointLoad = Engine.Structure.Create.BarPointLoad(bhomLoadcase,distA,bhomAssociatedBars, loadVector,null,axis,name);
+                bhomBarPointLoad = Engine.Structure.Create.BarPointLoad(bhomLoadcase, distA, bhomAssociatedBars, loadVector, null, axis, name);
                 bhomBarPointLoad.CustomData[AdapterIdName] = bhomBarPointLoad.Name;
             }
             else
@@ -108,6 +123,9 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             return bhomBarPointLoad;
         }
+
+        /***************************************************/
+
     }
 }
 

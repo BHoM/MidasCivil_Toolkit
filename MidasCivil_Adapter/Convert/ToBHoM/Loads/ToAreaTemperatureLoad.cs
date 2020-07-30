@@ -28,7 +28,12 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static AreaTemperatureLoad ToAreaTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count)
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static AreaTemperatureLoad ToAreaTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase,
+            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count, string temperatureUnit)
         {
             string[] delimitted = temperatureLoad.Split(',');
             List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
@@ -59,9 +64,11 @@ namespace BH.Adapter.Adapters.MidasCivil
                 name = delimitted[1].Trim();
             }
 
-            if (bhomAssociatedFEMeshes.Count!=0)
+            if (bhomAssociatedFEMeshes.Count != 0)
             {
-                AreaTemperatureLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaTemperatureLoad(bhomLoadcase, temperature, bhomAssociatedFEMeshes, LoadAxis.Global, false, name);
+                AreaTemperatureLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaTemperatureLoad(
+                    bhomLoadcase, temperature.DeltaTemperatureToSI(temperatureUnit),
+                    bhomAssociatedFEMeshes, LoadAxis.Global, false, name);
                 bhomAreaUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomAreaUniformlyDistributedLoad.Name;
                 return bhomAreaUniformlyDistributedLoad;
             }
@@ -70,6 +77,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                 return null;
             }
         }
+
+        /***************************************************/
 
     }
 }
