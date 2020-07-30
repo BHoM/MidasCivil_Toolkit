@@ -88,7 +88,7 @@ namespace BH.Adapter.MidasCivil
             for (int i = 16; i < meshForceText.Count; i++)
             {
                 List<string> meshForce = meshForceText[i].Split(',').ToList();
-                meshForces.Add(Convert.ToMeshForce(meshForce));
+                meshForces.Add(Convert.ToMeshForce(meshForce, forceUnit, lengthUnit));
             }
 
             return meshForces;

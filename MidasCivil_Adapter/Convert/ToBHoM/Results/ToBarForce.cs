@@ -25,6 +25,7 @@ using BH.oM.Structure.Results;
 
 using System.Linq;
 using System.Collections.Generic;
+using BH.Adapter.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -34,7 +35,7 @@ namespace BH.Adapter.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static BarForce ToBarForce(this List<string> delimitted)
+        public static BarForce ToBarForce(this List<string> delimitted, string forceUnit, string lengthUnit)
         {
             double position = GetBarResultPosition(delimitted[8]);
             //TODO: resolve below identifiers extractable through the API
@@ -49,12 +50,12 @@ namespace BH.Adapter.MidasCivil
                 timeStep,
                 position,
                 divisions,
-                System.Convert.ToDouble(delimitted[11]),
-                System.Convert.ToDouble(delimitted[12]),
-                System.Convert.ToDouble(delimitted[13]),
-                System.Convert.ToDouble(delimitted[14]),
-                System.Convert.ToDouble(delimitted[15]),
-                System.Convert.ToDouble(delimitted[16])
+                System.Convert.ToDouble(delimitted[11]).ForceToSI(forceUnit),
+                System.Convert.ToDouble(delimitted[12]).ForceToSI(forceUnit),
+                System.Convert.ToDouble(delimitted[13]).ForceToSI(forceUnit),
+                System.Convert.ToDouble(delimitted[14]).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(delimitted[15]).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(delimitted[16]).MomentToSI(forceUnit, lengthUnit)
                 );
             return barforce;
         }
