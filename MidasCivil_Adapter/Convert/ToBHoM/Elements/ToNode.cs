@@ -35,16 +35,16 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
 
         public static Node ToNode(this string node, Dictionary<string, Constraint6DOF> supports,
-            Dictionary<string, List<int>> supportAssignments, Dictionary<string, List<int>> springAssignments)
+            Dictionary<string, List<int>> supportAssignments, Dictionary<string, List<int>> springAssignments, string lengthUnit)
         {
             List<string> delimitted = node.Split(',').ToList();
 
             Node bhomNode = Engine.Structure.Create.Node(
                 new Point
                 {
-                    X = double.Parse(delimitted[1].Trim()),
-                    Y = double.Parse(delimitted[2].Trim()),
-                    Z = double.Parse(delimitted[3].Trim())
+                    X = double.Parse(delimitted[1].Trim()).LengthToSI(lengthUnit),
+                    Y = double.Parse(delimitted[2].Trim()).LengthToSI(lengthUnit),
+                    Z = double.Parse(delimitted[3].Trim()).LengthToSI(lengthUnit)
                 }
                 );
 
