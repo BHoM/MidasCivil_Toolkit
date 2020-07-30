@@ -28,7 +28,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static Constraint6DOF ToConstraint6DOF(this string support, string version)
+        public static Constraint6DOF ToConstraint6DOF(this string support, string version, string forceUnit, string lengthUnit)
         {
             List<string> delimitted = support.Split(',').ToList();
             string supportName;
@@ -36,7 +36,6 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<double> stiffness = new List<double>();
 
             int constraint = 0;
-
             string assignment = delimitted[1].Replace(" ",string.Empty);
 
             if(int.TryParse(assignment, out constraint))
@@ -67,7 +66,6 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 else
                 {
-
                     switch(version)
                     {
                         case "8.8.5":
@@ -80,8 +78,16 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 }
                                 else if(delimitted[i].Trim() == "NO")
                                 {
-                                    double spring = double.Parse(delimitted[i+6]);
-                                    if (spring == 1E+016 || spring == 100000)
+                                    double spring;
+                                    if(i < 5)
+                                    {
+                                        spring = double.Parse(delimitted[i + 6]).ForcePerLengthToSI(forceUnit, lengthUnit);
+                                    }
+                                    else
+                                    {
+                                        spring = double.Parse(delimitted[i + 6]).MomentToSI(forceUnit, lengthUnit);
+                                    }
+                                    if (spring > 1E+017.ForcePerLengthToSI(forceUnit,lengthUnit) || spring > 1E+19.MomentToSI(forceUnit, lengthUnit))
                                     {
                                         fixity.Add(true);
                                         stiffness.Add(0);
@@ -106,8 +112,16 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 }
                                 else
                                 {
-                                    double spring = double.Parse(delimitted[i]);
-                                    if (spring == 1E+016 || spring == 100000)
+                                    double spring;
+                                    if (i < 5)
+                                    {
+                                        spring = double.Parse(delimitted[i]).ForcePerLengthToSI(forceUnit, lengthUnit);
+                                    }
+                                    else
+                                    {
+                                        spring = double.Parse(delimitted[i]).MomentToSI(forceUnit, lengthUnit);
+                                    }
+                                    if (spring > 1E+017.ForcePerLengthFromSI(forceUnit, lengthUnit) || spring > 1E+19.MomentFromSI(forceUnit, lengthUnit))
                                     {
                                         fixity.Add(true);
                                         stiffness.Add(0);
