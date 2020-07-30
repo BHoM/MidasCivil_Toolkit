@@ -29,12 +29,12 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static LoadCombination ToLoadCombination(string loadCombination1, string loadCombination2, Dictionary<string, Loadcase> bhomLoadCaseDictionary)
         {
-            /***************************************************/
-            /**** Public Methods                            ****/
-            /***************************************************/
-
             List<string> delimittedLine1 = loadCombination1.Split(',').ToList();
             List<string> delimittedLine2 = loadCombination2.Split(',').ToList();
 

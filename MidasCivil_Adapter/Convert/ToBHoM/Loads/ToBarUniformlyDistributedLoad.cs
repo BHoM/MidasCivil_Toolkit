@@ -24,26 +24,29 @@ using System.Collections.Generic;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
+using Microsoft.Office.Interop.Excel;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static BarUniformlyDistributedLoad ToBarUniformlyDistributedLoad(string barUniformlyDistributedLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
-        {
-            /***************************************************/
-            /**** Public Methods                            ****/
-            /***************************************************/
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
+        public static BarUniformlyDistributedLoad ToBarUniformlyDistributedLoad(string barUniformlyDistributedLoad, List<string> associatedBars,
+            string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary,
+            int count, string forceUnit, string lengthUnit)
+        {
             string[] delimitted = barUniformlyDistributedLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
 
             Loadcase bhomLoadcase;
             loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
 
+            Bar bhomAssociatedBar;
             foreach (string associatedBar in associatedBars)
             {
-                Bar bhomAssociatedBar;
                 barDictionary.TryGetValue(associatedBar, out bhomAssociatedBar);
                 bhomAssociatedBars.Add(bhomAssociatedBar);
             }
@@ -69,7 +72,15 @@ namespace BH.Adapter.Adapters.MidasCivil
             double XLoad = 0;
             double YLoad = 0;
             double ZLoad = 0;
-            double force = double.Parse(delimitted[10].Trim());
+            double force;
+            if (loadType == "UNILOAD")
+            {
+                force = double.Parse(delimitted[10].Trim()).ForcePerLengthToSI(forceUnit, lengthUnit);
+            }
+            else
+            {
+                force = double.Parse(delimitted[10].Trim()).MomentPerLengthToSI(forceUnit, lengthUnit);
+            }
 
             switch (direction)
             {
@@ -106,12 +117,14 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             if (loadType == "UNILOAD")
             {
-                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(bhomLoadcase, bhomAssociatedBars, loadVector, null, axis, loadProjection, name);
+                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    bhomLoadcase, bhomAssociatedBars, loadVector, null, axis, loadProjection, name);
                 bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
             }
             else
             {
-                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(bhomLoadcase, bhomAssociatedBars, null, loadVector, axis, loadProjection, name);
+                bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(
+                    bhomLoadcase, bhomAssociatedBars, null, loadVector, axis, loadProjection, name);
                 bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
             }
 

@@ -29,12 +29,12 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
         public static Loadcase ToLoadcase(this string loadcase)
         {
-            /***************************************************/
-            /**** Public Methods                            ****/
-            /***************************************************/
-
             List<string> delimitted = loadcase.Split(',').ToList();
             LoadNature nature = LoadNature.Dead;
             ToLoadNature(delimitted[1].Trim(), ref nature);

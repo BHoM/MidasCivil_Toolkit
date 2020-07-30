@@ -31,12 +31,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static GravityLoad ToGravityLoad(List<BHoMObject> objects, string gravityLoad, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, int count)
-        {
-            /***************************************************/
-            /**** Public Methods                            ****/
-            /***************************************************/
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
+        public static GravityLoad ToGravityLoad(List<BHoMObject> objects, string gravityLoad, string loadcase, 
+            Dictionary<string, Loadcase> loadcaseDictionary, int count)
+        {
             string[] delimitted = gravityLoad.Split(',');
 
             Loadcase bhomLoadcase;
@@ -59,7 +60,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 name = delimitted[3].Trim();
             }
 
-            GravityLoad bhomGravityLoad = BH.Engine.Structure.Create.GravityLoad(bhomLoadcase, direction, objects, name);
+            GravityLoad bhomGravityLoad = Engine.Structure.Create.GravityLoad(bhomLoadcase, direction, objects, name);
             bhomGravityLoad.CustomData[AdapterIdName] = bhomGravityLoad.Name;
 
             return bhomGravityLoad;

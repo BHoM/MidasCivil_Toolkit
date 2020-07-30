@@ -99,10 +99,9 @@ namespace BH.Adapter.MidasCivil
                             indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
 
                             BarUniformlyDistributedLoad bhomBarUniformlyDistributedLoad =
-                                Adapter.Adapters.MidasCivil.Convert.ToBarUniformlyDistributedLoad(
-                                    distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i);
+                                Adapters.MidasCivil.Convert.ToBarUniformlyDistributedLoad(
+                                    distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i, forceUnit, lengthUnit);
                             bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
-
 
                             if(String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[17]))
                             {

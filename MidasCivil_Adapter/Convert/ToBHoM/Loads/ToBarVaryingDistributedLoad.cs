@@ -29,12 +29,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static BarVaryingDistributedLoad ToBarVaryingDistributedLoad(string barVaryingDistributedLoad, List<string> associatedBars, string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count)
-        {
-            /***************************************************/
-            /**** Public Methods                            ****/
-            /***************************************************/
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
 
+        public static BarVaryingDistributedLoad ToBarVaryingDistributedLoad(string barVaryingDistributedLoad, List<string> associatedBars, string loadcase,
+            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count, string forceUnit, string lengthUnit)
+        {
             string[] delimitted = barVaryingDistributedLoad.Split(',');
             List<Bar> bhomAssociatedBars = new List<Bar>();
 
@@ -72,8 +73,19 @@ namespace BH.Adapter.Adapters.MidasCivil
             double XEndLoad = 0;
             double YEndLoad = 0;
             double ZEndLoad = 0;
-            double startLoad = double.Parse(delimitted[10].Trim());
-            double endLoad = double.Parse(delimitted[12].Trim());
+
+            double startLoad;
+            double endLoad;
+            if (loadType == "UNILOAD")
+            {
+                startLoad = double.Parse(delimitted[10].Trim()).ForcePerLengthToSI(forceUnit, lengthUnit);
+                endLoad = double.Parse(delimitted[12].Trim()).ForcePerLengthToSI(forceUnit, lengthUnit);
+            }
+            else
+            {
+                startLoad = double.Parse(delimitted[10].Trim()).MomentPerLengthToSI(forceUnit, lengthUnit);
+                endLoad = double.Parse(delimitted[12].Trim()).MomentPerLengthToSI(forceUnit, lengthUnit);
+            }
 
             switch (direction)
             {
@@ -128,12 +140,14 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             if (loadType == "UNILOAD")
             {
-                bhomBarVaryingDistributedLoad = Engine.Structure.Create.BarVaryingDistributedLoad(bhomLoadcase, bhomAssociatedBars, distA, startLoadVector, null, distB, endLoadVector, null, axis, loadProjection, name);
+                bhomBarVaryingDistributedLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
+                    bhomLoadcase, bhomAssociatedBars, distA, startLoadVector, null, distB, endLoadVector, null, axis, loadProjection, name);
                 bhomBarVaryingDistributedLoad.CustomData[AdapterIdName] = bhomBarVaryingDistributedLoad.Name;
             }
             else
             {
-                bhomBarVaryingDistributedLoad = Engine.Structure.Create.BarVaryingDistributedLoad(bhomLoadcase, bhomAssociatedBars, distA, null, startLoadVector, distB, null, endLoadVector, axis, loadProjection, name);
+                bhomBarVaryingDistributedLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
+                    bhomLoadcase, bhomAssociatedBars, distA, null, startLoadVector, distB, null, endLoadVector, axis, loadProjection, name);
                 bhomBarVaryingDistributedLoad.CustomData[AdapterIdName] = bhomBarVaryingDistributedLoad.Name;
             }
 
