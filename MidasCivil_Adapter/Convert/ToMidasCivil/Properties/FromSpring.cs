@@ -32,9 +32,9 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromSpring(this Constraint6DOF constraint6DOF, string version)
+        public static string FromSpring(this Constraint6DOF constraint6DOF, string version, string forceUnit, string lengthUnit)
         {
-            List<double> stiffness = SpringStiffness(constraint6DOF);
+            List<double> stiffness = SpringStiffness(constraint6DOF, forceUnit, lengthUnit);
 
             string midasSpring = "";
 
@@ -44,21 +44,19 @@ namespace BH.Adapter.Adapters.MidasCivil
                     string springFixity = SpringFixity(constraint6DOF);
                     midasSpring = (
                         " " + "," + "LINEAR" + "," + springFixity +
-                        stiffness[0] + "," + stiffness[1] + "," + stiffness[2] + "," +
-                        stiffness[3] + "," + stiffness[4] + "," + stiffness[5] + "," +
-                        "NO, 0, 0, 0, 0, 0, 0," +
-                        constraint6DOF.Name + "," +
-                        "0, 0, 0, 0, 0"
+                        stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
+                        stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
+                        stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
+                        + "," + "NO, 0, 0, 0, 0, 0, 0," + constraint6DOF.Name + "," + "0, 0, 0, 0, 0"
                         );
                     break;
                 default:
                     midasSpring = (
                         " " + "," + "LINEAR" + "," +
-                        stiffness[0] + "," + stiffness[1] + "," + stiffness[2] + "," +
-                        stiffness[3] + "," + stiffness[4] + "," + stiffness[5] + "," +
-                        "NO, 0, 0, 0, 0, 0, 0," +
-                        constraint6DOF.Name + "," +
-                        "0, 0, 0, 0, 0"
+                        stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
+                        stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
+                        stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
+                        + "," + "NO, 0, 0, 0, 0, 0, 0," + constraint6DOF.Name + "," + "0, 0, 0, 0, 0"
                         );
                     break;
             }
@@ -70,7 +68,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static List<double> SpringStiffness(Constraint6DOF constraint6DOF)
+        private static List<double> SpringStiffness(Constraint6DOF constraint6DOF, string forceUnit, string lengthUnit)
         {
             List<double> stiffness = new List<double>();
 
@@ -92,17 +90,17 @@ namespace BH.Adapter.Adapters.MidasCivil
                 {
                     if (i < 3)
                     {
-                        stiffness.Add(100000);
-                        if (!(springs[i] == 100000))
+                        stiffness.Add(ForcePerLengthFromSI(1E17,forceUnit, lengthUnit));
+                        if (!(springs[i] == ForcePerLengthFromSI(1E17, forceUnit, lengthUnit)))
                             Engine.Reflection.Compute.RecordWarning(
-                                DOFType.Fixed + " used, this will overwrite the spring stiffness with 100,000 kN/m");
+                                DOFType.Fixed + " used, this will overwrite the spring stiffness with 1E+17 N/m");
                     }
                     else
                     {
-                        stiffness.Add(1E+016);
-                        if (!(springs[i] == 1E+016))
+                        stiffness.Add(MomentFromSI(1E19, forceUnit, lengthUnit));
+                        if (!(springs[i] == MomentFromSI(1E19, forceUnit, lengthUnit)))
                             Engine.Reflection.Compute.RecordWarning(
-                                DOFType.Fixed + " used, this will overwrite the spring stiffness with 1E+016 kNm/rad");
+                                DOFType.Fixed + " used, this will overwrite the spring stiffness with 1E+019 Nm/rad");
                     }
                 }
                 else if (freedom == DOFType.Free)
