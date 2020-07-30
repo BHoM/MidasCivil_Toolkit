@@ -32,28 +32,28 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromBarUniformlyDistributedLoad(this BarUniformlyDistributedLoad barLoad, string assignedBar, string loadType)
+        public static string FromBarUniformlyDistributedLoad(this BarUniformlyDistributedLoad barLoad, string assignedBar, string loadType, string forceUnit, string lengthUnit)
         {
             string midasBarLoad = null;
-            if (loadType=="Force")
+            if (loadType == "Force")
             {
                 string direction = FromVector(barLoad.Force);
                 midasBarLoad = assignedBar + ",BEAM,UNILOAD," + FromLoadAxis(barLoad.Axis) + direction +
-                                                                    "," + FromLoadProjection(barLoad.Projected) +
-                                                                    ",NO,aDir[1], , , ,0," +
-                                                                    FromVectorDirection(barLoad.Force, direction) +
-                                                                    ",1," + FromVectorDirection(barLoad.Force, direction) +
-                                                                    ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+                                "," + FromLoadProjection(barLoad.Projected) +
+                                ",NO,aDir[1], , , ,0," +
+                                FromVectorDirection(barLoad.Force, direction).ForcePerLengthFromSI(forceUnit, lengthUnit).ToString() +
+                                ",1," + FromVectorDirection(barLoad.Force, direction).ForcePerLengthFromSI(forceUnit, lengthUnit).ToString() +
+                                ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
             }
             else
             {
                 string direction = FromVector(barLoad.Moment);
                 midasBarLoad = assignedBar + ",BEAM,UNIMOMENT," + FromLoadAxis(barLoad.Axis) + direction +
-                                                                    "," + FromLoadProjection(barLoad.Projected) +
-                                                                    ",NO,aDir[1], , , ,0," +
-                                                                    FromVectorDirection(barLoad.Moment, direction) +
-                                                                    ",1," + FromVectorDirection(barLoad.Moment, direction) +
-                                                                    ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+                                "," + FromLoadProjection(barLoad.Projected) +
+                                ",NO,aDir[1], , , ,0," +
+                                FromVectorDirection(barLoad.Moment, direction).MomentPerLengthFromSI(forceUnit, lengthUnit).ToString() +
+                                ",1," + FromVectorDirection(barLoad.Moment, direction).MomentPerLengthFromSI(forceUnit, lengthUnit).ToString() +
+                                ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
             }
 
             return midasBarLoad;
