@@ -54,7 +54,7 @@ namespace BH.Adapter.MidasCivil
                     }
 
                 }
-                midasNodes.Add(Adapter.Adapters.MidasCivil.Convert.FromNode(node));
+                midasNodes.Add(Adapters.MidasCivil.Convert.FromNode(node, lengthUnit));
             }
 
             File.AppendAllLines(nodePath, midasNodes);
