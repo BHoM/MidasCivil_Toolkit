@@ -46,13 +46,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             for (int i = 0; i < 6; i++)
             {
-                bhomStartFixity.Add(Adapter.Adapters.MidasCivil.Convert.FromFixity(startFixity.Substring(i, 1)));
-                bhomEndFixity.Add(Adapter.Adapters.MidasCivil.Convert.FromFixity(endFixity.Substring(i, 1)));
+                bhomStartFixity.Add(FromFixity(startFixity.Substring(i, 1)));
+                bhomEndFixity.Add(FromFixity(endFixity.Substring(i, 1)));
             }
 
-            Constraint6DOF startConstraint = BH.Engine.Structure.Create.Constraint6DOF(bhomStartFixity[0], bhomStartFixity[1], bhomStartFixity[2],
+            Constraint6DOF startConstraint = Engine.Structure.Create.Constraint6DOF(bhomStartFixity[0], bhomStartFixity[1], bhomStartFixity[2],
                                                                                        bhomStartFixity[3], bhomStartFixity[4], bhomStartFixity[5], "StartConstraint");
-            Constraint6DOF endConstraint = BH.Engine.Structure.Create.Constraint6DOF(bhomEndFixity[0], bhomEndFixity[1], bhomEndFixity[2],
+            Constraint6DOF endConstraint = Engine.Structure.Create.Constraint6DOF(bhomEndFixity[0], bhomEndFixity[1], bhomEndFixity[2],
                                                                                      bhomEndFixity[3], bhomEndFixity[4], bhomEndFixity[5], "EndConstraint");
 
             if (!string.IsNullOrWhiteSpace(delimitted[15]))
