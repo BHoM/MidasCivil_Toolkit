@@ -32,9 +32,9 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromSectionProperty(this ISectionProperty sectionProperty)
+        public static string FromSectionProperty(this ISectionProperty sectionProperty, string lengthUnit)
         {
-            if (CreateSection(sectionProperty as dynamic) == null)
+            if (CreateSection(sectionProperty as dynamic, lengthUnit) == null)
             {
                 return null;
             }
@@ -42,7 +42,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 string midasSectionProperty = sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
                  sectionProperty.Name + ",CC, 0, 0, 0, 0, 0, 0, YES, NO," +
-                 CreateSection(sectionProperty as dynamic);
+                 CreateSection(sectionProperty as dynamic, lengthUnit);
 
                 string s3 = sectionProperty.Name;
                 int count3 = 0;
@@ -63,48 +63,48 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static string CreateSection(SteelSection sectionProperty)
+        private static string CreateSection(SteelSection sectionProperty, string lengthUnit)
         {
-            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit);
 
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateSection(ConcreteSection sectionProperty)
+        private static string CreateSection(ConcreteSection sectionProperty, string lengthUnit)
         {
-            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit);
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateSection(TimberSection sectionProperty)
+        private static string CreateSection(TimberSection sectionProperty, string lengthUnit)
         {
-            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit);
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateSection(GenericSection sectionProperty)
+        private static string CreateSection(GenericSection sectionProperty, string lengthUnit)
         {
-            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit);
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateSection(AluminiumSection sectionProperty)
+        private static string CreateSection(AluminiumSection sectionProperty, string lengthUnit)
         {
-            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic);
+            string midasSectionProperty = CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit);
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateSection(ExplicitSection sectionProperty)
+        private static string CreateSection(ExplicitSection sectionProperty, string lengthUnit)
         {
             Engine.Reflection.Compute.RecordError("ExplicitSection not supported in MidasCivil_Toolkit");
             return null;
@@ -112,88 +112,88 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateProfile(RectangleProfile profile)
+        private static string CreateProfile(RectangleProfile profile, string lengthUnit)
         {
             string midasSectionProperty = "SB, 2," +
-                profile.Height + "," + profile.Width +
+                profile.Height.LengthFromSI(lengthUnit) + "," + profile.Width.LengthFromSI(lengthUnit) +
                 " ,0, 0, 0, 0, 0, 0, 0, 0";
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateProfile(BoxProfile profile)
+        private static string CreateProfile(BoxProfile profile, string lengthUnit)
         {
-            double webSpacing = profile.Width - profile.Thickness;
+            double webSpacing = (profile.Width - profile.Thickness).LengthFromSI(lengthUnit);
 
             string midasSectionProperty = "B, 2," +
-                profile.Height + "," + profile.Width + "," + profile.Thickness + "," +
-                profile.Thickness + "," + webSpacing + "," + profile.Thickness +
+                profile.Height.LengthFromSI(lengthUnit) + "," + profile.Width.LengthFromSI(lengthUnit) + "," + profile.Thickness.LengthFromSI(lengthUnit) + "," +
+                profile.Thickness.LengthFromSI(lengthUnit) + "," + webSpacing + "," + profile.Thickness.LengthFromSI(lengthUnit) +
                 ", 0, 0, 0, 0";
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateProfile(FabricatedBoxProfile profile)
+        private static string CreateProfile(FabricatedBoxProfile profile, string lengthUnit)
         {
-            double webSpacing = profile.Width - profile.WebThickness;
+            double webSpacing = (profile.Width - profile.WebThickness).LengthFromSI(lengthUnit);
 
             string midasSectionProperty = "B, 2," +
-                profile.Height + "," + profile.Width + "," + profile.WebThickness + "," +
-                profile.TopFlangeThickness + "," + webSpacing + "," + profile.BotFlangeThickness +
+                profile.Height.LengthFromSI(lengthUnit) + "," + profile.Width.LengthFromSI(lengthUnit) + "," + profile.WebThickness.LengthFromSI(lengthUnit) + "," +
+                profile.TopFlangeThickness.LengthFromSI(lengthUnit) + "," + webSpacing + "," + profile.BotFlangeThickness.LengthFromSI(lengthUnit) +
                 ", 0, 0, 0, 0";
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateProfile(CircleProfile profile)
+        private static string CreateProfile(CircleProfile profile, string lengthUnit)
         {
             string midasSectionProperty = "SR, 2," +
-                profile.Diameter +
+                profile.Diameter.LengthFromSI(lengthUnit) +
                 ", 0, 0, 0, 0, 0, 0, 0, 0, 0";
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateProfile(TubeProfile profile)
+        private static string CreateProfile(TubeProfile profile, string lengthUnit)
         {
             string midasSectionProperty = "P  , 2," +
-                profile.Diameter + "," + profile.Thickness +
+                profile.Diameter.LengthFromSI(lengthUnit) + "," + profile.Thickness.LengthFromSI(lengthUnit) +
                 ", 0, 0, 0, 0, 0, 0, 0, 0";
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateProfile(ISectionProfile profile)
+        private static string CreateProfile(ISectionProfile profile, string lengthUnit)
         {
-            string midasSectionProperty = "H, 2, " + profile.Height + "," + profile.Width + "," +
-                profile.WebThickness + "," + profile.FlangeThickness + "," + profile.Width + "," +
-                profile.FlangeThickness + "," + profile.RootRadius + "," + profile.ToeRadius +
+            string midasSectionProperty = "H, 2, " + profile.Height.LengthFromSI(lengthUnit) + "," + profile.Width.LengthFromSI(lengthUnit) + "," +
+                profile.WebThickness.LengthFromSI(lengthUnit) + "," + profile.FlangeThickness.LengthFromSI(lengthUnit) + "," + profile.Width.LengthFromSI(lengthUnit) + "," +
+                profile.FlangeThickness.LengthFromSI(lengthUnit) + "," + profile.RootRadius.LengthFromSI(lengthUnit) + "," + profile.ToeRadius.LengthFromSI(lengthUnit) +
                 ", 0, 0";
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateProfile(TSectionProfile profile)
+        private static string CreateProfile(TSectionProfile profile, string lengthUnit)
         {
-            string midasSectionProperty = "T, 2," + profile.Height + "," + profile.Width + "," +
-                profile.WebThickness + "," + profile.FlangeThickness +
+            string midasSectionProperty = "T, 2," + profile.Height.LengthFromSI(lengthUnit) + "," + profile.Width.LengthFromSI(lengthUnit) + "," +
+                profile.WebThickness.LengthFromSI(lengthUnit) + "," + profile.FlangeThickness.LengthFromSI(lengthUnit) +
                 ",0, 0, 0, 0, 0, 0";
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateProfile(FabricatedISectionProfile profile)
+        private static string CreateProfile(FabricatedISectionProfile profile, string lengthUnit)
         {
-            string midasSectionProperty = "H, 2, " + profile.Height + "," + profile.TopFlangeWidth + "," +
-                profile.WebThickness + "," + profile.TopFlangeThickness + "," + profile.BotFlangeWidth + "," +
-                profile.BotFlangeThickness + "," + profile.WeldSize +
+            string midasSectionProperty = "H, 2, " + profile.Height.LengthFromSI(lengthUnit) + "," + profile.TopFlangeWidth.LengthFromSI(lengthUnit) + "," +
+                profile.WebThickness.LengthFromSI(lengthUnit) + "," + profile.TopFlangeThickness.LengthFromSI(lengthUnit) + "," + profile.BotFlangeWidth.LengthFromSI(lengthUnit) + "," +
+                profile.BotFlangeThickness.LengthFromSI(lengthUnit) + "," + profile.WeldSize.LengthFromSI(lengthUnit) +
                 ", 0, 0, 0";
 
             Engine.Reflection.Compute.RecordWarning(
@@ -205,10 +205,10 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateProfile(AngleProfile profile)
+        private static string CreateProfile(AngleProfile profile, string lengthUnit)
         {
-            string midasSectionProperty = "L, 2," + profile.Height + "," + profile.Width + "," +
-                profile.WebThickness + "," + profile.FlangeThickness +
+            string midasSectionProperty = "L, 2," + profile.Height.LengthFromSI(lengthUnit) + "," + profile.Width.LengthFromSI(lengthUnit) + "," +
+                profile.WebThickness.LengthFromSI(lengthUnit) + "," + profile.FlangeThickness.LengthFromSI(lengthUnit) +
                 ", 0, 0, 0, 0, 0, 0";
 
             return midasSectionProperty;
@@ -216,26 +216,27 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateProfile(ChannelProfile profile)
+        private static string CreateProfile(ChannelProfile profile, string lengthUnit)
         {
-            string midasSectionProperty = "C  , 2," + profile.Height + "," + profile.FlangeWidth + "," + profile.WebThickness + "," +
-                profile.FlangeThickness + "," + profile.FlangeWidth + "," + profile.FlangeThickness + ", 0, 0, 0, 0";
+            string midasSectionProperty = "C  , 2," + profile.Height.LengthFromSI(lengthUnit) + "," + profile.FlangeWidth.LengthFromSI(lengthUnit) + "," + 
+                profile.WebThickness.LengthFromSI(lengthUnit) + "," + profile.FlangeThickness.LengthFromSI(lengthUnit) + "," + 
+                profile.FlangeWidth.LengthFromSI(lengthUnit) + "," + profile.FlangeThickness.LengthFromSI(lengthUnit) + ", 0, 0, 0, 0";
             return midasSectionProperty;
         }
 
         /***************************************************/
 
-        private static string CreateProfile(GeneralisedFabricatedBoxProfile profile)
+        private static string CreateProfile(GeneralisedFabricatedBoxProfile profile, string lengthUnit)
         {
             double webSpacing = 0;
             if (profile.TopLeftCorbelWidth != 0 || profile.TopRightCorbelWidth != 0 || profile.BotLeftCorbelWidth != 0 || profile.BotRightCorbelWidth != 0)
             {
-                webSpacing = profile.Width - profile.TopLeftCorbelWidth - profile.TopRightCorbelWidth - profile.WebThickness;
+                webSpacing = (profile.Width - profile.TopLeftCorbelWidth - profile.TopRightCorbelWidth - profile.WebThickness).LengthFromSI(lengthUnit);
             }
 
             string midasSectionProperty = "B, 2," +
-                profile.Height + "," + profile.Width + "," + profile.WebThickness + "," +
-                profile.TopFlangeThickness + "," + webSpacing + "," + profile.BotFlangeThickness +
+                profile.Height.LengthFromSI(lengthUnit) + "," + profile.Width.LengthFromSI(lengthUnit) + "," + profile.WebThickness.LengthFromSI(lengthUnit) + "," +
+                profile.TopFlangeThickness.LengthFromSI(lengthUnit) + "," + webSpacing + "," + profile.BotFlangeThickness.LengthFromSI(lengthUnit) +
                 ", 0, 0, 0, 0";
 
             Engine.Reflection.Compute.RecordWarning(
@@ -247,7 +248,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateProfile(ZSectionProfile profile)
+        private static string CreateProfile(ZSectionProfile profile, string lengthUnit)
         {
             string[] profilearray = profile.GetType().ToString().Split('.');
             int profileindex = profilearray.Length;
@@ -260,7 +261,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateProfile(FreeFormProfile profile)
+        private static string CreateProfile(FreeFormProfile profile, string lengthUnit)
         {
             string[] profilearray = profile.GetType().ToString().Split('.');
             int profileindex = profilearray.Length;
@@ -273,7 +274,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateProfile(KiteProfile profile)
+        private static string CreateProfile(KiteProfile profile, string lengthUnit)
         {
             string[] profilearray = profile.GetType().ToString().Split('.');
             int profileindex = profilearray.Length;
@@ -286,7 +287,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string CreateProfile(GeneralisedTSectionProfile profile)
+        private static string CreateProfile(GeneralisedTSectionProfile profile, string lengthUnit)
         {
             string[] profilearray = profile.GetType().ToString().Split('.');
             int profileindex = profilearray.Length;

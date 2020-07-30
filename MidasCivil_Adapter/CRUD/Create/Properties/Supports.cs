@@ -43,7 +43,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Constraint6DOF constraint6DOF in supports)
             {
-                string midasBoundaryGroup = Adapter.Adapters.MidasCivil.Convert.FromTag(constraint6DOF.Name);
+                string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(constraint6DOF.Name);
                 CompareGroup(midasBoundaryGroup, boundaryGroupPath);
             }
 
@@ -51,12 +51,12 @@ namespace BH.Adapter.MidasCivil
             {
                 if (MidasCivilAdapter.GetStiffnessVectorModulus(constraint6DOF) > 0)
                 {
-                    midasSprings.Add(Adapter.Adapters.MidasCivil.Convert.FromSpring(constraint6DOF, midasCivilVersion));
+                    midasSprings.Add(Adapters.MidasCivil.Convert.FromSpring(constraint6DOF, midasCivilVersion, forceUnit, lengthUnit));
 
                 }
                 else
                 {
-                    midasSupports.Add(Adapter.Adapters.MidasCivil.Convert.FromSupport(constraint6DOF));
+                    midasSupports.Add(Adapters.MidasCivil.Convert.FromSupport(constraint6DOF));
                 }
             }
 

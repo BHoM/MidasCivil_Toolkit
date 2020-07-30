@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using BH.oM.Structure.MaterialFragments;
 using BH.Engine.Structure;
+using BH.oM.Structure.Results;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -32,7 +33,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromMaterial(this IMaterialFragment material)
+        public static string FromMaterial(this IMaterialFragment material, string forceUnit, string lengthUnit, string temperatureUnit)
         {
             string type = "";
             if (!(material.IMaterialType() == MaterialType.Steel || material.IMaterialType() == MaterialType.Concrete))
@@ -56,9 +57,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasMaterial = (
                     isotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
                     isotropic.Name + ",0,0,,C,NO," +
-                    isotropic.DampingRatio + ",2," + isotropic.YoungsModulus + "," +
-                    isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff + "," +
-                    isotropic.Density * 9.806 + "," + isotropic.Density
+                    isotropic.DampingRatio + ",2," + isotropic.YoungsModulus.PressureFromSI(forceUnit, lengthUnit) + "," +
+                    isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff.InverseDeltaTemperatureFromSI(temperatureUnit) + "," +
+                    isotropic.Density.DensityFromSI(forceUnit, lengthUnit) * 9.806 + "," + isotropic.Density.DensityFromSI(forceUnit, lengthUnit)
                 );
 
 
@@ -81,11 +82,17 @@ namespace BH.Adapter.Adapters.MidasCivil
                      iorthotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
                     iorthotropic.Name + ",0,0,,C,NO," +
                     iorthotropic.DampingRatio + ",3,"
-                    + iorthotropic.YoungsModulus.X + "," + iorthotropic.YoungsModulus.Y + "," + iorthotropic.YoungsModulus.Z + ","
-                    + iorthotropic.ThermalExpansionCoeff.X + "," + iorthotropic.ThermalExpansionCoeff.Y + "," + iorthotropic.ThermalExpansionCoeff.Z + ","
-                    + iorthotropic.ShearModulus.X + "," + iorthotropic.ShearModulus.Y + "," + iorthotropic.ShearModulus.Z + ","
+                    +   iorthotropic.YoungsModulus.X.PressureFromSI(forceUnit, lengthUnit) + "," + 
+                        iorthotropic.YoungsModulus.Y.PressureFromSI(forceUnit, lengthUnit) + "," + 
+                        iorthotropic.YoungsModulus.Z.PressureFromSI(forceUnit, lengthUnit) + ","
+                    +   iorthotropic.ThermalExpansionCoeff.X.InverseDeltaTemperatureFromSI(temperatureUnit) + "," + 
+                        iorthotropic.ThermalExpansionCoeff.Y.InverseDeltaTemperatureFromSI(temperatureUnit) + "," + 
+                        iorthotropic.ThermalExpansionCoeff.Z.InverseDeltaTemperatureFromSI(temperatureUnit) + ","
+                    +   iorthotropic.ShearModulus.X.PressureFromSI(forceUnit, lengthUnit) + "," + 
+                        iorthotropic.ShearModulus.Y.PressureFromSI(forceUnit, lengthUnit) + "," + 
+                        iorthotropic.ShearModulus.Z.PressureFromSI(forceUnit, lengthUnit) + ","
                     + iorthotropic.PoissonsRatio.X + "," + iorthotropic.PoissonsRatio.Y + "," + iorthotropic.PoissonsRatio.Z + ","
-                    + iorthotropic.Density * 9.806 + "," + iorthotropic.Density
+                    + iorthotropic.Density.DensityFromSI(forceUnit, lengthUnit) * 9.806 + "," + iorthotropic.Density.DensityFromSI(forceUnit, lengthUnit)
                 );
 
                 string s = iorthotropic.Name;
