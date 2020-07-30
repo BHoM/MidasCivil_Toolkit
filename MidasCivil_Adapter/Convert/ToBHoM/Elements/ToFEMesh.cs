@@ -52,7 +52,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             if (!(bhomSurfaceProperties.Count() == 0))
             {
-                bhomSurfaceProperties.TryGetValue(delimitted[3].Replace(" ", ""), out bhomSurfaceProperty);
+                bhomSurfaceProperties.TryGetValue(delimitted[3].Trim(), out bhomSurfaceProperty);
 
                 if (!(bhomMaterials.Count() == 0))
                 {

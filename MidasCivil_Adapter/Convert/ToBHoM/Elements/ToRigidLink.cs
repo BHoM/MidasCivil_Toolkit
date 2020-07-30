@@ -44,12 +44,12 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<string> slaves = delimitted[2].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
             List<int> assignments = MidasCivilAdapter.GetAssignmentIds(slaves);
 
-            bool x = Adapter.Adapters.MidasCivil.Convert.FromFixity(fixity.Substring(0, 1));
-            bool y = Adapter.Adapters.MidasCivil.Convert.FromFixity(fixity.Substring(1, 1));
-            bool z = Adapter.Adapters.MidasCivil.Convert.FromFixity(fixity.Substring(2, 1));
-            bool xx = Adapter.Adapters.MidasCivil.Convert.FromFixity(fixity.Substring(3, 1));
-            bool yy = Adapter.Adapters.MidasCivil.Convert.FromFixity(fixity.Substring(4, 1));
-            bool zz = Adapter.Adapters.MidasCivil.Convert.FromFixity(fixity.Substring(5, 1));
+            bool x = FromFixity(fixity.Substring(0, 1));
+            bool y = FromFixity(fixity.Substring(1, 1));
+            bool z = FromFixity(fixity.Substring(2, 1));
+            bool xx = FromFixity(fixity.Substring(3, 1));
+            bool yy = FromFixity(fixity.Substring(4, 1));
+            bool zz = FromFixity(fixity.Substring(5, 1));
 
             LinkConstraint constraint = new LinkConstraint { XtoX = x, YtoY = y, ZtoZ = z, XXtoXX = xx, YYtoYY = yy, ZZtoZZ = zz };
 
