@@ -31,14 +31,14 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromPointLoad(this PointLoad pointLoad, string assignedNode)
+        public static string FromPointLoad(this PointLoad pointLoad, string assignedNode, string forceUnit, string lengthUnit)
         {
-            string midasPointLoad = assignedNode + "," + pointLoad.Force.X.ToString() +
-                                                    "," + pointLoad.Force.Y.ToString() +
-                                                    "," + pointLoad.Force.Z.ToString() +
-                                                    "," + pointLoad.Moment.X.ToString() +
-                                                    "," + pointLoad.Moment.Y.ToString() +
-                                                    "," + pointLoad.Moment.Z.ToString() +
+            string midasPointLoad = assignedNode + "," + pointLoad.Force.X.ForceFromSI(forceUnit).ToString() +
+                                                    "," + pointLoad.Force.Y.ForceFromSI(forceUnit).ToString() +
+                                                    "," + pointLoad.Force.Z.ForceFromSI(forceUnit).ToString() +
+                                                    "," + pointLoad.Moment.X.MomentFromSI(forceUnit, lengthUnit).ToString() +
+                                                    "," + pointLoad.Moment.Y.MomentFromSI(forceUnit, lengthUnit).ToString() +
+                                                    "," + pointLoad.Moment.Z.MomentFromSI(forceUnit, lengthUnit).ToString() +
                                                     "," + pointLoad.Name;
             return midasPointLoad;
         }

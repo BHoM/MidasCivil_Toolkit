@@ -36,15 +36,13 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromAreaUniformlyDistributedLoad(this AreaUniformlyDistributedLoad femeshLoad, string assignedFEMesh)
+        public static string FromAreaUniformlyDistributedLoad(this AreaUniformlyDistributedLoad femeshLoad, string assignedFEMesh, string forceUnit, string lengthUnit)
         {
-            string midasFEMeshLoad = null;
-
             string direction = FromVector(femeshLoad.Pressure);
-            midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
-                                                                    ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) +
-                                                                    ", " + FromVectorDirection(femeshLoad.Pressure, direction) +
-                                                                    ", 0, 0, 0, 0, " + femeshLoad.Name;
+            string midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
+                                    ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) + ", " +
+                                    FromVectorDirection(femeshLoad.Pressure, direction).PressureFromSI(forceUnit, lengthUnit).ToString() +
+                                    ", 0, 0, 0, 0, " + femeshLoad.Name;
 
             return midasFEMeshLoad;
         }

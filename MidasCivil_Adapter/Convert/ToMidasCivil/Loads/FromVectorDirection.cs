@@ -32,21 +32,21 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromVectorDirection(Vector bhomVector, string direction)
+        public static double FromVectorDirection(Vector bhomVector, string direction)
         {
-            string MCLoad = "0";
+            double MCLoad = 0;
 
             if (direction == "X")
             {
-                MCLoad = bhomVector.X.ToString();
+                MCLoad = bhomVector.X;
             }
             else if (direction == "Y")
             {
-                MCLoad = bhomVector.Y.ToString();
+                MCLoad = bhomVector.Y;
             }
             else
             {
-                MCLoad = bhomVector.Z.ToString();
+                MCLoad = bhomVector.Z;
             }
 
             return MCLoad;
