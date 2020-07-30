@@ -115,6 +115,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Units_Engine">
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Units_Engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\AdapterIdName.cs" />
@@ -135,7 +139,6 @@
     <Compile Include="Convert\ToBHoM\Loads\ToLoadNature.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToPointForce.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToBarRelease.cs" />
-    <Compile Include="Convert\ToBHoM\Properties\ToConcreteSection.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToConstraint6DOF.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToMaterials.cs" />
     <Compile Include="Convert\ToBHoM\Properties\ToProfile.cs" />
@@ -176,6 +179,32 @@
     <Compile Include="Convert\ToMidasCivil\Properties\FromSupport.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromSurfaceProperty.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromTag.cs" />
+    <Compile Include="Convert\Units\AreaMomentOfInertiaToSI.cs" />
+    <Compile Include="Convert\Units\AreaToSI.cs" />
+    <Compile Include="Convert\Units\AreaFromSI.cs" />
+    <Compile Include="Convert\Units\AreaMomentOfInertiaFromSI.cs" />
+    <Compile Include="Convert\Units\DeltaTemperatureToSI.cs" />
+    <Compile Include="Convert\Units\DensityFromSI.cs" />
+    <Compile Include="Convert\Units\DensityToSI.cs" />
+    <Compile Include="Convert\Units\DeltaTemperatureFromSI.cs" />
+    <Compile Include="Convert\Units\MomentPerLengthFromSI.cs" />
+    <Compile Include="Convert\Units\MomentPerLengthToSI.cs" />
+    <Compile Include="Convert\Units\ForcePerLengthToSI.cs" />
+    <Compile Include="Convert\Units\InverseDeltaTemperatureToSI.cs" />
+    <Compile Include="Convert\Units\InverseDeltaTemperatureFromSI.cs" />
+    <Compile Include="Convert\Units\ForcePerLengthFromSI.cs" />
+    <Compile Include="Convert\Units\TemperatureToSI.cs" />
+    <Compile Include="Convert\Units\TemperatureFromSI.cs" />
+    <Compile Include="Convert\Units\PressureToSI.cs" />
+    <Compile Include="Convert\Units\PressureFromSI.cs" />
+    <Compile Include="Convert\Units\VolumeToSI.cs" />
+    <Compile Include="Convert\Units\VolumeFromSI.cs" />
+    <Compile Include="Convert\Units\MomentFromSI.cs" />
+    <Compile Include="Convert\Units\MomentToSI.cs" />
+    <Compile Include="Convert\Units\ForceToSI.cs" />
+    <Compile Include="Convert\Units\ForceFromSI.cs" />
+    <Compile Include="Convert\Units\LengthToSI.cs" />
+    <Compile Include="Convert\Units\LengthFromSI.cs" />
     <Compile Include="CRUD\Create\Elements\RigidLink.cs" />
     <Compile Include="CRUD\Create\Elements\Element.cs" />
     <Compile Include="CRUD\Create\Elements\Node.cs" />
