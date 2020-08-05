@@ -48,9 +48,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 System.Convert.ToDouble(delimitted[7]).LengthToSI(lengthUnit),
                 System.Convert.ToDouble(delimitted[8]).LengthToSI(lengthUnit),
                 System.Convert.ToDouble(delimitted[9]).LengthToSI(lengthUnit),
-                System.Convert.ToDouble(delimitted[10]).LengthToSI(lengthUnit),
-                System.Convert.ToDouble(delimitted[11]).LengthToSI(lengthUnit),
-                System.Convert.ToDouble(delimitted[12]).LengthToSI(lengthUnit)
+                System.Convert.ToDouble(delimitted[10]),
+                System.Convert.ToDouble(delimitted[11]),
+                System.Convert.ToDouble(delimitted[12])
                 );
 
             return nodeDisplacement;
