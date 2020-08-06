@@ -24,6 +24,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BH.oM.Adapter;
+using BH.oM.Analytical.Results;
 using BH.oM.Base;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.SectionProperties;
@@ -31,6 +32,7 @@ using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.Loads;
+using BH.oM.Structure.Results;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -67,6 +69,8 @@ namespace BH.Adapter.MidasCivil
                 return ReadLoadCombinations(ids as dynamic);
             else if (typeof(ILoad).IsAssignableFrom(type))
                 return ReadLoad(type, ids as dynamic);
+            else if (typeof(IResult).IsAssignableFrom(type))
+                Modules.Structure.ErrorMessages.ReadResultsError(type);
 
             return null;
         }
