@@ -34,12 +34,12 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             string midasLink = "";
 
-            string masterNode = link.MasterNode.CustomData[AdapterIdName].ToString();
-            string slaveNodes = "";
+            string primaryId = link.PrimaryNode.CustomData[AdapterIdName].ToString();
+            string secondaryId = "";
 
-            foreach (Node slaveNode in link.SlaveNodes)
+            foreach (Node secondaryNode in link.SecondaryNodes)
             {
-                slaveNodes = slaveNodes + " " + slaveNode.CustomData[AdapterIdName].ToString();
+                secondaryId = secondaryId + " " + secondaryNode.CustomData[AdapterIdName].ToString();
             }
 
             string fixity = BoolToFixity(link.Constraint.XtoX) +
@@ -49,7 +49,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                             BoolToFixity(link.Constraint.YYtoYY) +
                             BoolToFixity(link.Constraint.ZZtoZZ);
 
-            midasLink = "1, " + masterNode + "," + fixity + "," + slaveNodes + "," + link.Name;
+            midasLink = "1, " + primaryId + "," + fixity + "," + secondaryId + "," + link.Name;
 
             return midasLink;
         }
