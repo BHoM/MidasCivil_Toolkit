@@ -37,12 +37,12 @@ namespace BH.Adapter.Adapters.MidasCivil
             /***************************************************/
 
             string[] delimitted = rigidLink.Split(',');
-            List<Node> slaveNodes = new List<Node>();
+            List<Node> secondaryNodes = new List<Node>();
 
-            string master = delimitted[0].Trim();
+            string primaryId = delimitted[0].Trim();
             string fixity = delimitted[1].Replace(" ", "");
-            List<string> slaves = delimitted[2].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
-            List<int> assignments = MidasCivilAdapter.GetAssignmentIds(slaves);
+            List<string> secondaryIds = delimitted[2].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
+            List<int> assignments = MidasCivilAdapter.GetAssignmentIds(secondaryIds);
 
             bool x = FromFixity(fixity.Substring(0, 1));
             bool y = FromFixity(fixity.Substring(1, 1));
@@ -53,14 +53,14 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             LinkConstraint constraint = new LinkConstraint { XtoX = x, YtoY = y, ZtoZ = z, XXtoXX = xx, YYtoYY = yy, ZZtoZZ = zz };
 
-            Node masterNode;
-            nodes.TryGetValue(master, out masterNode);
+            Node primaryNode;
+            nodes.TryGetValue(primaryId, out primaryNode);
 
             foreach (int assignment in assignments)
             {
-                Node bhomSlave;
-                nodes.TryGetValue(assignment.ToString(), out bhomSlave);
-                slaveNodes.Add(bhomSlave);
+                Node secondaryNode;
+                nodes.TryGetValue(assignment.ToString(), out secondaryNode);
+                secondaryNodes.Add(secondaryNode);
             }
 
             string name = "";
@@ -74,7 +74,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 name = delimitted[3].Trim();
             }
 
-            RigidLink bhomRigidLink = Engine.Structure.Create.RigidLink(masterNode, slaveNodes, constraint);
+            RigidLink bhomRigidLink = Engine.Structure.Create.RigidLink(primaryNode, secondaryNodes, constraint);
             bhomRigidLink.Name = name;
             bhomRigidLink.CustomData[AdapterIdName] = name;
 
