@@ -39,9 +39,9 @@ namespace BH.Adapter.Adapters.MidasCivil
             string[] delimitted = rigidLink.Split(',');
             List<Node> secondaryNodes = new List<Node>();
 
-            string primaryId = delimitted[0].Trim();
-            string fixity = delimitted[1].Replace(" ", "");
-            List<string> secondaryIds = delimitted[2].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
+            string primaryId = delimitted[1].Trim();
+            string fixity = delimitted[2].Replace(" ", "");
+            List<string> secondaryIds = delimitted[3].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
             List<int> assignments = MidasCivilAdapter.GetAssignmentIds(secondaryIds);
 
             bool x = FromFixity(fixity.Substring(0, 1));
@@ -65,13 +65,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             string name = "";
 
-            if (string.IsNullOrWhiteSpace(delimitted[3]))
+            if (string.IsNullOrWhiteSpace(delimitted[4]))
             {
                 name = "RL" + count;
             }
             else
             {
-                name = delimitted[3].Trim();
+                name = delimitted[4].Trim();
             }
 
             RigidLink bhomRigidLink = Engine.Structure.Create.RigidLink(primaryNode, secondaryNodes, constraint);
