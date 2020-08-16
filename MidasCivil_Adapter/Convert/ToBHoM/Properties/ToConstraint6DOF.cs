@@ -42,15 +42,15 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 foreach(char freedom in assignment)
                 {
-                    int.Parse(freedom.ToString());
-                    if (freedom == 1)
+                    int freedoms= int.Parse(freedom.ToString());
+                    if (freedoms == 1)
                     {
-                        fixity.Add(false);
+                        fixity.Add(true);
                         stiffness.Add(0.0);
                     }
                     else
                     {
-                        fixity.Add(true);
+                        fixity.Add(false);
                         stiffness.Add(0.0);
                     }
                 }
