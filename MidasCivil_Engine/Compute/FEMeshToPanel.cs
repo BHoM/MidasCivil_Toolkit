@@ -47,7 +47,7 @@ namespace BH.Engine.Adapters.MidasCivil
             points.Add(mesh.Nodes.First().Position);
             polylines.Add(BH.Engine.Geometry.Create.Polyline(points));
 
-            List<Panel> panels = BH.Engine.Structure.Create.PanelPlanar(polylines);
+            List<Panel> panels = BH.Engine.Structure.Create.Panel(polylines.Cast<ICurve>().ToList());
 
             if (mesh.CustomData.ContainsValue(Convert.AdapterIdName))
                 panels[0].CustomData[Convert.AdapterIdName] = mesh.CustomData[Convert.AdapterIdName];
