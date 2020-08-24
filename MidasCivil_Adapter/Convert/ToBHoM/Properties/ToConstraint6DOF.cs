@@ -36,13 +36,13 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<double> stiffness = new List<double>();
 
             int constraint = 0;
-            string assignment = delimitted[1].Replace(" ",string.Empty);
+            string assignment = delimitted[1].Replace(" ", string.Empty);
 
-            if(int.TryParse(assignment, out constraint))
+            if (int.TryParse(assignment, out constraint))
             {
-                foreach(char freedom in assignment)
+                foreach (char freedom in assignment)
                 {
-                    int freedoms= int.Parse(freedom.ToString());
+                    int freedoms = int.Parse(freedom.ToString());
                     if (freedoms == 1)
                     {
                         fixity.Add(true);
@@ -58,7 +58,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             else
             {
-                if(!(delimitted[1].Trim()=="LINEAR"))
+                if (!(delimitted[1].Trim() == "LINEAR"))
                 {
                     Engine.Reflection.Compute.RecordWarning(
                         "MidasCivil_Toolkit does not support tension/compression only springs or multi-linear springs");
@@ -66,7 +66,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 else
                 {
-                    switch(version)
+                    switch (version)
                     {
                         case "8.8.5":
                             for (int i = 2; i < 8; i++)
@@ -76,10 +76,10 @@ namespace BH.Adapter.Adapters.MidasCivil
                                     fixity.Add(true);
                                     stiffness.Add(0);
                                 }
-                                else if(delimitted[i].Trim() == "NO")
+                                else if (delimitted[i].Trim() == "NO")
                                 {
                                     double spring;
-                                    if(i < 5)
+                                    if (i < 5)
                                     {
                                         spring = double.Parse(delimitted[i + 6]).ForcePerLengthToSI(forceUnit, lengthUnit);
                                     }
@@ -87,7 +87,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                     {
                                         spring = double.Parse(delimitted[i + 6]).MomentToSI(forceUnit, lengthUnit);
                                     }
-                                    if (spring > 1E+017.ForcePerLengthToSI(forceUnit,lengthUnit) || spring > 1E+19.MomentToSI(forceUnit, lengthUnit))
+                                    if (spring > 1E+017.ForcePerLengthToSI(forceUnit, lengthUnit) || spring > 1E+19.MomentToSI(forceUnit, lengthUnit))
                                     {
                                         fixity.Add(true);
                                         stiffness.Add(0);
