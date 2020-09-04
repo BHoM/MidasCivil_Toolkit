@@ -20,9 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Structure.Elements;
+using BH.Engine.Structure;
+
 using System.IO;
 using System.Collections.Generic;
-using BH.oM.Structure.Elements;
+using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -41,14 +44,14 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Bar bar in bars)
             {
-                if (bar.Release.Name != "FixFix" && bar.FEAType == BarFEAType.TensionOnly)
+                if (bar.Release.DescriptionOrName().Take(groupCharacterLimit).ToString() != "FixFix" && bar.FEAType == BarFEAType.TensionOnly)
                 {
                     Engine.Reflection.Compute.RecordError("Tension only elements cannot support bar releases in Midas");
                 }
 
-                if (!(bar.Release == null) && bar.Release.Name != "FixFix")
+                if (!(bar.Release == null) && bar.Release.DescriptionOrName().Take(groupCharacterLimit).ToString() != "FixFix")
                 {
-                    AssignBarRelease(bar.CustomData[AdapterIdName].ToString(), bar.Release.Name, "FRAME-RLS");
+                    AssignBarRelease(bar.CustomData[AdapterIdName].ToString(), bar.Release.DescriptionOrName().Take(groupCharacterLimit).ToString(), "FRAME-RLS");
                 }
 
                 midasElements.Add(Adapters.MidasCivil.Convert.FromBar(bar));

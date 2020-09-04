@@ -20,9 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Structure;
 using BH.oM.Structure.Elements;
+
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 
 namespace BH.Adapter.MidasCivil
@@ -46,11 +49,11 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (MidasCivilAdapter.GetStiffnessVectorModulus(node.Support) > 0)
                     {
-                        AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "SPRING");
+                        AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.DescriptionOrName().Take(groupCharacterLimit).ToString(), "SPRING");
                     }
                     else
                     {
-                        AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.Name, "CONSTRAINT");
+                        AssignProperty(node.CustomData[AdapterIdName].ToString(), node.Support.DescriptionOrName().Take(groupCharacterLimit).ToString(), "CONSTRAINT");
                     }
 
                 }

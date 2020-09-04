@@ -34,7 +34,7 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
 using BH.Engine.Adapters.MidasCivil.Comparer;
-
+using BH.Engine.Structure;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -56,20 +56,20 @@ namespace BH.Adapter.MidasCivil
 
                 AdapterComparers = new Dictionary<Type, object>
                 {
-                    {typeof(Node), new Engine.Structure.NodeDistanceComparer(3) },   //The 3 in here sets how many decimal places to look at for node merging. 3 decimal places gives mm precision
+                    {typeof(Node), new NodeDistanceComparer(3) },   //The 3 in here sets how many decimal places to look at for node merging. 3 decimal places gives mm precision
                     {typeof(Bar), new BarMidPointComparer(3) },
                     {typeof(FEMesh), new MeshCentreComparer() },
-                    {typeof(Constraint6DOF), new BHoMObjectNameComparer() },
-                    {typeof(RigidLink), new BHoMObjectNameComparer() },
-                    {typeof(BarRelease), new BHoMObjectNameComparer() },
-                    {typeof(SteelSection), new BHoMObjectNameComparer() },
-                    {typeof(ISectionProperty), new BHoMObjectNameComparer() },
-                    {typeof(Steel), new BHoMObjectNameComparer() },
-                    {typeof(Concrete), new BHoMObjectNameComparer() },
-                    {typeof(IMaterialFragment), new BHoMObjectNameComparer() },
-                    {typeof(LinkConstraint), new BHoMObjectNameComparer() },
-                    {typeof(ConstantThickness), new BHoMObjectNameComparer() },
-                    {typeof(ISurfaceProperty), new BHoMObjectNameComparer() },
+                    {typeof(Constraint6DOF), new NameOrDescriptionComparer() },
+                    {typeof(RigidLink), new NameOrDescriptionComparer() },
+                    {typeof(BarRelease), new NameOrDescriptionComparer() },
+                    {typeof(SteelSection), new NameOrDescriptionComparer() },
+                    {typeof(ISectionProperty), new NameOrDescriptionComparer() },
+                    {typeof(Steel), new NameOrDescriptionComparer() },
+                    {typeof(Concrete), new NameOrDescriptionComparer() },
+                    {typeof(IMaterialFragment), new NameOrDescriptionComparer() },
+                    {typeof(LinkConstraint), new NameOrDescriptionComparer() },
+                    {typeof(ConstantThickness), new NameOrDescriptionComparer() },
+                    {typeof(ISurfaceProperty), new NameOrDescriptionComparer() },
                     {typeof(Loadcase), new BHoMObjectNameComparer() },
                     {typeof(PointLoad), new BHoMObjectNameComparer() },
                     {typeof(GravityLoad), new BHoMObjectNameComparer() },
