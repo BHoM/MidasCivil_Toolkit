@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Constraint6DOF constraint6DOF in supports)
             {
-                string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString());
+                string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(new string(constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToArray()));
                 CompareGroup(midasBoundaryGroup, boundaryGroupPath);
             }
 

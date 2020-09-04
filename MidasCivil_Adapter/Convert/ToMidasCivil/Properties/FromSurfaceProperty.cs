@@ -60,7 +60,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                     case "8.8.5":
                         midasSurfaceProperty =
-                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + "," + bhomSurfaceProperty.DescriptionOrName().Take(groupCharacterLimit).ToString()
+                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + "," + new string(bhomSurfaceProperty.DescriptionOrName().Take(groupCharacterLimit).ToArray())
                         + ",VALUE,Yes," + bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,Yes,0,0";
                         break;
                     default:
