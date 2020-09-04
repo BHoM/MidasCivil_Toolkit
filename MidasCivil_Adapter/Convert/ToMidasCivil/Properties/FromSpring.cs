@@ -20,9 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
 using BH.Adapter.MidasCivil;
 using BH.oM.Structure.Constraints;
+using BH.Engine.Structure;
+
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -32,7 +35,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromSpring(this Constraint6DOF constraint6DOF, string version, string forceUnit, string lengthUnit)
+        public static string FromSpring(this Constraint6DOF constraint6DOF, string version, string forceUnit, string lengthUnit, int groupCharacterLimit)
         {
             List<double> stiffness = SpringStiffness(constraint6DOF, forceUnit, lengthUnit);
 
@@ -41,13 +44,13 @@ namespace BH.Adapter.Adapters.MidasCivil
             switch (version)
             {
                 case "8.8.5":
-                    string springFixity = SpringFixity(constraint6DOF);
+                    string springFixity = SpringFixity(constraint6DOF, groupCharacterLimit);
                     midasSpring = (
                         " " + "," + "LINEAR" + "," + springFixity +
                         stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
-                        + "," + "NO, 0, 0, 0, 0, 0, 0," + constraint6DOF.Name + "," + "0, 0, 0, 0, 0"
+                        + "," + "NO, 0, 0, 0, 0, 0, 0," + constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString() + "," + "0, 0, 0, 0, 0"
                         );
                     break;
                 default:
@@ -56,7 +59,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
-                        + "," + "NO, 0, 0, 0, 0, 0, 0," + constraint6DOF.Name + "," + "0, 0, 0, 0, 0"
+                        + "," + "NO, 0, 0, 0, 0, 0, 0," + constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString() + "," + "0, 0, 0, 0, 0"
                         );
                     break;
             }
@@ -118,7 +121,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        private static string SpringFixity(Constraint6DOF constraint6DOF)
+        private static string SpringFixity(Constraint6DOF constraint6DOF, int groupCharacterLimit)
         {
             List<DOFType> freedoms = new List<DOFType>
             {
@@ -133,7 +136,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 if (!(MidasCivilAdapter.GetSupportedDOFType(freedom)))
                 {
                     Engine.Reflection.Compute.RecordWarning(
-                        "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Fixed);
+                        "Unsupported DOFType in " + constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString() + " assumed to be" + DOFType.Fixed);
                     support = support + "YES,";
                 }
 

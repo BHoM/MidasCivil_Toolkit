@@ -20,9 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Structure.Constraints;
+using BH.Engine.Structure;
+
 using System.Collections.Generic;
 using System.IO;
-using BH.oM.Structure.Constraints;
+using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -43,7 +46,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Constraint6DOF constraint6DOF in supports)
             {
-                string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(constraint6DOF.Name);
+                string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString());
                 CompareGroup(midasBoundaryGroup, boundaryGroupPath);
             }
 
@@ -51,7 +54,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if (MidasCivilAdapter.GetStiffnessVectorModulus(constraint6DOF) > 0)
                 {
-                    midasSprings.Add(Adapters.MidasCivil.Convert.FromSpring(constraint6DOF, midasCivilVersion, forceUnit, lengthUnit));
+                    midasSprings.Add(Adapters.MidasCivil.Convert.FromSpring(constraint6DOF, midasCivilVersion, forceUnit, lengthUnit, groupCharacterLimit));
 
                 }
                 else

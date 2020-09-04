@@ -74,7 +74,8 @@ namespace BH.Adapter.MidasCivil
                 .Select(x => x.Split(',').ToList())
                 .ToList();
 
-            Dictionary<string, ISectionProperty> materialSections = GetSectionMaterialCombinations(materialSectionCombos, bhomMaterials, bhomSectionProperties);
+            Dictionary<string, ISectionProperty> materialSections = GetSectionMaterialCombinations(
+                materialSectionCombos, bhomMaterials, bhomSectionProperties);
 
             foreach (string bar in barText)
             {

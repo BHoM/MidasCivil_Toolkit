@@ -39,7 +39,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static string FromSupport(this Constraint6DOF constraint6DOF, int groupCharacterLimit)
         {
-            string midasSupport = " " + "," + SupportString(constraint6DOF) + "," +
+            string midasSupport = " " + "," + SupportString(constraint6DOF, groupCharacterLimit) + "," +
                  constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString();
 
             return midasSupport;
@@ -49,7 +49,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static string SupportString(Constraint6DOF constraint6DOF)
+        private static string SupportString(Constraint6DOF constraint6DOF, int groupCharacterLimit)
         {
             List<DOFType> freedoms = new List<DOFType>
             {
@@ -74,7 +74,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     else
                     {
                         Engine.Reflection.Compute.RecordWarning(
-                                     "Unsupported DOFType in " + constraint6DOF.Name + " assumed to be" + DOFType.Free);
+                                     "Unsupported DOFType in " + constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString() + " assumed to be" + DOFType.Free);
                         support = support + "0";
                     }
                 }
