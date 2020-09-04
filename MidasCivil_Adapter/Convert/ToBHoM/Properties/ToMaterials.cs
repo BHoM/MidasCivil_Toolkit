@@ -50,7 +50,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     density = (double.Parse(delimited[13].Trim()) / 9.806).DensityToSI(forceUnit, lengthUnit);
                 }
             }
-            else if(delimited.Count() == 24)
+            else if (delimited.Count() == 24)
             {
                 density = double.Parse(delimited[23].Trim()).DensityToSI(forceUnit, lengthUnit);
                 if (density == 0)

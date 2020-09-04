@@ -23,6 +23,8 @@
 using System.IO;
 using System.Collections.Generic;
 using BH.oM.Structure.Constraints;
+using BH.Engine.Structure;
+using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -40,11 +42,11 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarRelease release in releases)
             {
-                if (release.Name != "FixFix")
+                if (release.DescriptionOrName().Take(groupCharacterLimit).ToString() != "FixFix")
                 {
-                    string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(release.Name);
+                    string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(release.DescriptionOrName().Take(groupCharacterLimit).ToString());
                     CompareGroup(midasBoundaryGroup, boundaryGroupPath);
-                    midasBarReleases.AddRange(Adapters.MidasCivil.Convert.FromBarRelease(release));
+                    midasBarReleases.AddRange(Adapters.MidasCivil.Convert.FromBarRelease(release, groupCharacterLimit));
                 }
             }
 

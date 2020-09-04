@@ -56,7 +56,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    midasSupports.Add(Adapters.MidasCivil.Convert.FromSupport(constraint6DOF));
+                    midasSupports.Add(Adapters.MidasCivil.Convert.FromSupport(constraint6DOF, groupCharacterLimit));
                 }
             }
 
