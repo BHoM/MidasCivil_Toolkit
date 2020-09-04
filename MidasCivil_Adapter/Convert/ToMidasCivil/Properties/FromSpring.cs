@@ -50,7 +50,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
-                        + "," + "NO, 0, 0, 0, 0, 0, 0," + new string(constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToArray()) + "," + "0, 0, 0, 0, 0"
+                        + "," + "NO, 0, 0, 0, 0, 0, 0," + new string(constraint6DOF.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) + "," + "0, 0, 0, 0, 0"
                         );
                     break;
                 default:
@@ -59,7 +59,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
-                        + "," + "NO, 0, 0, 0, 0, 0, 0," + new string(constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToArray()) + "," + "0, 0, 0, 0, 0"
+                        + "," + "NO, 0, 0, 0, 0, 0, 0," + new string(constraint6DOF.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) + "," + "0, 0, 0, 0, 0"
                         );
                     break;
             }
@@ -136,7 +136,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 if (!(MidasCivilAdapter.GetSupportedDOFType(freedom)))
                 {
                     Engine.Reflection.Compute.RecordWarning(
-                        "Unsupported DOFType in " + new string(constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToArray()) + " assumed to be" + DOFType.Fixed);
+                        "Unsupported DOFType in " + new string(constraint6DOF.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) + " assumed to be" + DOFType.Fixed);
                     support = support + "YES,";
                 }
 

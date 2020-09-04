@@ -55,7 +55,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                     FromDOFType(barRelease.EndRelease.RotationZ);
 
             midasRelease.Add(",NO," + startFixity + ",0,0,0,0,0,0");
-            midasRelease.Add(endFixity + ",0,0,0,0,0,0," + new string(barRelease.DescriptionOrName().Take(groupCharacterLimit).ToArray()));
+            midasRelease.Add(endFixity + ",0,0,0,0,0,0," + new string(barRelease.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()));
 
             return midasRelease;
         }
