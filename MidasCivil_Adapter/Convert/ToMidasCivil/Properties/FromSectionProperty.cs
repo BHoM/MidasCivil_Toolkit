@@ -43,7 +43,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             else
             {
                 string midasSectionProperty = sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
-                 new string(sectionProperty.DescriptionOrName().Take(sectionPropertyCharacterLimit).ToArray()) + ",CC, 0, 0, 0, 0, 0, 0, YES, NO," +
+                 new string(sectionProperty.DescriptionOrName().Replace(",","").Take(sectionPropertyCharacterLimit).ToArray()) + ",CC, 0, 0, 0, 0, 0, 0, YES, NO," +
                  CreateSection(sectionProperty as dynamic, lengthUnit);
 
                 return midasSectionProperty;

@@ -44,14 +44,14 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Bar bar in bars)
             {
-                if (new string(bar.Release.DescriptionOrName().Take(groupCharacterLimit).ToArray()) != "FixFix" && bar.FEAType == BarFEAType.TensionOnly)
+                if (new string(bar.Release.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) != "FixFix" && bar.FEAType == BarFEAType.TensionOnly)
                 {
                     Engine.Reflection.Compute.RecordError("Tension only elements cannot support bar releases in Midas");
                 }
 
-                if (!(bar.Release == null) && new string(bar.Release.DescriptionOrName().Take(groupCharacterLimit).ToArray()) != "FixFix")
+                if (!(bar.Release == null) && new string(bar.Release.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) != "FixFix")
                 {
-                    AssignBarRelease(bar.CustomData[AdapterIdName].ToString(), new string(bar.Release.DescriptionOrName().Take(groupCharacterLimit).ToArray()), "FRAME-RLS");
+                    AssignBarRelease(bar.CustomData[AdapterIdName].ToString(), new string(bar.Release.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()), "FRAME-RLS");
                 }
 
                 midasElements.Add(Adapters.MidasCivil.Convert.FromBar(bar));

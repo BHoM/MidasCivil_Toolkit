@@ -42,9 +42,9 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarRelease release in releases)
             {
-                if (release.DescriptionOrName().Take(groupCharacterLimit).ToString() != "FixFix")
+                if (release.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToString() != "FixFix")
                 {
-                    string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(new string(release.DescriptionOrName().Take(groupCharacterLimit).ToArray()));
+                    string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(new string(release.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()));
                     CompareGroup(midasBoundaryGroup, boundaryGroupPath);
                     midasBarReleases.AddRange(Adapters.MidasCivil.Convert.FromBarRelease(release, groupCharacterLimit));
                 }
