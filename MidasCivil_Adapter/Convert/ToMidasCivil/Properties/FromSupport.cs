@@ -40,7 +40,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         public static string FromSupport(this Constraint6DOF constraint6DOF, int groupCharacterLimit)
         {
             string midasSupport = " " + "," + SupportString(constraint6DOF, groupCharacterLimit) + "," +
-                 constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString();
+                 new string(constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToArray());
 
             return midasSupport;
         }
@@ -74,7 +74,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     else
                     {
                         Engine.Reflection.Compute.RecordWarning(
-                                     "Unsupported DOFType in " + constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString() + " assumed to be" + DOFType.Free);
+                                     "Unsupported DOFType in " + new string(constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToArray()) + " assumed to be" + DOFType.Free);
                         support = support + "0";
                     }
                 }

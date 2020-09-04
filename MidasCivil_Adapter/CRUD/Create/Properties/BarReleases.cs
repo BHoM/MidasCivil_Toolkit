@@ -44,7 +44,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if (release.DescriptionOrName().Take(groupCharacterLimit).ToString() != "FixFix")
                 {
-                    string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(release.DescriptionOrName().Take(groupCharacterLimit).ToString());
+                    string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(new string(release.DescriptionOrName().Take(groupCharacterLimit).ToArray()));
                     CompareGroup(midasBoundaryGroup, boundaryGroupPath);
                     midasBarReleases.AddRange(Adapters.MidasCivil.Convert.FromBarRelease(release, groupCharacterLimit));
                 }
