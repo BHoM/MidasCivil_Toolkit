@@ -20,8 +20,12 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
+
+using BH.Engine.Structure;
 using BH.oM.Structure.SurfaceProperties;
+
+using System;
+using System.Linq;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -31,9 +35,9 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromSurfaceProperty(this ISurfaceProperty surfaceProperty, string version, string lengthUnit)
+        public static string FromSurfaceProperty(this ISurfaceProperty surfaceProperty, string version, string lengthUnit, int groupCharacterLimit)
         {
-            string midasSurfaceProperty = CreateSurfaceProfile(surfaceProperty as dynamic, version, lengthUnit);
+            string midasSurfaceProperty = CreateSurfaceProfile(surfaceProperty as dynamic, version, lengthUnit, groupCharacterLimit);
 
             return midasSurfaceProperty;
         }
@@ -42,7 +46,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty, string version, string lengthUnit)
+        private static string CreateSurfaceProfile(ConstantThickness bhomSurfaceProperty, string version, string lengthUnit, int groupCharacterLimit)
         {
             if (bhomSurfaceProperty.Thickness == 0)
             {
@@ -56,8 +60,8 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                     case "8.8.5":
                         midasSurfaceProperty =
-                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + "," + bhomSurfaceProperty.Name + ",VALUE,Yes," +
-                        bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,Yes,0,0";
+                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + "," + bhomSurfaceProperty.DescriptionOrName().Take(groupCharacterLimit).ToString()
+                        + ",VALUE,Yes," + bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,Yes,0,0";
                         break;
                     default:
                         midasSurfaceProperty =

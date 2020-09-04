@@ -23,7 +23,7 @@
 using System.Collections.Generic;
 using BH.oM.Structure.MaterialFragments;
 using BH.Engine.Structure;
-using BH.oM.Structure.Results;
+using System.Linq;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -33,7 +33,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromMaterial(this IMaterialFragment material, string forceUnit, string lengthUnit, string temperatureUnit)
+        public static string FromMaterial(this IMaterialFragment material, string forceUnit, string lengthUnit, string temperatureUnit, int materialCharacterLimit)
         {
             string type = "";
             if (!(material.IMaterialType() == MaterialType.Steel || material.IMaterialType() == MaterialType.Concrete))
@@ -56,31 +56,18 @@ namespace BH.Adapter.Adapters.MidasCivil
                 IIsotropic isotropic = material as IIsotropic;
                 midasMaterial = (
                     isotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
-                    isotropic.Name + ",0,0,,C,NO," +
+                    isotropic.DescriptionOrName().Take(materialCharacterLimit).ToString() + ",0,0,,C,NO," +
                     isotropic.DampingRatio + ",2," + isotropic.YoungsModulus.PressureFromSI(forceUnit, lengthUnit) + "," +
                     isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff.InverseDeltaTemperatureFromSI(temperatureUnit) + "," +
                     isotropic.Density.DensityFromSI(forceUnit, lengthUnit) * 9.806 + "," + isotropic.Density.DensityFromSI(forceUnit, lengthUnit)
                 );
-
-
-
-                string s2 = isotropic.Name;
-                int count2 = 0;
-                foreach (char c in s2)
-                {
-                    count2++;
-                }
-                if (count2 > 16)
-                {
-                    Engine.Reflection.Compute.RecordWarning("All names must be under 16 characters");
-                }
             }
             else if (material is IOrthotropic)
             {
                 IOrthotropic iorthotropic = material as IOrthotropic;
                 midasMaterial = (
                      iorthotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
-                    iorthotropic.Name + ",0,0,,C,NO," +
+                    iorthotropic.DescriptionOrName().Take(materialCharacterLimit).ToString() + ",0,0,,C,NO," +
                     iorthotropic.DampingRatio + ",3,"
                     +   iorthotropic.YoungsModulus.X.PressureFromSI(forceUnit, lengthUnit) + "," + 
                         iorthotropic.YoungsModulus.Y.PressureFromSI(forceUnit, lengthUnit) + "," + 
@@ -94,18 +81,6 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + iorthotropic.PoissonsRatio.X + "," + iorthotropic.PoissonsRatio.Y + "," + iorthotropic.PoissonsRatio.Z + ","
                     + iorthotropic.Density.DensityFromSI(forceUnit, lengthUnit) * 9.806 + "," + iorthotropic.Density.DensityFromSI(forceUnit, lengthUnit)
                 );
-
-                string s = iorthotropic.Name;
-                int count = 0;
-                foreach (char c in s)
-                {
-                    count++;
-                }
-
-                if (count > 16)
-                {
-                    Engine.Reflection.Compute.RecordWarning("All names must be under 16 characters");
-                }
             }
             return midasMaterial;
         }

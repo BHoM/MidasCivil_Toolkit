@@ -20,10 +20,14 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+
+using BH.Adapter.MidasCivil;
+using BH.Engine.Structure;
+using BH.oM.Structure.Constraints;
+
 using System.IO;
 using System.Collections.Generic;
-using BH.oM.Structure.Constraints;
-using BH.Adapter.MidasCivil;
+using System.Linq;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -33,13 +37,10 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromSupport(this Constraint6DOF constraint6DOF)
+        public static string FromSupport(this Constraint6DOF constraint6DOF, int groupCharacterLimit)
         {
-            string midasSupport = (
-                 " " + "," +
-                 SupportString(constraint6DOF) + "," +
-                 constraint6DOF.Name
-                 );
+            string midasSupport = " " + "," + SupportString(constraint6DOF) + "," +
+                 constraint6DOF.DescriptionOrName().Take(groupCharacterLimit).ToString();
 
             return midasSupport;
         }

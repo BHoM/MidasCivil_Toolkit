@@ -32,14 +32,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static string FromTag(string name)
         {
-            //Check what AUTOTYPE is, seems auto set to 0
-
-            string midasBoundaryGroup = (
-                name + "," +
-                "0"
-            );
-
-            return midasBoundaryGroup;
+            return name + "," + "0";
         }
 
         /***************************************************/

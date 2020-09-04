@@ -181,6 +181,9 @@ namespace BH.Adapter.MidasCivil
         public string lengthUnit;
         public string heatUnit;
         public string temperatureUnit;
+        public int groupCharacterLimit = 80;
+        public int sectionPropertyCharacterLimit = 28;
+        public int materialCharacterLimit = 16;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
 
 

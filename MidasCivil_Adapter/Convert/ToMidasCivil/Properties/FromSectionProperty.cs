@@ -23,6 +23,8 @@
 using System;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Geometry.ShapeProfiles;
+using BH.Engine.Structure;
+using System.Linq;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -32,7 +34,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromSectionProperty(this ISectionProperty sectionProperty, string lengthUnit)
+        public static string FromSectionProperty(this ISectionProperty sectionProperty, string lengthUnit, int sectionPropertyCharacterLimit)
         {
             if (CreateSection(sectionProperty as dynamic, lengthUnit) == null)
             {
@@ -41,19 +43,9 @@ namespace BH.Adapter.Adapters.MidasCivil
             else
             {
                 string midasSectionProperty = sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
-                 sectionProperty.Name + ",CC, 0, 0, 0, 0, 0, 0, YES, NO," +
+                 sectionProperty.DescriptionOrName().Take(sectionPropertyCharacterLimit).ToString() + ",CC, 0, 0, 0, 0, 0, 0, YES, NO," +
                  CreateSection(sectionProperty as dynamic, lengthUnit);
 
-                string s3 = sectionProperty.Name;
-                int count3 = 0;
-                foreach (char c in s3)
-                {
-                    count3++;
-                }
-                if (count3 > 16)
-                {
-                    Engine.Reflection.Compute.RecordWarning("All names must be under 16 characters");
-                }
                 return midasSectionProperty;
             }
 

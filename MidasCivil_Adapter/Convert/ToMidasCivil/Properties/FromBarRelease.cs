@@ -20,8 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Structure;
 using BH.oM.Structure.Constraints;
+
+using System.IO;
 using System.Collections.Generic;
+using System.Linq;
+using BH.Adapter.MidasCivil;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -31,7 +36,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static List<string> FromBarRelease(this BarRelease barRelease)
+        public static List<string> FromBarRelease(this BarRelease barRelease, int groupCharacterLimit)
         {
             List<string> midasRelease = new List<string>();
 
@@ -50,7 +55,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                     FromDOFType(barRelease.EndRelease.RotationZ);
 
             midasRelease.Add(",NO," + startFixity + ",0,0,0,0,0,0");
-            midasRelease.Add(endFixity + ",0,0,0,0,0,0," + barRelease.Name);
+            midasRelease.Add(endFixity + ",0,0,0,0,0,0," + barRelease.DescriptionOrName().Take(groupCharacterLimit).ToString());
 
             return midasRelease;
         }
