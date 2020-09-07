@@ -33,17 +33,17 @@ namespace BH.Adapter.MidasCivil
 
         public void SetSectionText()
         {
-            List<int> sectionIndexes = midasText.Select((value, index) => new { value, index })
+            List<int> sectionIndexes = m_midasText.Select((value, index) => new { value, index })
                 .Where(x => x.ToString().Contains("*"))
                 .Select(x => x.index)
                 .ToList();
 
-            List<int> loadcaseStarts = midasText.Select((value, index) => new { value, index })
+            List<int> loadcaseStarts = m_midasText.Select((value, index) => new { value, index })
                 .Where(x => x.ToString().Contains("*USE-STLD"))
                 .Select(x => x.index)
                 .ToList();
 
-            List<int> loadcaseEnds = midasText.Select((value, index) => new { value, index })
+            List<int> loadcaseEnds = m_midasText.Select((value, index) => new { value, index })
                 .Where(x => x.ToString().Contains("; End of data for load case"))
                 .Select(x => x.index)
                 .ToList();
@@ -63,7 +63,7 @@ namespace BH.Adapter.MidasCivil
                 int sectionStart = sectionIndexes[i];
                 int sectionEnd = sectionIndexes[i + 1] - 1;
 
-                string sectionHeader = midasText[sectionStart];
+                string sectionHeader = m_midasText[sectionStart];
 
                 if (!(sectionHeader[0] == '*') || loadSectionIndexes.Contains(sectionStart))
                 {
@@ -71,7 +71,7 @@ namespace BH.Adapter.MidasCivil
                 }
 
                 string sectionName = SectionName(sectionHeader);
-                List<string> sectionText = midasText.GetRange(sectionStart, sectionEnd - sectionStart);
+                List<string> sectionText = m_midasText.GetRange(sectionStart, sectionEnd - sectionStart);
 
                 if (loadcaseStarts.Contains(sectionStart))
                 {
@@ -86,13 +86,13 @@ namespace BH.Adapter.MidasCivil
                     {
                         int loadStart = sectionIndexes[k];
                         int loadEnd = sectionIndexes[k + 1] - 1;
-                        string loadHeader = midasText[loadStart];
-                        List<string> loadText = midasText.GetRange(loadStart, loadEnd - loadStart);
+                        string loadHeader = m_midasText[loadStart];
+                        List<string> loadText = m_midasText.GetRange(loadStart, loadEnd - loadStart);
                         if (!(loadHeader[0] == '*'))
                         {
                             continue;
                         }
-                        string loadName = SectionName(midasText[loadStart]);
+                        string loadName = SectionName(m_midasText[loadStart]);
                         WriteSectionText(loadText, loadName, path);
                     }
                 }
