@@ -39,8 +39,8 @@ namespace BH.Adapter.MidasCivil
 
             if (ids.Count() != 0)
             {
-                string constraintPath = directory + "\\TextFiles\\" + "CONSTRAINT" + ".txt";
-                string springPath = directory + "\\TextFiles\\" + "SPRING" + ".txt";
+                string constraintPath = m_directory + "\\TextFiles\\" + "CONSTRAINT" + ".txt";
+                string springPath = m_directory + "\\TextFiles\\" + "SPRING" + ".txt";
                 List<string> paths = new List<string> { constraintPath, springPath };
 
                 foreach (string path in paths)

@@ -48,7 +48,7 @@ namespace BH.Adapter.MidasCivil
 
             Engine.Reflection.Compute.RecordWarning("Note: Midas applies Self Weight to all objects in a given loadcase");
 
-            string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
+            string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
             int i = 1;
 

@@ -49,15 +49,15 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (MidasCivilAdapter.GetStiffnessVectorModulus(node.Support) > 0)
                     {
-                        AssignProperty(node.CustomData[AdapterIdName].ToString(), new string(node.Support.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()), "SPRING");
+                        AssignProperty(node.CustomData[AdapterIdName].ToString(), new string(node.Support.DescriptionOrName().Replace(",","").Take(m_groupCharacterLimit).ToArray()), "SPRING");
                     }
                     else
                     {
-                        AssignProperty(node.CustomData[AdapterIdName].ToString(), new string(node.Support.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()), "CONSTRAINT");
+                        AssignProperty(node.CustomData[AdapterIdName].ToString(), new string(node.Support.DescriptionOrName().Replace(",","").Take(m_groupCharacterLimit).ToArray()), "CONSTRAINT");
                     }
 
                 }
-                midasNodes.Add(Adapters.MidasCivil.Convert.FromNode(node, lengthUnit));
+                midasNodes.Add(Adapters.MidasCivil.Convert.FromNode(node, m_lengthUnit));
             }
 
             File.AppendAllLines(nodePath, midasNodes);

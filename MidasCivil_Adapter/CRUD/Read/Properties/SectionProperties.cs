@@ -53,7 +53,7 @@ namespace BH.Adapter.MidasCivil
                     string sectionProperties3 = sectionProperties[i + 3];
 
                     bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(
-                        sectionProfile, sectionProperties1, sectionProperties2, sectionProperties3, lengthUnit);
+                        sectionProfile, sectionProperties1, sectionProperties2, sectionProperties3, m_lengthUnit);
 
                     i = i + 3;
                 }
@@ -68,7 +68,7 @@ namespace BH.Adapter.MidasCivil
                     else
                     {
                         bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(
-                            sectionProperty, lengthUnit);
+                            sectionProperty, m_lengthUnit);
                     }
 
                 }

@@ -81,14 +81,14 @@ namespace BH.Adapter.MidasCivil
         private IEnumerable<IResult> ExtractMeshForce(List<int> ids, List<string> loadcaseIds)
         {
             /***************************************************/
-            string filePath = directory + "\\Plate Force(UL_Local).xls";
+            string filePath = m_directory + "\\Plate Force(UL_Local).xls";
             string csvPath = ExcelToCsv(filePath);
             List<string> meshForceText = File.ReadAllLines(csvPath).ToList();
             List<MeshForce> meshForces = new List<MeshForce>();
             for (int i = 16; i < meshForceText.Count; i++)
             {
                 List<string> meshForce = meshForceText[i].Split(',').ToList();
-                meshForces.Add(Convert.ToMeshForce(meshForce, forceUnit, lengthUnit));
+                meshForces.Add(Convert.ToMeshForce(meshForce, m_forceUnit, m_lengthUnit));
             }
 
             return meshForces;
@@ -99,7 +99,7 @@ namespace BH.Adapter.MidasCivil
         private IEnumerable<IResult> ExtractMeshStress(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
         {
             /***************************************************/
-            string filePath = directory + "\\Plate Stress(L).xls";
+            string filePath = m_directory + "\\Plate Stress(L).xls";
             string csvPath = ExcelToCsv(filePath);
             List<string> meshStressText = File.ReadAllLines(csvPath).ToList();
             List<MeshStress> meshStresses = new List<MeshStress>();
@@ -126,7 +126,7 @@ namespace BH.Adapter.MidasCivil
         private IEnumerable<IResult> ExtractMeshVonMises(List<int> ids, List<string> loadcaseIds, MeshResultLayer meshResultLayer)
         {
             /***************************************************/
-            string filePath = directory + "\\Plate Stress(L).xls";
+            string filePath = m_directory + "\\Plate Stress(L).xls";
             string csvPath = ExcelToCsv(filePath);
             List<string> meshVonMisesText = File.ReadAllLines(csvPath).ToList();
             List<MeshVonMises> meshVonMiseses = new List<MeshVonMises>();

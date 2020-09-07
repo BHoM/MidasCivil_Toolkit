@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
             Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
                         x => x.Name);
 
-            string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
+            string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
             int i = 1;
 
@@ -79,7 +79,7 @@ namespace BH.Adapter.MidasCivil
 
                             AreaUniformlyDistributedLoad bhomAreaUniformlyDistributedLoad =
                                 Adapters.MidasCivil.Convert.ToAreaUniformlyDistributedLoad(
-                                    distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i, forceUnit, lengthUnit);
+                                    distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i, m_forceUnit, m_lengthUnit);
 
                             bhomAreaUniformlyDistributedLoads.Add(bhomAreaUniformlyDistributedLoad);
 

@@ -68,7 +68,7 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractNodeReaction(List<int> ids, List<string> loadcaseIds)
         {
-            string filePath = directory + "\\Reaction(Global).xls";
+            string filePath = m_directory + "\\Reaction(Global).xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> nodeReactionText = File.ReadAllLines(csvPath).ToList();
             List<NodeReaction> nodeReactions = new List<NodeReaction>();
@@ -83,7 +83,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (ids.Contains(System.Convert.ToInt32(nodeReaction[2])) && loadcaseIds.Contains(nodeReaction[3]))
                     {
-                        nodeReactions.Add(Adapters.MidasCivil.Convert.ToNodeReaction(nodeReaction, forceUnit, lengthUnit));
+                        nodeReactions.Add(Adapters.MidasCivil.Convert.ToNodeReaction(nodeReaction, m_forceUnit, m_lengthUnit));
                     }
                 }
 
@@ -96,7 +96,7 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractNodeDisplacement(List<int> ids, List<string> loadcaseIds)
         {
-            string filePath = directory + "\\Displacements(Global).xls";
+            string filePath = m_directory + "\\Displacements(Global).xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> nodeDisplacementText = File.ReadAllLines(csvPath).ToList();
 
@@ -112,7 +112,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (ids.Contains(System.Convert.ToInt32(nodeDisplacement[2])) && loadcaseIds.Contains(nodeDisplacement[3]))
                     {
-                        nodeDisplacements.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(nodeDisplacement, lengthUnit));
+                        nodeDisplacements.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(nodeDisplacement, m_lengthUnit));
                     }
                 }
             }

@@ -42,7 +42,7 @@ namespace BH.Adapter.MidasCivil
             Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
                         x => x.Name);
 
-            string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
+            string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
             int i = 1;
 
@@ -90,7 +90,7 @@ namespace BH.Adapter.MidasCivil
 
                             BarVaryingDistributedLoad bhomBarVaryingDistributedLoad =
                                 Adapters.MidasCivil.Convert.ToBarVaryingDistributedLoad(
-                                    distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i, forceUnit, lengthUnit);
+                                    distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i, m_forceUnit, m_lengthUnit);
                             bhomBarVaryingDistributedLoads.Add(bhomBarVaryingDistributedLoad);
 
 

@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
 
             if (ids.Count() != 0)
             {
-                string path = directory + "\\TextFiles\\" + "LOADCOMB" + ".txt";
+                string path = m_directory + "\\TextFiles\\" + "LOADCOMB" + ".txt";
 
                 if (File.Exists(path))
                 {

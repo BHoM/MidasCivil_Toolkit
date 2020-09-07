@@ -41,7 +41,7 @@ namespace BH.Adapter.MidasCivil
             foreach (Loadcase loadcase in loadcases)
             {
                 loadcase.CustomData[AdapterIdName] = loadcase.Name;
-                Directory.CreateDirectory(directory + "\\TextFiles\\" + loadcase.Name);
+                Directory.CreateDirectory(m_directory + "\\TextFiles\\" + loadcase.Name);
                 midasLoadCases.Add(Adapters.MidasCivil.Convert.FromLoadcase(loadcase));
             }
 

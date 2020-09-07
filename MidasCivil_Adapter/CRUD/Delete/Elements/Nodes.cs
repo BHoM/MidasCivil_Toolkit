@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
 
             if (ids.Count() != 0)
             {
-                string path = directory + "\\TextFiles\\" + "NODE" + ".txt";
+                string path = m_directory + "\\TextFiles\\" + "NODE" + ".txt";
 
                 if (File.Exists(path))
                 {
