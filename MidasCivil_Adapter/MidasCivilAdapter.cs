@@ -111,49 +111,49 @@ namespace BH.Adapter.MidasCivil
                     {
                         throw new Exception("File does not exist, please reference an .mcb file");
                     }
-                    directory = Path.GetDirectoryName(filePath);
+                    m_directory = Path.GetDirectoryName(filePath);
                     string fileName = Path.GetFileNameWithoutExtension(filePath);
-                    string txtFile = directory + "\\" + fileName + ".txt";
-                    string mctFile = directory + "\\" + fileName + ".mct";
+                    string txtFile = m_directory + "\\" + fileName + ".txt";
+                    string mctFile = m_directory + "\\" + fileName + ".mct";
 
                     if (File.Exists(txtFile))
                     {
-                        midasText = File.ReadAllLines(txtFile).ToList();
+                        m_midasText = File.ReadAllLines(txtFile).ToList();
                         SetSectionText();
                     }
                     else if (File.Exists(mctFile))
                     {
-                        midasText = File.ReadAllLines(mctFile).ToList();
+                        m_midasText = File.ReadAllLines(mctFile).ToList();
                         SetSectionText();
                     }
-                    string versionFile = directory + "\\TextFiles\\" + "VERSION" + ".txt";
-                    midasCivilVersion = "8.8.1";
+                    string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
+                    m_midasCivilVersion = "8.8.1";
 
                     if (!(version == ""))
                     {
-                        midasCivilVersion = version.Trim();
+                        m_midasCivilVersion = version.Trim();
                         if (File.Exists(versionFile))
                         {
-                            Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + midasCivilVersion);
+                            Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
                         }
                     }
                     else if (File.Exists(versionFile))
                     {
                         List<string> versionText = GetSectionText("VERSION");
-                        midasCivilVersion = versionText[0].Trim();
+                        m_midasCivilVersion = versionText[0].Trim();
                     }
                     else
                     {
-                        Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + midasCivilVersion);
+                        Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
                     }
 
                     try
                     {
                         List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
-                        forceUnit = units[0].Trim();
-                        lengthUnit = units[1].Trim();
-                        heatUnit = units[2].Trim();
-                        temperatureUnit = units[3].Trim();
+                        m_forceUnit = units[0].Trim();
+                        m_lengthUnit = units[1].Trim();
+                        m_heatUnit = units[2].Trim();
+                        m_temperatureUnit = units[3].Trim();
                     }
                     catch(DirectoryNotFoundException)
                     {
@@ -174,26 +174,21 @@ namespace BH.Adapter.MidasCivil
             return (Process.GetProcessesByName("CVlw").Length > 0) ? true : false;
         }
 
-        public List<string> midasText;
-        public string directory;
-        public string midasCivilVersion;
-        public string forceUnit;
-        public string lengthUnit;
-        public string heatUnit;
-        public string temperatureUnit;
-        public int groupCharacterLimit = 80;
-        public int sectionPropertyCharacterLimit = 28;
-        public int materialCharacterLimit = 16;
-        private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
-
-
         /***************************************************/
         /**** Private  Fields                           ****/
         /***************************************************/
 
-        //Add any comlink object as a private field here, example named:
-
-        //private SoftwareComLink m_softwareNameCom;
+        private List<string> m_midasText;
+        private string m_directory;
+        private string m_midasCivilVersion;
+        private string m_forceUnit;
+        private string m_lengthUnit;
+        private string m_heatUnit;
+        private string m_temperatureUnit;
+        private readonly int m_groupCharacterLimit = 80;
+        private readonly int m_sectionPropertyCharacterLimit = 28;
+        private readonly int m_materialCharacterLimit = 15;
+        private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
 
         /***************************************************/
     }

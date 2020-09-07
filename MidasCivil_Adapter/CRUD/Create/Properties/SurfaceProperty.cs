@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (ISurfaceProperty surfaceProperty in surfaceProperties)
             {
-                midasSectionProperties.Add(Adapters.MidasCivil.Convert.FromSurfaceProperty(surfaceProperty, midasCivilVersion, lengthUnit, groupCharacterLimit));
+                midasSectionProperties.Add(Adapters.MidasCivil.Convert.FromSurfaceProperty(surfaceProperty, m_midasCivilVersion, m_lengthUnit, m_groupCharacterLimit));
             }
 
             File.AppendAllLines(path, midasSectionProperties);

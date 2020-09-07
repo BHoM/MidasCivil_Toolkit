@@ -35,7 +35,7 @@ namespace BH.Adapter.MidasCivil
 
             if (ids.Count()!=0)
             {
-                string[] loadcaseNames = Directory.GetDirectories(directory+ "\\TextFiles\\");
+                string[] loadcaseNames = Directory.GetDirectories(m_directory+ "\\TextFiles\\");
 
                 foreach (string loadcaseName in loadcaseNames)
                 {

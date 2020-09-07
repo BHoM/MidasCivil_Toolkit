@@ -35,7 +35,7 @@ namespace BH.Adapter.MidasCivil
 
         private void WriteSectionText(List<string> sectionText, string section)
         {
-            string path = directory + "\\TextFiles\\" + section + ".txt";
+            string path = m_directory + "\\TextFiles\\" + section + ".txt";
 
             using (StreamWriter sectionFile = File.CreateText(path))
             {

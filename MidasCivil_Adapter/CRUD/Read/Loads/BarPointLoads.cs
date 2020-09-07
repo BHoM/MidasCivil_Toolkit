@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
             Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
                         x => x.Name);
 
-            string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
+            string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
             int j = 1;
 
@@ -107,7 +107,7 @@ namespace BH.Adapter.MidasCivil
                             List<string> matchingBars = new List<string>();
                             indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
 
-                            BarPointLoad bhomBarPointLoad = Adapters.MidasCivil.Convert.ToBarPointLoad(distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary,1,forceUnit, lengthUnit);
+                            BarPointLoad bhomBarPointLoad = Adapters.MidasCivil.Convert.ToBarPointLoad(distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary,1,m_forceUnit, m_lengthUnit);
                             bhomBarPointLoads.Add(bhomBarPointLoad);
 
                             if (String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[17]))

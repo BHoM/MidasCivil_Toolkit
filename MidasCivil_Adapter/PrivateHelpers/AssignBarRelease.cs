@@ -34,7 +34,7 @@ namespace BH.Adapter.MidasCivil
 
         private void AssignBarRelease(string bhomID, string propertyName, string section)
         {
-            string path = directory + "\\TextFiles\\" + section + ".txt";
+            string path = m_directory + "\\TextFiles\\" + section + ".txt";
 
             List<string> propertyText = File.ReadAllLines(path).ToList();
 

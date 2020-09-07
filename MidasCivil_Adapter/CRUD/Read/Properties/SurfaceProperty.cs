@@ -42,7 +42,7 @@ namespace BH.Adapter.MidasCivil
                 string surfaceProperty = surfaceProperties[i];
                 string type = "";
 
-                switch (midasCivilVersion)
+                switch (m_midasCivilVersion)
                 {
                     case "8.8.5":
                         type = surfaceProperty.Split(',')[2].Trim();
@@ -62,7 +62,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else if (type == "VALUE")
                 {
-                    bhomSurfaceProperty = Adapters.MidasCivil.Convert.ToSurfaceProperty(surfaceProperty, midasCivilVersion, lengthUnit);
+                    bhomSurfaceProperty = Adapters.MidasCivil.Convert.ToSurfaceProperty(surfaceProperty, m_midasCivilVersion, m_lengthUnit);
                     bhomSurfaceProperties.Add(bhomSurfaceProperty);
                 }
             }

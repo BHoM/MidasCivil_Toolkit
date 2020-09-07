@@ -52,7 +52,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedFEMesh in assignedFEMeshes)
                 {
-                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromAreaTemperatureLoad(areaTemperatureLoad, assignedFEMesh, temperatureUnit));
+                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromAreaTemperatureLoad(areaTemperatureLoad, assignedFEMesh, m_temperatureUnit));
                 }
 
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);

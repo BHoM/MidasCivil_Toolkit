@@ -94,7 +94,7 @@ namespace BH.Adapter.MidasCivil
             }
 
             List<string> totalKeys = groupsToAdd.Keys.ToList();
-            File.Delete(directory + "\\TextFiles\\GROUP.txt");
+            File.Delete(m_directory + "\\TextFiles\\GROUP.txt");
             string path = CreateSectionFile("GROUP");
 
 
@@ -177,7 +177,7 @@ namespace BH.Adapter.MidasCivil
             }
 
             List<string> totalKeys = groupsToAdd.Keys.ToList();
-            File.Delete(directory + "\\TextFiles\\GROUP.txt");
+            File.Delete(m_directory + "\\TextFiles\\GROUP.txt");
             string path = CreateSectionFile("GROUP");
 
 
@@ -258,7 +258,7 @@ namespace BH.Adapter.MidasCivil
             }
 
             List<string> totalKeys = groupsToAdd.Keys.ToList();
-            File.Delete(directory + "\\TextFiles\\GROUP.txt");
+            File.Delete(m_directory + "\\TextFiles\\GROUP.txt");
             string path = CreateSectionFile("GROUP");
 
 

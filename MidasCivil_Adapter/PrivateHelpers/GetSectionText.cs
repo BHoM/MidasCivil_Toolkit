@@ -34,7 +34,7 @@ namespace BH.Adapter.MidasCivil
 
         private List<string> GetSectionText(string section)
         {
-            string path = directory + "\\TextFiles\\" + section + ".txt";
+            string path = m_directory + "\\TextFiles\\" + section + ".txt";
             List<string> sectionText = new List<string>();
 
             if (File.Exists(path))

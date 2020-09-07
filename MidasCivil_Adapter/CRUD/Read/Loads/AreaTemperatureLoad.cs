@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
             Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
                         x => x.Name);
 
-            string[] loadcaseFolders = Directory.GetDirectories(directory + "\\TextFiles");
+            string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
             int i = 1;
 
@@ -79,7 +79,7 @@ namespace BH.Adapter.MidasCivil
 
                             AreaTemperatureLoad bhomAreaTemperatureLoad =
                                 Adapters.MidasCivil.Convert.ToAreaTemperatureLoad(
-                                    distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i, temperatureUnit);
+                                    distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i, m_temperatureUnit);
 
                             if (bhomAreaTemperatureLoad != null)
                                 bhomAreaTemperatureLoads.Add(bhomAreaTemperatureLoad);
