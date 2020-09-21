@@ -39,21 +39,41 @@ namespace BH.Adapter.MidasCivil
 
             for (int i = 0; i < sectionText.Count(); i++)
             {
-                string splitSection = sectionText[i].Split(',')[0];
+                List<string> splitSection = sectionText[i].Split(',').ToList();
+                string geometryList = splitSection[0];
 
                 List<string> geometryAssignments = new List<string>();
 
-                if (splitSection.Contains(" "))
-                {
-                    geometryAssignments = splitSection.Split(' ').
+                if (geometryList.Contains(" "))
+                    geometryAssignments = geometryList.Split(' ').
                         Select(x => x.Trim()).
                         Where(x => !string.IsNullOrEmpty(x)).
                         ToList();
-                }
+                else
+                    geometryAssignments.Add(geometryList);
 
                 List<int> propertyAssignment = MidasCivilAdapter.GetAssignmentIds(geometryAssignments);
 
-                propertyAssignments.Add(namePrefix + "_" + (i + 1), propertyAssignment);
+
+                switch (section)
+                {
+                    case "CONSTRAINT":
+                        propertyAssignments.Add(splitSection[2], propertyAssignment);
+                        break;
+                    case "SPRING":
+                        switch (m_midasCivilVersion)
+                        {
+                            case "8.9.5":
+                            case "8.9.0":
+                            case "8.8.5":
+                                propertyAssignments.Add(splitSection[21], propertyAssignment);
+                                break;
+                            default:
+                                propertyAssignments.Add(splitSection[15], propertyAssignment);
+                                break;
+                        }
+                        break;
+                }
             }
 
             return propertyAssignments;
