@@ -57,7 +57,7 @@ namespace BH.Adapter.MidasCivil
                 AdapterComparers = new Dictionary<Type, object>
                 {
                     {typeof(Node), new NodeDistanceComparer(3) },   //The 3 in here sets how many decimal places to look at for node merging. 3 decimal places gives mm precision
-                    {typeof(Bar), new BarMidPointComparer(3) },
+                    {typeof(Bar), new BarEndNodesDistanceComparer(3) },
                     {typeof(FEMesh), new MeshCentreComparer() },
                     {typeof(Constraint6DOF), new NameOrDescriptionComparer() },
                     {typeof(RigidLink), new NameOrDescriptionComparer() },
