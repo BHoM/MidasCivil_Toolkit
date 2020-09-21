@@ -109,7 +109,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                if (type == typeof(ConstantThickness))
+                if (typeof(ISurfaceProperty).IsAssignableFrom(type))
                 {
                     string section = "THICKNESS";
 
