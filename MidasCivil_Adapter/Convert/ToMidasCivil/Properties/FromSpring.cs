@@ -43,6 +43,8 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             switch (version)
             {
+                case "8.9.5":
+                case "8.9.0":
                 case "8.8.5":
                     string springFixity = SpringFixity(constraint6DOF, groupCharacterLimit);
                     midasSpring = (
