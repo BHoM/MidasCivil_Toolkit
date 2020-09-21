@@ -59,15 +59,12 @@ namespace BH.Engine.Adapters.MidasCivil.Comparer
 
             Panel panel1 = Compute.FEMeshToPanel(mesh1);
             Panel panel2 = Compute.FEMeshToPanel(mesh2);
-            List<Point> controlPoints1 = BH.Engine.Structure.Query.ControlPoints(panel1, true);
-            List<Point> controlPoints2 = BH.Engine.Structure.Query.ControlPoints(panel2, true);
-            Point centrePoint1 = BH.Engine.Geometry.Query.Average(controlPoints1);
-            Point centrePoint2 = BH.Engine.Geometry.Query.Average(controlPoints2);
+            List<Point> controlPoints1 = Query.ControlPoints(panel1, true);
+            List<Point> controlPoints2 = Query.ControlPoints(panel2, true);
+            Point centrePoint1 = Geometry.Query.Average(controlPoints1);
+            Point centrePoint2 = Geometry.Query.Average(controlPoints2);
 
-            if (nodeComparer.Equals(new Node() { Position = centrePoint1 }, new Node() { Position = centrePoint1 }))
-                return nodeComparer.Equals(new Node() { Position = centrePoint1 }, new Node() { Position = centrePoint1 });
-
-            return false;
+            return nodeComparer.Equals(new Node() { Position = centrePoint1 }, new Node() { Position = centrePoint2 });
         }
 
         /***************************************************/
