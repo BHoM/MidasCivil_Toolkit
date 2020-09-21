@@ -38,6 +38,11 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             switch (version)
             {
+                case "8.9.5":
+                case "8.9.0":
+                    constantThickness = Engine.Structure.Create.ConstantThickness(
+                        System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit), null, "t = " + split[3].Trim());
+                    break;
                 case "8.8.5":
                     constantThickness = Engine.Structure.Create.ConstantThickness(
                         System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit), null, split[1]);

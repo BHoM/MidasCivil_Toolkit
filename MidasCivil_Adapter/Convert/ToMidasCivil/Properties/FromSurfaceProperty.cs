@@ -57,16 +57,30 @@ namespace BH.Adapter.Adapters.MidasCivil
                 string midasSurfaceProperty = "";
                 switch (version)
                 {
-
+                    case "8.9.5":
+                    case "8.9.0":
+                        midasSurfaceProperty =
+                            bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + ",VALUE,1,Yes," +
+                            bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,No,0,0";
+                        break;
                     case "8.8.5":
                         midasSurfaceProperty =
-                        bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + "," + new string(bhomSurfaceProperty.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray())
-                        + ",VALUE,Yes," + bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,Yes,0,0";
+                        bhomSurfaceProperty.CustomDat
+                            1, VALUE, 1, YES, 0.2, 0,  NO, 0, 0
+    2, VALUE, 1, YES, 0.3, 0,  NO, 0, 0
+                                1, VALUE, 1, YES, 0.2, 0,  NO, 0, 0
+    2, VALUE, 1, YES, 0.3, 0,  NO, 0, 0
+
+
+
+                                1, VALUE, 1, YES, 0.2, 0,  NO, 0, 0
+    2, VALUE, 1, YES, 0.3, 0,  NO                   a[AdapterIdName].ToString() + "," + new string(bhomSurfaceProperty.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray())
+                        + ",VALUE,Yes," + bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,No,0,0";
                         break;
                     default:
                         midasSurfaceProperty =
                         bhomSurfaceProperty.CustomData[AdapterIdName].ToString() + ",VALUE,Yes," +
-                        bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,Yes,0,0";
+                        bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,No,0,0";
                         break;
                 }
 
