@@ -26,8 +26,7 @@ using BH.oM.Structure.SectionProperties;
 using BH.oM.Geometry.ShapeProfiles;
 using BH.Engine.Structure;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using Microsoft.SqlServer.Server;
+using BH.oM.Structure.MaterialFragments;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -39,8 +38,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static List<string> FromSectionProperty(this ISectionProperty sectionProperty, string lengthUnit, int sectionPropertyCharacterLimit)
         {
-            List<string> midasSectionProperty = new List<string>();
-            midasSectionProperty = CreateSection(sectionProperty as dynamic, lengthUnit, sectionPropertyCharacterLimit);
+            List<string> midasSectionProperty = CreateSection(sectionProperty as dynamic, lengthUnit, sectionPropertyCharacterLimit);
 
             return midasSectionProperty is null ? null : midasSectionProperty;
         }
@@ -54,9 +52,9 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<string> midasSectionProperty = new List<string>();
             if(sectionProperty.SectionProfile is TaperedProfile)
             {
-                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",TAPERED" +
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",TAPERED," +
                     new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
-                    "CC, 0,0,0,0,0,0,0,0,YES,NO" + GetShapeCode(sectionProperty) + GetInterpolationOrder(sectionProperty) + GetInterpolationOrder(sectionProperty) + "USER");
+                    ",CC, 0,0,0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + ",USER");
                 midasSectionProperty.Add(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
             else
@@ -76,7 +74,10 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<string> midasSectionProperty = new List<string>();
             if (sectionProperty.SectionProfile is TaperedProfile)
             {
-                midasSectionProperty.AddRange(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",TAPERED," +
+                    new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
+                    ",CC, 0,0,0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + ",USER");
+                midasSectionProperty.Add(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
             else
             {
@@ -95,7 +96,10 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<string> midasSectionProperty = new List<string>();
             if (sectionProperty.SectionProfile is TaperedProfile)
             {
-                midasSectionProperty.AddRange(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",TAPERED," +
+                    new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
+                    ",CC, 0,0,0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + ",USER");
+                midasSectionProperty.Add(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
             else
             {
@@ -114,7 +118,10 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<string> midasSectionProperty = new List<string>();
             if (sectionProperty.SectionProfile is TaperedProfile)
             {
-                midasSectionProperty.AddRange(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",TAPERED," +
+                    new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
+                    ",CC, 0,0,0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + ",USER");
+                midasSectionProperty.Add(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
             else
             {
@@ -133,7 +140,10 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<string> midasSectionProperty = new List<string>();
             if (sectionProperty.SectionProfile is TaperedProfile)
             {
-                midasSectionProperty.AddRange(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",TAPERED," +
+                    new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
+                    ",CC, 0,0,0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) + ",USER");
+                midasSectionProperty.Add(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
             else
             {
@@ -347,44 +357,184 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             List<IProfile> profiles = new List<IProfile>(profile.Profiles.Values);
 
-            return CreateProfile(profiles[0] as dynamic, lengthUnit) + CreateProfile(profiles[profiles.Count-1] as dynamic, lengthUnit);
+            List<string> startProfile = new List<string>(CreateProfile(profiles[0] as dynamic, lengthUnit).Split(','));
+            List<string> endProfile = new List<string>(CreateProfile(profiles[profiles.Count - 1] as dynamic, lengthUnit).Split(','));
+
+            startProfile.GetRange(2, startProfile.Count - 4);
+
+            return string.Join(",",startProfile.GetRange(2, startProfile.Count - 4)) + "," + string.Join(",", endProfile.GetRange(2, startProfile.Count - 4));
         }
 
         /***************************************************/
 
         private static string GetInterpolationOrder(ISectionProperty sectionProperty)
         {
-            GenericSection genericSection = (GenericSection)sectionProperty;
-            TaperedProfile taperedProfile = (TaperedProfile)genericSection.SectionProfile;
-            List<int> interpolationOrders = taperedProfile.InterpolationOrder;
+            if (sectionProperty is SteelSection)
+            {
+                SteelSection section = (SteelSection)sectionProperty;
+                TaperedProfile taperedProfile = (TaperedProfile)section.SectionProfile;
+                return taperedProfile.InterpolationOrder.Max().ToString();
 
-            return interpolationOrders.Max().ToString();
+            }
+            else if (sectionProperty is ConcreteSection)
+            {
+                ConcreteSection section = (ConcreteSection)sectionProperty;
+                TaperedProfile taperedProfile = (TaperedProfile)section.SectionProfile;
+                return taperedProfile.InterpolationOrder.Max().ToString();
+            }
+            else if (sectionProperty is AluminiumSection)
+            {
+                AluminiumSection section = (AluminiumSection)sectionProperty;
+                TaperedProfile taperedProfile = (TaperedProfile)section.SectionProfile;
+                return taperedProfile.InterpolationOrder.Max().ToString();
+            }
+            else if (sectionProperty is TimberSection)
+            {
+                TimberSection section = (TimberSection)sectionProperty;
+                TaperedProfile taperedProfile = (TaperedProfile)section.SectionProfile;
+                return taperedProfile.InterpolationOrder.Max().ToString();
+            }
+            else if (sectionProperty is GenericSection)
+            {
+                GenericSection section = (GenericSection)sectionProperty;
+                TaperedProfile taperedProfile = (TaperedProfile)section.SectionProfile;
+                return taperedProfile.InterpolationOrder.Max().ToString();
+            }
+            return null;
         }
 
         /***************************************************/
-        private static string GetShapeCode(ISectionProperty sectionProperty)
-        {
-            GenericSection genericSection = (GenericSection)sectionProperty;
-            IProfile profile = genericSection.SectionProfile;
 
-            if (profile is GeneralisedFabricatedBoxProfile || profile is FabricatedBoxProfile || profile is BoxProfile)
-                return "B";
-            else if (profile is FabricatedISectionProfile || profile is ISectionProfile)
-                return "I";
-            else if (profile is RectangleProfile)
-                return "SB";
-            else if (profile is CircleProfile)
-                return "SR";
-            else if (profile is TubeProfile)
-                return "P";
-            else if (profile is TSectionProfile)
-                return "T";
-            else if (profile is AngleProfile)
-                return "L";
-            else if (profile is ChannelProfile)
-                return "C";
-            else
-                return null;
+        private static string GetSectionShapeCode(SteelSection sectionProperty)
+        {
+            return GetProfileShapeCode(sectionProperty.SectionProfile as dynamic);
+        }
+
+        /***************************************************/
+
+        private static string GetSectionShapeCode(ConcreteSection sectionProperty)
+        {
+            return GetProfileShapeCode(sectionProperty.SectionProfile as dynamic);
+        }
+
+        /***************************************************/
+
+        private static string GetSectionShapeCode(TimberSection sectionProperty)
+        {
+            return GetProfileShapeCode(sectionProperty.SectionProfile as dynamic);
+        }
+
+        /***************************************************/
+
+        private static string GetSectionShapeCode(AluminiumSection sectionProperty)
+        {
+            return GetProfileShapeCode(sectionProperty.SectionProfile as dynamic);
+        }
+
+        /***************************************************/
+
+        private static string GetSectionShapeCode(GenericSection sectionProperty)
+        {
+            return GetProfileShapeCode(sectionProperty.SectionProfile as dynamic);
+        }
+
+        /***************************************************/
+
+        private static string GetSectionShapeCode(ExplicitSection sectionProperty)
+        {
+            return null;
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(RectangleProfile sectionProfile)
+        {
+            return "SB";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(CircleProfile sectionProfile)
+        {
+            return "SR";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(TubeProfile sectionProfile)
+        {
+            return "P";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(GeneralisedFabricatedBoxProfile sectionProfile)
+        {
+            return "B";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(FabricatedBoxProfile sectionProfile)
+        {
+            return "B";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(BoxProfile sectionProfile)
+        {
+            return "B";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(ISectionProfile sectionProfile)
+        {
+            return "H";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(FabricatedISectionProfile sectionProfile)
+        {
+            return "H";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(TSectionProfile sectionProfile)
+        {
+            return "T";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(AngleProfile sectionProfile)
+        {
+            return "L";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(ChannelProfile sectionProfile)
+        {
+            return "C";
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(GeneralisedTSectionProfile sectionProfile)
+        {
+            return null;
+        }
+
+        /***************************************************/
+
+        private static string GetProfileShapeCode(TaperedProfile sectionProfile)
+        {
+            TaperedProfile taperedProfile = (TaperedProfile)sectionProfile;
+            return GetProfileShapeCode(taperedProfile.Profiles.Values.First() as dynamic);
         }
 
         /***************************************************/
