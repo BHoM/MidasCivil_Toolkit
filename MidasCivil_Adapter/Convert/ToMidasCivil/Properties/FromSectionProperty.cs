@@ -40,7 +40,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             List<string> midasSectionProperty = CreateSection(sectionProperty as dynamic, lengthUnit, sectionPropertyCharacterLimit);
 
-            return midasSectionProperty is null ? null : midasSectionProperty;
+            return midasSectionProperty == null ? null : midasSectionProperty;
         }
 
         /***************************************************/
