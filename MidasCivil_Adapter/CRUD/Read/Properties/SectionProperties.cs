@@ -76,7 +76,7 @@ namespace BH.Adapter.MidasCivil
                     else
                     {
                         List<string> split = sectionProperty.Split(',').ToList();
-                        bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(split.GetRange(14, numberColumns - 16), 
+                        bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(split.GetRange(14, numberColumns - 16),
                             split[12].Trim(), m_lengthUnit);
 
                         bhomSectionProperty.Name = split[2].Trim();
