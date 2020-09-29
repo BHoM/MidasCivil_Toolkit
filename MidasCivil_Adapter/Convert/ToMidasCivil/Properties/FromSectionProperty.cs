@@ -59,7 +59,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             else
             {
-                midasSectionProperty.AddRange(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
                     new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) + 
                     ",CC, 0, 0, 0, 0, 0, 0, YES, NO," + CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
@@ -81,7 +81,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             else
             {
-                midasSectionProperty.AddRange(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
                     new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
                     ",CC, 0, 0, 0, 0, 0, 0, YES, NO," + CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
@@ -103,7 +103,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             else
             {
-                midasSectionProperty.AddRange(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
                     new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
                     ",CC, 0, 0, 0, 0, 0, 0, YES, NO," + CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
@@ -125,7 +125,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             else
             {
-                midasSectionProperty.AddRange(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
                     new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
                     ",CC, 0, 0, 0, 0, 0, 0, YES, NO," + CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
@@ -147,7 +147,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             else
             {
-                midasSectionProperty.AddRange(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
+                midasSectionProperty.Add(sectionProperty.CustomData[AdapterIdName] + ",DBUSER," +
                     new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
                     ",CC, 0, 0, 0, 0, 0, 0, YES, NO," + CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
             }
