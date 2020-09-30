@@ -98,11 +98,10 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 string shapeCode = shape.Split('-')[1].Trim();
                 int interpolationOrder = System.Convert.ToInt32(shape.Split('-')[2].Trim());
-                IProfile startProfile = Convert.ToProfile(sectionProfile.GetRange(0, sectionProfile.Count / 2), shapeCode, lengthUnit);
-                IProfile endProfile = Convert.ToProfile(sectionProfile.GetRange(sectionProfile.Count / 2, sectionProfile.Count / 2), shapeCode, lengthUnit);
-
+                int midIndex = sectionProfile.Count / 2;
+                IProfile startProfile = Convert.ToProfile(sectionProfile.GetRange(0, midIndex), shapeCode, lengthUnit);
+                IProfile endProfile = Convert.ToProfile(sectionProfile.GetRange(midIndex, midIndex), shapeCode, lengthUnit);
                 bhomProfile = Engine.Geometry.Create.TaperedProfile(startProfile, endProfile, interpolationOrder);
-
             }
 
             return bhomProfile;
