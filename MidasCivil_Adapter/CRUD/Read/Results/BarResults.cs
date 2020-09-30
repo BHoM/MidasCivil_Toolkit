@@ -80,8 +80,19 @@ namespace BH.Adapter.MidasCivil
             List<BarStress> barStresses = new List<BarStress>();
             for (int i = 14; i < barStressText.Count; i++)
             {
+
                 List<string> barStress = barStressText[i].Split(',').ToList();
-                barStresses.Add(Convert.ToBarStress(barStress, m_forceUnit, m_lengthUnit));
+                if (barStressText[i].Contains("SUMMATION"))
+                {
+                    break;
+                }
+                else
+                {
+                    if (ids.Contains(System.Convert.ToInt32(barStress[2])) && loadcaseIds.Contains(barStress[3]))
+                    {
+                        barStresses.Add(Convert.ToBarStress(barStress, m_forceUnit, m_lengthUnit));
+                    }
+                }
             }
 
             return barStresses;
@@ -113,7 +124,17 @@ namespace BH.Adapter.MidasCivil
             for (int i = 11; i < barForceText.Count; i++)
             {
                 List<string> barForce = barForceText[i].Split(',').ToList();
-                barForces.Add(Convert.ToBarForce(barForce, m_forceUnit, m_lengthUnit));
+                if (barForceText[i].Contains("SUMMATION"))
+                {
+                    break;
+                }
+                else
+                {
+                    if (ids.Contains(System.Convert.ToInt32(barForce[3])) && loadcaseIds.Contains(barForce[4]))
+                    {
+                        barForces.Add(Convert.ToBarForce(barForce, m_forceUnit, m_lengthUnit));
+                    }
+                }
             }
 
             return barForces;

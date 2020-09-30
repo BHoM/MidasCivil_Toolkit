@@ -88,9 +88,18 @@ namespace BH.Adapter.MidasCivil
             for (int i = 16; i < meshForceText.Count; i++)
             {
                 List<string> meshForce = meshForceText[i].Split(',').ToList();
-                meshForces.Add(Convert.ToMeshForce(meshForce, m_forceUnit, m_lengthUnit));
+                if (meshForceText[i].Contains("SUMMATION"))
+                {
+                    break;
+                }
+                else
+                {
+                    if (ids.Contains(System.Convert.ToInt32(meshForce[2])) && loadcaseIds.Contains(meshForce[3]))
+                    {
+                        meshForces.Add(Convert.ToMeshForce(meshForce, m_forceUnit, m_lengthUnit));
+                    }
+                }
             }
-
             return meshForces;
         }
 
@@ -108,16 +117,26 @@ namespace BH.Adapter.MidasCivil
             for (int i = 10; i < meshStressText.Count; i++)
             {
                 List<string> meshStress = meshStressText[i].Split(',').ToList();
+                if (meshStressText[i].Contains("SUMMATION"))
+                {
+                    break;
+                }
+                else
+                {
                     if (meshStress[2] == "")
                     {
                         meshStress[2] = initialmeshStress[2];
                         meshStress[3] = initialmeshStress[3];
                         meshStress[7] = initialmeshStress[7];
                     }
-                meshStresses.Add(Convert.ToMeshStress(meshStress));
-                initialmeshStress = meshStressText[i].Split(',').ToList();
-            }
+                    initialmeshStress = meshStressText[i].Split(',').ToList();
+                    if (ids.Contains(System.Convert.ToInt32(meshStress[2])) && loadcaseIds.Contains(meshStress[3]))
+                    {
+                        meshStresses.Add(Convert.ToMeshStress(meshStress));
 
+                    }
+                }
+            }
             return meshStresses;
         }
         
@@ -134,17 +153,26 @@ namespace BH.Adapter.MidasCivil
 
             for (int i = 10; i < meshVonMisesText.Count; i++)
             {
-               List<string> meshVonMises = meshVonMisesText[i].Split(',').ToList();
+                List<string> meshVonMises = meshVonMisesText[i].Split(',').ToList();
+                if (meshVonMisesText[i].Contains("SUMMATION"))
+                {
+                    break;
+                }
+                else
+                {
                     if (meshVonMises[2] == "")
+                        {
+                            meshVonMises[2] = initialmeshVonMises[2];
+                            meshVonMises[7] = initialmeshVonMises[7];
+                            meshVonMises[3] = initialmeshVonMises[3];
+                        }
+                    initialmeshVonMises = meshVonMisesText[i].Split(',').ToList();
+                    if (ids.Contains(System.Convert.ToInt32(meshVonMises[2])) && loadcaseIds.Contains(meshVonMises[3]))
                     {
-                        meshVonMises[2] = initialmeshVonMises[2];
-                        meshVonMises[7] = initialmeshVonMises[7];
-                        meshVonMises[3] = initialmeshVonMises[3];
+                        meshVonMiseses.Add(Convert.ToMeshVonMises(meshVonMises));
                     }
-                meshVonMiseses.Add(Convert.ToMeshVonMises(meshVonMises));
-                initialmeshVonMises = meshVonMisesText[i].Split(',').ToList();
+                }
             }
-
             return meshVonMiseses;
         }
 
