@@ -80,7 +80,6 @@ namespace BH.Adapter.MidasCivil
             List<BarStress> barStresses = new List<BarStress>();
             for (int i = 14; i < barStressText.Count; i++)
             {
-
                 List<string> barStress = barStressText[i].Split(',').ToList();
                 if (barStressText[i].Contains("SUMMATION"))
                 {
@@ -94,7 +93,6 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
             }
-
             return barStresses;
         }
 
@@ -136,10 +134,8 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
             }
-
             return barForces;
         }
-
         /***************************************************/
 
     }
