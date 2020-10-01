@@ -126,42 +126,8 @@ namespace BH.Adapter.MidasCivil
         private List<string> GetLoadcaseIDs(IResultRequest request)
         {
             IList cases = request.Cases;
-
             List<string> caseNames = new List<string>();
-
-            if (cases is List<string>)
-                return (cases as List<string>);
-            else if (cases is List<int>)
-            {
-                Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit Loadcases do not have Ids as int, provide Loadcases or names.");
-                return null;
-            }
-
-            else if (cases is List<double>)
-            {
-                Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit Loadcases do not have Ids as doubles, provide Loadcases or names.");
-                return null;
-            }
-
-            else if (cases is List<Loadcase>)
-            {
-                for (int i = 0; i < cases.Count; i++)
-                {
-                    caseNames.Add((cases[i] as Loadcase).Name);
-                }
-            }
-            else if (cases is List<LoadCombination>)
-            {
-                foreach (object lComb in cases)
-                {
-                    foreach (Tuple<double, ICase> lCase in (lComb as LoadCombination).LoadCases)
-                    {
-                        caseNames.Add(lCase.Item2.Name);
-                    }
-                    caseNames.Add((lComb as LoadCombination).Name);
-                }
-            }
-            else
+            if (cases == null || cases.Count == 0)
             {
                 caseNames = GetSectionText("STLDCASE").Select(x => x.Split(',')[0].Trim()).ToList();
 
@@ -171,8 +137,19 @@ namespace BH.Adapter.MidasCivil
                     caseNames.Add(loadCombinationText[i].Split(',')[0].Split('=')[1].Trim());
                 }
             }
-
-
+                foreach (object thisCase in cases)
+                {
+                    if (thisCase is ICase)
+                    {
+                        ICase bhCase = thisCase as ICase;
+                        caseNames.Add(bhCase.Name.ToString());
+                    }
+                    else if (thisCase is string)
+                    {
+                        string caseId = thisCase as string;
+                        caseNames.Add(caseId);
+                    }
+                }
             return caseNames;
         }
 
