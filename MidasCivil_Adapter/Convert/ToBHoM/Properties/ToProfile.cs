@@ -20,7 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry.ShapeProfiles;
+using BH.oM.Spatial.ShapeProfiles;
 using System.Collections.Generic;
 
 namespace BH.Adapter.Adapters.MidasCivil
@@ -37,7 +37,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             switch (shape)
             {
                 case "SB":
-                    bhomProfile = Engine.Geometry.Create.RectangleProfile(
+                    bhomProfile = Engine.Spatial.Create.RectangleProfile(
                         System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit), 0);
                     break;
                 case "B":
@@ -55,39 +55,39 @@ namespace BH.Adapter.Adapters.MidasCivil
                         corbel = (width / 2 - webSpacing / 2 - webThickness / 2).LengthToSI(lengthUnit);
                     }
 
-                    bhomProfile = Engine.Geometry.Create.GeneralisedFabricatedBoxProfile(
+                    bhomProfile = Engine.Spatial.Create.GeneralisedFabricatedBoxProfile(
                             System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), width, webThickness,
                             System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit),
                             corbel, corbel);
                     break;
                 case "P":
-                    bhomProfile = Engine.Geometry.Create.TubeProfile(System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit),
+                    bhomProfile = Engine.Spatial.Create.TubeProfile(System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit),
                         System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit));
                     break;
                 case "SR":
-                    bhomProfile = Engine.Geometry.Create.CircleProfile(
+                    bhomProfile = Engine.Spatial.Create.CircleProfile(
                          System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit));
                     break;
                 case "H":
-                    bhomProfile = Engine.Geometry.Create.FabricatedISectionProfile(
+                    bhomProfile = Engine.Spatial.Create.FabricatedISectionProfile(
                         System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
                         System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit),
                         System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit), 0);
                     break;
                 case "T":
-                    bhomProfile = Engine.Geometry.Create.TSectionProfile(
+                    bhomProfile = Engine.Spatial.Create.TSectionProfile(
                         System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
                         System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit),
                         0, 0);
                     break;
                 case "C":
-                    bhomProfile = Engine.Geometry.Create.ChannelProfile(
+                    bhomProfile = Engine.Spatial.Create.ChannelProfile(
                             System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
                             System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit),
                             System.Convert.ToDouble(sectionProfile[6]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[7]).LengthToSI(lengthUnit));
                     break;
                 case "L":
-                    bhomProfile = Engine.Geometry.Create.AngleProfile(
+                    bhomProfile = Engine.Spatial.Create.AngleProfile(
                             System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
                             System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit),
                             0, 0, false, true);
@@ -101,7 +101,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 int midIndex = sectionProfile.Count / 2;
                 IProfile startProfile = Convert.ToProfile(sectionProfile.GetRange(0, midIndex), shapeCode, lengthUnit);
                 IProfile endProfile = Convert.ToProfile(sectionProfile.GetRange(midIndex, midIndex), shapeCode, lengthUnit);
-                bhomProfile = Engine.Geometry.Create.TaperedProfile(startProfile, endProfile, interpolationOrder);
+                bhomProfile = Engine.Spatial.Create.TaperedProfile(startProfile, endProfile, interpolationOrder);
             }
 
             return bhomProfile;

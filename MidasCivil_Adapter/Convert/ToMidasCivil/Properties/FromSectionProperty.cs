@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 using BH.oM.Structure.SectionProperties;
-using BH.oM.Geometry.ShapeProfiles;
+using BH.oM.Spatial.ShapeProfiles;
 using BH.Engine.Structure;
 using System.Linq;
 using BH.oM.Structure.MaterialFragments;
