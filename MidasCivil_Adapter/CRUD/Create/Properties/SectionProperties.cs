@@ -39,7 +39,9 @@ namespace BH.Adapter.MidasCivil
 
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
-                midasSectionProperties.Add(Adapters.MidasCivil.Convert.FromSectionProperty(sectionProperty, m_lengthUnit, m_sectionPropertyCharacterLimit));
+                List<string> midasSectionProperty = Adapters.MidasCivil.Convert.FromSectionProperty(sectionProperty, m_lengthUnit, m_sectionPropertyCharacterLimit);
+                if (midasSectionProperty != null)
+                    midasSectionProperties.AddRange(midasSectionProperty);
             }
 
             File.AppendAllLines(path, midasSectionProperties);

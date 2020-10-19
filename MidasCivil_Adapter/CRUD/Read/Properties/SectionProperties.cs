@@ -20,7 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Spatial.ShapeProfiles;
 using BH.oM.Structure.SectionProperties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,7 +43,7 @@ namespace BH.Adapter.MidasCivil
             for (int i = 0; i < sectionProperties.Count; i++)
             {
                 string sectionProperty = sectionProperties[i];
-                string type = sectionProperty.Split(',')[1].Replace(" ", "");
+                string type = sectionProperty.Split(',')[1].Trim();
 
                 ISectionProperty bhomSectionProperty = null;
 
@@ -52,8 +54,14 @@ namespace BH.Adapter.MidasCivil
                     string sectionProperties2 = sectionProperties[i + 2];
                     string sectionProperties3 = sectionProperties[i + 3];
 
+                    List<string> split = sectionProfile.Split(',').ToList();
+
                     bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(
-                        sectionProfile, sectionProperties1, sectionProperties2, sectionProperties3, m_lengthUnit);
+                        split.GetRange(14, sectionProperty.Split(',').Count() - 15), sectionProperties1, sectionProperties2, sectionProperties3,
+                        split[12].Trim(), m_lengthUnit);
+
+                    bhomSectionProperty.Name = split[2].Trim();
+                    bhomSectionProperty.CustomData[AdapterIdName] = split[0].Trim();
 
                     i = i + 3;
                 }
@@ -67,10 +75,27 @@ namespace BH.Adapter.MidasCivil
                     }
                     else
                     {
-                        bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(
-                            sectionProperty, m_lengthUnit);
-                    }
+                        List<string> split = sectionProperty.Split(',').ToList();
+                        bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(split.GetRange(14, numberColumns - 16),
+                            split[12].Trim(), m_lengthUnit);
 
+                        bhomSectionProperty.Name = split[2].Trim();
+                        bhomSectionProperty.CustomData[AdapterIdName] = split[0].Trim();
+                    }
+                }
+                else if (type == "TAPERED")
+                {
+                    List<string> split = sectionProperty.Split(',').ToList();
+                    List<string> profiles = sectionProperties[i + 1].Split(',').ToList();
+                    string shape = split[14].Trim();
+                    string interpolationOrder = Math.Max(System.Convert.ToInt32(split[15].Trim()), System.Convert.ToInt32(split[16].Trim())).ToString();
+
+                    bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(profiles, "TAPERED" + "-" + shape + "-" + interpolationOrder, m_lengthUnit);
+
+                    bhomSectionProperty.CustomData[AdapterIdName] = split[0].Trim();
+                    bhomSectionProperty.Name = split[2].Trim();
+
+                    i = i + 1;
                 }
                 else
                 {

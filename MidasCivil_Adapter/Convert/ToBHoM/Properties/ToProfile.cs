@@ -20,7 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Geometry.ShapeProfiles;
+using BH.oM.Spatial.ShapeProfiles;
+using System.Collections.Generic;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -30,77 +31,77 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static IProfile ToProfile(string sectionProfile, string lengthUnit)
+        public static IProfile ToProfile(List<string> sectionProfile, string shape, string lengthUnit)
         {
-            string[] split = sectionProfile.Split(',');
-            string shape = split[12].Trim();
-
             IProfile bhomProfile = null;
-            if (shape == "SB")
+            switch (shape)
             {
-                bhomProfile = Engine.Geometry.Create.RectangleProfile(
-                    System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[15]).LengthToSI(lengthUnit), 0);
-            }
-            else if (shape == "B")
-            {
-                double width = System.Convert.ToDouble(split[15]).LengthToSI(lengthUnit);
-                double webSpacing = System.Convert.ToDouble(split[18]).LengthToSI(lengthUnit);
-                double webThickness = System.Convert.ToDouble(split[16]).LengthToSI(lengthUnit);
-                double corbel;
-                if (System.Math.Abs(width / 2 - webSpacing / 2 - webThickness / 2) < oM.Geometry.Tolerance.Distance)
-                {
-                    corbel = 0;
-                }
+                case "SB":
+                    bhomProfile = Engine.Spatial.Create.RectangleProfile(
+                        System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit), 0);
+                    break;
+                case "B":
+                    double width = System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit);
+                    double webSpacing = System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit);
+                    double webThickness = System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit);
+                    double corbel;
+                    if (System.Math.Abs(width / 2 - webSpacing / 2 - webThickness / 2) < oM.Geometry.Tolerance.Distance)
+                    {
+                        corbel = 0;
+                    }
 
-                else
-                {
-                    corbel = (width / 2 - webSpacing / 2 - webThickness / 2).LengthToSI(lengthUnit);
-                }
+                    else
+                    {
+                        corbel = (width / 2 - webSpacing / 2 - webThickness / 2).LengthToSI(lengthUnit);
+                    }
 
-                bhomProfile = Engine.Geometry.Create.GeneralisedFabricatedBoxProfile(
-                        System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit), width, webThickness,
-                        System.Convert.ToDouble(split[17]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[19]).LengthToSI(lengthUnit),
-                        corbel, corbel
-                );
+                    bhomProfile = Engine.Spatial.Create.GeneralisedFabricatedBoxProfile(
+                            System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), width, webThickness,
+                            System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit),
+                            corbel, corbel);
+                    break;
+                case "P":
+                    bhomProfile = Engine.Spatial.Create.TubeProfile(System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit),
+                        System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit));
+                    break;
+                case "SR":
+                    bhomProfile = Engine.Spatial.Create.CircleProfile(
+                         System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit));
+                    break;
+                case "H":
+                    bhomProfile = Engine.Spatial.Create.FabricatedISectionProfile(
+                        System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
+                        System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit),
+                        System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit), 0);
+                    break;
+                case "T":
+                    bhomProfile = Engine.Spatial.Create.TSectionProfile(
+                        System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
+                        System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit),
+                        0, 0);
+                    break;
+                case "C":
+                    bhomProfile = Engine.Spatial.Create.ChannelProfile(
+                            System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
+                            System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit),
+                            System.Convert.ToDouble(sectionProfile[6]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[7]).LengthToSI(lengthUnit));
+                    break;
+                case "L":
+                    bhomProfile = Engine.Spatial.Create.AngleProfile(
+                            System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
+                            System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit),
+                            0, 0, false, true);
+                    break;
             }
-            else if (shape == "P")
+
+            if (shape.Contains("TAPERED"))
             {
-                bhomProfile = Engine.Geometry.Create.TubeProfile(System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit),
-                    System.Convert.ToDouble(split[15]).LengthToSI(lengthUnit));
-            }
-            else if (shape == "SR")
-            {
-                bhomProfile = Engine.Geometry.Create.CircleProfile(
-                     System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit));
-            }
-            else if (shape == "H")
-            {
-                bhomProfile = Engine.Geometry.Create.FabricatedISectionProfile(
-                    System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[15]).LengthToSI(lengthUnit),
-                    System.Convert.ToDouble(split[18]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[16]).LengthToSI(lengthUnit),
-                    System.Convert.ToDouble(split[17]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[19]).LengthToSI(lengthUnit), 0);
-            }
-            else if (shape == "T")
-            {
-                bhomProfile = Engine.Geometry.Create.TSectionProfile(
-                    System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[15]).LengthToSI(lengthUnit),
-                    System.Convert.ToDouble(split[16]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[17]).LengthToSI(lengthUnit),
-                    0, 0
-                    );
-            }
-            else if (shape == "C")
-            {
-                bhomProfile = Engine.Geometry.Create.ChannelProfile(
-                        System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[15]).LengthToSI(lengthUnit),
-                        System.Convert.ToDouble(split[16]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[17]).LengthToSI(lengthUnit),
-                        System.Convert.ToDouble(split[20]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[21]).LengthToSI(lengthUnit));
-            }
-            else if (shape == "L")
-            {
-                bhomProfile = Engine.Geometry.Create.AngleProfile(
-                        System.Convert.ToDouble(split[14]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[15]).LengthToSI(lengthUnit),
-                        System.Convert.ToDouble(split[16]).LengthToSI(lengthUnit), System.Convert.ToDouble(split[17]).LengthToSI(lengthUnit),
-                        0, 0, false, true);
+                string shapeCode = shape.Split('-')[1].Trim();
+                int interpolationOrder = System.Convert.ToInt32(shape.Split('-')[2].Trim());
+                int midIndex = sectionProfile.Count / 2;
+                IProfile startProfile = Convert.ToProfile(sectionProfile.GetRange(0, midIndex), shapeCode, lengthUnit);
+                IProfile endProfile = Convert.ToProfile(sectionProfile.GetRange(midIndex, midIndex), shapeCode, lengthUnit);
+                bhomProfile = Engine.Spatial.Create.TaperedProfile(startProfile, endProfile, interpolationOrder);
             }
 
             return bhomProfile;
