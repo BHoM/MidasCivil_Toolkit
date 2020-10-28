@@ -20,7 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Spatial.ShapeProfiles;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.SectionProperties;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace BH.Adapter.MidasCivil
                         split[12].Trim(), m_lengthUnit);
 
                     bhomSectionProperty.Name = split[2].Trim();
-                    bhomSectionProperty.CustomData[AdapterIdName] = split[0].Trim();
+                    bhomSectionProperty.SetAdapterId(typeof(MidasCivilId), split[0].Trim());
 
                     i = i + 3;
                 }
@@ -80,7 +81,7 @@ namespace BH.Adapter.MidasCivil
                             split[12].Trim(), m_lengthUnit);
 
                         bhomSectionProperty.Name = split[2].Trim();
-                        bhomSectionProperty.CustomData[AdapterIdName] = split[0].Trim();
+                        bhomSectionProperty.SetAdapterId(typeof(MidasCivilId), split[0].Trim());
                     }
                 }
                 else if (type == "TAPERED")
@@ -92,7 +93,7 @@ namespace BH.Adapter.MidasCivil
 
                     bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(profiles, "TAPERED" + "-" + shape + "-" + interpolationOrder, m_lengthUnit);
 
-                    bhomSectionProperty.CustomData[AdapterIdName] = split[0].Trim();
+                    bhomSectionProperty.SetAdapterId(typeof(MidasCivilId), split[0].Trim());
                     bhomSectionProperty.Name = split[2].Trim();
 
                     i = i + 1;

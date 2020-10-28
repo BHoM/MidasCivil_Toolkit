@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Constraints;
 using System.Collections.Generic;
 using System.Linq;
@@ -143,7 +145,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
 
             Constraint6DOF bhomConstraint6DOF = Engine.Structure.Create.Constraint6DOF(supportName, fixity, stiffness);
-            bhomConstraint6DOF.CustomData[AdapterIdName] = supportName;
+            bhomConstraint6DOF.SetAdapterId(typeof(MidasCivilId), supportName);
 
             return bhomConstraint6DOF;
 

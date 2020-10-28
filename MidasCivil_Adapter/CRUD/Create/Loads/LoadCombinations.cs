@@ -20,7 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
 using BH.oM.Structure.Loads;
+using BH.Engine.Adapter;
 using System.Collections.Generic;
 using System.IO;
 
@@ -39,7 +41,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (LoadCombination loadCombination in loadCombinations)
             {
-                loadCombination.CustomData[AdapterIdName] = loadCombination.Name;
+                loadCombination.SetAdapterId(typeof(MidasCivilId), loadCombination.Name);
                 midasLoadCombinations.AddRange(Adapters.MidasCivil.Convert.FromLoadCombination(loadCombination, m_midasCivilVersion));
             }
 

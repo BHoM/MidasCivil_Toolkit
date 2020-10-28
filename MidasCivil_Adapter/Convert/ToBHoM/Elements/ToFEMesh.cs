@@ -20,10 +20,11 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SurfaceProperties;
-using BH.oM.Geometry;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -90,7 +91,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 Property = bhomSurfaceProperty
             };
 
-            bhomFEMesh.CustomData[AdapterIdName] = delimitted[0].Trim();
+            bhomFEMesh.SetAdapterId(typeof(MidasCivilId), delimitted[0].Trim());
 
             return bhomFEMesh;
         }

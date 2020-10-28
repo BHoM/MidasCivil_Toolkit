@@ -25,7 +25,8 @@ using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using System.Collections.Generic;
 using System.IO;
-
+using BH.Engine.Adapter;
+using BH.oM.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -47,7 +48,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (IAreaElement mesh in assignedElements)
                 {
-                    assignedFEMeshes.Add(mesh.CustomData[AdapterIdName].ToString());
+                    assignedFEMeshes.Add(mesh.AdapterId<string>(typeof(MidasCivilId)));
                 }
 
                 foreach (string assignedFEMesh in assignedFEMeshes)

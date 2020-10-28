@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Constraints;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +67,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
 
             BarRelease bhomBarRelease = Engine.Structure.Create.BarRelease(startConstraint, endConstraint, releaseName);
-            bhomBarRelease.CustomData[AdapterIdName] = bhomBarRelease.Name;
+            bhomBarRelease.SetAdapterId(typeof(MidasCivilId), bhomBarRelease.Name);
 
             return bhomBarRelease;
         }

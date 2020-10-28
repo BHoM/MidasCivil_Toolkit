@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using System.Collections.Generic;
@@ -49,7 +51,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (Bar bar in assignedElements)
                 {
-                    assignedBars.Add(bar.CustomData[AdapterIdName].ToString());
+                    assignedBars.Add(bar.AdapterId<string>(typeof(MidasCivilId)));
                 }
 
                 foreach (string assignedBar in assignedBars)

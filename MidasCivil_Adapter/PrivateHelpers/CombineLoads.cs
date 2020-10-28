@@ -22,6 +22,8 @@
 
 using System.Linq;
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
@@ -40,7 +42,7 @@ namespace BH.Adapter.MidasCivil
             var groupedByLoadCase = loads.GroupBy(x => x.Loadcase);
 
             Dictionary<string, Bar> barDictionary = bars.ToDictionary(
-                x => x.CustomData[Engine.Adapters.MidasCivil.Convert.AdapterIdName].ToString());
+                x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             foreach (var loadcaseGroup in groupedByLoadCase)
             {
@@ -82,7 +84,7 @@ namespace BH.Adapter.MidasCivil
 
                         foreach (var element in load.Objects.Elements)
                         {
-                            loadBar.Add(element.CustomData[Engine.Adapters.MidasCivil.Convert.AdapterIdName].ToString());
+                            loadBar.Add(element.AdapterId<string>(typeof(MidasCivilId)));
                         }
 
                         loadBars.Add(loadBar);

@@ -24,6 +24,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Base;
 using BH.oM.Data.Requests;
 using BH.oM.Structure.Loads;
@@ -63,13 +65,13 @@ namespace BH.Adapter.MidasCivil
                     foreach (object o in ids)
                     {
                         int id;
-                        object idObj;
                         if (int.TryParse(o.ToString(), out id))
                         {
                             idsOut.Add(id);
                         }
-                        else if (o is IBHoMObject && (o as IBHoMObject).CustomData.TryGetValue(AdapterIdName, out idObj) && int.TryParse(idObj.ToString(), out id))
-                            idsOut.Add(id);
+                        else if (o is IBHoMObject && (o as IBHoMObject).HasAdapterIdFragment(typeof(MidasCivilId)))
+                            int.TryParse((o as IBHoMObject).AdapterId<string>(typeof(MidasCivilId)), out id);
+                        idsOut.Add(id);
                     }
                     return idsOut;
                 }

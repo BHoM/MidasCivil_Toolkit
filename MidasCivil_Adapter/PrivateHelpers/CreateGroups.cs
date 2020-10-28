@@ -23,6 +23,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 
 namespace BH.Adapter.MidasCivil
@@ -75,13 +77,13 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (!groupsToAdd.ContainsKey(tag))
                     {
-                        groupsToAdd.Add(tag, node.CustomData[AdapterIdName].ToString());
+                        groupsToAdd.Add(tag, node.AdapterId<string>(typeof(MidasCivilId)));
                     }
                     else
                     {
                         string assignedNodes;
                         groupsToAdd.TryGetValue(tag, out assignedNodes);
-                        string bhomID = node.CustomData[AdapterIdName].ToString();
+                        string bhomID = node.AdapterId<string>(typeof(MidasCivilId));
 
                         if (!assignedNodes.Contains(bhomID))
                         {
@@ -158,13 +160,13 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (!groupsToAdd.ContainsKey(tag))
                     {
-                        groupsToAdd.Add(tag, bar.CustomData[AdapterIdName].ToString());
+                        groupsToAdd.Add(tag, bar.AdapterId<string>(typeof(MidasCivilId)));
                     }
                     else
                     {
                         string assignedBars;
                         groupsToAdd.TryGetValue(tag, out assignedBars);
-                        string bhomID = bar.CustomData[AdapterIdName].ToString();
+                        string bhomID = bar.AdapterId<string>(typeof(MidasCivilId));
 
                         if (!assignedBars.Contains(bhomID))
                         {
@@ -239,13 +241,13 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (!groupsToAdd.ContainsKey(tag))
                     {
-                        groupsToAdd.Add(tag, mesh.CustomData[AdapterIdName].ToString());
+                        groupsToAdd.Add(tag, mesh.AdapterId<string>(typeof(MidasCivilId)));
                     }
                     else
                     {
                         string assignedFEMesh;
                         groupsToAdd.TryGetValue(tag, out assignedFEMesh);
-                        string bhomID = mesh.CustomData[AdapterIdName].ToString();
+                        string bhomID = mesh.AdapterId<string>(typeof(MidasCivilId));
 
                         if (!assignedFEMesh.Contains(bhomID))
                         {

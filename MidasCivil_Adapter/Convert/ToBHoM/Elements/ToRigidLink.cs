@@ -22,6 +22,8 @@
 
 using System.Linq;
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.Adapter.MidasCivil;
@@ -76,7 +78,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             RigidLink bhomRigidLink = Engine.Structure.Create.RigidLink(primaryNode, secondaryNodes, constraint);
             bhomRigidLink.Name = name;
-            bhomRigidLink.CustomData[AdapterIdName] = name;
+            bhomRigidLink.SetAdapterId(typeof(MidasCivilId), name);
 
             return bhomRigidLink;
         }

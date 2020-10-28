@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapter;
+using BH.oM.Adapters.MidasCivil;
 using BH.oM.Structure.Loads;
 using System.Collections.Generic;
 using System.IO;
@@ -40,7 +42,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (Loadcase loadcase in loadcases)
             {
-                loadcase.CustomData[AdapterIdName] = loadcase.Name;
+                loadcase.SetAdapterId(typeof(MidasCivilId), loadcase.Name);
                 Directory.CreateDirectory(m_directory + "\\TextFiles\\" + loadcase.Name);
                 midasLoadCases.Add(Adapters.MidasCivil.Convert.FromLoadcase(loadcase));
             }

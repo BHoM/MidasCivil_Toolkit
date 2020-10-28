@@ -19,6 +19,9 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
+
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Geometry;
 using System.Linq;
@@ -153,7 +156,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
             }
 
-            bhomMaterial.CustomData[AdapterIdName] = delimited[0].Trim();
+            bhomMaterial.SetAdapterId(typeof(MidasCivilId), delimited[0].Trim());
             return bhomMaterial;
         }
 

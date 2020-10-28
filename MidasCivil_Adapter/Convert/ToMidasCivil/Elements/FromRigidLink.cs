@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 
 namespace BH.Adapter.Adapters.MidasCivil
@@ -34,12 +36,12 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             string midasLink = "";
 
-            string primaryId = link.PrimaryNode.CustomData[AdapterIdName].ToString();
+            string primaryId = link.PrimaryNode.AdapterId<string>(typeof(MidasCivilId));
             string secondaryId = "";
 
             foreach (Node secondaryNode in link.SecondaryNodes)
             {
-                secondaryId = secondaryId + " " + secondaryNode.CustomData[AdapterIdName].ToString();
+                secondaryId = secondaryId + " " + secondaryNode.AdapterId<string>(typeof(MidasCivilId));
             }
 
             string fixity = BoolToFixity(link.Constraint.XtoX) +

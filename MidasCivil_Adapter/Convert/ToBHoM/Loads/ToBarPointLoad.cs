@@ -21,6 +21,8 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
@@ -113,12 +115,12 @@ namespace BH.Adapter.Adapters.MidasCivil
             if (loadType == "CONLOAD")
             {
                 bhomBarPointLoad = Engine.Structure.Create.BarPointLoad(bhomLoadcase, distA, bhomAssociatedBars, loadVector, null, axis, name);
-                bhomBarPointLoad.CustomData[AdapterIdName] = bhomBarPointLoad.Name;
+                bhomBarPointLoad.SetAdapterId(typeof(MidasCivilId), bhomBarPointLoad.Name);
             }
             else
             {
                 bhomBarPointLoad = Engine.Structure.Create.BarPointLoad(bhomLoadcase, distA, bhomAssociatedBars, null, loadVector, axis, name);
-                bhomBarPointLoad.CustomData[AdapterIdName] = bhomBarPointLoad.Name;
+                bhomBarPointLoad.SetAdapterId(typeof(MidasCivilId), bhomBarPointLoad.Name);
             }
 
             return bhomBarPointLoad;

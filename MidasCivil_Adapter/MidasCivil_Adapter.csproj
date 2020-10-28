@@ -79,6 +79,10 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="MidasCivil_oM, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\MidasCivil_oM.dll</HintPath>
+    </Reference>
     <Reference Include="Physical_oM">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\ProgramData\BHoM\Assemblies\Physical_oM.dll</HintPath>
@@ -129,7 +133,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\AdapterIdName.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToFEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />

@@ -21,6 +21,8 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
@@ -34,7 +36,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
 
         public static AreaUniformlyDistributedLoad ToAreaUniformlyDistributedLoad(string areaUniformlyDistributedLoad, List<string> associatedFEMeshes,
-            string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, 
+            string loadcase, Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary,
             int count, string forceUnit, string lengthUnit)
         {
             string[] delimitted = areaUniformlyDistributedLoad.Split(',');
@@ -104,8 +106,8 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
 
             AreaUniformlyDistributedLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformlyDistributedLoad(
-                bhomLoadcase, loadVector,bhomAssociatedFEMeshes, axis, loadProjection, name);
-            bhomAreaUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomAreaUniformlyDistributedLoad.Name;
+                bhomLoadcase, loadVector, bhomAssociatedFEMeshes, axis, loadProjection, name);
+            bhomAreaUniformlyDistributedLoad.SetAdapterId(typeof(MidasCivilId), bhomAreaUniformlyDistributedLoad.Name);
 
             return bhomAreaUniformlyDistributedLoad;
         }

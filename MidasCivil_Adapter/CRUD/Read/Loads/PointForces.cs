@@ -23,6 +23,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using System.IO;
@@ -56,7 +58,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     List<Node> bhomNodes = ReadNodes();
                     Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
-                                                                x => x.CustomData[AdapterIdName].ToString());
+                                                                x => x.AdapterId<string>(typeof(MidasCivilId)));
 
                     List<string> PointLoadComparison = new List<string>();
                     List<string> PointLoadNodes = new List<string>();

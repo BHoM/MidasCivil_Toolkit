@@ -21,6 +21,8 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 
@@ -68,7 +70,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 BarTemperatureLoad bhombarUniformlyDistributedLoad = Engine.Structure.Create.BarTemperatureLoad(
                     bhomLoadcase, temperature, bhomAssociatedBars, LoadAxis.Global, false, name);
-                bhombarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhombarUniformlyDistributedLoad.Name;
+                bhombarUniformlyDistributedLoad.SetAdapterId(typeof(MidasCivilId), bhombarUniformlyDistributedLoad.Name);
                 return bhombarUniformlyDistributedLoad;
             }
             else

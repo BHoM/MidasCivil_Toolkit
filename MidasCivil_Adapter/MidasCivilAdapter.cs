@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using BH.Engine.Base.Objects;
+using BH.oM.Adapters.MidasCivil;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.MaterialFragments;
@@ -50,7 +51,7 @@ namespace BH.Adapter.MidasCivil
         {
             if (active)
             {
-                AdapterIdName = "MidasCivil_id";   //Set the "AdapterId" to "SoftwareName_id". Generally stored as a constant string in the convert class in the SoftwareName_Engine
+                AdapterIdFragmentType = typeof(MidasCivilId);
 
                 Modules.Structure.ModuleLoader.LoadModules(this);
 
@@ -155,12 +156,12 @@ namespace BH.Adapter.MidasCivil
                         m_heatUnit = units[2].Trim();
                         m_temperatureUnit = units[3].Trim();
                     }
-                    catch(DirectoryNotFoundException)
+                    catch (DirectoryNotFoundException)
                     {
                         Engine.Reflection.Compute.RecordWarning(
                             "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                     }
-                    catch(ArgumentOutOfRangeException)
+                    catch (ArgumentOutOfRangeException)
                     {
                         Engine.Reflection.Compute.RecordWarning(
                             "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");

@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using System.Collections.Generic;
@@ -49,8 +51,8 @@ namespace BH.Engine.Adapters.MidasCivil
 
             List<Panel> panels = BH.Engine.Structure.Create.Panel(polylines.Cast<ICurve>().ToList());
 
-            if (mesh.CustomData.ContainsValue(Convert.AdapterIdName))
-                panels[0].CustomData[Convert.AdapterIdName] = mesh.CustomData[Convert.AdapterIdName];
+            if (mesh.HasAdapterIdFragment(typeof(MidasCivilId)))
+                panels[0].SetAdapterId(typeof(MidasCivilId), mesh.AdapterId<int>(typeof(MidasCivilId)));
 
             return panels[0];
         }

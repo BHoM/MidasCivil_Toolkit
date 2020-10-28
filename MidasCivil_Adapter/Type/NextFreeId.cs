@@ -22,6 +22,8 @@
 
 using System;
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.SectionProperties;
@@ -60,7 +62,7 @@ namespace BH.Adapter.MidasCivil
                     {
                         List<Node> nodes = ReadNodes();
                         List<int> nodeID = new List<int>();
-                        nodes.ForEach(x => nodeID.Add(System.Convert.ToInt32(x.CustomData[AdapterIdName].ToString())));
+                        nodes.ForEach(x => nodeID.Add(System.Convert.ToInt32(x.AdapterId<string>(typeof(MidasCivilId)))));
                         nodeID.Sort();
                         nodeID.Reverse();
 
@@ -116,7 +118,7 @@ namespace BH.Adapter.MidasCivil
                     if (ExistsSection(section))
                     {
 
-                        index = GetMaxId(section) +1;
+                        index = GetMaxId(section) + 1;
                     }
                     else
                     {
@@ -124,7 +126,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                if(typeof(ISectionProperty).IsAssignableFrom(type))
+                if (typeof(ISectionProperty).IsAssignableFrom(type))
                 {
                     string section = "SECTION";
 
@@ -154,8 +156,8 @@ namespace BH.Adapter.MidasCivil
 
             }
 
-                m_indexDict[type] = index;
-                return index;
+            m_indexDict[type] = index;
+            return index;
         }
 
 

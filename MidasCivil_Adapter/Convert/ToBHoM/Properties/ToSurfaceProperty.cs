@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.SurfaceProperties;
 
 namespace BH.Adapter.Adapters.MidasCivil
@@ -54,7 +56,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     break;
             }
 
-            constantThickness.CustomData[AdapterIdName] = split[0].Trim();
+            constantThickness.SetAdapterId(typeof(MidasCivilId), split[0].Trim());
 
             if (split[5].Trim() == "YES")
                 Engine.Reflection.Compute.RecordWarning("SurfaceProperty objects do not have offsets implemented so this information will be lost");
