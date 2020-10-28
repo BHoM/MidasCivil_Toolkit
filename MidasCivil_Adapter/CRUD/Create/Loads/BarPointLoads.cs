@@ -20,8 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
 using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
+using BH.Engine.Adapter;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +46,7 @@ namespace BH.Adapter.MidasCivil
                 string barLoadPath = CreateSectionFile(barPointLoad.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barPointLoad);
 
-                List<string> assignedBars = barPointLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
+                List<string> assignedBars = barPointLoad.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
 
                 List<double> loadVectors = new List<double> { barPointLoad.Force.X,
                                                               barPointLoad.Force.Y,

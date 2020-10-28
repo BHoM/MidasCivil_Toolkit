@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Adapter_Engine">
+      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Adapter_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Analytical_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Analytical_oM.dll</HintPath>
       <Private>False</Private>
@@ -55,6 +58,10 @@
     <Reference Include="Library_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="MidasCivil_oM, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\MidasCivil_oM.dll</HintPath>
     </Reference>
     <Reference Include="Physical_oM">
       <SpecificVersion>False</SpecificVersion>

@@ -20,7 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.MaterialFragments;
 using BH.Engine.Structure;
 using System.Linq;
@@ -55,8 +56,8 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 IIsotropic isotropic = material as IIsotropic;
                 midasMaterial = (
-                    isotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
-                    new string(isotropic.DescriptionOrName().Replace(",","").Take(materialCharacterLimit).ToArray()) + ",0,0,,C,NO," +
+                    isotropic.AdapterId<string>(typeof(MidasCivilId)) + "," + type + "," +
+                    new string(isotropic.DescriptionOrName().Replace(",", "").Take(materialCharacterLimit).ToArray()) + ",0,0,,C,NO," +
                     isotropic.DampingRatio + ",2," + isotropic.YoungsModulus.PressureFromSI(forceUnit, lengthUnit) + "," +
                     isotropic.PoissonsRatio + "," + isotropic.ThermalExpansionCoeff.InverseDeltaTemperatureFromSI(temperatureUnit) + "," +
                     isotropic.Density.DensityFromSI(forceUnit, lengthUnit) * 9.806 + "," + isotropic.Density.DensityFromSI(forceUnit, lengthUnit)
@@ -66,17 +67,17 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 IOrthotropic iorthotropic = material as IOrthotropic;
                 midasMaterial = (
-                     iorthotropic.CustomData[AdapterIdName].ToString() + "," + type + "," +
-                    new string(iorthotropic.DescriptionOrName().Replace(",","").Take(materialCharacterLimit).ToArray()) + ",0,0,,C,NO," +
+                     iorthotropic.AdapterId<string>(typeof(MidasCivilId)) + "," + type + "," +
+                    new string(iorthotropic.DescriptionOrName().Replace(",", "").Take(materialCharacterLimit).ToArray()) + ",0,0,,C,NO," +
                     iorthotropic.DampingRatio + ",3,"
-                    +   iorthotropic.YoungsModulus.X.PressureFromSI(forceUnit, lengthUnit) + "," + 
-                        iorthotropic.YoungsModulus.Y.PressureFromSI(forceUnit, lengthUnit) + "," + 
+                    + iorthotropic.YoungsModulus.X.PressureFromSI(forceUnit, lengthUnit) + "," +
+                        iorthotropic.YoungsModulus.Y.PressureFromSI(forceUnit, lengthUnit) + "," +
                         iorthotropic.YoungsModulus.Z.PressureFromSI(forceUnit, lengthUnit) + ","
-                    +   iorthotropic.ThermalExpansionCoeff.X.InverseDeltaTemperatureFromSI(temperatureUnit) + "," + 
-                        iorthotropic.ThermalExpansionCoeff.Y.InverseDeltaTemperatureFromSI(temperatureUnit) + "," + 
+                    + iorthotropic.ThermalExpansionCoeff.X.InverseDeltaTemperatureFromSI(temperatureUnit) + "," +
+                        iorthotropic.ThermalExpansionCoeff.Y.InverseDeltaTemperatureFromSI(temperatureUnit) + "," +
                         iorthotropic.ThermalExpansionCoeff.Z.InverseDeltaTemperatureFromSI(temperatureUnit) + ","
-                    +   iorthotropic.ShearModulus.X.PressureFromSI(forceUnit, lengthUnit) + "," + 
-                        iorthotropic.ShearModulus.Y.PressureFromSI(forceUnit, lengthUnit) + "," + 
+                    + iorthotropic.ShearModulus.X.PressureFromSI(forceUnit, lengthUnit) + "," +
+                        iorthotropic.ShearModulus.Y.PressureFromSI(forceUnit, lengthUnit) + "," +
                         iorthotropic.ShearModulus.Z.PressureFromSI(forceUnit, lengthUnit) + ","
                     + iorthotropic.PoissonsRatio.X + "," + iorthotropic.PoissonsRatio.Y + "," + iorthotropic.PoissonsRatio.Z + ","
                     + iorthotropic.Density.DensityFromSI(forceUnit, lengthUnit) * 9.806 + "," + iorthotropic.Density.DensityFromSI(forceUnit, lengthUnit)

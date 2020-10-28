@@ -20,8 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
-using BH.Engine.Units;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -35,7 +36,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             string midasNode =
                 (
-                    node.CustomData[AdapterIdName].ToString() + "," +
+                    node.AdapterId<string>(typeof(MidasCivilId)) + "," +
                     node.Position.X.LengthFromSI(lengthUnit).ToString() + "," +
                     node.Position.Y.LengthFromSI(lengthUnit).ToString() + "," +
                     node.Position.Z.LengthFromSI(lengthUnit).ToString()

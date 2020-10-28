@@ -21,6 +21,8 @@
  */
 
 using System;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using System.Collections.Generic;
 using BH.oM.Structure.Loads;
 using System.Linq;
@@ -46,7 +48,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 Number = 0,
             };
 
-            bhomLoadCase.CustomData[AdapterIdName] = delimitted[0].Trim();
+            bhomLoadCase.SetAdapterId(typeof(MidasCivilId), delimitted[0].Trim());
 
             return bhomLoadCase;
         }

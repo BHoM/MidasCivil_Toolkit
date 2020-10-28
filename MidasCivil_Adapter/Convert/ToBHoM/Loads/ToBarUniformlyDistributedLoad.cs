@@ -21,6 +21,8 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
@@ -119,13 +121,13 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(
                     bhomLoadcase, bhomAssociatedBars, loadVector, null, axis, loadProjection, name);
-                bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
+                bhomBarUniformlyDistributedLoad.SetAdapterId(typeof(MidasCivilId), bhomBarUniformlyDistributedLoad.Name);
             }
             else
             {
                 bhomBarUniformlyDistributedLoad = Engine.Structure.Create.BarUniformlyDistributedLoad(
                     bhomLoadcase, bhomAssociatedBars, null, loadVector, axis, loadProjection, name);
-                bhomBarUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomBarUniformlyDistributedLoad.Name;
+                bhomBarUniformlyDistributedLoad.SetAdapterId(typeof(MidasCivilId), bhomBarUniformlyDistributedLoad.Name);
             }
 
             return bhomBarUniformlyDistributedLoad;

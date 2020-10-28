@@ -26,6 +26,8 @@ using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Geometry;
 using System.Collections.Generic;
 using System.Linq;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.MidasCivil;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -51,8 +53,8 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             List<Panel> panels = Engine.Structure.Create.Panel(polylines.Cast<ICurve>().ToList());
 
-            if (mesh.CustomData.ContainsValue(AdapterIdName))
-                panels[0].CustomData[AdapterIdName] = mesh.CustomData[AdapterIdName];
+            if (mesh.HasAdapterIdFragment(typeof(MidasCivilId)))
+                panels[0].SetAdapterId(typeof(MidasCivilId), mesh.AdapterId<int>(typeof(MidasCivilId)));
 
             return panels[0];
         }

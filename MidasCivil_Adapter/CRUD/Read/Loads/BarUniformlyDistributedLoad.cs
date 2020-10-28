@@ -22,6 +22,8 @@
 
 using System;
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using System.Linq;
@@ -86,7 +88,7 @@ namespace BH.Adapter.MidasCivil
                     {
                         List<Bar> bhomBars = ReadBars();
                         Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
-                                                                    x => x.CustomData[AdapterIdName].ToString());
+                                                                    x => x.AdapterId<string>(typeof(MidasCivilId)));
                         List<string> distinctBarLoads = barComparison.Distinct().ToList();
 
                         foreach (string distinctBarLoad in distinctBarLoads)
@@ -103,7 +105,7 @@ namespace BH.Adapter.MidasCivil
                                     distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i, m_forceUnit, m_lengthUnit);
                             bhomBarUniformlyDistributedLoads.Add(bhomBarUniformlyDistributedLoad);
 
-                            if(String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[17]))
+                            if (String.IsNullOrWhiteSpace(distinctBarLoad.Split(',').ToList()[17]))
                             {
                                 i = i + 1;
                             }

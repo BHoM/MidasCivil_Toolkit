@@ -21,6 +21,8 @@
  */
 
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 
@@ -69,7 +71,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 AreaTemperatureLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaTemperatureLoad(
                     bhomLoadcase, temperature.DeltaTemperatureToSI(temperatureUnit),
                     bhomAssociatedFEMeshes, LoadAxis.Global, false, name);
-                bhomAreaUniformlyDistributedLoad.CustomData[AdapterIdName] = bhomAreaUniformlyDistributedLoad.Name;
+                bhomAreaUniformlyDistributedLoad.SetAdapterId(typeof(MidasCivilId), bhomAreaUniformlyDistributedLoad.Name);
                 return bhomAreaUniformlyDistributedLoad;
             }
             else

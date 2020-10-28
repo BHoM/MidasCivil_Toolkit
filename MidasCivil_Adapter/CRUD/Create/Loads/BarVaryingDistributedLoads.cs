@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
 using System.IO;
@@ -44,7 +46,7 @@ namespace BH.Adapter.MidasCivil
                 string barLoadPath = CreateSectionFile(barVaryingDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barVaryingDistributedLoad);
 
-                List<string> assignedBars = barVaryingDistributedLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
+                List<string> assignedBars = barVaryingDistributedLoad.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
 
                 List<double> startLoadVectors = new List<double> { barVaryingDistributedLoad.ForceA.X,
                                                               barVaryingDistributedLoad.ForceA.Y,

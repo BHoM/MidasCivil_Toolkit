@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using System.Collections.Generic;
 
@@ -53,30 +55,30 @@ namespace BH.Adapter.Adapters.MidasCivil
                     break;
             }
 
-            string startNodeID = bar.StartNode.CustomData[AdapterIdName].ToString();
-            string endNodeID = bar.EndNode.CustomData[AdapterIdName].ToString();
+            string startNodeID = bar.StartNode.AdapterId<string>(typeof(MidasCivilId));
+            string endNodeID = bar.EndNode.AdapterId<string>(typeof(MidasCivilId));
             string materialID = "1";
             string sectionID = "1";
 
             if (bar.SectionProperty != null)
             {
-                sectionID = bar.SectionProperty.CustomData[AdapterIdName].ToString();
+                sectionID = bar.SectionProperty.AdapterId<string>(typeof(MidasCivilId));
                 if (bar.SectionProperty.Material != null)
                 {
-                    materialID = bar.SectionProperty.Material.CustomData[AdapterIdName].ToString();
+                    materialID = bar.SectionProperty.Material.AdapterId<string>(typeof(MidasCivilId));
                 }
             }
 
             if (bar.FEAType == BarFEAType.Axial || bar.FEAType == BarFEAType.Flexural)
             {
-                midasElement = (bar.CustomData[AdapterIdName].ToString() + "," + feaType +
+                midasElement = (bar.AdapterId<string>(typeof(MidasCivilId)) + "," + feaType +
                                       "," + materialID + "," + sectionID + "," +
                                       startNodeID + "," + endNodeID + "," +
-                                      (bar.OrientationAngle*180/System.Math.PI).ToString() + ",0,0");
+                                      (bar.OrientationAngle * 180 / System.Math.PI).ToString() + ",0,0");
             }
             else
             {
-                midasElement = (bar.CustomData[AdapterIdName].ToString() + "," + feaType +
+                midasElement = (bar.AdapterId<string>(typeof(MidasCivilId)) + "," + feaType +
                                   "," + materialID + "," + sectionID + "," +
                                   startNodeID + "," + endNodeID + "," +
                                   (bar.OrientationAngle * 180 / System.Math.PI).ToString() + ",1,0,0,NO");

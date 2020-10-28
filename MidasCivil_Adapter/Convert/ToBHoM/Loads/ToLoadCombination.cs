@@ -21,6 +21,8 @@
  */
 
 using System;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using System.Collections.Generic;
 using System.Linq;
 using BH.oM.Structure.Loads;
@@ -53,7 +55,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             int number = 0;
 
             LoadCombination bhomLoadCombination = BH.Engine.Structure.Create.LoadCombination(name, number, associatedLoadcases, loadFactors);
-            bhomLoadCombination.CustomData[AdapterIdName] = name;
+            bhomLoadCombination.SetAdapterId(typeof(MidasCivilId), name);
 
             return bhomLoadCombination;
         }

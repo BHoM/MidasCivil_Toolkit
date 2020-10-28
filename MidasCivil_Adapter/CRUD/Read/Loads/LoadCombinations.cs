@@ -23,6 +23,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 
 namespace BH.Adapter.MidasCivil
@@ -40,7 +42,7 @@ namespace BH.Adapter.MidasCivil
 
             IEnumerable<Loadcase> bhomLoadCases = ReadLoadcases();
             Dictionary<string, Loadcase> bhomLoadCaseDictionary = bhomLoadCases.ToDictionary(
-                x => x.CustomData[AdapterIdName].ToString());
+                x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             for (int i = 0; i < loadCombinationText.Count; i += 2)
             {

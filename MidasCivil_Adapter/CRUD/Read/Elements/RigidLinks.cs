@@ -20,8 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
-using BH.oM.Structure.Constraints;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -40,7 +41,7 @@ namespace BH.Adapter.MidasCivil
 
             List<string> linkText = GetSectionText("RIGIDLINK");
             List<Node> nodes = ReadNodes();
-            Dictionary<string, Node> nodeDictionary = nodes.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
+            Dictionary<string, Node> nodeDictionary = nodes.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             int count = 0;
 

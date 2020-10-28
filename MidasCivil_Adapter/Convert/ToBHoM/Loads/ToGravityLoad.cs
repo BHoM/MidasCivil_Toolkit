@@ -20,10 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
-using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.oM.Base;
 
@@ -35,7 +35,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static GravityLoad ToGravityLoad(List<BHoMObject> objects, string gravityLoad, string loadcase, 
+        public static GravityLoad ToGravityLoad(List<BHoMObject> objects, string gravityLoad, string loadcase,
             Dictionary<string, Loadcase> loadcaseDictionary, int count)
         {
             string[] delimitted = gravityLoad.Split(',');
@@ -61,7 +61,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
 
             GravityLoad bhomGravityLoad = Engine.Structure.Create.GravityLoad(bhomLoadcase, direction, objects, name);
-            bhomGravityLoad.CustomData[AdapterIdName] = bhomGravityLoad.Name;
+            bhomGravityLoad.SetAdapterId(typeof(MidasCivilId), bhomGravityLoad.Name);
 
             return bhomGravityLoad;
         }

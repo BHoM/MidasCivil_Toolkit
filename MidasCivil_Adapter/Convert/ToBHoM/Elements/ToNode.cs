@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.Engine.Adapter;
+using BH.oM.Adapters.MidasCivil;
 using BH.oM.Geometry;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.Elements;
@@ -48,8 +50,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 );
 
-            bhomNode.CustomData[AdapterIdName] = delimitted[0].Trim();
-            int bhomID = System.Convert.ToInt32(bhomNode.CustomData[AdapterIdName]);
+            bhomNode.SetAdapterId(typeof(MidasCivilId), delimitted[0].Trim());
+            int bhomID = bhomNode.AdapterId<int>(typeof(MidasCivilId));
 
             string supportName = "";
 

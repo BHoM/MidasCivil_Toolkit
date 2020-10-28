@@ -21,6 +21,8 @@
  */
 
 using System;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using System.Collections.Generic;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
@@ -80,7 +82,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             IEnumerable<Node> nodes = bhomAssociatedNodes;
 
             PointLoad bhomPointLoad = Engine.Structure.Create.PointLoad(bhomLoadcase, nodes, forceVector, momentVector, LoadAxis.Global, name);
-            bhomPointLoad.CustomData[AdapterIdName] = bhomPointLoad.Name;
+            bhomPointLoad.SetAdapterId(typeof(MidasCivilId), bhomPointLoad.Name);
 
             return bhomPointLoad;
         }

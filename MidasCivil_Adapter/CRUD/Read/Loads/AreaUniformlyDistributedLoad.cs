@@ -24,6 +24,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 
@@ -65,7 +67,7 @@ namespace BH.Adapter.MidasCivil
                     {
                         List<FEMesh> bhomMeshes = ReadFEMeshes();
                         Dictionary<string, FEMesh> FEMeshDictionary = bhomMeshes.ToDictionary(
-                                                                    x => x.CustomData[AdapterIdName].ToString());
+                                                                    x => x.AdapterId<string>(typeof(MidasCivilId)));
                         List<string> distinctFEMeshLoads = feMeshComparison.Distinct().ToList();
 
                         foreach (string distinctFEMeshLoad in distinctFEMeshLoads)

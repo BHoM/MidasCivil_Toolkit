@@ -22,6 +22,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SurfaceProperties;
@@ -44,19 +46,19 @@ namespace BH.Adapter.MidasCivil
 
             IEnumerable<Node> bhomNodesList = ReadNodes();
             Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
-                x => x.CustomData[AdapterIdName].ToString());
+                x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             IEnumerable<ISurfaceProperty> bhomSurfacePropertiesList = ReadSurfaceProperties();
             Dictionary<string, ISurfaceProperty> bhomSuraceProperties = bhomSurfacePropertiesList.ToDictionary(
-                x => x.CustomData[AdapterIdName].ToString());
+                x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             IEnumerable<IMaterialFragment> bhomMaterialList = ReadMaterials();
-            Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.CustomData[AdapterIdName].ToString());
+            Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             foreach (string mesh in meshText)
             {
                 FEMesh bhomMesh = Adapters.MidasCivil.Convert.ToFEMesh(mesh, bhomNodes, bhomSuraceProperties, bhomMaterials);
-                int bhomID = System.Convert.ToInt32(bhomMesh.CustomData[AdapterIdName]);
+                int bhomID = bhomMesh.AdapterId<int>(typeof(MidasCivilId));
                 bhomMesh.Tags = GetGroupAssignments(elementGroups, bhomID);
                 bhomMeshes.Add(bhomMesh);
             }

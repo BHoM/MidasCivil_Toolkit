@@ -20,9 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
-using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.SectionProperties;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,7 +95,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             double orientationAngle = double.Parse(delimitted[6].Trim());
 
             Bar bhomBar = Engine.Structure.Create.Bar(startNode, endNode, sectionProperty, orientationAngle, barRelease, feaType);
-            bhomBar.CustomData[AdapterIdName] = bhomID;
+            bhomBar.SetAdapterId(typeof(MidasCivilId), bhomID);
 
             return bhomBar;
         }

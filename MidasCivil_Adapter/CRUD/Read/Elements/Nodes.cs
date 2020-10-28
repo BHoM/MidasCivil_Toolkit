@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using BH.oM.Structure.Constraints;
 using System.Collections.Generic;
@@ -53,7 +55,7 @@ namespace BH.Adapter.MidasCivil
             foreach (string node in nodesText)
             {
                 Node bhomNode = Adapters.MidasCivil.Convert.ToNode(node, supports, supportAssignments, springAssignments, m_lengthUnit);
-                int bhomID = System.Convert.ToInt32(bhomNode.CustomData[AdapterIdName]);
+                int bhomID = bhomNode.AdapterId<int>(typeof(MidasCivilId));
                 bhomNode.Tags = GetGroupAssignments(nodeGroups, bhomID);
                 bhomNodes.Add(bhomNode);
             }

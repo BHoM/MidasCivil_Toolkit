@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
@@ -43,10 +45,10 @@ namespace BH.Adapter.MidasCivil
                 List<IAreaElement> assignedElements = areaUniformlyDistributedLoad.Objects.Elements;
 
                 List<string> assignedFEMeshes = new List<string>();
-				
+
                 foreach (IAreaElement mesh in assignedElements)
                 {
-                    assignedFEMeshes.Add(mesh.CustomData[AdapterIdName].ToString());
+                    assignedFEMeshes.Add(mesh.AdapterId<string>(typeof(MidasCivilId)));
                 }
 
                 List<double> loadVectors = new List<double> { areaUniformlyDistributedLoad.Pressure.X,
@@ -63,10 +65,10 @@ namespace BH.Adapter.MidasCivil
                     {
                         areaUniformlyDistributedLoad.Pressure = CreateSingleComponentVector(i, loadVectors[i]);
 
-                            foreach (string assignedFEMesh in assignedFEMeshes)
-                            {
-                                midasPressureLoads.Add(Adapters.MidasCivil.Convert.FromAreaUniformlyDistributedLoad(areaUniformlyDistributedLoad, assignedFEMesh, m_forceUnit, m_lengthUnit));
-                            }
+                        foreach (string assignedFEMesh in assignedFEMeshes)
+                        {
+                            midasPressureLoads.Add(Adapters.MidasCivil.Convert.FromAreaUniformlyDistributedLoad(areaUniformlyDistributedLoad, assignedFEMesh, m_forceUnit, m_lengthUnit));
+                        }
                     }
                 }
 

@@ -22,6 +22,8 @@
 
 using System;
 using System.Collections.Generic;
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using System.Linq;
@@ -75,7 +77,7 @@ namespace BH.Adapter.MidasCivil
                     {
                         List<Bar> bhomBars = ReadBars();
                         Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(
-                                                                    x => x.CustomData[AdapterIdName].ToString());
+                                                                    x => x.AdapterId<string>(typeof(MidasCivilId)));
 
                         List<string> distinctBarLoads = barComparison.Distinct().ToList();
 

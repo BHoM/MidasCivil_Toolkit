@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using System.IO;
 using System.Collections.Generic;
@@ -43,7 +45,7 @@ namespace BH.Adapter.MidasCivil
                 string PointLoadPath = CreateSectionFile(PointLoad.Loadcase.Name + "\\CONLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(PointLoad);
 
-                List<string> assignedNodes = PointLoad.Objects.Elements.Select(x => x.CustomData[AdapterIdName].ToString()).ToList();
+                List<string> assignedNodes = PointLoad.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
 
                 foreach (string assignedNode in assignedNodes)
                 {
