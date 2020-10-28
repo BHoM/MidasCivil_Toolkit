@@ -20,12 +20,13 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Base;
 using System.ComponentModel;
 using System.Collections.Generic;
 
 namespace BH.oM.Adapters.MidasCivil
 {
-    public class MidasCivilId
+    public class MidasCivilId : IAdapterId
     {
         /***************************************************/
         /**** Public Properties                         ****/
