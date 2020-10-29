@@ -79,11 +79,6 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="MidasCivil_oM">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\ProgramData\BHoM\Assemblies\MidasCivil_oM.dll</HintPath>
-	  <Private>False</Private>
-    </Reference>
     <Reference Include="Physical_oM">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\ProgramData\BHoM\Assemblies\Physical_oM.dll</HintPath>
@@ -315,6 +310,10 @@
       <Project>{bc0a8eff-4277-49e9-bbdc-66ffa11e5258}</Project>
       <Name>MidasCivil_Engine</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\MidasCivil_oM\MidasCivil_oM.csproj">
+      <Project>{ec91e4d3-1fce-4547-8482-b78df69f56a8}</Project>
+      <Name>MidasCivil_oM</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
