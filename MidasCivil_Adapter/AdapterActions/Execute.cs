@@ -106,10 +106,18 @@ namespace BH.Adapter.MidasCivil
             }
 
             Directory.CreateDirectory(newDirectory);
-            CopyAll(new DirectoryInfo(m_directory + "\\TEXTFILES"), new DirectoryInfo(newDirectory + "\\TEXTFILES"));
+            string[] mcbFiles = Directory.GetFiles(m_directory, "*.mcb");
+            foreach (string mcbFile in mcbFiles)
+                File.Copy(mcbFile, newDirectory);
+            string[] mctFiles = Directory.GetFiles(m_directory, "*.mcb");
+            foreach (string mctFile in mctFiles)
+                File.Copy(mctFile, newDirectory);
+
+
+            CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
+            CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
 
             m_directory = newDirectory;
-            Directory.CreateDirectory(newDirectory + "\\Results");
 
             return true;
         }
