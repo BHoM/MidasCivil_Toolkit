@@ -220,8 +220,8 @@ namespace BH.Adapter.MidasCivil
 
         public bool RunCommand(ClearResults command)
         {
-            Engine.Reflection.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
-            return false;
+            Directory.Delete(m_directory + "\\Results");
+            return true;
         }
 
         /***************************************************/
