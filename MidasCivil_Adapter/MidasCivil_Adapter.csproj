@@ -129,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdapterActions\Execute.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToFEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />
