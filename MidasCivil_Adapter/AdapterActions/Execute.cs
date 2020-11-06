@@ -80,6 +80,7 @@ namespace BH.Adapter.MidasCivil
                 File.Copy(versionFile, newDirectory + versionExtension);
 
             m_directory = newDirectory;
+            Directory.CreateDirectory(newDirectory + "\\Results");
 
             return true;
         }
@@ -108,6 +109,7 @@ namespace BH.Adapter.MidasCivil
             CopyAll(new DirectoryInfo(m_directory + "\\TEXTFILES"), new DirectoryInfo(newDirectory + "\\TEXTFILES"));
 
             m_directory = newDirectory;
+            Directory.CreateDirectory(newDirectory + "\\Results");
 
             return true;
         }
@@ -190,6 +192,9 @@ namespace BH.Adapter.MidasCivil
                     Engine.Reflection.Compute.RecordWarning(
                         "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                 }
+
+                Directory.CreateDirectory(m_directory + "\\Results");
+
             }
 
             return true;
