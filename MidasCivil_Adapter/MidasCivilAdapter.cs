@@ -36,6 +36,7 @@ using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Structure.Loads;
 using BH.Engine.Adapters.MidasCivil.Comparer;
 using BH.Engine.Structure;
+using BH.oM.Adapter.Commands;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -94,79 +95,9 @@ namespace BH.Adapter.MidasCivil
                     {typeof(ILoad), new List<Type> {typeof(Loadcase) } }
                 };
 
-                if (string.IsNullOrWhiteSpace(filePath))
-                {
-                    throw new ArgumentException("No file path given");
-                }
-                else if (IsApplicationRunning())
-                {
-                    throw new Exception("MidasCivil process already running");
-                }
-                else
-                {
-                    try
-                    {
-                        System.Diagnostics.Process.Start(filePath);
-                    }
-                    catch (System.ComponentModel.Win32Exception)
-                    {
-                        throw new Exception("File does not exist, please reference an .mcb file");
-                    }
-                    m_directory = Path.GetDirectoryName(filePath);
-                    string fileName = Path.GetFileNameWithoutExtension(filePath);
-                    string txtFile = m_directory + "\\" + fileName + ".txt";
-                    string mctFile = m_directory + "\\" + fileName + ".mct";
+                m_midasCivilVersion = version;
 
-                    if (File.Exists(txtFile))
-                    {
-                        m_midasText = File.ReadAllLines(txtFile).ToList();
-                        SetSectionText();
-                    }
-                    else if (File.Exists(mctFile))
-                    {
-                        m_midasText = File.ReadAllLines(mctFile).ToList();
-                        SetSectionText();
-                    }
-                    string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
-                    m_midasCivilVersion = "8.8.1";
-
-                    if (!(version == ""))
-                    {
-                        m_midasCivilVersion = version.Trim();
-                        if (File.Exists(versionFile))
-                        {
-                            Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
-                        }
-                    }
-                    else if (File.Exists(versionFile))
-                    {
-                        List<string> versionText = GetSectionText("VERSION");
-                        m_midasCivilVersion = versionText[0].Trim();
-                    }
-                    else
-                    {
-                        Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
-                    }
-
-                    try
-                    {
-                        List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
-                        m_forceUnit = units[0].Trim();
-                        m_lengthUnit = units[1].Trim();
-                        m_heatUnit = units[2].Trim();
-                        m_temperatureUnit = units[3].Trim();
-                    }
-                    catch (DirectoryNotFoundException)
-                    {
-                        Engine.Reflection.Compute.RecordWarning(
-                            "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        Engine.Reflection.Compute.RecordWarning(
-                            "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
-                    }
-                }
+                Execute(new Open() { FileName = filePath });
             }
         }
 
