@@ -68,7 +68,7 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractNodeReaction(List<int> ids, List<string> loadcaseIds)
         {
-            string filePath = m_directory + "\\Reaction(Global).xls";
+            string filePath = m_directory + "\\Results\\Reaction(Global).xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> nodeReactionText = File.ReadAllLines(csvPath).ToList();
             List<NodeReaction> nodeReactions = new List<NodeReaction>();
@@ -96,7 +96,7 @@ namespace BH.Adapter.MidasCivil
 
         private IEnumerable<IResult> ExtractNodeDisplacement(List<int> ids, List<string> loadcaseIds)
         {
-            string filePath = m_directory + "\\Displacements(Global).xls";
+            string filePath = m_directory + "\\Results\\Displacements(Global).xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> nodeDisplacementText = File.ReadAllLines(csvPath).ToList();
 

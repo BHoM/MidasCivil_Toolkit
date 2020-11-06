@@ -74,7 +74,7 @@ namespace BH.Adapter.MidasCivil
         private IEnumerable<IResult> ExtractBarStress(List<int> ids, List<string> loadcaseIds)
         {
 
-            string filePath = m_directory + "\\Beam Stress.xls";
+            string filePath = m_directory + "\\Results\\Beam Stress.xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> barStressText = File.ReadAllLines(csvPath).ToList();
             List<BarStress> barStresses = new List<BarStress>();
@@ -115,7 +115,7 @@ namespace BH.Adapter.MidasCivil
         private IEnumerable<IResult> ExtractBarForce(List<int> ids, List<string> loadcaseIds)
         {
 
-            string filePath = m_directory + "\\Beam Force.xls";
+            string filePath = m_directory + "\\Results\\Beam Force.xls";
             string csvPath = ExcelToCsv(filePath);
             List<String> barForceText = File.ReadAllLines(csvPath).ToList();
             List<BarForce> barForces = new List<BarForce>();
