@@ -29,6 +29,7 @@ using BH.oM.Adapter;
 using BH.oM.Reflection;
 using BH.oM.Adapter.Commands;
 using BH.oM.Structure.Loads;
+using System.Runtime.InteropServices;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -72,12 +73,15 @@ namespace BH.Adapter.MidasCivil
             string unitFile = m_directory + unitExtension;
             string versionFile = m_directory + versionExtension;
 
-
             if (!File.Exists(unitFile))
                 File.Copy(unitFile, newDirectory + unitExtension);
+            else
+                File.AppendAllLines(m_directory + unitExtension, new List<string>() {"*UNIT","N,M,BTU,C"});
 
             if (!File.Exists(versionFile))
                 File.Copy(versionFile, newDirectory + versionExtension);
+            else
+                File.AppendAllLines(m_directory + versionExtension, new List<string>() { "*VERSION", m_midasCivilVersion });
 
             m_directory = newDirectory;
             Directory.CreateDirectory(newDirectory + "\\Results");
@@ -112,8 +116,6 @@ namespace BH.Adapter.MidasCivil
             string[] mctFiles = Directory.GetFiles(m_directory, "*.mcb");
             foreach (string mctFile in mctFiles)
                 File.Copy(mctFile, newDirectory);
-
-
             CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
             CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
 
