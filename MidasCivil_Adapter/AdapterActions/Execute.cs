@@ -73,15 +73,17 @@ namespace BH.Adapter.MidasCivil
             string unitFile = m_directory + unitExtension;
             string versionFile = m_directory + versionExtension;
 
+            Directory.CreateDirectory(newDirectory + "\\TextFiles");
+
             if (!File.Exists(unitFile))
                 File.Copy(unitFile, newDirectory + unitExtension);
             else
-                File.AppendAllLines(m_directory + unitExtension, new List<string>() {"*UNIT","N,M,BTU,C"});
+                File.AppendAllLines(newDirectory + unitExtension, new List<string>() {"*UNIT","N,M,BTU,C"});
 
             if (!File.Exists(versionFile))
                 File.Copy(versionFile, newDirectory + versionExtension);
             else
-                File.AppendAllLines(m_directory + versionExtension, new List<string>() { "*VERSION", m_midasCivilVersion });
+                File.AppendAllLines(newDirectory + versionExtension, new List<string>() { "*VERSION", m_midasCivilVersion });
 
             m_directory = newDirectory;
             Directory.CreateDirectory(newDirectory + "\\Results");
