@@ -98,11 +98,11 @@ namespace BH.Adapter.MidasCivil
                         case "BH.oM.Structure.Loads.AreaUniformlyDistributedLoad":
                             success = CreateCollection(objects as IEnumerable<AreaUniformlyDistributedLoad>);
                             break;
-                        case "BH.oM.Structure.Loads.BarTemperatureLoad":
-                            success = CreateCollection(objects as IEnumerable<BarTemperatureLoad>);
+                        case "BH.oM.Structure.Loads.BarUniformTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<BarUniformTemperatureLoad>);
                             break;
-                        case "BH.oM.Structure.Loads.AreaTemperatureLoad":
-                            success = CreateCollection(objects as IEnumerable<AreaTemperatureLoad>);
+                        case "BH.oM.Structure.Loads.AreaUniformTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaUniformTemperatureLoad>);
                             break;
                         case "BH.oM.Structure.Loads.PointDisplacement":
                             success = CreateCollection(objects as IEnumerable<PointDisplacement>);
