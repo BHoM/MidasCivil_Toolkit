@@ -29,7 +29,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public int DeleteAreaTemperatureLoads(IEnumerable<object> ids)
+        public int DeleteAreaUniformTemperatureLoads(IEnumerable<object> ids)
         {
             int success = 1;
 

@@ -30,7 +30,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromBarTemperatureLoad(this BarTemperatureLoad barLoad, string assignedBar, string temperatureUnit)
+        public static string FromBarUniformTemperatureLoad(this BarUniformTemperatureLoad barLoad, string assignedBar, string temperatureUnit)
         {
             string midasBarLoad = null;
 

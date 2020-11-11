@@ -35,17 +35,17 @@ namespace BH.Adapter.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<BarTemperatureLoad> barTemperatureLoads)
+        private bool CreateCollection(IEnumerable<BarUniformTemperatureLoad> BarUniformTemperatureLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
 
-            foreach (BarTemperatureLoad barTemperatureLoad in barTemperatureLoads)
+            foreach (BarUniformTemperatureLoad BarUniformTemperatureLoad in BarUniformTemperatureLoads)
             {
                 List<string> midasTemperatureLoads = new List<string>();
-                string barLoadPath = CreateSectionFile(barTemperatureLoad.Loadcase.Name + "\\ELTEMPER");
-                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barTemperatureLoad);
+                string barLoadPath = CreateSectionFile(BarUniformTemperatureLoad.Loadcase.Name + "\\ELTEMPER");
+                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(BarUniformTemperatureLoad);
 
-                List<Bar> assignedElements = barTemperatureLoad.Objects.Elements;
+                List<Bar> assignedElements = BarUniformTemperatureLoad.Objects.Elements;
 
                 List<string> assignedBars = new List<string>();
 
@@ -56,7 +56,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedBar in assignedBars)
                 {
-                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromBarTemperatureLoad(barTemperatureLoad, assignedBar, m_temperatureUnit));
+                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromBarUniformTemperatureLoad(BarUniformTemperatureLoad, assignedBar, m_temperatureUnit));
                 }
 
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);

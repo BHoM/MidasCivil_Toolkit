@@ -33,9 +33,9 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private List<ILoad> ReadAreaTemperatureLoads(List<string> ids = null)
+        private List<ILoad> ReadAreaUniformTemperatureLoads(List<string> ids = null)
         {
-            List<ILoad> bhomAreaTemperatureLoads = new List<ILoad>();
+            List<ILoad> bhomAreaUniformTemperatureLoads = new List<ILoad>();
 
             List<Loadcase> bhomLoadcases = ReadLoadcases();
             Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
@@ -48,16 +48,16 @@ namespace BH.Adapter.MidasCivil
             foreach (string loadcaseFolder in loadcaseFolders)
             {
                 string loadcase = Path.GetFileName(loadcaseFolder);
-                List<string> AreaTemperatureLoadText = GetSectionText(loadcase + "\\ELTEMPER");
+                List<string> AreaUniformTemperatureLoadText = GetSectionText(loadcase + "\\ELTEMPER");
 
-                if (AreaTemperatureLoadText.Count != 0)
+                if (AreaUniformTemperatureLoadText.Count != 0)
                 {
                     List<string> feMeshComparison = new List<string>();
                     List<string> loadedFEMeshes = new List<string>();
 
-                    foreach (string AreaTemperatureLoad in AreaTemperatureLoadText)
+                    foreach (string AreaUniformTemperatureLoad in AreaUniformTemperatureLoadText)
                     {
-                        List<string> delimitted = AreaTemperatureLoad.Split(',').ToList();
+                        List<string> delimitted = AreaUniformTemperatureLoad.Split(',').ToList();
                         loadedFEMeshes.Add(delimitted[0].Trim());
                         delimitted.RemoveAt(0);
                         feMeshComparison.Add(String.Join(",", delimitted));
@@ -79,12 +79,12 @@ namespace BH.Adapter.MidasCivil
                             List<string> matchingFEMeshes = new List<string>();
                             indexMatches.ForEach(x => matchingFEMeshes.Add(loadedFEMeshes[x]));
 
-                            AreaTemperatureLoad bhomAreaTemperatureLoad =
-                                Adapters.MidasCivil.Convert.ToAreaTemperatureLoad(
+                            AreaUniformTemperatureLoad bhomAreaUniformTemperatureLoad =
+                                Adapters.MidasCivil.Convert.ToAreaUniformTemperatureLoad(
                                     distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i, m_temperatureUnit);
 
-                            if (bhomAreaTemperatureLoad != null)
-                                bhomAreaTemperatureLoads.Add(bhomAreaTemperatureLoad);
+                            if (bhomAreaUniformTemperatureLoad != null)
+                                bhomAreaUniformTemperatureLoads.Add(bhomAreaUniformTemperatureLoad);
 
                             if ((string.IsNullOrWhiteSpace(distinctFEMeshLoad.Split(',')[1].ToString())))
                             {
@@ -96,7 +96,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
             }
-            return bhomAreaTemperatureLoads;
+            return bhomAreaUniformTemperatureLoads;
         }
 
     }

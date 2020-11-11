@@ -37,9 +37,9 @@ namespace BH.Adapter.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private List<ILoad> ReadBarTemperatureLoads(List<string> ids = null)
+        private List<ILoad> ReadBarUniformTemperatureLoads(List<string> ids = null)
         {
-            List<ILoad> bhomBarTemperatureLoads = new List<ILoad>();
+            List<ILoad> bhomBarUniformTemperatureLoads = new List<ILoad>();
 
             List<Loadcase> bhomLoadcases = ReadLoadcases();
             Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
@@ -52,16 +52,16 @@ namespace BH.Adapter.MidasCivil
             foreach (string loadcaseFolder in loadcaseFolders)
             {
                 string loadcase = Path.GetFileName(loadcaseFolder);
-                List<string> BarTemperatureLoadText = GetSectionText(loadcase + "\\ELTEMPER");
+                List<string> BarUniformTemperatureLoadText = GetSectionText(loadcase + "\\ELTEMPER");
 
-                if (BarTemperatureLoadText.Count != 0)
+                if (BarUniformTemperatureLoadText.Count != 0)
                 {
                     List<string> barComparison = new List<string>();
                     List<string> loadedBars = new List<string>();
 
-                    foreach (string BarTemperatureLoad in BarTemperatureLoadText)
+                    foreach (string BarUniformTemperatureLoad in BarUniformTemperatureLoadText)
                     {
-                        List<string> delimitted = BarTemperatureLoad.Split(',').ToList();
+                        List<string> delimitted = BarUniformTemperatureLoad.Split(',').ToList();
                         loadedBars.Add(delimitted[0].Trim());
                         delimitted.RemoveAt(0);
                         barComparison.Add(String.Join(",", delimitted));
@@ -83,12 +83,12 @@ namespace BH.Adapter.MidasCivil
                             List<string> matchingBars = new List<string>();
                             indexMatches.ForEach(x => matchingBars.Add(loadedBars[x]));
 
-                            BarTemperatureLoad bhomBarTemperatureLoad =
-                                Adapters.MidasCivil.Convert.ToBarTemperatureLoad(
+                            BarUniformTemperatureLoad bhomBarUniformTemperatureLoad =
+                                Adapters.MidasCivil.Convert.ToBarUniformTemperatureLoad(
                                     distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i, m_temperatureUnit);
 
-                            if (bhomBarTemperatureLoad != null)
-                                bhomBarTemperatureLoads.Add(bhomBarTemperatureLoad);
+                            if (bhomBarUniformTemperatureLoad != null)
+                                bhomBarUniformTemperatureLoads.Add(bhomBarUniformTemperatureLoad);
 
                             if ((string.IsNullOrWhiteSpace(distinctBarLoad.Split(',')[1].ToString())))
                             {
@@ -100,7 +100,7 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
             }
-            return bhomBarTemperatureLoads;
+            return bhomBarUniformTemperatureLoads;
         }
 
         /***************************************************/

@@ -33,7 +33,7 @@ namespace BH.Adapter.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private int DeleteBarTemperatureLoads(IEnumerable<object> ids)
+        private int DeleteBarUniformTemperatureLoads(IEnumerable<object> ids)
         {
             int success = 1;
 

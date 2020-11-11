@@ -34,7 +34,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static AreaTemperatureLoad ToAreaTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase,
+        public static AreaUniformTemperatureLoad ToAreaUniformTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase,
             Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count, string temperatureUnit)
         {
             string[] delimitted = temperatureLoad.Split(',');
@@ -68,7 +68,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             if (bhomAssociatedFEMeshes.Count != 0)
             {
-                AreaTemperatureLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaTemperatureLoad(
+                AreaUniformTemperatureLoad bhomAreaUniformlyDistributedLoad = Engine.Structure.Create.AreaUniformTemperatureLoad(
                     bhomLoadcase, temperature.DeltaTemperatureToSI(temperatureUnit),
                     bhomAssociatedFEMeshes, LoadAxis.Global, false, name);
                 bhomAreaUniformlyDistributedLoad.SetAdapterId(typeof(MidasCivilId), bhomAreaUniformlyDistributedLoad.Name);
