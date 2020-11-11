@@ -232,7 +232,12 @@ namespace BH.Adapter.MidasCivil
 
         public bool RunCommand(ClearResults command)
         {
-            Directory.Delete(m_directory + "\\Results");
+            DirectoryInfo directory = new DirectoryInfo(m_directory + "\\Results");
+            foreach (FileInfo file in directory.EnumerateFiles())
+            {
+                file.Delete();
+            }
+
             return true;
         }
 
