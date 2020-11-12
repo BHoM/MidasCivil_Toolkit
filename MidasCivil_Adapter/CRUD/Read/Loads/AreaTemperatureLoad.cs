@@ -48,16 +48,16 @@ namespace BH.Adapter.MidasCivil
             foreach (string loadcaseFolder in loadcaseFolders)
             {
                 string loadcase = Path.GetFileName(loadcaseFolder);
-                List<string> AreaUniformTemperatureLoadText = GetSectionText(loadcase + "\\ELTEMPER");
+                List<string> areaUniformTemperatureLoadText = GetSectionText(loadcase + "\\ELTEMPER");
 
-                if (AreaUniformTemperatureLoadText.Count != 0)
+                if (areaUniformTemperatureLoadText.Count != 0)
                 {
                     List<string> feMeshComparison = new List<string>();
                     List<string> loadedFEMeshes = new List<string>();
 
-                    foreach (string AreaUniformTemperatureLoad in AreaUniformTemperatureLoadText)
+                    foreach (string areaUniformTemperatureLoad in areaUniformTemperatureLoadText)
                     {
-                        List<string> delimitted = AreaUniformTemperatureLoad.Split(',').ToList();
+                        List<string> delimitted = areaUniformTemperatureLoad.Split(',').ToList();
                         loadedFEMeshes.Add(delimitted[0].Trim());
                         delimitted.RemoveAt(0);
                         feMeshComparison.Add(String.Join(",", delimitted));
