@@ -52,16 +52,16 @@ namespace BH.Adapter.MidasCivil
             foreach (string loadcaseFolder in loadcaseFolders)
             {
                 string loadcase = Path.GetFileName(loadcaseFolder);
-                List<string> BarUniformTemperatureLoadText = GetSectionText(loadcase + "\\ELTEMPER");
+                List<string> barUniformTemperatureLoadText = GetSectionText(loadcase + "\\ELTEMPER");
 
-                if (BarUniformTemperatureLoadText.Count != 0)
+                if (barUniformTemperatureLoadText.Count != 0)
                 {
                     List<string> barComparison = new List<string>();
                     List<string> loadedBars = new List<string>();
 
-                    foreach (string BarUniformTemperatureLoad in BarUniformTemperatureLoadText)
+                    foreach (string barUniformTemperatureLoad in barUniformTemperatureLoadText)
                     {
-                        List<string> delimitted = BarUniformTemperatureLoad.Split(',').ToList();
+                        List<string> delimitted = barUniformTemperatureLoad.Split(',').ToList();
                         loadedBars.Add(delimitted[0].Trim());
                         delimitted.RemoveAt(0);
                         barComparison.Add(String.Join(",", delimitted));

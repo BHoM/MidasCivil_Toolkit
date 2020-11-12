@@ -32,17 +32,17 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public bool CreateCollection(IEnumerable<AreaUniformTemperatureLoad> AreaUniformTemperatureLoads)
+        public bool CreateCollection(IEnumerable<AreaUniformTemperatureLoad> areaUniformTemperatureLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
 
-            foreach (AreaUniformTemperatureLoad AreaUniformTemperatureLoad in AreaUniformTemperatureLoads)
+            foreach (AreaUniformTemperatureLoad areaUniformTemperatureLoad in areaUniformTemperatureLoads)
             {
                 List<string> midasTemperatureLoads = new List<string>();
-                string FEMeshLoadPath = CreateSectionFile(AreaUniformTemperatureLoad.Loadcase.Name + "\\ELTEMPER");
-                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(AreaUniformTemperatureLoad);
+                string FEMeshLoadPath = CreateSectionFile(areaUniformTemperatureLoad.Loadcase.Name + "\\ELTEMPER");
+                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(areaUniformTemperatureLoad);
 
-                List<IAreaElement> assignedElements = AreaUniformTemperatureLoad.Objects.Elements;
+                List<IAreaElement> assignedElements = areaUniformTemperatureLoad.Objects.Elements;
 
                 List<string> assignedFEMeshes = new List<string>();
 
@@ -53,7 +53,7 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedFEMesh in assignedFEMeshes)
                 {
-                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromAreaUniformTemperatureLoad(AreaUniformTemperatureLoad, assignedFEMesh, m_temperatureUnit));
+                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromAreaUniformTemperatureLoad(areaUniformTemperatureLoad, assignedFEMesh, m_temperatureUnit));
                 }
 
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
