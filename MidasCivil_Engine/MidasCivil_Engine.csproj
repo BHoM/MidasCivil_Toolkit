@@ -74,7 +74,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Spatial_Engine">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
