@@ -59,8 +59,8 @@ namespace BH.Engine.Adapters.MidasCivil.Comparer
 
             Panel panel1 = Compute.FEMeshToPanel(mesh1);
             Panel panel2 = Compute.FEMeshToPanel(mesh2);
-            List<Point> controlPoints1 = Query.ControlPoints(panel1, true);
-            List<Point> controlPoints2 = Query.ControlPoints(panel2, true);
+            List<Point> controlPoints1 = Spatial.Query.ControlPoints(panel1, true);
+            List<Point> controlPoints2 = Spatial.Query.ControlPoints(panel2, true);
             Point centrePoint1 = Geometry.Query.Average(controlPoints1);
             Point centrePoint2 = Geometry.Query.Average(controlPoints2);
 

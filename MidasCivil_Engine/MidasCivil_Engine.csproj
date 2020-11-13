@@ -73,6 +73,11 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Spatial_Engine">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>
       <Private>False</Private>
