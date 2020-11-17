@@ -143,13 +143,13 @@ namespace BH.Adapter.Adapters.MidasCivil
             if (loadType == "UNILOAD")
             {
                 bhomBarVaryingDistributedLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
-                    bhomLoadcase, bhomAssociatedBars, distA, startLoadVector, null, distB, endLoadVector, null, axis, loadProjection, name);
+                    bhomLoadcase, bhomAssociatedBars, distA, startLoadVector, null, distB, endLoadVector, null, true, axis, loadProjection, name);
                 bhomBarVaryingDistributedLoad.SetAdapterId(typeof(MidasCivilId), bhomBarVaryingDistributedLoad.Name);
             }
             else
             {
                 bhomBarVaryingDistributedLoad = Engine.Structure.Create.BarVaryingDistributedLoad(
-                    bhomLoadcase, bhomAssociatedBars, distA, null, startLoadVector, distB, null, endLoadVector, axis, loadProjection, name);
+                    bhomLoadcase, bhomAssociatedBars, distA, null, startLoadVector, distB, null, endLoadVector, true, axis, loadProjection, name);
                 bhomBarVaryingDistributedLoad.SetAdapterId(typeof(MidasCivilId), bhomBarVaryingDistributedLoad.Name);
             }
 
