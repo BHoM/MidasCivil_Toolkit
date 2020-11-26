@@ -22,6 +22,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.Loads;
 
 namespace BH.Adapter.Adapters.MidasCivil
@@ -32,13 +35,41 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static List <string> FromBarDifferentialTemperatureLoad(this BarDifferentialTemperatureLoad barLoad, string assignedBar, string temperatureUnit)
+        public static List <string> FromBarDifferentialTemperatureLoad(this BarDifferentialTemperatureLoad load, string assignedBar, string temperatureUnit)
         {
             List <string> midasBarLoad = null;
 
-            midasBarLoad.Add(assignedBar + ", Lz," + barLoad.LoadDirection.ToString() + ", ," + "No");
-                midasBarLoad.Add(barLoad.Name + ",0,0,"+ "0.25,"+ "0.34" + barLoad.TemperatureProfile.ToString()+"0.35"+ barLoad.TemperatureProfile.ToString());
+            List<Bar> bars = load.Objects.Elements;
 
+            var barGroups = bars.GroupBy(x => x.SectionProperty);
+
+            foreach(List<Bar> barGroup in barGroups)
+            {
+                ISectionProperty sectionProperty = barGroup.First().SectionProperty;
+
+                double width = sectionProperty.Vpy + sectionProperty.Vy;
+                double Presetwidth = width / 2;
+                double H1 = new double();
+                double H2 = new double();
+                double depth = sectionProperty.Vpz + sectionProperty.Vz;
+                if (load.LoadDirection == DifferentialTemperatureLoadDirection.LocalY)
+                {
+                    midasBarLoad.Add(assignedBar + "," + "LY" + ",Bot , ," + "No");
+                }
+                else
+                {
+                    midasBarLoad.Add(assignedBar + "," + "LZ" + ",Bot , ," + "No");
+                }
+                    for (int i = 1; i < load.TemperatureProfile.Keys.Count; i++)
+                {
+                    H1 = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
+                    H2 = depth * load.TemperatureProfile.Keys.ElementAt(i);
+                    
+                    midasBarLoad.Add(load.Name + ",0,0," + Presetwidth + "," + H1 + "," + load.TemperatureProfile.Values.ElementAt(i-1) + "," + H2 + "," + load.TemperatureProfile.Values.ElementAt(i));
+
+                }
+
+            }
             return midasBarLoad;
         }
 
