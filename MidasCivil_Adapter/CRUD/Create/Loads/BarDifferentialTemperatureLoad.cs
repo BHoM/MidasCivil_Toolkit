@@ -42,7 +42,7 @@ namespace BH.Adapter.MidasCivil
             foreach (BarDifferentialTemperatureLoad barDifferentialTemperatureLoad in BarDifferentialTemperatureLoads)
             {
                 List<string> midasTemperatureLoads = new List<string>();
-                string barLoadPath = CreateSectionFile(barDifferentialTemperatureLoad.Loadcase.Name + "\\ELTEMPER");
+                string barLoadPath = CreateSectionFile(barDifferentialTemperatureLoad.Loadcase.Name + "\\BSTEMPER");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barDifferentialTemperatureLoad);
 
                 List<Bar> assignedElements = barDifferentialTemperatureLoad.Objects.Elements;
