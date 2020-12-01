@@ -48,6 +48,12 @@ namespace BH.Adapter.MidasCivil
                     continue;
                 }
 
+                if (barVaryingDistributedLoad.StartPosition >= barVaryingDistributedLoad.EndPosition)
+                {
+                    Engine.Reflection.Compute.RecordError("Midas civil only supports start positions less than end positions for BarVaryingDistributedLoads.");
+                    continue;
+                }
+
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barVaryingDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barVaryingDistributedLoad);
