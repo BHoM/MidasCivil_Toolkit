@@ -66,7 +66,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 midasBarLoad.Add(Line1);
                 string LineN = "";
-                for (int i = 1; i < load.TemperatureProfile.Keys.Count; i++)
+                for (int i = 0; i < load.TemperatureProfile.Keys.Count-1; i++)
                 {
                     H1 = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
                     H2 = depth * load.TemperatureProfile.Keys.ElementAt(i);
