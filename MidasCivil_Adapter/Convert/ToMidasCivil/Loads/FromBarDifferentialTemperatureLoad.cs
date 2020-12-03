@@ -37,7 +37,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static List <string> FromBarDifferentialTemperatureLoad(this BarDifferentialTemperatureLoad load, string assignedBar, string temperatureUnit)
         {
-            List <object> midasBarLoad = new List<object>() ;
+            List <string> midasBarLoad = new List<string>() ;
 
             var barGroups = load.Objects.Elements.GroupBy(x => x.SectionProperty);
                 if (load.TemperatureProfile.Keys.Count < 21)
