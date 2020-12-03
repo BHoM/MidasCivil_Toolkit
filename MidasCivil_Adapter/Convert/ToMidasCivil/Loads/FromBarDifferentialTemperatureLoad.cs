@@ -52,7 +52,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 double H1 = new double();
                 double H2 = new double();
                 double depth = sectionProperty.Vpz + sectionProperty.Vz;
-                string Line1 = "";
+                string firstLine;
                 if (load.LoadDirection == DifferentialTemperatureLoadDirection.LocalY)
                 {
                     double Reference = load.TemperatureProfile.Keys.Count - 1;
