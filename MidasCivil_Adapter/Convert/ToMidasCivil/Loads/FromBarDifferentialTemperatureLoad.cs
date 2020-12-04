@@ -74,10 +74,13 @@ namespace BH.Adapter.Adapters.MidasCivil
                         break;
                 }
 
+
                 firstLine = assignedBar + "," + loadDirection + ",Bot ," + Reference + ", ," + "No";
                 midasBarLoad.Add(firstLine);
 
-                string LineN;
+
+                string nLine;
+
                 for (int i = 0; i < load.TemperatureProfile.Keys.Count-1; i++)
                 {
                     bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
