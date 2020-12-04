@@ -62,17 +62,20 @@ namespace BH.Adapter.Adapters.MidasCivil
                 string firstLine;
                 double Reference = load.TemperatureProfile.Keys.Count - 1;
 
+                string loadDirection = "";
+
                 switch (load.LoadDirection)
                 {
                     case DifferentialTemperatureLoadDirection.LocalY:
-                        firstLine = assignedBar + "," + "LY" + ",Bot ," + Reference + ", ," + "No";
-                        midasBarLoad.Add(firstLine);
+                        loadDirection = "LY";
                         break;
                     case DifferentialTemperatureLoadDirection.LocalZ:
-                        firstLine = assignedBar + "," + "LZ" + ", Bot," + Reference + ", ," + "No";
-                        midasBarLoad.Add(firstLine);
+                        loadDirection = "LZ";
                         break;
                 }
+
+                firstLine = assignedBar + "," + loadDirection + ",Bot ," + Reference + ", ," + "No";
+                midasBarLoad.Add(firstLine);
 
                 string LineN;
                 for (int i = 0; i < load.TemperatureProfile.Keys.Count-1; i++)
