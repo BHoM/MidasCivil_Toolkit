@@ -78,15 +78,14 @@ namespace BH.Adapter.Adapters.MidasCivil
                 firstLine = assignedBar + "," + loadDirection + ",Bot ," + Reference + ", ," + "No";
                 midasBarLoad.Add(firstLine);
 
-
                 string nLine;
 
                 for (int i = 0; i < load.TemperatureProfile.Keys.Count-1; i++)
                 {
                     bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
                     topTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i);
-                    LineN = "ELEMENT" + ",0,0," + presetWidth + "," + bottomTemperature + "," + load.TemperatureProfile.Values.ElementAt(i - 1) + "," + topTemperature + "," + load.TemperatureProfile.Values.ElementAt(i);
-                    midasBarLoad.Add(LineN);
+                    nLine = "ELEMENT" + ",0,0," + presetWidth + "," + bottomTemperature + "," + load.TemperatureProfile.Values.ElementAt(i - 1) + "," + topTemperature + "," + load.TemperatureProfile.Values.ElementAt(i);
+                    midasBarLoad.Add(nLine);
                 }
                
             }
