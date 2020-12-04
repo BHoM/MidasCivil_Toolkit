@@ -48,19 +48,19 @@ namespace BH.Adapter.MidasCivil
 
                 List<string> assignedBars = barVaryingDistributedLoad.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
 
-                List<double> startLoadVectors = new List<double> { barVaryingDistributedLoad.MomentAtStart.X,
-                                                              barVaryingDistributedLoad.ForceAtStart.Y,
-                                                              barVaryingDistributedLoad.ForceAtStart.Z,
-                                                              barVaryingDistributedLoad.MomentAtStart.X,
-                                                              barVaryingDistributedLoad.MomentAtStart.Y,
-                                                              barVaryingDistributedLoad.MomentAtStart.Z};
+                List<double> startLoadVectors = new List<double> { barVaryingDistributedLoad.ForceA.X,
+                                                              barVaryingDistributedLoad.ForceA.Y,
+                                                              barVaryingDistributedLoad.ForceA.Z,
+                                                              barVaryingDistributedLoad.MomentA.X,
+                                                              barVaryingDistributedLoad.MomentA.Y,
+                                                              barVaryingDistributedLoad.MomentA.Z};
 
-                List<double> endLoadVectors = new List<double> { barVaryingDistributedLoad.ForceAtEnd.X,
-                                                              barVaryingDistributedLoad.ForceAtEnd.Y,
-                                                              barVaryingDistributedLoad.ForceAtEnd.Z,
-                                                              barVaryingDistributedLoad.MomentAtEnd.X,
-                                                              barVaryingDistributedLoad.MomentAtEnd.Y,
-                                                              barVaryingDistributedLoad.MomentAtEnd.Z};
+                List<double> endLoadVectors = new List<double> { barVaryingDistributedLoad.ForceB.X,
+                                                              barVaryingDistributedLoad.ForceB.Y,
+                                                              barVaryingDistributedLoad.ForceB.Z,
+                                                              barVaryingDistributedLoad.MomentB.X,
+                                                              barVaryingDistributedLoad.MomentB.Y,
+                                                              barVaryingDistributedLoad.MomentB.Z};
 
                 Vector zeroVector = new Vector { X = 0, Y = 0, Z = 0 };
 
