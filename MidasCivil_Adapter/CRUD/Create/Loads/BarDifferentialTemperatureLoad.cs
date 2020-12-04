@@ -39,6 +39,7 @@ namespace BH.Adapter.MidasCivil
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
 
+
             foreach (BarDifferentialTemperatureLoad barDifferentialTemperatureLoad in BarDifferentialTemperatureLoads)
             {
                 List<string> midasTemperatureLoads = new List<string>();
@@ -56,12 +57,16 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedBar in assignedBars)
                 {
+                    if (Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, assignedBar, m_temperatureUnit) == null)
+                    {
+                        return false;
+                    }
                     midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, assignedBar, m_temperatureUnit));
                 }
 
-                CompareLoadGroup(midasLoadGroup, loadGroupPath);
-                RemoveEndOfDataString(barLoadPath);
-                File.AppendAllLines(barLoadPath, midasTemperatureLoads);
+                    CompareLoadGroup(midasLoadGroup, loadGroupPath);
+                    RemoveEndOfDataString(barLoadPath);
+                    File.AppendAllLines(barLoadPath, midasTemperatureLoads);
             }
 
             return true;

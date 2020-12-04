@@ -40,14 +40,15 @@ namespace BH.Adapter.Adapters.MidasCivil
             List <string> midasBarLoad = new List<string>() ;
 
             var barGroups = load.Objects.Elements.GroupBy(x => x.SectionProperty);
-                if (load.TemperatureProfile.Keys.Count < 21)
+                if (load.TemperatureProfile.Keys.Count > 20)
                 {
                 Engine.Reflection.Compute.RecordWarning("There is a maximium of 20 layers in the temperature profile");
                     return null;
                 }
+            var barGroup = barGroups.First();
 
-            foreach (var barGroup in barGroups)
-            {
+            //foreach (var barGroup in barGroups)
+            //{
                 if (barGroup.First().SectionProperty == null)
                 {
                     Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
@@ -80,15 +81,15 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                 string nLine;
 
-                for (int i = 0; i < load.TemperatureProfile.Keys.Count-1; i++)
+                for (int i = 1; i < load.TemperatureProfile.Keys.Count; i++)
                 {
                     bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
                     topTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i);
-                    nLine = "ELEMENT" + ",0,0," + presetWidth + "," + bottomTemperature + "," + load.TemperatureProfile.Values.ElementAt(i - 1) + "," + topTemperature + "," + load.TemperatureProfile.Values.ElementAt(i);
+                    nLine = "ELEMENT" + ",0,0," + presetWidth + "," + bottomTemperature + "," + load.TemperatureProfile.Values.ElementAt(i-1) + "," + topTemperature + "," + load.TemperatureProfile.Values.ElementAt(i);
                     midasBarLoad.Add(nLine);
                 }
                
-            }
+            //}
             return midasBarLoad;
         }
 
