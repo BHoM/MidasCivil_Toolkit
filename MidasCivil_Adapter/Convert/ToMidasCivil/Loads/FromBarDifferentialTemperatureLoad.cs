@@ -37,8 +37,6 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static List <string> FromBarDifferentialTemperatureLoad(this BarDifferentialTemperatureLoad load, string assignedBar, string temperatureUnit)
         {
-            List <string> midasBarLoad = new List<string>() ;
-
                 string loadDirection = "";
                 switch (load.LoadDirection)
                 {
@@ -51,7 +49,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
             double temperatureProfileCount = load.TemperatureProfile.Keys.Count - 1;
             string firstLine = assignedBar + "," + loadDirection + ",Bot ," + temperatureProfileCount + ", ," + "No";
-                midasBarLoad.Add(firstLine);
+            List<string> midasBarLoad = new List<string>();
+            midasBarLoad.Add(firstLine);
 
                 for (int i = 1; i < load.TemperatureProfile.Keys.Count; i++)
                 {
@@ -60,8 +59,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 double depth = sectionProperty.Vpz + sectionProperty.Vz;
                 double bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
                 double topTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i);
+                //nLine represents the temperature at layer n 
                 string nLine = "ELEMENT" + ",0,0," + presetWidth + "," + bottomTemperature + "," + load.TemperatureProfile.Values.ElementAt(i-1) + "," + topTemperature + "," + load.TemperatureProfile.Values.ElementAt(i);
-                    midasBarLoad.Add(nLine);
+                midasBarLoad.Add(nLine);
                 }
             return midasBarLoad;
         }
