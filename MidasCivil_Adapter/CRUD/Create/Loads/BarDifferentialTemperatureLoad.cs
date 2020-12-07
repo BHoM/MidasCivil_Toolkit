@@ -40,8 +40,6 @@ namespace BH.Adapter.MidasCivil
         private bool CreateCollection(IEnumerable<BarDifferentialTemperatureLoad> BarDifferentialTemperatureLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
-           
-
             foreach (BarDifferentialTemperatureLoad barDifferentialTemperatureLoad in BarDifferentialTemperatureLoads)
             {
                 if (barDifferentialTemperatureLoad.TemperatureProfile.Keys.Count > 20)
