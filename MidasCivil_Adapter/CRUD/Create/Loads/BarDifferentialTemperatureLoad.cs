@@ -20,6 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System;
+using System.Linq;
 using BH.oM.Adapters.MidasCivil;
 using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
@@ -38,29 +40,33 @@ namespace BH.Adapter.MidasCivil
         private bool CreateCollection(IEnumerable<BarDifferentialTemperatureLoad> BarDifferentialTemperatureLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
-
+           
 
             foreach (BarDifferentialTemperatureLoad barDifferentialTemperatureLoad in BarDifferentialTemperatureLoads)
             {
+                if (barDifferentialTemperatureLoad.TemperatureProfile.Keys.Count > 20)
+                {
+                    Engine.Reflection.Compute.RecordWarning("There is a maximium of 20 layers in the temperature profile");
+                    return true;
+                }
+                if (barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty).First().First().SectionProperty == null)
+                {
+                    Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
+                    return true;
+                }
                 List<string> midasTemperatureLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barDifferentialTemperatureLoad.Loadcase.Name + "\\BSTEMPER");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barDifferentialTemperatureLoad);
 
                 List<Bar> assignedElements = barDifferentialTemperatureLoad.Objects.Elements;
-
                 List<string> assignedBars = new List<string>();
 
                 foreach (Bar bar in assignedElements)
                 {
                     assignedBars.Add(bar.AdapterId<string>(typeof(MidasCivilId)));
-                }
-
-                foreach (string assignedBar in assignedBars)
+                }             
+                    foreach (string assignedBar in assignedBars)
                 {
-                    if (Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, assignedBar, m_temperatureUnit) == null)
-                    {
-                        return false;
-                    }
                     midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, assignedBar, m_temperatureUnit));
                 }
 

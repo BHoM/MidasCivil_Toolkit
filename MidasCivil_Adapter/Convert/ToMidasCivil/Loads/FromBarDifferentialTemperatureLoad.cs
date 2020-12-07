@@ -39,32 +39,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             List <string> midasBarLoad = new List<string>() ;
 
-            var barGroups = load.Objects.Elements.GroupBy(x => x.SectionProperty);
-                if (load.TemperatureProfile.Keys.Count > 20)
-                {
-                Engine.Reflection.Compute.RecordWarning("There is a maximium of 20 layers in the temperature profile");
-                    return null;
-                }
-            var barGroup = barGroups.First();
-
-            //foreach (var barGroup in barGroups)
-            //{
-                if (barGroup.First().SectionProperty == null)
-                {
-                    Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
-                    return null;
-                }
-                ISectionProperty sectionProperty = barGroup.First().SectionProperty;
-
-                double presetWidth = sectionProperty.Vpy + sectionProperty.Vy / 2;
-                double bottomTemperature = new double();
-                double topTemperature = new double();
-                double depth = sectionProperty.Vpz + sectionProperty.Vz;
-                string firstLine;
-                double Reference = load.TemperatureProfile.Keys.Count - 1;
-
                 string loadDirection = "";
-
                 switch (load.LoadDirection)
                 {
                     case DifferentialTemperatureLoadDirection.LocalY:
@@ -74,26 +49,22 @@ namespace BH.Adapter.Adapters.MidasCivil
                         loadDirection = "LZ";
                         break;
                 }
-
-
-                firstLine = assignedBar + "," + loadDirection + ",Bot ," + Reference + ", ," + "No";
+            double temperatureProfileCount = load.TemperatureProfile.Keys.Count - 1;
+            string firstLine = assignedBar + "," + loadDirection + ",Bot ," + temperatureProfileCount + ", ," + "No";
                 midasBarLoad.Add(firstLine);
-
-                string nLine;
 
                 for (int i = 1; i < load.TemperatureProfile.Keys.Count; i++)
                 {
-                    bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
-                    topTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i);
-                    nLine = "ELEMENT" + ",0,0," + presetWidth + "," + bottomTemperature + "," + load.TemperatureProfile.Values.ElementAt(i-1) + "," + topTemperature + "," + load.TemperatureProfile.Values.ElementAt(i);
+                ISectionProperty sectionProperty = load.Objects.Elements.GroupBy(x => x.SectionProperty).First().First().SectionProperty;
+                double presetWidth = sectionProperty.Area / (sectionProperty.Vpz + sectionProperty.Vz);
+                double depth = sectionProperty.Vpz + sectionProperty.Vz;
+                double bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
+                double topTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i);
+                string nLine = "ELEMENT" + ",0,0," + presetWidth + "," + bottomTemperature + "," + load.TemperatureProfile.Values.ElementAt(i-1) + "," + topTemperature + "," + load.TemperatureProfile.Values.ElementAt(i);
                     midasBarLoad.Add(nLine);
                 }
-               
-            //}
             return midasBarLoad;
         }
-
         /***************************************************/
-
     }
 }
