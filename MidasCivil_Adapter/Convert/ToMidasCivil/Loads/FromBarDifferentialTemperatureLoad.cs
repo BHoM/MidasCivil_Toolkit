@@ -57,8 +57,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                 ISectionProperty sectionProperty = load.Objects.Elements.GroupBy(x => x.SectionProperty).First().First().SectionProperty;
                 double presetWidth = sectionProperty.Area / (sectionProperty.Vpz + sectionProperty.Vz);
                 double depth = sectionProperty.Vpz + sectionProperty.Vz;
-                double bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
-                double topTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i);
+                double bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1).DeltaTemperatureFromSI(temperatureUnit);
+                double topTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i).DeltaTemperatureFromSI(temperatureUnit);
                 //nLine represents the temperature at layer n 
                 string nLine = "ELEMENT" + ",0,0," + presetWidth + "," + bottomTemperature + "," + load.TemperatureProfile.Values.ElementAt(i-1) + "," + topTemperature + "," + load.TemperatureProfile.Values.ElementAt(i);
                 midasBarLoad.Add(nLine);
