@@ -51,10 +51,6 @@ namespace BH.Adapter.MidasCivil
                 List<string> midasTemperatureLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barDifferentialTemperatureLoad.Loadcase.Name + "\\BSTEMPER");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barDifferentialTemperatureLoad);
-
-                List<Bar> assignedElements = barDifferentialTemperatureLoad.Objects.Elements;
-                List<string> assignedBars = new List<string>();
-
                 var groupedBars = barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty);
                string ids = "";
                 ISectionProperty sectionProperty = null;
@@ -81,13 +77,8 @@ namespace BH.Adapter.MidasCivil
                     {
                         ids = ids + " " + (bar.AdapterId<string>(typeof(MidasCivilId)));
                     }
-                    if (groupedBars.Count() == 1)
-                    {
-                        midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, ids, sectionProperty, m_temperatureUnit));
-                    }
-                    var test = groupedBars.Last().Last().BHoM_Guid.ToString();
-                    var test2 = barGroup.Last().BHoM_Guid.ToString();
-                    if (barGroup.Last().BHoM_Guid.ToString()== test)
+                    //this if function below is to add temperature load for the final load and for cases where there is only one bar
+                    if (barGroup.Last().BHoM_Guid.ToString()== groupedBars.Last().Last().BHoM_Guid.ToString())
                     {
                         midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, ids, sectionProperty, m_temperatureUnit));
                     }
