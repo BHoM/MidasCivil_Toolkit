@@ -44,8 +44,6 @@ namespace BH.Adapter.MidasCivil
 
                 switch (m_midasCivilVersion)
                 {
-                    case "8.9.5":
-                    case "8.9.0":
                     case "8.8.5":
                         type = surfaceProperty.Split(',')[2].Trim();
                         break;
