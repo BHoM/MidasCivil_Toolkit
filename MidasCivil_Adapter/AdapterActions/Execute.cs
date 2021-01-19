@@ -165,9 +165,8 @@ namespace BH.Adapter.MidasCivil
                     m_midasText = File.ReadAllLines(mctFile).ToList();
                     SetSectionText();
                 }
-                string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
-                m_midasCivilVersion = "8.8.1";
 
+                string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
                 if (!(m_midasCivilVersion == ""))
                 {
                     m_midasCivilVersion = m_midasCivilVersion.Trim();
@@ -183,6 +182,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
+                    m_midasCivilVersion = "8.8.1";
                     Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
                 }
 
