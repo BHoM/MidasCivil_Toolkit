@@ -38,13 +38,18 @@ namespace BH.Adapter.Adapters.MidasCivil
         public static List <string> FromBarDifferentialTemperatureLoad(this BarDifferentialTemperatureLoad load, string ids, ISectionProperty sectionProperty, string temperatureUnit)
         {
                 string loadDirection = "";
-                switch (load.LoadDirection)
+            double depth = sectionProperty.Vpz + sectionProperty.Vz;
+            double presetWidth = sectionProperty.Vpy;
+            switch (load.LoadDirection)
                 {
                     case DifferentialTemperatureLoadDirection.LocalY:
                         loadDirection = "LY";
-                        break;
+                    depth = sectionProperty.Vpy + sectionProperty.Vy;
+                    presetWidth = sectionProperty.Vpz;
+                    break;
                     case DifferentialTemperatureLoadDirection.LocalZ:
                         loadDirection = "LZ";
+
                         break;
                 }
             double temperatureProfileCount = load.TemperatureProfile.Keys.Count - 1;
@@ -54,10 +59,9 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                 for (int i = 1; i < load.TemperatureProfile.Keys.Count; i++)
                 {
-                double presetWidth = sectionProperty.Area / (sectionProperty.Vpz + sectionProperty.Vz);
-                double depth = sectionProperty.Vpz + sectionProperty.Vz;
-                double bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1).DeltaTemperatureFromSI(temperatureUnit);
-                double topTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i).DeltaTemperatureFromSI(temperatureUnit);
+
+                double bottomTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i-1);
+                double topTemperature = depth * load.TemperatureProfile.Keys.ElementAt(i);
                 //nLine represents the temperature at layer n 
                 string nLine = "ELEMENT" + ",0,0," + presetWidth + "," + bottomTemperature + "," + load.TemperatureProfile.Values.ElementAt(i-1) + "," + topTemperature + "," + load.TemperatureProfile.Values.ElementAt(i);
                 midasBarLoad.Add(nLine);
