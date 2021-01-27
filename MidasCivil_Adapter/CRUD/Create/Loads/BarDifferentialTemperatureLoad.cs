@@ -52,36 +52,33 @@ namespace BH.Adapter.MidasCivil
                 string barLoadPath = CreateSectionFile(barDifferentialTemperatureLoad.Loadcase.Name + "\\BSTEMPER");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barDifferentialTemperatureLoad);
                 var groupedBars = barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty);
+                ISectionProperty sectionPropertyCheck = groupedBars.First().Key;
                 string ids = "";
-                ISectionProperty sectionProperty = null;
                 foreach (var barGroup in groupedBars)
                 {
-                    //This if function below is to separate the same load that has different section properties
-                    if (sectionProperty == null) { }
-                    else
-                    {
-                        if (sectionProperty.Asy == barGroup.First().SectionProperty.Asy && sectionProperty.Asz == barGroup.First().SectionProperty.Asz) { }
-                        else
-                        {
-                            midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, ids, sectionProperty, m_temperatureUnit));
-                            ids = "";
-                        }
-                    }
-                    sectionProperty = barGroup.First().SectionProperty;
-                    if (sectionProperty == null)
+
+                    if (barGroup.Key == null)
                     {
                         Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
                         return true;
                     }
-                    foreach (Bar bar in barGroup)
-                    {
-                        ids = ids + " " + (bar.AdapterId<string>(typeof(MidasCivilId)));
+                    ISectionProperty sectionProperty = barGroup.Key;
+                        foreach (Bar bar in barGroup)
+                        {
+                        if (sectionProperty.Iy == sectionPropertyCheck.Iy & sectionProperty.Iz == sectionPropertyCheck.Iz)
+                        {
+                            ids = ids + " " + (bar.AdapterId<string>(typeof(MidasCivilId)));
+                        }
+                        else
+                        { 
+                           ids = bar.AdapterId<string>(typeof(MidasCivilId));
+                        }
                     }
-                    //this if function below is to add temperature load for the final load and for cases where there is only one bar
-                    if (barGroup.Last().BHoM_Guid.ToString() == groupedBars.Last().Last().BHoM_Guid.ToString())
-                    {
-                        midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, ids, sectionProperty, m_temperatureUnit));
-                    }
+                    midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, ids, sectionProperty, m_temperatureUnit));
+                    sectionPropertyCheck = barGroup.Key;
+
+
+
                 }
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
                 RemoveEndOfDataString(barLoadPath);
