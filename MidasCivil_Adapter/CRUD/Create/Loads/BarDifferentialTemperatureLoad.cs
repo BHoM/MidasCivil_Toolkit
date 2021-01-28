@@ -38,10 +38,10 @@ namespace BH.Adapter.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private bool CreateCollection(IEnumerable<BarDifferentialTemperatureLoad> BarDifferentialTemperatureLoads)
+        private bool CreateCollection(IEnumerable<BarDifferentialTemperatureLoad> barDifferentialTemperatureLoads)
         {
             string loadGroupPath = CreateSectionFile("LOAD-GROUP");
-            foreach (BarDifferentialTemperatureLoad barDifferentialTemperatureLoad in BarDifferentialTemperatureLoads)
+            foreach (BarDifferentialTemperatureLoad barDifferentialTemperatureLoad in barDifferentialTemperatureLoads)
             {
                 if (barDifferentialTemperatureLoad.TemperatureProfile.Keys.Count > 21)
                 {
@@ -53,33 +53,23 @@ namespace BH.Adapter.MidasCivil
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barDifferentialTemperatureLoad);
                 var groupedBars = barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty);
                 ISectionProperty sectionPropertyCheck = groupedBars.First().Key;
-                string ids = "";
                 foreach (var barGroup in groupedBars)
                 {
-
-                    if (barGroup.Key == null)
+                    string ids = "";
+                    ISectionProperty sectionProperty = barGroup.Key;
+                    if (sectionProperty == null)
                     {
                         Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
                         return true;
                     }
-                    ISectionProperty sectionProperty = barGroup.Key;
-                        foreach (Bar bar in barGroup)
-                        {
-                        if (sectionProperty.Iy == sectionPropertyCheck.Iy & sectionProperty.Iz == sectionPropertyCheck.Iz)
-                        {
-                            ids = ids + " " + (bar.AdapterId<string>(typeof(MidasCivilId)));
-                        }
-                        else
-                        { 
-                           ids = bar.AdapterId<string>(typeof(MidasCivilId));
-                        }
+
+                    foreach (Bar bar in barGroup)
+                    {
+                        ids = ids + " " + (bar.AdapterId<string>(typeof(MidasCivilId)));
                     }
-                    midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, ids, sectionProperty, m_temperatureUnit));
-                    sectionPropertyCheck = barGroup.Key;
-
-
-
+                    midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, ids, sectionProperty, m_temperatureUnit, m_lengthUnit ));
                 }
+
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
                 RemoveEndOfDataString(barLoadPath);
                 File.AppendAllLines(barLoadPath, midasTemperatureLoads);
