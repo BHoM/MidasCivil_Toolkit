@@ -62,22 +62,18 @@ namespace BH.Adapter.MidasCivil
                         Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
                         return true;
                     }
-
                     foreach (Bar bar in barGroup)
                     {
                         ids = ids + " " + (bar.AdapterId<string>(typeof(MidasCivilId)));
                     }
-                    midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, ids, sectionProperty, m_temperatureUnit, m_lengthUnit ));
+                    midasTemperatureLoads.AddRange(Adapters.MidasCivil.Convert.FromBarDifferentialTemperatureLoad(barDifferentialTemperatureLoad, ids, sectionProperty, m_temperatureUnit, m_lengthUnit));
                 }
-
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
                 RemoveEndOfDataString(barLoadPath);
                 File.AppendAllLines(barLoadPath, midasTemperatureLoads);
             }
             return true;
         }
-
         /***************************************************/
-
     }
 }
