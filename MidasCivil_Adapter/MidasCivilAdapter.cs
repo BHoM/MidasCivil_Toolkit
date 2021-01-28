@@ -112,7 +112,7 @@ namespace BH.Adapter.MidasCivil
 
         private List<string> m_midasText;
         private string m_directory;
-        private string m_midasCivilVersion;
+        public string m_midasCivilVersion { get; protected set; }
         private string m_forceUnit;
         private string m_lengthUnit;
         private string m_heatUnit;
