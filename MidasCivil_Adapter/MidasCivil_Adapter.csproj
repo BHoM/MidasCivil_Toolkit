@@ -163,6 +163,7 @@
     <Compile Include="Convert\ToMidasCivil\Elements\FromFEMesh.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromNode.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromRigidLink.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromAreaDifferentialTemperatureLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromAreaUniformTemperatureLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromAreaUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromBarPointLoad.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="CRUD\Create\Elements\RigidLink.cs" />
     <Compile Include="CRUD\Create\Elements\Element.cs" />
     <Compile Include="CRUD\Create\Elements\Node.cs" />
+    <Compile Include="CRUD\Create\Loads\AreaDifferentialTemperatureLoad.cs" />
     <Compile Include="CRUD\Create\Loads\BarDifferentialTemperatureLoad.cs" />
     <Compile Include="CRUD\Create\Loads\Loadcase.cs" />
     <Compile Include="CRUD\Create\Loads\AreaUniformTemperatureLoads.cs" />
