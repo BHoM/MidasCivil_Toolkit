@@ -39,18 +39,17 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             string loadDirection = "";
             double depth = sectionProperty.Vpz + sectionProperty.Vz;
-            double presetWidth = sectionProperty.Vpy;
             switch (load.LoadDirection)
             {
                 case DifferentialTemperatureLoadDirection.LocalY:
                     loadDirection = "LY";
                     depth = sectionProperty.Vpy + sectionProperty.Vy;
-                    presetWidth = sectionProperty.Vpz;
                     break;
                 case DifferentialTemperatureLoadDirection.LocalZ:
                     loadDirection = "LZ";
                     break;
             }
+            double presetWidth = sectionProperty.Area / depth;
             double temperatureProfileCount = load.TemperatureProfile.Keys.Count - 1;
             string firstLine = ids.Trim() + "," + loadDirection + ",Bot ," + temperatureProfileCount + ", ," + "No";
             List<string> midasBarLoad = new List<string>();
