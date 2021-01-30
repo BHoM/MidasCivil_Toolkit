@@ -45,23 +45,22 @@ namespace BH.Adapter.MidasCivil
             {
                 if (barDifferentialTemperatureLoad.TemperatureProfile.Keys.Count > 21)
                 {
-                    Engine.Reflection.Compute.RecordWarning("There is a maximium of 20 layers in the temperature profile");
-                    return true;
+                    Engine.Reflection.Compute.RecordError("MidasCivil can only parse BarDifferentialTemperatureLoads with a maximum of 20 positions.");
+                    return false;
                 }
                 List<string> midasTemperatureLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barDifferentialTemperatureLoad.Loadcase.Name + "\\BSTEMPER");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barDifferentialTemperatureLoad);
-                var groupedBars = barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty);
-                ISectionProperty sectionPropertyCheck = groupedBars.First().Key;
+                if (barDifferentialTemperatureLoad.Objects.Elements.Any(x => x.SectionProperty == null))
+                {
+                    Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
+                    return true;
+                }
+                var groupedBars = barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty.Name);
                 foreach (var barGroup in groupedBars)
                 {
                     string ids = "";
-                    ISectionProperty sectionProperty = barGroup.Key;
-                    if (sectionProperty == null)
-                    {
-                        Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
-                        return true;
-                    }
+                    ISectionProperty sectionProperty = barGroup.First().SectionProperty;
                     foreach (Bar bar in barGroup)
                     {
                         ids = ids + " " + (bar.AdapterId<string>(typeof(MidasCivilId)));
