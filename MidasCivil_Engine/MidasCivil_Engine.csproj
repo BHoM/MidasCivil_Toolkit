@@ -35,7 +35,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Analytical_Engine">
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Analytical_Engine.dll</HintPath>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Analytical_Engine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Analytical_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Analytical_oM.dll</HintPath>
