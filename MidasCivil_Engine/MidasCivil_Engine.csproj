@@ -34,6 +34,9 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\Adapter_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Analytical_Engine">
+      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Analytical_Engine.dll</HintPath>
+    </Reference>
     <Reference Include="Analytical_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Analytical_oM.dll</HintPath>
       <Private>False</Private>
@@ -97,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\FEMeshToPanel.cs" />
+    <Compile Include="Compute\PanelToFEMesh.cs" />
     <Compile Include="Objects\AdapterIdName.cs" />
     <Compile Include="Objects\ArrayComparer.cs" />
     <Compile Include="Objects\MeshCentreComparer.cs" />
