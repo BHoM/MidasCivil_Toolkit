@@ -49,7 +49,7 @@ namespace BH.Engine.Adapters.MidasCivil
                 int Count = BH.Engine.Geometry.Convert.IToPolyline(curve).ControlPoints.Count();
                 if (Count == 4)
                 {
-                    face = Geometry.Create.Face(3, 2, 1, 0);   
+                    face = Geometry.Create.Face(3, 2, 1, 0);
                 }
                 if (Count == 3)
                 {
@@ -60,7 +60,7 @@ namespace BH.Engine.Adapters.MidasCivil
             }
 
             Mesh mesh = BH.Engine.Geometry.Create.Mesh(points.Distinct(), faces);
-            FEMesh fEMesh = BH.Engine.Structure.Create.FEMesh(mesh, panel.Property,null,panel.Name);
+            FEMesh fEMesh = BH.Engine.Structure.Create.FEMesh(mesh, panel.Property, null, panel.Name);
 
             return fEMesh;
         }
