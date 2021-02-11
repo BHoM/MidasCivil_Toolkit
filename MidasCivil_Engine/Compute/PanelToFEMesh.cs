@@ -24,9 +24,12 @@ using BH.oM.Adapters.MidasCivil;
 using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
+using BH.oM.Reflection.Attributes;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 using BH.Engine.Analytical;
+
 namespace BH.Engine.Adapters.MidasCivil
 {
     public static partial class Compute
@@ -34,6 +37,10 @@ namespace BH.Engine.Adapters.MidasCivil
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
+
+        [Description("Converting panel with 3 or 4 edges to FEmesh ")]
+        [Input("panel", "BH.oM.Structure.Elements.Panel with 3 or 4 edges")]
+        [Output("FEMesh", "BH.oM.Structure.Elements.FEMesh with 3 or 4 nodes")]
 
         public static FEMesh PanelToFEMesh(Panel panel)
         {
@@ -51,14 +58,17 @@ namespace BH.Engine.Adapters.MidasCivil
                 {
                     face = Geometry.Create.Face(3, 2, 1, 0);
                 }
-                if (Count == 3)
+                else if (Count == 3)
                 {
                     face = Geometry.Create.Face(2, 1, 0, -1);
                 }
+                if (face == null)
+                {
+                    return null;
+                }  
                 faces.Add(face);
                 points.AddRange(BH.Engine.Geometry.Convert.IToPolyline(curve).ControlPoints);
             }
-
             Mesh mesh = BH.Engine.Geometry.Create.Mesh(points.Distinct(), faces);
             FEMesh fEMesh = BH.Engine.Structure.Create.FEMesh(mesh, panel.Property, null, panel.Name);
 
