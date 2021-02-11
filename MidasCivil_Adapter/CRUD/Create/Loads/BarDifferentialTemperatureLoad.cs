@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
                 if (barDifferentialTemperatureLoad.TemperatureProfile.Keys.Count > 21)
                 {
                     Engine.Reflection.Compute.RecordError("MidasCivil can only parse BarDifferentialTemperatureLoads with a maximum of 20 positions.");
-                    return false;
+                    continue;
                 }
                 List<string> midasTemperatureLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(barDifferentialTemperatureLoad.Loadcase.Name + "\\BSTEMPER");
@@ -54,7 +54,7 @@ namespace BH.Adapter.MidasCivil
                 if (barDifferentialTemperatureLoad.Objects.Elements.Any(x => x.SectionProperty == null))
                 {
                     Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
-                    return true;
+                    continue;
                 }
                 var groupedBars = barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty.Name);
                 foreach (var barGroup in groupedBars)
