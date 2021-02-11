@@ -35,20 +35,30 @@ namespace BH.Engine.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static FEMesh PanelToFEMesh(Panel panel, Face face)
+        public static FEMesh PanelToFEMesh(Panel panel)
         {
             List<Point> points = new List<Point>();
             List<Edge> edges = panel.ExternalEdges;
             List<ICurve> curves = new List<ICurve>();
             List<Face> faces = new List<Face>();
-            faces.Add(face);
+            Face face = new Face();
 
             foreach (Edge edge in edges)
             {
                 ICurve curve = BH.Engine.Analytical.Query.Geometry(edge);
+                int Count = BH.Engine.Geometry.Convert.IToPolyline(curve).ControlPoints.Count();
+                if (Count == 4)
+                {
+                    face = Geometry.Create.Face(3, 2, 1, 0);   
+                }
+                if (Count == 3)
+                {
+                    face = Geometry.Create.Face(2, 1, 0, -1);
+                }
+                faces.Add(face);
                 points.AddRange(BH.Engine.Geometry.Convert.IToPolyline(curve).ControlPoints);
             }
-        
+
             Mesh mesh = BH.Engine.Geometry.Create.Mesh(points.Distinct(), faces);
             FEMesh fEMesh = BH.Engine.Structure.Create.FEMesh(mesh, panel.Property,null,panel.Name);
 
