@@ -25,8 +25,10 @@ using BH.oM.Adapters.MidasCivil;
 using BH.Engine.Adapter;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
+using BH.Engine.Reflection;
 using BH.oM.Structure.SectionProperties;
-
+using System.Linq;
+using System.IO;
 namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
@@ -35,43 +37,89 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static BarDifferentialTemperatureLoad ToBarDifferentialTemperatureLoad (string temperatureLoad, List<string> associatedFEMeshes, string loadcase,
-            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count, string temperatureUnit)
+        public static BarDifferentialTemperatureLoad ToBarDifferentialTemperatureLoad(List<string> temperatureLoad, string loadcase,
+            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, Bar> barDictionary, int count, string temperatureUnit, string matchingBar)
         {
-            string[] delimitted = temperatureLoad.Split(',');
-            List<Bar> bhomAssociatedBars = new List<Bar>();
-
-            Loadcase bhomLoadcase;
-            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
-
-            Bar bhomAssociatedBar;
-            foreach (string associatedFEMesh in associatedFEMeshes)
-            {
-                if (barDictionary.ContainsKey(associatedFEMesh))
-                {
-                    barDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedBar);
-                    bhomAssociatedBars.Add(bhomAssociatedBar);
-                }
-            }
-            double temperature = double.Parse(delimitted[0].Trim()).DeltaTemperatureToSI(temperatureUnit);
-            List<double> temperatures= new List<double>();
-             temperatures.Add(temperature);
             List<double> positions = new List<double>();
-            string name;
-
-            if (string.IsNullOrWhiteSpace(delimitted[1]))
+            List<double> temperatureList = new List<double>();
+            DifferentialTemperatureLoadDirection loadDirection = new DifferentialTemperatureLoadDirection();
+            double depth = new double();
+            List<Bar> bhomAssociatedBars = new List<Bar>();
+            Bar bhomAssociatedBar = new Bar();
+            if (matchingBar.Contains(' '))
             {
-                name = "ATL" + count;
+                string[] matchingBars = matchingBar.Split(' ');
+                foreach (string matchBar in matchingBars)
+                    barDictionary.TryGetValue(matchBar, out bhomAssociatedBar);
+                bhomAssociatedBars.Add(bhomAssociatedBar);
             }
             else
             {
-                name = delimitted[1].Trim();
+                barDictionary.TryGetValue(matchingBar, out bhomAssociatedBar);
+                bhomAssociatedBars.Add(bhomAssociatedBar);
+            }
+            for (int j = 1; j < temperatureLoad.Count; j++)
+            {
+                string[] delimitted = temperatureLoad[j].Split(',');
+                double absPositionTop = double.Parse(delimitted[4].Trim());
+                double absPositionBot = double.Parse(delimitted[6].Trim());
+
+                if (!positions.Contains(absPositionTop))
+                {
+                    positions.Add(absPositionTop);
+                    temperatureList.Add(double.Parse(delimitted[5].Trim()).DeltaTemperatureToSI(temperatureUnit));
+                }
+                if (!positions.Contains(absPositionBot))
+                {
+                    positions.Add(absPositionBot);
+                    temperatureList.Add(double.Parse(delimitted[7].Trim()).DeltaTemperatureToSI(temperatureUnit));
+                }
+            }
+            if (temperatureLoad[0].Contains("LY"))
+            {
+                loadDirection = DifferentialTemperatureLoadDirection.LocalY;
+                depth = bhomAssociatedBars[0].SectionProperty.Vpy + bhomAssociatedBars[0].SectionProperty.Vy;
+            }
+            else
+            {
+                loadDirection = DifferentialTemperatureLoadDirection.LocalZ;
+                depth = bhomAssociatedBars[0].SectionProperty.Vpz + bhomAssociatedBars[0].SectionProperty.Vz;
+            }
+            List<double> normalisedPositions = new List<double>();
+
+            foreach (double position in positions)
+            {
+                double normalisedPosition = position / depth;
+                if ((1 - normalisedPosition) < 0.02)
+                {
+                    if((1-normalisedPosition>0.001))
+                    {
+                        Compute.RecordWarning("The normalised top position of temperature profile is between 0.981 to 0.999 and has been assumed as 1");
+                    }
+                    normalisedPosition = 1;
+                }
+                if ((normalisedPosition) < oM.Geometry.Tolerance.MacroDistance)
+                {
+                    normalisedPosition = 0;
+                }
+                normalisedPositions.Add(normalisedPosition);
             }
 
-            if (bhomAssociatedBars.Count != 0)
+            Loadcase bhomLoadcase;
+            loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
+            string name;
+            if (string.IsNullOrWhiteSpace(temperatureLoad[0].Split(',')[4]))
             {
-                BarDifferentialTemperatureLoad bhombarDifferentialTemperatureLoad = Engine.Structure.Create.BarDifferentialTemperatureLoad(
-                    bhomLoadcase, positions, temperatures, DifferentialTemperatureLoadDirection.LocalZ , bhomAssociatedBars, name);
+                name = "UBL" + count;
+            }
+            else
+            {
+                name = temperatureLoad[0].Split(',')[4].Trim();
+            }
+            if (bhomAssociatedBars.Count() != 0)
+            {
+                BarDifferentialTemperatureLoad bhombarDifferentialTemperatureLoad = Engine.Structure.Create.BarDifferentialTemperatureLoad(bhomLoadcase, 
+                    normalisedPositions, temperatureList, loadDirection, bhomAssociatedBars, name);
                 bhombarDifferentialTemperatureLoad.SetAdapterId(typeof(MidasCivilId), bhombarDifferentialTemperatureLoad.Name);
                 return bhombarDifferentialTemperatureLoad;
             }
@@ -82,7 +130,6 @@ namespace BH.Adapter.Adapters.MidasCivil
         }
 
         /***************************************************/
-
     }
 }
 
