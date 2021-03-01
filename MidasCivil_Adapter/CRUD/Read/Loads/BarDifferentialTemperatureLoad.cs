@@ -78,7 +78,6 @@ namespace BH.Adapter.MidasCivil
                         }
                         else if (j == loadIndexes.Count() - 1)
                         {
-
                         }
                         else
                         {
