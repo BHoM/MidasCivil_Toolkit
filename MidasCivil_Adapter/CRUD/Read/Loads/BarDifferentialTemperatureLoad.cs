@@ -89,8 +89,6 @@ namespace BH.Adapter.MidasCivil
                             }
                         }
                     }
-
-
                     if (barDifferntialTemperatureSets.Count != 0)
                     {
                         List<Bar> bhomBars = ReadBars();
