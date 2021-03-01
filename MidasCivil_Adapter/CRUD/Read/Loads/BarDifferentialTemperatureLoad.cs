@@ -66,26 +66,13 @@ namespace BH.Adapter.MidasCivil
                         }
                     }
                     loadIndexes.Add(barDifferentialTemperatureLoadText.Count);
-                    for (int j = 0; j < loadIndexes.Count(); j++)
+                    //This is needed to iterate over all BarDifferentialTemperatureLoads as it is input over several lines
+                    for (int j = 0; j < loadIndexes.Count() - 1; j++)
                     {
-                        if (j == 0)
+                        barDifferntialTemperatureSets.Add(new List<string>());
+                        for (int k = loadIndexes[j]; k < loadIndexes[j + 1]; k++)
                         {
-                            barDifferntialTemperatureSets.Add(new List<string>());
-                            for (int k = 0; k < loadIndexes[1]; k++)
-                            {
-                                barDifferntialTemperatureSets[j].Add(String.Join(",", barDifferentialTemperatureLoadText[k].Split(',').ToList()));
-                            }
-                        }
-                        else if (j == loadIndexes.Count() - 1)
-                        {
-                        }
-                        else
-                        {
-                            barDifferntialTemperatureSets.Add(new List<string>());
-                            for (int k = loadIndexes[j]; k < loadIndexes[j + 1]; k++)
-                            {
-                                barDifferntialTemperatureSets[j].Add(String.Join(",", barDifferentialTemperatureLoadText[k].Split(',').ToList()));
-                            }
+                            barDifferntialTemperatureSets[j].Add(String.Join(",", barDifferentialTemperatureLoadText[k].Split(',').ToList()));
                         }
                     }
                     if (barDifferntialTemperatureSets.Count != 0)
@@ -94,11 +81,11 @@ namespace BH.Adapter.MidasCivil
                         Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
                         for (int j = 0; j < barDifferntialTemperatureSets.Count; j++)
                         {
-                                BarDifferentialTemperatureLoad bhomBarDifferentialTemperatureLoad =
-                                    Adapters.MidasCivil.Convert.ToBarDifferentialTemperatureLoad(
-                                         barDifferntialTemperatureSets[j], loadcase, loadcaseDictionary, barDictionary, i, m_temperatureUnit, barID[j]);
-                                if (bhomBarDifferentialTemperatureLoad != null)
-                                    bhomBarDifferentialTemperatureLoads.Add(bhomBarDifferentialTemperatureLoad);                    
+                            BarDifferentialTemperatureLoad bhomBarDifferentialTemperatureLoad =
+                                Adapters.MidasCivil.Convert.ToBarDifferentialTemperatureLoad(
+                                     barDifferntialTemperatureSets[j], loadcase, loadcaseDictionary, barDictionary, i, m_temperatureUnit, barID[j]);
+                            if (bhomBarDifferentialTemperatureLoad != null)
+                                bhomBarDifferentialTemperatureLoads.Add(bhomBarDifferentialTemperatureLoad);
                         }
                     }
                 }
