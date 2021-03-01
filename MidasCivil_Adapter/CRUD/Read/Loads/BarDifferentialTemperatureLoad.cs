@@ -54,44 +54,42 @@ namespace BH.Adapter.MidasCivil
                 {
                     List<List<string>> barDifferntialTemperatureSets = new List<List<string>>();
                     List<string> barID = new List<string>();
-                    List<int> loadIndex = new List<int>();
+                    List<int> loadIndexes = new List<int>();
                     List<string> delimitted = new List<string>();
                     for (int j = 0; j < barDifferentialTemperatureLoadText.Count; j++)
                     {
                         if (!barDifferentialTemperatureLoadText[j].Contains("ELEMENT"))
                         {
-                            loadIndex.Add(j);
+                            loadIndexes.Add(j);
                             delimitted = barDifferentialTemperatureLoadText[j].Split(',').ToList();
                             barID.Add(delimitted[0].Trim());
                         }
                     }
-                    loadIndex.Add(barDifferentialTemperatureLoadText.Count);
-                    int index = 0;
-
-                    foreach (int LoadIN in loadIndex)
+                    loadIndexes.Add(barDifferentialTemperatureLoadText.Count);
+                    for (int j = 0; j < loadIndexes.Count(); j++)
                     {
-                        if (LoadIN == loadIndex[0])
+                        if (j == 0)
                         {
                             barDifferntialTemperatureSets.Add(new List<string>());
-                            for (int j = 0; j < loadIndex[1]; j++)
+                            for (int k = 0; k < loadIndexes[1]; k++)
                             {
-                                barDifferntialTemperatureSets[index].Add(String.Join(",", barDifferentialTemperatureLoadText[j].Split(',').ToList()));
+                                barDifferntialTemperatureSets[j].Add(String.Join(",", barDifferentialTemperatureLoadText[k].Split(',').ToList()));
                             }
                         }
-                        else if (LoadIN == loadIndex.Last())
+                        else if (j == loadIndexes.Count() - 1)
                         {
-                            ;
+
                         }
                         else
                         {
                             barDifferntialTemperatureSets.Add(new List<string>());
-                            for (int j = LoadIN; j < loadIndex[1 + index]; j++)
+                            for (int k = loadIndexes[j]; k < loadIndexes[j + 1]; k++)
                             {
-                                barDifferntialTemperatureSets[index].Add(String.Join(",", barDifferentialTemperatureLoadText[j].Split(',').ToList()));
+                                barDifferntialTemperatureSets[j].Add(String.Join(",", barDifferentialTemperatureLoadText[k].Split(',').ToList()));
                             }
                         }
-                        index++;
                     }
+
 
                     if (barDifferntialTemperatureSets.Count != 0)
                     {
