@@ -65,8 +65,8 @@ namespace BH.Adapter.MidasCivil
                             barID.Add(delimitted[0].Trim());
                         }
                     }
-                    loadIndexes.Add(barDifferentialTemperatureLoadText.Count);
                     //This is needed to iterate over all BarDifferentialTemperatureLoads as it is input over several lines
+                    loadIndexes.Add(barDifferentialTemperatureLoadText.Count);
                     for (int j = 0; j < loadIndexes.Count() - 1; j++)
                     {
                         barDifferntialTemperatureSets.Add(new List<string>());
