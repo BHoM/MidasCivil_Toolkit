@@ -135,6 +135,7 @@
     <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToRigidLink.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToAreaDifferentialTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToBarPointLoad.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="CRUD\Delete\Properties\BarReleases.cs" />
     <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
+    <Compile Include="CRUD\Read\Loads\AreaDifferentialTemperatureLoad.cs" />
     <Compile Include="CRUD\Read\Results\BarResults.cs" />
     <Compile Include="CRUD\Read\Results\MeshResults.cs" />
     <Compile Include="CRUD\Read\Results\NodeResults.cs" />
