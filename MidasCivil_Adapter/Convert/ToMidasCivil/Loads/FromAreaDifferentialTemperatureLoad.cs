@@ -33,12 +33,9 @@ namespace BH.Adapter.Adapters.MidasCivil
         public static string FromAreaDifferentialTemperatureLoad(this AreaDifferentialTemperatureLoad temperatureProfile, string assignedFEMesh, string temperatureUnit)
         {
             string midasFEMeshLoad = null;
-            for (int i = 1; i < temperatureProfile.TemperatureProfile.Keys.Count; i++)
-            {
-                double temperatureDifference = temperatureProfile.TemperatureProfile[i - 1] - temperatureProfile.TemperatureProfile[i];
+                double temperatureDifference = temperatureProfile.TemperatureProfile[0].DeltaTemperatureToSI(temperatureUnit) - temperatureProfile.TemperatureProfile[1].DeltaTemperatureToSI(temperatureUnit);
                 midasFEMeshLoad = assignedFEMesh + ",2," + temperatureDifference + "," + "YES,0," +
                 temperatureProfile.Name;
-            }
             return midasFEMeshLoad;
         }
 

@@ -37,7 +37,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         public static AreaDifferentialTemperatureLoad ToAreaDifferentialTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase,
             Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count, string temperatureUnit)
         {
-            string[] delimitted = temperatureLoad.Split(',');
+            List<string> delimitted = new List<string>(temperatureLoad.Split(','));
             List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
 
             Loadcase bhomLoadcase;
@@ -54,11 +54,19 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
 
             double temperature = double.Parse(delimitted[1].Trim());
-            double topTemperature = temperature / 2;
-            double botTemperature = -topTemperature;
-
+            double topTemperature = new double();
+            double botTemperature = new double();
+            if (delimitted.Count > 4)
+            {
+                topTemperature = temperature / 2 + double.Parse(delimitted[5].Trim());
+                botTemperature = -temperature / 2 + double.Parse(delimitted[5].Trim());
+            }
+            else
+            {
+                topTemperature = temperature / 2;
+                botTemperature = -topTemperature;
+            }
             string name;
-
             if (string.IsNullOrWhiteSpace(delimitted[4]))
             {
                 name = "ADTL" + count;

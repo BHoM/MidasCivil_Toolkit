@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.IO;
 using BH.Engine.Adapter;
 using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Reflection;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -38,16 +39,20 @@ namespace BH.Adapter.MidasCivil
 
             foreach (AreaDifferentialTemperatureLoad areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoads)
             {
-                List<string> midasTemperatureLoadsP1 = new List<string>();
-                List<string> midasTemperatureLoadsP2 = new List<string>();
-                string FEMeshLoadPathP1 = CreateSectionFile(areaDifferentialTemperatureLoad.Loadcase.Name + "\\THERGRAD");
-                string FEMeshLoadPathP2 = CreateSectionFile(areaDifferentialTemperatureLoad.Loadcase.Name + "\\ELTEMPER");
+                List<string> midasTemperatureLoads = new List<string>();
+                string FEMeshLoadPath = CreateSectionFile(areaDifferentialTemperatureLoad.Loadcase.Name + "\\THERGRAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(areaDifferentialTemperatureLoad);
                 List<IAreaElement> assignedElements = areaDifferentialTemperatureLoad.Objects.Elements;
                 List<string> assignedFEMeshes = new List<string>();
                 AreaUniformTemperatureLoad areaUniformTemperatureLoad = new AreaUniformTemperatureLoad();
-                areaUniformTemperatureLoad.TemperatureChange = (areaDifferentialTemperatureLoad.TemperatureProfile[0] - areaDifferentialTemperatureLoad.TemperatureProfile[1]) / 2;
+                areaUniformTemperatureLoad.TemperatureChange = (areaDifferentialTemperatureLoad.TemperatureProfile[0] - areaDifferentialTemperatureLoad.TemperatureProfile[1]) / 2 + areaDifferentialTemperatureLoad.TemperatureProfile[1];
                 areaUniformTemperatureLoad.Name = areaDifferentialTemperatureLoad.Name;
+                areaUniformTemperatureLoad.Objects = areaDifferentialTemperatureLoad.Objects;
+                areaUniformTemperatureLoad.Loadcase = areaDifferentialTemperatureLoad.Loadcase;
+                Compute.RecordWarning("Given the limitation of Midas, an Area Differential Temperature Load is inputted as one Element Temperature Load and one Temperature Gradient Load");
+                Compute.RecordWarning("Please ensure a separate Loadcase is used if user would like to push any Area Uniform Temperature Load in addition to Area Differential Temperature Load");
+                CreateCollection(new List<AreaUniformTemperatureLoad>() { areaUniformTemperatureLoad });
+
                 foreach (IAreaElement mesh in assignedElements)
                 {
                     assignedFEMeshes.Add(mesh.AdapterId<string>(typeof(MidasCivilId)));
@@ -55,15 +60,11 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedFEMesh in assignedFEMeshes)
                 {
-                    midasTemperatureLoadsP1.Add(Adapters.MidasCivil.Convert.FromAreaDifferentialTemperatureLoad(areaDifferentialTemperatureLoad, assignedFEMesh, m_temperatureUnit));
-                    midasTemperatureLoadsP2.Add(Adapters.MidasCivil.Convert.FromAreaUniformTemperatureLoad(areaUniformTemperatureLoad, assignedFEMesh, m_temperatureUnit));
+                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromAreaDifferentialTemperatureLoad(areaDifferentialTemperatureLoad, assignedFEMesh, m_temperatureUnit));
                 }
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
-                RemoveEndOfDataString(FEMeshLoadPathP1);
-                File.AppendAllLines(FEMeshLoadPathP1, midasTemperatureLoadsP1);
-                RemoveEndOfDataString(FEMeshLoadPathP2);
-                File.AppendAllLines(FEMeshLoadPathP2, midasTemperatureLoadsP2);
-
+                RemoveEndOfDataString(FEMeshLoadPath);
+                File.AppendAllLines(FEMeshLoadPath, midasTemperatureLoads);
             }
 
             return true;
