@@ -57,7 +57,7 @@ namespace BH.Adapter.MidasCivil
                 if (areaDifferentialTemperatureLoadText.Count != 0)
                 {
                     int Index = 0;
-                    if (areaUniformTemperatureLoadText.Count == areaUniformTemperatureLoadText.Count)
+                    if (areaUniformTemperatureLoadText.Count == areaDifferentialTemperatureLoadText.Count)
                     {
                         foreach (string areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoadText)
                         {
@@ -72,7 +72,8 @@ namespace BH.Adapter.MidasCivil
                             }
                             else
                             {
-                                Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load due to " + ADTLdelimitted[0].Trim().ToString() + " element number for the two loads are not aligned.");
+                                Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load due to " + ADTLdelimitted[0].Trim().ToString() + " element number for the two loads are different");
+                                Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section");
                                 loadedFEMeshes.Add(ADTLdelimitted[0].Trim());
                                 ADTLdelimitted.RemoveAt(0);
                                 feMeshComparison.Add(String.Join(",", ADTLdelimitted));
@@ -82,13 +83,14 @@ namespace BH.Adapter.MidasCivil
                     }
                     else
                     {
-                        Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load. Area Differential Temperature load will be applied at the centroid of the cross section");
                         foreach (string areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoadText)
                         {
-                            List<string> delimitted = areaDifferentialTemperatureLoad.Split(',').ToList();
-                            loadedFEMeshes.Add(delimitted[0].Trim());
-                            delimitted.RemoveAt(0);
-                            feMeshComparison.Add(String.Join(",", delimitted));
+                            List<string> ADTLdelimitted = areaDifferentialTemperatureLoad.Split(',').ToList();
+                            Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load due to " + ADTLdelimitted[0].Trim().ToString() + " element number for the two loads are not aligned.");
+                            Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section");
+                            loadedFEMeshes.Add(ADTLdelimitted[0].Trim());
+                            ADTLdelimitted.RemoveAt(0);
+                            feMeshComparison.Add(String.Join(",", ADTLdelimitted));
                         }
                     }
                     if (feMeshComparison.Count != 0)
@@ -118,7 +120,6 @@ namespace BH.Adapter.MidasCivil
                             {
                                 i = i + 1;
                             }
-
                         }
 
                     }

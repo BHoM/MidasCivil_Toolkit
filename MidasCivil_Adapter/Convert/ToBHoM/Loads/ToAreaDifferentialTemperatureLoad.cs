@@ -56,7 +56,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             double temperature = double.Parse(delimitted[1].Trim());
             double topTemperature = new double();
             double botTemperature = new double();
-            if (delimitted.Count > 4)
+            if (delimitted.Count > 5)
             {
                 topTemperature = temperature / 2 + double.Parse(delimitted[5].Trim());
                 botTemperature = -temperature / 2 + double.Parse(delimitted[5].Trim());
