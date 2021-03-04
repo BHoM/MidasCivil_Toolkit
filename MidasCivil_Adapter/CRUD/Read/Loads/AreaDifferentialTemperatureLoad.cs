@@ -72,8 +72,8 @@ namespace BH.Adapter.MidasCivil
                             }
                             else
                             {
-                                Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load due to Element number" + ADTLdelimitted[0].Trim().ToString() + " for the two loads are different");
-                                Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section at Element Number"+ ADTLdelimitted[0].Trim().ToString());
+                                Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load at Element number " + ADTLdelimitted[0].Trim().ToString() + " due to the two loads are assigned to differnt element");
+                                Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section at Element number "+ ADTLdelimitted[0].Trim().ToString());
                                 loadedFEMeshes.Add(ADTLdelimitted[0].Trim());
                                 ADTLdelimitted.RemoveAt(0);
                                 feMeshComparison.Add(String.Join(",", ADTLdelimitted));
@@ -86,8 +86,8 @@ namespace BH.Adapter.MidasCivil
                         foreach (string areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoadText)
                         {
                             List<string> ADTLdelimitted = areaDifferentialTemperatureLoad.Split(',').ToList();
-                            Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load due to Element number" + ADTLdelimitted[0].Trim().ToString() + " for the two loads are not aligned.");
-                            Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section" + ADTLdelimitted[0].Trim().ToString());
+                            Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load at Element number " + ADTLdelimitted[0].Trim().ToString() + " due to the two loads are not aligned.");
+                            Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section at Element number " + ADTLdelimitted[0].Trim().ToString());
                             loadedFEMeshes.Add(ADTLdelimitted[0].Trim());
                             ADTLdelimitted.RemoveAt(0);
                             feMeshComparison.Add(String.Join(",", ADTLdelimitted));
