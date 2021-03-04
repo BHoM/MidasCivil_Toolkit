@@ -42,7 +42,6 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             Loadcase bhomLoadcase;
             loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
-
             foreach (string associatedFEMesh in associatedFEMeshes)
             {
                 if (femeshDictionary.ContainsKey(associatedFEMesh))
@@ -52,7 +51,6 @@ namespace BH.Adapter.Adapters.MidasCivil
                     bhomAssociatedFEMeshes.Add(bhomAssociatedFEMesh);
                 }
             }
-
             double temperature = double.Parse(delimitted[1].Trim());
             double topTemperature = new double();
             double botTemperature = new double();
@@ -75,7 +73,6 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 name = delimitted[4].Trim();
             }
-
             if (bhomAssociatedFEMeshes.Count != 0)
             {
                 AreaDifferentialTemperatureLoad bhomAreaDifferentialTemperatureLoad = Engine.Structure.Create.AreaDifferentialTemperatureLoad(
