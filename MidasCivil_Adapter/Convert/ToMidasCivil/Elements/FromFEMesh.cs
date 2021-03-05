@@ -24,6 +24,8 @@ using BH.oM.Adapters.MidasCivil;
 using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using System.Collections.Generic;
+using System;
+
 namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
@@ -40,17 +42,18 @@ namespace BH.Adapter.Adapters.MidasCivil
             string sectionPropertyId = "1";
             string materialId = "1";
 
+            if (!(feMesh.Property == null))
+            {
+                sectionPropertyId = feMesh.Property.AdapterId<string>(typeof(MidasCivilId));
+
+                if (!(feMesh.Property.Material == null))
+                {
+                    materialId = feMesh.Property.Material.AdapterId<string>(typeof(MidasCivilId));
+                }
+            }
+
             if (feMesh.Faces.Count == 1)
             {
-                if (!(feMesh.Property == null))
-                {
-                    sectionPropertyId = feMesh.Property.AdapterId<string>(typeof(MidasCivilId));
-
-                    if (!(feMesh.Property.Material == null))
-                    {
-                        materialId = feMesh.Property.Material.AdapterId<string>(typeof(MidasCivilId));
-                    }
-                }
                 if (feMesh.Nodes.Count < 3)
                 {
                     BH.Engine.Reflection.Compute.RecordError("Cannot push mesh with less than 3 nodes");
@@ -86,40 +89,29 @@ namespace BH.Adapter.Adapters.MidasCivil
                     int Node2 = meshFace.NodeListIndices[2];
            
                     nodeIndices = meshFace.NodeListIndices;
+
+                    string j = i.ToString();//Will end up with random plate numbers
+                    FEMesh discreteMesh = new FEMesh();
+                    discreteMesh.Nodes.AddRange(feMesh.Nodes);//Unfortunatley need all the nodes because the node indices need to match
+                    FEMeshFace disFace = new FEMeshFace();
+                    disFace.NodeListIndices.Add(Node0);
+                    disFace.NodeListIndices.Add(Node1);
+                    disFace.NodeListIndices.Add(Node2);
+
                     if (nodeIndices.Count == 4)
                     {
                         int Node3 = meshFace.NodeListIndices[3];
-                        string j = i.ToString();//Will end up with random plate numbers
-                        FEMesh discreteMesh = new FEMesh();
-                        discreteMesh.Nodes.AddRange(feMesh.Nodes);//Unfortunatley need all the nodes because the node indices need to match
-                        FEMeshFace disFace = new FEMeshFace();
-                        disFace.NodeListIndices.Add(Node0);
-                        disFace.NodeListIndices.Add(Node1);
-                        disFace.NodeListIndices.Add(Node2);
                         disFace.NodeListIndices.Add(Node3);
-                        discreteMesh.Faces.Add(disFace);
 
-                        //discreteMesh.Property.Material.SetAdapterId<string>(typeof(MidasCivilId), feMesh.Property.Material.AdapterId<string>(typeof(MidasCivilId)));
-
-                        discreteMesh.SetAdapterId<string>(typeof(MidasCivilId), j);
-                        midasElement += "\n" + FromFEMesh(discreteMesh);
                     }
-                    else if (nodeIndices.Count == 3)
-                    {
-                        string j = i.ToString();
-                        FEMesh discreteMesh = new FEMesh();
-                        discreteMesh.Nodes.AddRange(feMesh.Nodes);
-                        FEMeshFace disFace = new FEMeshFace();
-                        disFace.NodeListIndices.Add(Node0);
-                        disFace.NodeListIndices.Add(Node1);
-                        disFace.NodeListIndices.Add(Node2);
-                        discreteMesh.Faces.Add(disFace);
+                    discreteMesh.Faces.Add(disFace);
 
-                        //discreteMesh.Property.Material.SetAdapterId<string>(typeof(MidasCivilId), feMesh.Property.Material.AdapterId<string>(typeof(MidasCivilId)));
+                    discreteMesh.Property = feMesh.Property;
+                    discreteMesh.Property.Material = feMesh.Property.Material;
+                    
 
-                        discreteMesh.SetAdapterId<string>(typeof(MidasCivilId), j);
-                        midasElement += "\n" + FromFEMesh(discreteMesh);
-                    }
+                    discreteMesh.SetAdapterId<string>(typeof(MidasCivilId), j);
+                    midasElement += "\n" + FromFEMesh(discreteMesh);
                     i++;
 
                 }
