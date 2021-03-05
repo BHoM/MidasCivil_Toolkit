@@ -92,7 +92,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                     string j = i.ToString();//Will end up with random plate numbers
                     FEMesh discreteMesh = new FEMesh();
-                    discreteMesh.Nodes.AddRange(feMesh.Nodes);//Unfortunatley need all the nodes because the node indices need to match
+                    discreteMesh.Nodes = feMesh.Nodes;
                     FEMeshFace disFace = new FEMeshFace();
                     disFace.NodeListIndices.Add(Node0);
                     disFace.NodeListIndices.Add(Node1);
