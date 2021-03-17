@@ -41,6 +41,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<int> nodeIndices = feMesh.Faces[0].NodeListIndices;
             string sectionPropertyId = "1";
             string materialId = "1";
+            i = Math.Max(i, int.Parse(feMesh.AdapterId<string>(typeof(MidasCivilId))) - 1);
 
             if (!(feMesh.Property == null))
             {
