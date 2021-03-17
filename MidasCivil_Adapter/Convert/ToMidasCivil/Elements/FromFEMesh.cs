@@ -25,6 +25,7 @@ using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using System.Collections.Generic;
 using System;
+using BH.Adapter.MidasCivil;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -33,11 +34,11 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        private static int i = 0;
+
         public static string FromFEMesh(this FEMesh feMesh)
         {
-
-            string midasElement = "";
+        int i = NextFreeId(typeof(FEMesh));
+        string midasElement = "";
             List<int> nodeIndices = feMesh.Faces[0].NodeListIndices;
             string sectionPropertyId = "1";
             string materialId = "1";
@@ -85,9 +86,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 i++;
                 foreach (FEMeshFace meshFace in feMesh.Faces)
                 {
-                    int Node0 = meshFace.NodeListIndices[0];
-                    int Node1 = meshFace.NodeListIndices[1];
-                    int Node2 = meshFace.NodeListIndices[2];
+                    int node0 = meshFace.NodeListIndices[0];
+                    int node1 = meshFace.NodeListIndices[1];
+                    int node2 = meshFace.NodeListIndices[2];
            
                     nodeIndices = meshFace.NodeListIndices;
 
@@ -95,14 +96,14 @@ namespace BH.Adapter.Adapters.MidasCivil
                     FEMesh discreteMesh = new FEMesh();
                     discreteMesh.Nodes = feMesh.Nodes;
                     FEMeshFace disFace = new FEMeshFace();
-                    disFace.NodeListIndices.Add(Node0);
-                    disFace.NodeListIndices.Add(Node1);
-                    disFace.NodeListIndices.Add(Node2);
+                    disFace.NodeListIndices.Add(node0);
+                    disFace.NodeListIndices.Add(node1);
+                    disFace.NodeListIndices.Add(node2);
 
                     if (nodeIndices.Count == 4)
                     {
-                        int Node3 = meshFace.NodeListIndices[3];
-                        disFace.NodeListIndices.Add(Node3);
+                        int node3 = meshFace.NodeListIndices[3];
+                        disFace.NodeListIndices.Add(node3);
 
                     }
                     discreteMesh.Faces.Add(disFace);
