@@ -26,6 +26,7 @@ using BH.oM.Structure.Elements;
 using System.Collections.Generic;
 using System;
 using BH.Adapter.MidasCivil;
+using System.Text;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -34,15 +35,15 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
+        private static int i = 1;// should be able to use NextFreeId(typeof(FEMesh)), but can't.;
 
         public static string FromFEMesh(this FEMesh feMesh)
         {
-        int i = NextFreeId(typeof(FEMesh));
-        string midasElement = "";
+            StringBuilder midasElements = new StringBuilder();
+            string midasElement = "";
             List<int> nodeIndices = feMesh.Faces[0].NodeListIndices;
             string sectionPropertyId = "1";
             string materialId = "1";
-            i = Math.Max(i, int.Parse(feMesh.AdapterId<string>(typeof(MidasCivilId))) - 1);
 
             if (!(feMesh.Property == null))
             {
@@ -54,71 +55,43 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
             }
 
-            if (feMesh.Faces.Count == 1)
+            foreach (FEMeshFace meshFace in feMesh.Faces)
             {
-                if (feMesh.Nodes.Count < 3)
+                int node0 = meshFace.NodeListIndices[0];
+                int node1 = meshFace.NodeListIndices[1];
+                int node2 = meshFace.NodeListIndices[2];
+
+                if (meshFace.NodeListIndices.Count < 3)
                 {
                     BH.Engine.Reflection.Compute.RecordError("Cannot push mesh with less than 3 nodes");
                 }
 
-                if (feMesh.Faces[0].NodeListIndices.Count == 4)
+                if (meshFace.NodeListIndices.Count == 4)
                 {
-                    midasElement = (feMesh.AdapterId<string>(typeof(MidasCivilId)) + ",PLATE," +
+                    int node3 = meshFace.NodeListIndices[3];
+                    midasElement = (i + ",PLATE," +
                     materialId + "," +
                     sectionPropertyId + "," +
-                  feMesh.Nodes[nodeIndices[0]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-                  feMesh.Nodes[nodeIndices[1]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-                  feMesh.Nodes[nodeIndices[2]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-                  feMesh.Nodes[nodeIndices[3]].AdapterId<string>(typeof(MidasCivilId)) + ",1,0");
+                    feMesh.Nodes[node0].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node1].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node2].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node3].AdapterId<string>(typeof(MidasCivilId)) + ",1,0");
                 }
-                else if (feMesh.Faces[0].NodeListIndices.Count == 3)
+                else if (meshFace.NodeListIndices.Count == 3)
                 {
-                    midasElement = (feMesh.AdapterId<string>(typeof(MidasCivilId)) + ",PLATE," +
+                    midasElement = (i + ",PLATE," +
                     materialId + "," +
                     sectionPropertyId + "," +
-                 feMesh.Nodes[nodeIndices[0]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-                 feMesh.Nodes[nodeIndices[1]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-                 feMesh.Nodes[nodeIndices[2]].AdapterId<string>(typeof(MidasCivilId)) + ",0,1,0");
+                    feMesh.Nodes[node0].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node1].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node2].AdapterId<string>(typeof(MidasCivilId)) + ",0,1,0");
                 }
-            }
-            else if (feMesh.Faces.Count > 1)
-            {
+
+                midasElements.AppendLine(midasElement);
                 i++;
-                foreach (FEMeshFace meshFace in feMesh.Faces)
-                {
-                    int node0 = meshFace.NodeListIndices[0];
-                    int node1 = meshFace.NodeListIndices[1];
-                    int node2 = meshFace.NodeListIndices[2];
-           
-                    nodeIndices = meshFace.NodeListIndices;
 
-                    string j = i.ToString();//Will end up with random plate numbers
-                    FEMesh discreteMesh = new FEMesh();
-                    discreteMesh.Nodes = feMesh.Nodes;
-                    FEMeshFace disFace = new FEMeshFace();
-                    disFace.NodeListIndices.Add(node0);
-                    disFace.NodeListIndices.Add(node1);
-                    disFace.NodeListIndices.Add(node2);
-
-                    if (nodeIndices.Count == 4)
-                    {
-                        int node3 = meshFace.NodeListIndices[3];
-                        disFace.NodeListIndices.Add(node3);
-
-                    }
-                    discreteMesh.Faces.Add(disFace);
-
-                    discreteMesh.Property = feMesh.Property;
-                    discreteMesh.Property.Material = feMesh.Property.Material;
-                    
-
-                    discreteMesh.SetAdapterId<string>(typeof(MidasCivilId), j);
-                    midasElement += "\n" + FromFEMesh(discreteMesh);
-                    i++;
-
-                }
             }
-            return midasElement;
+            return midasElements.ToString();
         }
 
         /***************************************************/
