@@ -36,8 +36,10 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        public static string FromFEMesh(this FEMesh feMesh, int index = 1)
+        private static int index = 0;
+        public static string FromFEMesh(this FEMesh feMesh, int index_ = 1)
         {
+            index = Math.Max(index, index_);
             StringBuilder midasElements = new StringBuilder();
             string midasElement = "";
             string sectionPropertyId = "1";
