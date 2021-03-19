@@ -28,6 +28,7 @@ using System;
 using BH.Adapter.MidasCivil;
 using System.Text;
 
+
 namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
@@ -35,13 +36,10 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        private static int i = 1;// should be able to use NextFreeId(typeof(FEMesh)), but can't.;
-
-        public static string FromFEMesh(this FEMesh feMesh)
+        public static string FromFEMesh(this FEMesh feMesh, int index = 1)
         {
             StringBuilder midasElements = new StringBuilder();
             string midasElement = "";
-            List<int> nodeIndices = feMesh.Faces[0].NodeListIndices;
             string sectionPropertyId = "1";
             string materialId = "1";
 
@@ -69,7 +67,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 if (meshFace.NodeListIndices.Count == 4)
                 {
                     int node3 = meshFace.NodeListIndices[3];
-                    midasElement = (i + ",PLATE," +
+                    midasElement = (index + ",PLATE," +
                     materialId + "," +
                     sectionPropertyId + "," +
                     feMesh.Nodes[node0].AdapterId<string>(typeof(MidasCivilId)) + "," +
@@ -79,7 +77,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 else if (meshFace.NodeListIndices.Count == 3)
                 {
-                    midasElement = (i + ",PLATE," +
+                    midasElement = (index + ",PLATE," +
                     materialId + "," +
                     sectionPropertyId + "," +
                     feMesh.Nodes[node0].AdapterId<string>(typeof(MidasCivilId)) + "," +
@@ -88,7 +86,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
 
                 midasElements.AppendLine(midasElement);
-                i++;
+                index++;
 
             }
             return midasElements.ToString();
