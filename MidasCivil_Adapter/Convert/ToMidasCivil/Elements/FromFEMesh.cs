@@ -36,10 +36,8 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        private static int index = 0;
-        public static string FromFEMesh(this FEMesh feMesh, int index_ = 1)
+        public static string FromFEMesh(this FEMesh feMesh, ref int index)
         {
-            index = Math.Max(index, index_);
             StringBuilder midasElements = new StringBuilder();
             string midasElement = "";
             string sectionPropertyId = "1";
@@ -86,7 +84,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     feMesh.Nodes[node1].AdapterId<string>(typeof(MidasCivilId)) + "," +
                     feMesh.Nodes[node2].AdapterId<string>(typeof(MidasCivilId)) + ",0,1,0");
                 }
-
+                meshFace.SetAdapterId(typeof(MidasCivilId), index);
                 midasElements.AppendLine(midasElement);
                 index++;
 

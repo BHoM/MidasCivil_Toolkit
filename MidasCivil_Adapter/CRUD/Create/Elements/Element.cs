@@ -72,9 +72,11 @@ namespace BH.Adapter.MidasCivil
 
             CreateGroups(meshes);
 
+            int index = System.Convert.ToInt32(NextFreeId(typeof(FEMesh)));
+
             foreach (FEMesh mesh in meshes)
             {
-                midasElements.Add(Adapters.MidasCivil.Convert.FromFEMesh(mesh, System.Convert.ToInt32(NextFreeId(typeof(FEMesh)))));
+                midasElements.Add(Adapters.MidasCivil.Convert.FromFEMesh(mesh, ref index));
             }
 
             File.AppendAllLines(path, midasElements);
