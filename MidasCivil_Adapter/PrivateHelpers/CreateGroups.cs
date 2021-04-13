@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Text;
 using BH.oM.Adapters.MidasCivil;
 using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
@@ -237,26 +238,44 @@ namespace BH.Adapter.MidasCivil
 
             foreach (FEMesh mesh in meshes)
             {
-                foreach (string tag in mesh.Tags)
+                 foreach (string tag in mesh.Tags)
                 {
                     if (!groupsToAdd.ContainsKey(tag))
                     {
-                        groupsToAdd.Add(tag, mesh.AdapterId<string>(typeof(MidasCivilId)));
+                        StringBuilder meshTags = new StringBuilder(mesh.AdapterId<string>(typeof(MidasCivilId)));
+                        foreach(FEMeshFace feMeshFace in mesh.Faces)
+                        {
+                            meshTags.Append(" " + feMeshFace.AdapterId<string>(typeof(MidasCivilId)));
+                        }
+
+                        groupsToAdd.Add(tag, meshTags.ToString());
                     }
                     else
                     {
                         string assignedFEMesh;
                         groupsToAdd.TryGetValue(tag, out assignedFEMesh);
-                        string bhomID = mesh.AdapterId<string>(typeof(MidasCivilId));
+                        string meshId = mesh.AdapterId<string>(typeof(MidasCivilId));
 
-                        if (!assignedFEMesh.Contains(bhomID))
+                        StringBuilder assignedIds = new StringBuilder(assignedFEMesh);
+
+                        if (!assignedFEMesh.Contains(meshId))
                         {
-                            assignedFEMesh = assignedFEMesh + " " + bhomID;
+                            assignedIds.Append(" " + meshId);
+                        }
+
+                        foreach(FEMeshFace feMeshFace in mesh.Faces)
+                        {
+                            string faceId = feMeshFace.AdapterId<string>(typeof(MidasCivilId));
+                            if (!assignedFEMesh.Contains(faceId))
+                            {
+                                assignedIds.Append(" " + faceId);
+                            }
                         }
 
                         groupsToAdd[tag] = assignedFEMesh;
                     }
                 }
+
             }
 
             List<string> totalKeys = groupsToAdd.Keys.ToList();
