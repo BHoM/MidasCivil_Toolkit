@@ -185,7 +185,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    m_midasCivilVersion = "8.8.4";
+                    m_midasCivilVersion = "8.8.1";
                     Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
                 }
 
