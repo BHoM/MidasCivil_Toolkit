@@ -272,7 +272,7 @@ namespace BH.Adapter.MidasCivil
                             }
                         }
 
-                        groupsToAdd[tag] = assignedFEMesh;
+                        groupsToAdd[tag] = assignedIds.ToString();;
                     }
                 }
 
