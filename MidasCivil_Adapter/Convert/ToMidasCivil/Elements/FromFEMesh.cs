@@ -24,6 +24,11 @@ using BH.oM.Adapters.MidasCivil;
 using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
 using System.Collections.Generic;
+using System;
+using BH.Adapter.MidasCivil;
+using System.Text;
+
+
 namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
@@ -31,11 +36,10 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-
-        public static string FromFEMesh(this FEMesh feMesh)
+        public static string FromFEMesh(this FEMesh feMesh, ref int index)
         {
+            StringBuilder midasElements = new StringBuilder();
             string midasElement = "";
-            List<int> nodeIndices = feMesh.Faces[0].NodeListIndices;
             string sectionPropertyId = "1";
             string materialId = "1";
 
@@ -48,31 +52,44 @@ namespace BH.Adapter.Adapters.MidasCivil
                     materialId = feMesh.Property.Material.AdapterId<string>(typeof(MidasCivilId));
                 }
             }
-            if (feMesh.Nodes.Count > 4)
-            {
-                BH.Engine.Reflection.Compute.RecordError("Cannot push mesh with more than 4 nodes");
-            }
 
-            if (feMesh.Nodes.Count == 4)
+            foreach (FEMeshFace meshFace in feMesh.Faces)
             {
-                midasElement = (feMesh.AdapterId<string>(typeof(MidasCivilId)) + ",PLATE," +
-                materialId + "," +
-                sectionPropertyId + "," +
-              feMesh.Nodes[nodeIndices[0]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-              feMesh.Nodes[nodeIndices[1]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-              feMesh.Nodes[nodeIndices[2]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-              feMesh.Nodes[nodeIndices[3]].AdapterId<string>(typeof(MidasCivilId)) + ",1,0");
+                int node0 = meshFace.NodeListIndices[0];
+                int node1 = meshFace.NodeListIndices[1];
+                int node2 = meshFace.NodeListIndices[2];
+
+                if (meshFace.NodeListIndices.Count < 3)
+                {
+                    BH.Engine.Reflection.Compute.RecordError("Cannot push a FEMesh with less than three nodes");
+                }
+
+                if (meshFace.NodeListIndices.Count == 4)
+                {
+                    int node3 = meshFace.NodeListIndices[3];
+                    midasElement = (index + ",PLATE," +
+                    materialId + "," +
+                    sectionPropertyId + "," +
+                    feMesh.Nodes[node0].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node1].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node2].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node3].AdapterId<string>(typeof(MidasCivilId)) + ",1,0");
+                }
+                else if (meshFace.NodeListIndices.Count == 3)
+                {
+                    midasElement = (index + ",PLATE," +
+                    materialId + "," +
+                    sectionPropertyId + "," +
+                    feMesh.Nodes[node0].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node1].AdapterId<string>(typeof(MidasCivilId)) + "," +
+                    feMesh.Nodes[node2].AdapterId<string>(typeof(MidasCivilId)) + ",0,1,0");
+                }
+                meshFace.SetAdapterId(typeof(MidasCivilId), index);
+                midasElements.AppendLine(midasElement);
+                index++;
+
             }
-            else
-            {
-                midasElement = (feMesh.AdapterId<string>(typeof(MidasCivilId)) + ",PLATE," +
-                materialId + "," +
-                sectionPropertyId + "," +
-             feMesh.Nodes[nodeIndices[0]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-             feMesh.Nodes[nodeIndices[1]].AdapterId<string>(typeof(MidasCivilId)) + "," +
-             feMesh.Nodes[nodeIndices[2]].AdapterId<string>(typeof(MidasCivilId)) + ",0,1,0");
-            }
-            return midasElement;
+            return midasElements.ToString();
         }
 
         /***************************************************/

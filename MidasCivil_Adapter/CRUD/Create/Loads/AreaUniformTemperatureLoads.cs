@@ -46,9 +46,13 @@ namespace BH.Adapter.MidasCivil
 
                 List<string> assignedFEMeshes = new List<string>();
 
-                foreach (IAreaElement mesh in assignedElements)
+                foreach (FEMesh mesh in assignedElements)
                 {
-                    assignedFEMeshes.Add(mesh.AdapterId<string>(typeof(MidasCivilId)));
+                    List<FEMeshFace> faces = mesh.Faces;
+                    foreach (FEMeshFace face in faces)
+                    {
+                        assignedFEMeshes.Add(face.AdapterId<string>(typeof(MidasCivilId)));
+                    }
                 }
 
                 foreach (string assignedFEMesh in assignedFEMeshes)

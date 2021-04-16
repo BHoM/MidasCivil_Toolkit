@@ -78,7 +78,7 @@ namespace BH.Adapter.MidasCivil
             if (!File.Exists(unitFile))
                 File.Copy(unitFile, newDirectory + unitExtension);
             else
-                File.AppendAllLines(newDirectory + unitExtension, new List<string>() {"*UNIT","N,M,BTU,C"});
+                File.AppendAllLines(newDirectory + unitExtension, new List<string>() { "*UNIT", "N,M,KJ,C" });
 
             if (!File.Exists(versionFile))
                 File.Copy(versionFile, newDirectory + versionExtension);
@@ -136,19 +136,22 @@ namespace BH.Adapter.MidasCivil
             {
                 throw new ArgumentException("No file path given");
             }
-            else if (IsApplicationRunning())
-            {
-                throw new Exception("MidasCivil process already running");
-            }
             else
             {
-                try
+                if (IsApplicationRunning())
                 {
-                    System.Diagnostics.Process.Start(filePath);
+                    Engine.Reflection.Compute.RecordWarning("MidasCivil process already running");
                 }
-                catch (System.ComponentModel.Win32Exception)
+                else
                 {
-                    throw new Exception("File does not exist, please reference an .mcb file");
+                    try
+                    {
+                        System.Diagnostics.Process.Start(filePath);
+                    }
+                    catch (System.ComponentModel.Win32Exception)
+                    {
+                        throw new Exception("File does not exist, please reference an .mcb file");
+                    }
                 }
                 m_directory = Path.GetDirectoryName(filePath);
                 string fileName = Path.GetFileNameWithoutExtension(filePath);
@@ -197,19 +200,19 @@ namespace BH.Adapter.MidasCivil
                 catch (DirectoryNotFoundException)
                 {
                     Engine.Reflection.Compute.RecordWarning(
-                        "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
+                        "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                 }
                 catch (ArgumentOutOfRangeException)
                 {
                     Engine.Reflection.Compute.RecordWarning(
-                        "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, calories and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
+                        "No UNITS.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                 }
 
                 Directory.CreateDirectory(m_directory + "\\Results");
 
             }
 
-            return true;
+                return true;
         }
 
         /***************************************************/
