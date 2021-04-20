@@ -45,6 +45,12 @@ namespace BH.Engine.Adapters.MidasCivil
         {
             if (active)
             {
+                string intro = ";---------------------------------------------------------------------------"
+                    + "\n;   MIDAS/Civil Text(MCT) File"
+                    + $"\n;   Created from Rhino geometry using the BHoM v{BH.Engine.Reflection.Query.BHoMVersion()}"
+                    + $"\n;   Date: {DateTime.Now.ToString("yyyy-MM-dd")}"
+                    + "\n;---------------------------------------------------------------------------\n";
+
                 string directory;
                 List<string> delimited = filePath.Split(new Char[] { '\\' }).ToList();
                 delimited.Reverse();
@@ -57,6 +63,11 @@ namespace BH.Engine.Adapters.MidasCivil
                 // Retrieve type strings: select all from directory if none provided
 
                 List<string> typeNames = new List<string>();
+                List<string> MetaData = new List<string>(3);
+                MetaData.Add("VERSION");
+                MetaData.Add("UNITS");
+                MetaData.Add("PROJINFO");
+
                 bool includeLoadcases = true;
 
                 if (types.Count == 0)
@@ -97,6 +108,11 @@ namespace BH.Engine.Adapters.MidasCivil
                 List<string> sectionDependencies = new List<string> { "DGN-SECT" };
                 List<string> loadcaseDependencies = new List<string> { "LOADCOMB", "LC-COLOUR" };
 
+                independents.Insert(0, "REBAR-MATL-CODE");
+                independents.Add("LOAD-GROUP");
+                independents.Add("LOADCOMB");
+
+
                 List<List<string>> dependents = new List<List<string>>();
                 dependents.Add(nodeDependencies);
                 dependents.Add(elementDependencies);
@@ -116,18 +132,32 @@ namespace BH.Engine.Adapters.MidasCivil
                     }
                 }
 
-                independents.Insert(0, "REBAR-MATL-CODE");
-                independents.Insert(0, "UNIT");
-                independents.Insert(0, "VERSION");
-                independents.Add("LOAD-GROUP");
-                independents.Add("LOADCOMB");
 
                 List<string> loadcases = Directory.GetDirectories(directory).ToList();
+                loadcases.Remove(directory + "\\00_MetaData");
 
                 using (var combined = File.Create(path))
                 {
                     using (StreamWriter writer = new StreamWriter(combined))
                     {
+                        writer.Write(intro);
+                        writer.Flush();
+                        foreach (string file in MetaData)
+                        {
+                            if (File.Exists(directory + "\\00_MetaData\\" + file + ".txt"))
+                            {
+                                using (var input = File.OpenRead(directory + "\\00_MetaData\\" + file + ".txt"))
+                                {
+                                    if (new FileInfo(directory + "\\00_MetaData\\" + file + ".txt").Length != 0)
+                                    {
+                                        input.CopyTo(combined);
+                                    }
+                                }
+                                writer.Write(System.Environment.NewLine);
+                                writer.Flush();
+                            }
+                        }
+
                         foreach (string independent in independents)
                         {
                             if (typeNames.Contains(independent))

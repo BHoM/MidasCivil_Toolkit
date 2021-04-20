@@ -96,6 +96,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\MidasMetaData.cs" />
     <Compile Include="Compute\FEMeshToPanel.cs" />
     <Compile Include="Objects\AdapterIdName.cs" />
     <Compile Include="Objects\ArrayComparer.cs" />

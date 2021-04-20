@@ -231,6 +231,7 @@
     <Compile Include="CRUD\Create\Properties\BarReleases.cs" />
     <Compile Include="CRUD\Create\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
+    <Compile Include="PrivateHelpers\MetaData.cs" />
     <Compile Include="CRUD\Create\Properties\SurfaceProperty.cs" />
     <Compile Include="CRUD\Delete\Elements\RigidLink.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />

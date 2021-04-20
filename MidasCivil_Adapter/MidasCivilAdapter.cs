@@ -37,6 +37,7 @@ using BH.oM.Structure.Loads;
 using BH.Engine.Adapters.MidasCivil.Comparer;
 using BH.Engine.Structure;
 using BH.oM.Adapter.Commands;
+using BH.Engine.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -48,7 +49,7 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
-        public MidasCivilAdapter(string filePath, bool active = false, string version = "")
+        public MidasCivilAdapter(string filePath, bool active = false, string version = "", MetaData metaData = null)
         {
             if (active)
             {
@@ -97,6 +98,21 @@ namespace BH.Adapter.MidasCivil
 
                 m_midasCivilVersion = version;
 
+                if(metaData != null)
+                {
+                    m_midasMetaData = metaData;
+                }
+                /*if(units != null)
+                {
+                    units = units.ToUpper();
+                    units = units.Replace(" ", "");
+                    string[] unit = units.Split(',');
+                    m_forceUnit = unit[0];
+                    m_lengthUnit = unit[1];
+                    m_temperatureUnit = unit[2];
+                    m_heatUnit = unit[3];
+                }*/
+
                 Execute(new Open() { FileName = filePath });
             }
         }
@@ -120,6 +136,7 @@ namespace BH.Adapter.MidasCivil
         private readonly int m_groupCharacterLimit = 80;
         private readonly int m_sectionPropertyCharacterLimit = 28;
         private readonly int m_materialCharacterLimit = 15;
+        private MetaData m_midasMetaData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
 
         /***************************************************/

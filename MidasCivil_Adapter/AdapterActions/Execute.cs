@@ -68,12 +68,13 @@ namespace BH.Adapter.MidasCivil
                 i++;
             }
 
-            string unitExtension = "\\TextFiles\\" + "UNIT" + ".txt";
-            string versionExtension = "\\TextFiles\\" + "VERSION" + ".txt";
+            string unitExtension = "\\TextFiles\\00_MetaData\\" + "UNIT" + ".txt";
+            string versionExtension = "\\TextFiles\\00_MetaData\\" + "VERSION" + ".txt";
             string unitFile = m_directory + unitExtension;
             string versionFile = m_directory + versionExtension;
 
             Directory.CreateDirectory(newDirectory + "\\TextFiles");
+            Directory.CreateDirectory(newDirectory + "\\TextFiles\\00_MetaData");
 
             if (!File.Exists(unitFile))
                 File.Copy(unitFile, newDirectory + unitExtension);
@@ -169,7 +170,7 @@ namespace BH.Adapter.MidasCivil
                     SetSectionText();
                 }
 
-                string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
+                string versionFile = m_directory + "\\TextFiles\\00_MetaData\\" + "VERSION" + ".txt";
                 if (!(m_midasCivilVersion == ""))
                 {
                     m_midasCivilVersion = m_midasCivilVersion.Trim();
@@ -191,6 +192,10 @@ namespace BH.Adapter.MidasCivil
 
                 try
                 {
+                    if (m_midasMetaData != null)
+                    {
+                        SetMetaData(m_midasMetaData);
+                    }
                     List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
                     m_forceUnit = units[0].Trim();
                     m_lengthUnit = units[1].Trim();
@@ -212,7 +217,19 @@ namespace BH.Adapter.MidasCivil
 
             }
 
-                return true;
+            if (m_midasMetaData != null)
+            {
+                SetMetaData(m_midasMetaData);
+            }
+            else if(File.Exists(m_directory + @"\TextFiles\00_MetaData\PROJINFO.txt"))
+            {
+                m_midasMetaData = getMetaData(m_directory + @"\TextFiles\00_MetaData\PROJINFO.txt");
+            }
+            SetVersion(m_midasCivilVersion);
+            //SetUnits(m_lengthUnit, m_forceUnit, m_temperatureUnit, m_heatUnit);
+            SetUnits();
+
+            return true;
         }
 
         /***************************************************/

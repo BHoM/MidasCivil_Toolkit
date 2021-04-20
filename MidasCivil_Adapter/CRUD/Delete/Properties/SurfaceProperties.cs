@@ -83,8 +83,7 @@ namespace BH.Adapter.MidasCivil
 
                     thicknesses = thicknesses.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-                    File.Delete(path);
-                    File.WriteAllLines(path, thicknesses.ToArray());
+                    File.WriteAllText(path, "\n" + string.Join("\n",thicknesses));
                 }
             }
             return success;
