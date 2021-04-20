@@ -115,59 +115,57 @@ namespace BH.Adapter.MidasCivil
 
             path += "\\" + "UNITS.txt";
 
-            if (File.Exists(path))
+            if (!File.Exists(path))
             {
-                Engine.Reflection.Compute.RecordWarning($"UNITS.txt already exists, unit values have been updated");
-            }
+                string units = "*UNIT\n" + "   N, M, KJ, C\n";
 
-            string units = "*UNIT\n" + "   N, M, KJ, C\n";
+                /*string[] lengths = { "M", "CM", "MM", "FT", "IN" };
+                string[] forces = { "N", "KN", "KGF", "TONF", "LBF", "KIPS" };
+                string[] temperatures = { "C", "F" };
+                string[] heats = { "CAL", "KCAL", "J", "KJ", "BTU" };
 
-            /*string[] lengths = { "M", "CM", "MM", "FT", "IN" };
-            string[] forces = { "N", "KN", "KGF", "TONF", "LBF", "KIPS" };
-            string[] temperatures = { "C", "F" };
-            string[] heats = { "CAL", "KCAL", "J", "KJ", "BTU" };
+                if (Array.Exists(forces, element => element == force))
+                {
+                    units += force + ", ";
+                }
+                else
+                {
+                    Engine.Reflection.Compute.RecordWarning($"Unit input {force} not recognised using Newtons (N) instead");
+                    units += "N" + ", ";
+                }
 
-            if (Array.Exists(forces, element => element == force))
-            {
-                units += force + ", ";
-            }
-            else
-            {
-                Engine.Reflection.Compute.RecordWarning($"Unit input {force} not recognised using Newtons (N) instead");
-                units += "N" + ", ";
-            }
+                if (Array.Exists(lengths, element => element == length))
+                {
+                    units += length + ", ";
+                }
+                else
+                {
+                    Engine.Reflection.Compute.RecordWarning($"Unit input {length} not recognised using meters (m) instead");
+                    units += "M" + ", ";
+                }
 
-            if (Array.Exists(lengths, element => element == length))
-            {
-                units += length + ", ";
-            }
-            else
-            {
-                Engine.Reflection.Compute.RecordWarning($"Unit input {length} not recognised using meters (m) instead");
-                units += "M" + ", ";
-            }
+                if (Array.Exists(heats, element => element == heat))
+                {
+                    units += heat + ", ";
+                }
+                else
+                {
+                    Engine.Reflection.Compute.RecordWarning($"Unit input {heat} not recognised using kilojoules (kJ) instead");
+                    units += "KJ" + ", ";
+                }
+                if (Array.Exists(temperatures, element => element == temperature))
+                {
+                    units += temperature;
+                }
+                else
+                {
+                    Engine.Reflection.Compute.RecordWarning($"Unit input {temperature} not recognised using celcius (C) instead");
+                    units += "C";
+                }
+                units += "\n";*/
 
-            if (Array.Exists(heats, element => element == heat))
-            {
-                units += heat + ", ";
+                File.WriteAllText(path, units);
             }
-            else
-            {
-                Engine.Reflection.Compute.RecordWarning($"Unit input {heat} not recognised using kilojoules (kJ) instead");
-                units += "KJ" + ", ";
-            }
-            if (Array.Exists(temperatures, element => element == temperature))
-            {
-                units += temperature;
-            }
-            else
-            {
-                Engine.Reflection.Compute.RecordWarning($"Unit input {temperature} not recognised using celcius (C) instead");
-                units += "C";
-            }
-            units += "\n";*/
-
-            File.WriteAllText(path, units);
 
             return true;
         }
