@@ -181,7 +181,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else if (File.Exists(versionFile))
                 {
-                    List<string> versionText = GetSectionText("VERSION");
+                    List<string> versionText = GetSectionText("00_MetaData\\VERSION");
                     m_midasCivilVersion = versionText[0].Trim();
                 }
                 else
@@ -192,11 +192,7 @@ namespace BH.Adapter.MidasCivil
 
                 try
                 {
-                    if (m_midasMetaData != null)
-                    {
-                        SetMetaData(m_midasMetaData);
-                    }
-                    List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
+                    List<string> units = GetSectionText("00_MetaData\\UNIT")[0].Split(',').ToList();
                     m_forceUnit = units[0].Trim();
                     m_lengthUnit = units[1].Trim();
                     m_heatUnit = units[2].Trim();

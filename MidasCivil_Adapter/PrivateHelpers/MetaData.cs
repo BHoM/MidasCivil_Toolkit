@@ -113,7 +113,7 @@ namespace BH.Adapter.MidasCivil
                 Directory.CreateDirectory(path);
             }
 
-            path += "\\" + "UNITS.txt";
+            path += "\\" + "UNIT.txt";
 
             if (!File.Exists(path))
             {
