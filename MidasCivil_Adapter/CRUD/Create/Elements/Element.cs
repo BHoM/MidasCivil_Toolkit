@@ -70,12 +70,14 @@ namespace BH.Adapter.MidasCivil
             string path = CreateSectionFile("ELEMENT");
             List<string> midasElements = new List<string>();
 
-            CreateGroups(meshes);
+            int index = System.Convert.ToInt32(NextFreeId(typeof(FEMesh)));
 
             foreach (FEMesh mesh in meshes)
             {
-                midasElements.Add(Adapters.MidasCivil.Convert.FromFEMesh(mesh));
+                midasElements.Add(Adapters.MidasCivil.Convert.FromFEMesh(mesh, ref index));
             }
+
+            CreateGroups(meshes);
 
             File.AppendAllLines(path, midasElements);
 
