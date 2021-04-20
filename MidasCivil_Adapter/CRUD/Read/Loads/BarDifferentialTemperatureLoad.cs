@@ -56,6 +56,7 @@ namespace BH.Adapter.MidasCivil
                     List<string> barID = new List<string>();
                     List<int> loadIndexes = new List<int>();
                     List<string> delimitted = new List<string>();
+                    //This is needed to iterate over all BarDifferentialTemperatureLoads as it is input over several lines
                     for (int j = 0; j < barDifferentialTemperatureLoadText.Count; j++)
                     {
                         if (!barDifferentialTemperatureLoadText[j].Contains("ELEMENT"))
@@ -65,7 +66,6 @@ namespace BH.Adapter.MidasCivil
                             barID.Add(delimitted[0].Trim());
                         }
                     }
-                    //This is needed to iterate over all BarDifferentialTemperatureLoads as it is input over several lines
                     loadIndexes.Add(barDifferentialTemperatureLoadText.Count);
                     for (int j = 0; j < loadIndexes.Count() - 1; j++)
                     {

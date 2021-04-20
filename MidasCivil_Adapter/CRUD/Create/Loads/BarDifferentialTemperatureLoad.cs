@@ -53,7 +53,7 @@ namespace BH.Adapter.MidasCivil
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barDifferentialTemperatureLoad);
                 if (barDifferentialTemperatureLoad.Objects.Elements.Any(x => x.SectionProperty == null))
                 {
-                    Engine.Reflection.Compute.RecordWarning("Section Property is required for inputting differential temperature load");
+                    Engine.Reflection.Compute.RecordError("Section Property is required for inputting differential temperature load");
                     continue;
                 }
                 var groupedBars = barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty.Name);

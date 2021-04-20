@@ -50,8 +50,10 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 string[] matchingBars = matchingBar.Split(' ');
                 foreach (string matchBar in matchingBars)
+                {
                     barDictionary.TryGetValue(matchBar, out bhomAssociatedBar);
-                bhomAssociatedBars.Add(bhomAssociatedBar);
+                    bhomAssociatedBars.Add(bhomAssociatedBar);
+                }
             }
             else
             {
@@ -92,7 +94,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 double normalisedPosition = position / depth;
                 if ((1 - normalisedPosition) < 0.02)
                 {
-                    Compute.RecordWarning("The normalised top position of temperature profile is between 0.981 to 0.999 and has been assumed as 1");
+                    Compute.RecordWarning("The normalised top position of temperature profile is between 0.981 to 0.999 and has been assumed as 1.");
                     normalisedPosition = 1;
                 }
                 if ((normalisedPosition) < oM.Geometry.Tolerance.MacroDistance)
