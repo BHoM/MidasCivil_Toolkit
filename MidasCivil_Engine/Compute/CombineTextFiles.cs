@@ -45,27 +45,23 @@ namespace BH.Engine.Adapters.MidasCivil
         {
             if (active)
             {
+                DateTime Date = DateTime.Now;
                 string intro = ";---------------------------------------------------------------------------"
                     + "\n;   MIDAS/Civil Text(MCT) File"
                     + $"\n;   Created from Rhino geometry using the BHoM v{BH.Engine.Reflection.Query.BHoMVersion()}"
-                    + $"\n;   Date: {DateTime.Now.ToString("yyyy-MM-dd")}"
+                    + $"\n;   Date: {Date.ToString("yyyy-MM-dd")}"
                     + "\n;---------------------------------------------------------------------------\n";
 
-                string directory;
-                List<string> delimited = filePath.Split(new Char[] { '\\' }).ToList();
-                delimited.Reverse();
-                delimited.RemoveAt(0);
-                delimited.Reverse();
-                directory = string.Join("\\", delimited) + "\\TextFiles";
+                string directory = Path.GetDirectoryName(filePath) + "\\TextFiles";
 
-                string path = directory + "\\" + "COMBINED.mct";
+                string path = directory + "\\" + "Combined.mct";
 
                 // Retrieve type strings: select all from directory if none provided
 
                 List<string> typeNames = new List<string>();
                 List<string> MetaData = new List<string>(3);
                 MetaData.Add("VERSION");
-                MetaData.Add("UNITS");
+                MetaData.Add("UNIT");
                 MetaData.Add("PROJINFO");
 
                 bool includeLoadcases = true;
@@ -108,11 +104,6 @@ namespace BH.Engine.Adapters.MidasCivil
                 List<string> sectionDependencies = new List<string> { "DGN-SECT" };
                 List<string> loadcaseDependencies = new List<string> { "LOADCOMB", "LC-COLOUR" };
 
-                independents.Insert(0, "REBAR-MATL-CODE");
-                independents.Add("LOAD-GROUP");
-                independents.Add("LOADCOMB");
-
-
                 List<List<string>> dependents = new List<List<string>>();
                 dependents.Add(nodeDependencies);
                 dependents.Add(elementDependencies);
@@ -132,6 +123,9 @@ namespace BH.Engine.Adapters.MidasCivil
                     }
                 }
 
+                independents.Insert(0, "REBAR-MATL-CODE");
+                independents.Add("LOAD-GROUP");
+                independents.Add("LOADCOMB");
 
                 List<string> loadcases = Directory.GetDirectories(directory).ToList();
                 loadcases.Remove(directory + "\\00_MetaData");
@@ -246,6 +240,22 @@ namespace BH.Engine.Adapters.MidasCivil
                         writer.Flush();
                     }
                     combined.Close();
+
+                    string fName = $"{Path.GetDirectoryName(filePath)}\\{ Date.ToString("yyMMdd")}_{ Path.GetFileNameWithoutExtension(filePath).Replace(" ", "_")}";
+                    int i = 1;
+                    if (File.Exists(fName + ".mct"))
+                    {
+                        string fName_ = fName;
+                        while (i < 99)
+                        {
+                            if (File.Exists(fName_ + ".mct")) { i++; fName_ = $"{fName}_v{i}"; }
+                            else { fName = fName_; i = 100;}
+                        }
+                    }
+
+                    File.Copy(path, fName + ".mct", true);
+
+
                 }
 
                 return true;

@@ -117,9 +117,9 @@ namespace BH.Adapter.MidasCivil
 
             if (!File.Exists(path))
             {
-                string units = "*UNIT\n" + "   N, M, KJ, C\n";
+                string units = "*UNIT\n";
 
-                /*string[] lengths = { "M", "CM", "MM", "FT", "IN" };
+                string[] lengths = { "M", "CM", "MM", "FT", "IN" };
                 string[] forces = { "N", "KN", "KGF", "TONF", "LBF", "KIPS" };
                 string[] temperatures = { "C", "F" };
                 string[] heats = { "CAL", "KCAL", "J", "KJ", "BTU" };
@@ -162,7 +162,7 @@ namespace BH.Adapter.MidasCivil
                     Engine.Reflection.Compute.RecordWarning($"Unit input {temperature} not recognised using celcius (C) instead");
                     units += "C";
                 }
-                units += "\n";*/
+                units += "\n";
 
                 File.WriteAllText(path, units);
             }
