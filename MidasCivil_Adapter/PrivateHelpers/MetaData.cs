@@ -104,7 +104,7 @@ namespace BH.Adapter.MidasCivil
             return true;
         }
 
-        private bool SetUnits(string length = "M", string force = "KN", string temperature = "C", string heat = "KJ")
+        private bool SetUnits(string length = "M", string force = "N", string temperature = "C", string heat = "KJ")
         {
             string path = m_directory + @"\TextFiles\00_MetaData";
 

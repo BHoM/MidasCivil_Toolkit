@@ -145,6 +145,7 @@ namespace BH.Engine.Adapters.MidasCivil
                                     if (new FileInfo(directory + "\\00_MetaData\\" + file + ".txt").Length != 0)
                                     {
                                         input.CopyTo(combined);
+                                        input.Close();
                                     }
                                 }
                                 writer.Write(System.Environment.NewLine);
@@ -160,6 +161,7 @@ namespace BH.Engine.Adapters.MidasCivil
                                 {
                                     var input = File.OpenRead(directory + "\\" + independent + ".txt");
                                     input.CopyTo(combined);
+                                    input.Close();
                                     writer.Write(System.Environment.NewLine);
                                     writer.Flush();
                                 }
@@ -207,6 +209,7 @@ namespace BH.Engine.Adapters.MidasCivil
                                     using (var input = File.OpenRead(loadcase + "\\" + load))
                                     {
                                         input.CopyTo(combined);
+                                        input.Close();
                                     }
 
                                     writer.Write(System.Environment.NewLine);
@@ -230,6 +233,7 @@ namespace BH.Engine.Adapters.MidasCivil
                                 if (new FileInfo(directory + "\\" + file + ".txt").Length != 0)
                                 {
                                     input.CopyTo(combined);
+                                    input.Close();
                                 }
                             }
                             writer.Write(System.Environment.NewLine);
@@ -238,6 +242,7 @@ namespace BH.Engine.Adapters.MidasCivil
 
                         writer.Write("*ENDDATA");
                         writer.Flush();
+                        writer.Close();
                     }
                     combined.Close();
 
