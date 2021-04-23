@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Text;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
@@ -39,7 +40,7 @@ namespace BH.Adapter.MidasCivil
 
             foreach (AreaDifferentialTemperatureLoad areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoads)
             {
-                List<string> midasTemperatureLoads = new List<string>();
+                StringBuilder midasTemperatureLoads = new StringBuilder();
                 string FEMeshLoadPath = CreateSectionFile(areaDifferentialTemperatureLoad.Loadcase.Name + "\\THERGRAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(areaDifferentialTemperatureLoad);
                 List<IAreaElement> assignedElements = areaDifferentialTemperatureLoad.Objects.Elements;
@@ -64,11 +65,11 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (string assignedFEMesh in assignedFEMeshes)
                 {
-                    midasTemperatureLoads.Add(Adapters.MidasCivil.Convert.FromAreaDifferentialTemperatureLoad(areaDifferentialTemperatureLoad, assignedFEMesh, m_temperatureUnit));
+                    midasTemperatureLoads.AppendLine(Adapters.MidasCivil.Convert.FromAreaDifferentialTemperatureLoad(areaDifferentialTemperatureLoad, assignedFEMesh, m_temperatureUnit));
                 }
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
                 RemoveEndOfDataString(FEMeshLoadPath);
-                File.AppendAllLines(FEMeshLoadPath, midasTemperatureLoads);
+                File.AppendAllText(FEMeshLoadPath, midasTemperatureLoads.ToString());
             }
 
             return true;
