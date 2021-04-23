@@ -53,13 +53,9 @@ namespace BH.Adapter.MidasCivil
                 Compute.RecordWarning("Please ensure a separate Loadcase is used if user would like to push any Area Uniform Temperature Load in addition to Area Differential Temperature Load");
                 CreateCollection(new List<AreaUniformTemperatureLoad>() { areaUniformTemperatureLoad });
 
-                foreach (FEMesh mesh in assignedElements)
+                foreach (IAreaElement mesh in assignedElements)
                 {
-                    List<FEMeshFace> faces = mesh.Faces;
-                    foreach (FEMeshFace face in faces)
-                    {
-                        assignedFEMeshes.Add(face.AdapterId<string>(typeof(MidasCivilId)));
-                    }
+                    assignedFEMeshes.Add(mesh.AdapterId<string>(typeof(MidasCivilId)));
                 }
 
                 foreach (string assignedFEMesh in assignedFEMeshes)
