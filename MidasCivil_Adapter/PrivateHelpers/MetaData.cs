@@ -60,31 +60,48 @@ namespace BH.Adapter.MidasCivil
             midasMetaData.AppendLine($"   ENGINEER={MidasMetaData.author}");
             midasMetaData.AppendLine($"   EDATE={MidasMetaData.creationDate}");
 
-            int index = MidasMetaData.reviewer.Count;
-
-            if (index >= 1)
+            if (MidasMetaData.reviewer != null && MidasMetaData.reviewer.Count >= 1)
             {
+                int index = MidasMetaData.reviewer.Count;
                 midasMetaData.AppendLine($"   CHECK1={MidasMetaData.reviewer[0]}");
-                midasMetaData.AppendLine($"   CDATE1={MidasMetaData.reviewDate[0]}");
 
                 if (MidasMetaData.approved)
                 {
                     index -= 1;
                     midasMetaData.AppendLine($"   APPROVE={MidasMetaData.reviewer[index]}");
-                    midasMetaData.AppendLine($"   ADATE={MidasMetaData.reviewDate[index]}");
                 }
                 if (index >= 3)
                 {
                     index -= 1;
                     midasMetaData.AppendLine($"   CHECK3={MidasMetaData.reviewer[index]}");
-                    midasMetaData.AppendLine($"   CDATE3={MidasMetaData.reviewDate[index]}");
-                    Engine.Reflection.Compute.RecordWarning($"More than three checkers will only record first and last two");
-
+                    if(index >= 3) { Engine.Reflection.Compute.RecordWarning($"More than three checkers will only record first and last two"); }
                 }
                 if (index >= 2)
                 {
                     index -= 1;
                     midasMetaData.AppendLine($"   CHECK2={MidasMetaData.reviewer[index]}");
+                }
+            }
+
+            if (MidasMetaData.reviewDate != null && MidasMetaData.reviewDate.Count >= 1)
+            {
+                int index = MidasMetaData.reviewDate.Count;
+                midasMetaData.AppendLine($"   CDATE1={MidasMetaData.reviewDate[0]}");
+
+                if (MidasMetaData.approved)
+                {
+                    index -= 1;
+                    midasMetaData.AppendLine($"   ADATE={MidasMetaData.reviewDate[index]}");
+                }
+                if (index >= 3)
+                {
+                    index -= 1;
+                    midasMetaData.AppendLine($"   CDATE3={MidasMetaData.reviewDate[index]}");
+
+                }
+                if (index >= 2)
+                {
+                    index -= 1;
                     midasMetaData.AppendLine($"   CDATE2={MidasMetaData.reviewDate[index]}");
                 }
             }
