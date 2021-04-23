@@ -55,10 +55,10 @@ namespace BH.Adapter.MidasCivil
 
                 foreach (FEMesh mesh in assignedElements)
                 {
-                    List faces = mesh.Faces;
+                    List<FEMeshFace> faces = mesh.Faces;
                     foreach (FEMeshFace face in faces)
                     {
-                        assignedFEMeshes.Add(face.AdapterId(typeof(MidasCivilId)));
+                        assignedFEMeshes.Add(face.AdapterId<string>(typeof(MidasCivilId)));
                     }
                 }
 
