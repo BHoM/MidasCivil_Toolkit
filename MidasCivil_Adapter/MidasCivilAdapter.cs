@@ -77,6 +77,7 @@ namespace BH.Adapter.MidasCivil
                     {typeof(GravityLoad), new BHoMObjectNameComparer() },
                     {typeof(BarUniformlyDistributedLoad), new BHoMObjectNameComparer() },
                     {typeof(BarVaryingDistributedLoad), new BHoMObjectNameComparer() },
+                    {typeof(BarDifferentialTemperatureLoad), new BHoMObjectNameComparer() },
                     {typeof(BarPointLoad), new BHoMObjectNameComparer() },
                     {typeof(AreaUniformlyDistributedLoad), new BHoMObjectNameComparer() },
                     {typeof(AreaUniformTemperatureLoad), new BHoMObjectNameComparer() },
