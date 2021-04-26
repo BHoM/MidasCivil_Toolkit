@@ -113,6 +113,9 @@ namespace BH.Adapter.MidasCivil
                         case "BH.oM.Structure.Loads.BarVaryingDistributedLoad":
                             success = CreateCollection(objects as IEnumerable<BarVaryingDistributedLoad>);
                             break;
+                        case "BH.oM.Structure.Loads.BarDifferentialTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<BarDifferentialTemperatureLoad>);
+                            break;
                     }
                 }
                 if (objects.First() is ISectionProperty)
