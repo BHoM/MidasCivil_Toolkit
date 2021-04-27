@@ -44,7 +44,7 @@ namespace BH.Adapter.MidasCivil
 
             string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
-            int i = 1;
+
 
             foreach (string loadcaseFolder in loadcaseFolders)
             {
@@ -56,50 +56,40 @@ namespace BH.Adapter.MidasCivil
 
                 if (areaDifferentialTemperatureLoadText.Count != 0)
                 {
-                    int Index = 0;
-                    if (areaUniformTemperatureLoadText.Count == areaDifferentialTemperatureLoadText.Count)
+                    List<string> areaDifferentialTempatureElements = areaDifferentialTemperatureLoadText.Select(x => x.Split(',')[0]).ToList();
+                    List<string> areaUniformTempatureElements = areaUniformTemperatureLoadText.Select(x => x.Split(',')[0]).ToList();
+                    for (int i = 0; i < areaDifferentialTempatureElements.Count; i++)
                     {
-                        foreach (string areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoadText)
+                        List<string> differentialDelimitted = areaDifferentialTemperatureLoadText[i].Split(',').ToList();
+                        loadedFEMeshes.Add(areaDifferentialTempatureElements[i].Trim());
+                        differentialDelimitted.RemoveAt(0);
+                        if (areaUniformTempatureElements.Count != 0)
                         {
-                            List<string> ADTLdelimitted = areaDifferentialTemperatureLoad.Split(',').ToList();
-                            List<string> AUTLdelimitted = areaUniformTemperatureLoadText[Index].Split(',').ToList();
-                            if (ADTLdelimitted[0].Trim() == AUTLdelimitted[0].Trim())
+                            if (areaDifferentialTempatureElements[i] == areaUniformTempatureElements[i])
                             {
-                                loadedFEMeshes.Add(ADTLdelimitted[0].Trim());
-                                ADTLdelimitted.RemoveAt(0);
-                                ADTLdelimitted.Add(AUTLdelimitted[1].Trim());
-                                feMeshComparison.Add(String.Join(",", ADTLdelimitted));
+                                List<string> globalDelimitted = areaUniformTemperatureLoadText[i].Split(',').ToList();
+                                differentialDelimitted.Add(globalDelimitted[1].Trim());
                             }
                             else
                             {
-                                Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load at Element number " + ADTLdelimitted[0].Trim().ToString() + " due to the two loads are assigned to differnt element");
-                                Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section at Element number "+ ADTLdelimitted[0].Trim().ToString());
-                                loadedFEMeshes.Add(ADTLdelimitted[0].Trim());
-                                ADTLdelimitted.RemoveAt(0);
-                                feMeshComparison.Add(String.Join(",", ADTLdelimitted));
+                                Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load at Element number " + areaDifferentialTempatureElements[i].Trim().ToString() + " due to the two loads are assigned to differnt element");
+                                Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section at Element number " + areaDifferentialTempatureElements[i].Trim().ToString());
                             }
-                            Index++;
                         }
-                    }
-                    else
-                    {
-                        foreach (string areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoadText)
+                        else
                         {
-                            List<string> ADTLdelimitted = areaDifferentialTemperatureLoad.Split(',').ToList();
-                            Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load at Element number " + ADTLdelimitted[0].Trim().ToString() + " due to the two loads are not aligned.");
-                            Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section at Element number " + ADTLdelimitted[0].Trim().ToString());
-                            loadedFEMeshes.Add(ADTLdelimitted[0].Trim());
-                            ADTLdelimitted.RemoveAt(0);
-                            feMeshComparison.Add(String.Join(",", ADTLdelimitted));
+                            Compute.RecordWarning("No Area Uniform Temperature Load is detected at Element number " + areaDifferentialTempatureElements[i].Trim().ToString());
+                            Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section at Element number " + areaDifferentialTempatureElements[i].Trim().ToString());
                         }
+                        feMeshComparison.Add(String.Join(",", differentialDelimitted));
                     }
                     if (feMeshComparison.Count != 0)
                     {
                         List<FEMesh> bhomMeshes = ReadFEMeshes();
-                        Dictionary<string, FEMesh> FEMeshDictionary = bhomMeshes.ToDictionary(
+                        Dictionary<string, FEMesh> feMeshDictionary = bhomMeshes.ToDictionary(
                                                                     x => x.AdapterId<string>(typeof(MidasCivilId)));
                         List<string> distinctFEMeshLoads = feMeshComparison.Distinct().ToList();
-
+                        int i = 1;
                         foreach (string distinctFEMeshLoad in distinctFEMeshLoads)
                         {
                             List<int> indexMatches = feMeshComparison.Select((meshload, index) => new { meshload, index })
@@ -110,7 +100,7 @@ namespace BH.Adapter.MidasCivil
                             indexMatches.ForEach(x => matchingFEMeshes.Add(loadedFEMeshes[x]));
                             AreaDifferentialTemperatureLoad bhomAreaDifferentialTemperatureLoad =
                                 Adapters.MidasCivil.Convert.ToAreaDifferentialTemperatureLoad(
-                                    distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, FEMeshDictionary, i, m_temperatureUnit);
+                                    distinctFEMeshLoad, matchingFEMeshes, loadcase, loadcaseDictionary, feMeshDictionary, i, m_temperatureUnit);
 
                             if (bhomAreaDifferentialTemperatureLoad != null)
                                 bhomAreaDifferentialTemperatureLoads.Add(bhomAreaDifferentialTemperatureLoad);
