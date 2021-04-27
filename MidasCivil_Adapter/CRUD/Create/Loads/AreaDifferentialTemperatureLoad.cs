@@ -50,10 +50,8 @@ namespace BH.Adapter.MidasCivil
                 areaUniformTemperatureLoad.Name = areaDifferentialTemperatureLoad.Name;
                 areaUniformTemperatureLoad.Objects = areaDifferentialTemperatureLoad.Objects;
                 areaUniformTemperatureLoad.Loadcase = areaDifferentialTemperatureLoad.Loadcase;
-                Compute.RecordWarning("Given the limitation of Midas, an Area Differential Temperature Load is inputted as one Element Temperature Load and one Temperature Gradient Load");
-                Compute.RecordWarning("Please ensure a separate Loadcase is used if user would like to push any Area Uniform Temperature Load in addition to Area Differential Temperature Load");
+                Compute.RecordWarning("Please note theAreaDifferentialTemperatureLoad is input to MidasCivil as a Temperature Gradient and an Element Temperature Load. Any AreaTemperatureLoads should be pushed in a seperate Loadcase to avoid errors when pulling AreaDifferentialTemperatureLoads.");
                 CreateCollection(new List<AreaUniformTemperatureLoad>() { areaUniformTemperatureLoad });
-
                 foreach (FEMesh mesh in assignedElements)
                 {
                     List<FEMeshFace> faces = mesh.Faces;
