@@ -44,8 +44,6 @@ namespace BH.Adapter.MidasCivil
 
             string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
-
-
             foreach (string loadcaseFolder in loadcaseFolders)
             {
                 string loadcase = Path.GetFileName(loadcaseFolder);

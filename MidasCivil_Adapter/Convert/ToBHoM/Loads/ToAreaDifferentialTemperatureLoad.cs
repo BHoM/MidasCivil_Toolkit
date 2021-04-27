@@ -39,7 +39,6 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             List<string> delimitted = new List<string>(temperatureLoad.Split(','));
             List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
-
             Loadcase bhomLoadcase;
             loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
             foreach (string associatedFEMesh in associatedFEMeshes)
