@@ -68,6 +68,9 @@ namespace BH.Adapter.MidasCivil
                 case "BarVaryingDistributedLoad":
                     readLoads = ReadBarVaryingDistributedLoads(ids as dynamic);
                     break;
+                case "BarDifferentialTemperatureLoad":
+                    readLoads = ReadBarDifferentialTemperatureLoads(ids as dynamic);
+                    break;
             }
 
             return readLoads;
