@@ -51,14 +51,19 @@ namespace BH.Adapter.MidasCivil
 
             midasMetaData.AppendLine("*PROJINFO");
             midasMetaData.AppendLine($"   PROJECT={MidasMetaData.projectNumber}");
+            midasMetaData.AppendLine($";  DESIGNSTAGE={MidasMetaData.designStage}");
+            midasMetaData.AppendLine($";  PROJECTLEAD={MidasMetaData.projectLead}");
             midasMetaData.AppendLine($"   REVISION={MidasMetaData.revision}");
             midasMetaData.AppendLine($"   USER={MidasMetaData.author}");
             midasMetaData.AppendLine($"   EMAIL={MidasMetaData.email}");
-            midasMetaData.AppendLine($"   ADDRESS={MidasMetaData.address.Replace(",","").Replace(System.Environment.NewLine, ", ")}");
+            midasMetaData.AppendLine($"   ADDRESS={MidasMetaData.location.Replace(System.Environment.NewLine, ", ")}");
             midasMetaData.AppendLine($"   CLIENT={MidasMetaData.client}");
             midasMetaData.AppendLine($"   TITLE={MidasMetaData.projectName}");
             midasMetaData.AppendLine($"   ENGINEER={MidasMetaData.author}");
             midasMetaData.AppendLine($"   EDATE={MidasMetaData.creationDate}");
+            midasMetaData.AppendLine($";  DESCRIPTION={MidasMetaData.description}");
+            midasMetaData.AppendLine($";  DISCIPLINE={MidasMetaData.discipline}");
+
 
             if (MidasMetaData.reviewer != null && MidasMetaData.reviewer.Count >= 1)
             {
@@ -223,10 +228,15 @@ namespace BH.Adapter.MidasCivil
                 else if (dataItem.Contains("REVISION=")) { metaData.revision = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains("USER=")) { metaData.author = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains("EMAIL=")) { metaData.email = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("ADDRESS=")) { metaData.address = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("ADDRESS=")) { metaData.location = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains("CLIENT=")) { metaData.client = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains("TITLE=")) { metaData.projectName = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains("EDATE=")) { metaData.creationDate = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";DESIGNSTAGE=")) { metaData.designStage = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";PROJECTLEAD=")) { metaData.projectLead = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";DESCRIPTION=")) { metaData.description = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";DISCIPLINE=")) { metaData.discipline = dataItem.Split('=')[1]; }
+
                 if (dataItem.Contains("CHECK1=")|| dataItem.Contains("CHECK2=")|| dataItem.Contains("CHECK3="))
                 {
                     reviewers.Add(dataItem.Split('=')[1]);

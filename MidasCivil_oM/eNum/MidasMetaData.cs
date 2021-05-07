@@ -30,18 +30,27 @@ namespace BH.oM.Adapters.MidasCivil
 
     public class MetaData : BHoMObject //Suggest making this universal
     {
+
         public virtual string projectNumber { get; set; }
         public virtual string projectName { get; set; }
+        public virtual string location { get; set; }
+        public virtual string client { get; set; }
+        public virtual string designStage { get; set; }
+        public virtual string projectLead { get; set; }
         public virtual string revision { get; set; }
+
         public virtual string author { get; set; }
         public virtual string creationDate { get; set; }
         public virtual string email { get; set; }
-        public virtual string address { get; set; }
-        public virtual string client { get; set; }
+
+        public virtual string description { get; set; }
+        public virtual string discipline { get; set; }
+
         public virtual List<string> reviewer { get; set; }
         public virtual List<string> reviewDate { get; set; }
         public virtual List<string> comments { get; set; }
         public virtual bool approved { get; set; }
+
     }
 }
 
