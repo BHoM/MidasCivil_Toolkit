@@ -60,8 +60,8 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="netDxf.netstandard, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\netDXF.2.2.0.1\lib\net45\netDxf.netstandard.dll</HintPath>
+    <Reference Include="netDxf, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\netDXF\lib\net45\netDxf.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Physical_oM">
@@ -81,9 +81,9 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Spatial_oM, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Spatial_oM">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Spatial_oM.dll</HintPath>
+      <HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_oM.dll</HintPath>
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>

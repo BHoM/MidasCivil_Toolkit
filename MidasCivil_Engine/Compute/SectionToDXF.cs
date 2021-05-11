@@ -21,7 +21,7 @@
  */
 
 using System.Collections.Generic;
-using System.IO;
+using System;
 using BH.oM.Structure.SectionProperties;
 using netDxf;
 using BH.oM.Geometry;
@@ -37,57 +37,10 @@ namespace BH.Engine.Adapters.MidasCivil
             if (activate)
             {
                 DxfDocument DXFdoc = new DxfDocument();
-
-                IProfile profile = section.SectionProfile;
-                IEnumerable<ICurve> edges = profile.Edges;
-
                 netDxf.AciColor colour = GetColourFromType(section);
-                netDxf.Tables.Layer layer = new netDxf.Tables.Layer(name);
-                layer.Color = colour;
+                DXFdoc = profiletoDxfDocument(section.SectionProfile, DXFdoc, colour, name);
 
-                foreach (BH.oM.Geometry.ICurve edge in edges)
-                {
-                    if (edge.GetType() == typeof(Line))
-                    {
-                        netDxf.Entities.Line line = DXFLine((Line)edge);
-                        line.Layer = layer;
-                        DXFdoc.AddEntity(line);
-                    }
 
-                    else if (edge.GetType() == typeof(Polyline))
-                    {
-                        netDxf.Entities.Polyline line = DXFPolyline((Polyline)edge);
-                        line.Layer = layer;
-                        DXFdoc.AddEntity(line);
-                    }
-
-                    else if (edge.GetType() == typeof(Circle))
-                    {
-                        netDxf.Entities.Circle line = DXFCircle((Circle)edge);
-                        line.Layer = layer;
-                        DXFdoc.AddEntity(line);
-                    }
-                    else if (edge.GetType() == typeof(PolyCurve))
-                    {
-                        foreach(ICurve curve in ((PolyCurve)edge).Curves)
-                        {
-                            if (edge.GetType() == typeof(Line))
-                            {
-                                netDxf.Entities.Line line = DXFLine((Line)edge);
-                                line.Layer = layer;
-                                DXFdoc.AddEntity(line);
-                            }
-
-                            else if (edge.GetType() == typeof(Polyline))
-                            {
-                                netDxf.Entities.Polyline line = DXFPolyline((Polyline)edge);
-                                line.Layer = layer;
-                                DXFdoc.AddEntity(line);
-                            }
-                        }
-                    }
-                }
-                
                 netDxf.Entities.MText MText = new netDxf.Entities.MText(PropertyTextBlock(section.Material));
                 netDxf.Tables.Layer pLayer = new netDxf.Tables.Layer(name + "Properties");
                 pLayer.IsVisible = false;
@@ -96,14 +49,22 @@ namespace BH.Engine.Adapters.MidasCivil
 
                 DXFdoc.AddEntity(MText);
 
-                DXFdoc.DrawingVariables.AUnits = netDxf.Units.AngleUnitType.DecimalDegrees;
-                DXFdoc.DrawingVariables.LUnits = netDxf.Units.LinearUnitType.Decimal;
-                DXFdoc.DrawingVariables.InsUnits = netDxf.Units.DrawingUnits.Millimeters;
-                Engine.Reflection.Compute.RecordWarning(".dxf file units have been set to milimeters");
-
                 DXFdoc.Save(directory + "\\" + name + ".dxf");
                 return true;
 
+            }
+            return false;
+        }
+
+        public static bool shapeProfileToDXF(IProfile profile, string directory, string name, bool activate)
+        {
+            if (activate)
+            {
+                DxfDocument DXFdoc = new DxfDocument();
+                netDxf.AciColor colour = AciColor.LightGray;
+                DXFdoc = profiletoDxfDocument(profile, DXFdoc, colour, name);
+                DXFdoc.Save(directory + "\\" + name + ".dxf");
+                return true;
             }
             return false;
         }
@@ -157,6 +118,20 @@ namespace BH.Engine.Adapters.MidasCivil
             netDxf.Entities.Polyline polyline_ = new netDxf.Entities.Polyline(points);
             return polyline_;
         }
+        private static netDxf.Entities.Polyline DXFArc(Arc arc)
+        {
+            List<Point> points = BH.Engine.Geometry.Convert.ToNurbsCurve(arc).ControlPoints;
+            netDxf.Entities.Polyline arc_ = new netDxf.Entities.Polyline
+                (
+                new List<netDxf.Vector3>
+                    {
+                    DXFPoint(points[0]),
+                    DXFPoint(points[1]),
+                    DXFPoint(points[2])
+                    }
+                );
+            return arc_;
+        }
         private static string PropertyTextBlock(IMaterialFragment material)
         {
             string properties = "MATERIAL PROPERTIES\\P" +
@@ -188,6 +163,75 @@ namespace BH.Engine.Adapters.MidasCivil
             }
 
             return properties;
+        }
+
+        private static DxfDocument profiletoDxfDocument (IProfile profile, DxfDocument DXFdoc, AciColor colour, string name)
+        {
+            IEnumerable<ICurve> edges = profile.Edges;
+
+            netDxf.Tables.Layer layer = new netDxf.Tables.Layer(name);
+            layer.Color = colour;
+
+            foreach (BH.oM.Geometry.ICurve edge in edges)
+            {
+                if (edge.GetType() == typeof(Line))
+                {
+                    netDxf.Entities.Line line = DXFLine((Line)edge);
+                    line.Layer = layer;
+                    DXFdoc.AddEntity(line);
+                }
+
+                else if (edge.GetType() == typeof(Polyline))
+                {
+                    netDxf.Entities.Polyline line = DXFPolyline((Polyline)edge);
+                    line.Layer = layer;
+                    DXFdoc.AddEntity(line);
+                }
+
+                else if (edge.GetType() == typeof(Circle))
+                {
+                    netDxf.Entities.Circle line = DXFCircle((Circle)edge);
+                    line.Layer = layer;
+                    DXFdoc.AddEntity(line);
+                }
+                else if (edge.GetType() == typeof(Arc))
+                {
+                    netDxf.Entities.Polyline line = DXFArc((Arc)edge);
+                    line.Layer = layer;
+                    DXFdoc.AddEntity(line);
+                }
+                else if (edge.GetType() == typeof(PolyCurve))
+                {
+                    foreach (ICurve curve in ((PolyCurve)edge).Curves)
+                    {
+                        if (edge.GetType() == typeof(Line))
+                        {
+                            netDxf.Entities.Line line = DXFLine((Line)edge);
+                            line.Layer = layer;
+                            DXFdoc.AddEntity(line);
+                        }
+
+                        else if (edge.GetType() == typeof(Polyline))
+                        {
+                            netDxf.Entities.Polyline line = DXFPolyline((Polyline)edge);
+                            line.Layer = layer;
+                            DXFdoc.AddEntity(line);
+                        }
+                        else if (edge.GetType() == typeof(Arc))
+                        {
+                            netDxf.Entities.Polyline line = DXFArc((Arc)edge);
+                            line.Layer = layer;
+                            DXFdoc.AddEntity(line);
+                        }
+                    }
+                }
+            }
+            DXFdoc.DrawingVariables.AUnits = netDxf.Units.AngleUnitType.DecimalDegrees;
+            DXFdoc.DrawingVariables.LUnits = netDxf.Units.LinearUnitType.Decimal;
+            DXFdoc.DrawingVariables.InsUnits = netDxf.Units.DrawingUnits.Millimeters;
+            Engine.Reflection.Compute.RecordWarning(".dxf file units have been set to milimeters");
+
+            return DXFdoc;
         }
     }
 }

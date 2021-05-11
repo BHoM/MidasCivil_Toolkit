@@ -67,8 +67,13 @@ namespace BH.Engine.Adapters.MidasCivil
                 {
                     edges.Add(BHOMCircle(circle));
                 }
+                foreach(netDxf.Entities.Arc arc in DXFdoc.Arcs)
+                {
+                    edges.Add(BHOMArc(arc));
+                }
 
                 FreeFormProfile profile = new FreeFormProfile(edges);
+                Engine.Reflection.Compute.RecordWarning(".dxf file units are assumed to be in milimeters and will be converted to meters");
                 return profile;
             }
             else { return null; }
@@ -92,9 +97,9 @@ namespace BH.Engine.Adapters.MidasCivil
         private static Polyline BHOMPolyline(netDxf.Entities.Polyline line)
         {
             List<Point> points = new List<Point>();
-            foreach (Vector3 point in (IEnumerable<Vector3>)line)
+            foreach (netDxf.Entities.PolylineVertex point in line.Vertexes)
             {
-                points.Add(BHOMPoint(point));
+                points.Add(BHOMPoint(point.Position));
             }
             Polyline line_ = new Polyline();
             line_.ControlPoints = points;
@@ -110,6 +115,17 @@ namespace BH.Engine.Adapters.MidasCivil
             circle_.Radius = radius;
             circle_.Centre = centre;
             return circle_;
+        }
+
+        private static Arc BHOMArc(netDxf.Entities.Arc arc)
+        {
+            List<Vector2> points = arc.PolygonalVertexes(2);
+            Arc arc_ = Geometry.Create.Arc(
+                BHOMPoint(new Vector3(points[0].X, points[0].Y, 0) + arc.Center),
+                BHOMPoint(new Vector3(points[1].X, points[1].Y, 0) + arc.Center),
+                BHOMPoint(new Vector3(points[2].X, points[2].Y, 0) + arc.Center)
+                );
+            return arc_;
         }
 
         private static IMaterialFragment DXFMaterialProperties(string filePath)
