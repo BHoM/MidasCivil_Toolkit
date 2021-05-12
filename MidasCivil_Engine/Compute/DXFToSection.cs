@@ -37,9 +37,7 @@ namespace BH.Engine.Adapters.MidasCivil
             if (activate)
             {
                 GenericSection section = Structure.Create.GenericSectionFromProfile(DXFToFreeFormProfile(filePath, name, true), DXFMaterialProperties(filePath), name);
-                Engine.Reflection.Compute.ClearCurrentEvents();
                 Engine.Reflection.Compute.RecordWarning(".dxf file units are assumed to be in milimeters and will be converted to meters");
-                Engine.Reflection.Compute.RecordWarning("Can not calculate Torsional or Warping constants from DXF file, these values are assumed to be zero");
                 return section;
             }
             else
@@ -70,6 +68,10 @@ namespace BH.Engine.Adapters.MidasCivil
                 foreach(netDxf.Entities.Arc arc in DXFdoc.Arcs)
                 {
                     edges.Add(BHOMArc(arc));
+                }
+                foreach (netDxf.Entities.Spline spline in DXFdoc.Splines)
+                {
+                    edges.Add(BHOMSpline(spline));
                 }
 
                 FreeFormProfile profile = new FreeFormProfile(edges);
@@ -126,6 +128,28 @@ namespace BH.Engine.Adapters.MidasCivil
                 BHOMPoint(new Vector3(points[2].X, points[2].Y, 0) + arc.Center)
                 );
             return arc_;
+        }
+
+        private static ICurve BHOMSpline(netDxf.Entities.Spline spline)
+        {
+            Engine.Reflection.Compute.RecordWarning("Spline has been converted to polyline");
+            if(spline.ControlPoints.Count != 0)
+            {
+                return BHOMPolyline(spline.ToPolyline(36));
+            }
+            else
+            {
+                Polyline polyline_ = new Polyline();
+                List<Point> points_ = new List<Point>();
+                List<Vector3> points = spline.FitPoints;
+                foreach(Vector3 point in points)
+                {
+                    points_.Add(BHOMPoint(point));
+                }
+                polyline_.ControlPoints = points_;
+                return polyline_;
+            }
+                
         }
 
         private static IMaterialFragment DXFMaterialProperties(string filePath)

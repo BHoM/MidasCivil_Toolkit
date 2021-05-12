@@ -120,17 +120,22 @@ namespace BH.Engine.Adapters.MidasCivil
         }
         private static netDxf.Entities.Polyline DXFArc(Arc arc)
         {
-            List<Point> points = BH.Engine.Geometry.Convert.ToNurbsCurve(arc).ControlPoints;
+            List<Point> points = Geometry.Convert.ToNurbsCurve(arc).ControlPoints;
+            List<double> weights = Geometry.Convert.ToNurbsCurve(arc).Weights;
+
+            int i = points.Count - 1;
+            //netDxf.Entities.Polyline arc_ = new netDxf.Entities.Polyline;
             netDxf.Entities.Polyline arc_ = new netDxf.Entities.Polyline
                 (
                 new List<netDxf.Vector3>
                     {
                     DXFPoint(points[0]),
-                    DXFPoint(points[1]),
-                    DXFPoint(points[2])
+                    DXFPoint(points[i])
                     }
                 );
+            Engine.Reflection.Compute.RecordWarning("Arc shapes are currently not supported");
             return arc_;
+
         }
         private static string PropertyTextBlock(IMaterialFragment material)
         {
