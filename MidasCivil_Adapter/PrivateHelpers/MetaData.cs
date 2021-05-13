@@ -24,7 +24,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using BH.oM.Adapters.MidasCivil;
-using BH.Engine;
 using System;
 
 namespace BH.Adapter.MidasCivil
@@ -44,80 +43,80 @@ namespace BH.Adapter.MidasCivil
 
             if (File.Exists(path))
             {
-                Engine.Reflection.Compute.RecordWarning("PROJINFO.txt already exists, the information has been update to latest user inputs");
+                Engine.Reflection.Compute.RecordWarning("MetaData already exists, the PROJINFO has been overwritten.");
             }
 
             StringBuilder midasMetaData = new StringBuilder();
 
             midasMetaData.AppendLine("*PROJINFO");
-            midasMetaData.AppendLine($"   PROJECT={MidasMetaData.projectNumber}");
-            midasMetaData.AppendLine($";  DESIGNSTAGE={MidasMetaData.designStage}");
-            midasMetaData.AppendLine($";  PROJECTLEAD={MidasMetaData.projectLead}");
-            midasMetaData.AppendLine($"   REVISION={MidasMetaData.revision}");
-            midasMetaData.AppendLine($"   USER={MidasMetaData.author}");
-            midasMetaData.AppendLine($"   EMAIL={MidasMetaData.email}");
-            midasMetaData.AppendLine($"   ADDRESS={MidasMetaData.location.Replace(System.Environment.NewLine, ", ")}");
-            midasMetaData.AppendLine($"   CLIENT={MidasMetaData.client}");
-            midasMetaData.AppendLine($"   TITLE={MidasMetaData.projectName}");
-            midasMetaData.AppendLine($"   ENGINEER={MidasMetaData.author}");
-            midasMetaData.AppendLine($"   EDATE={MidasMetaData.creationDate}");
-            midasMetaData.AppendLine($";  DESCRIPTION={MidasMetaData.description}");
-            midasMetaData.AppendLine($";  DISCIPLINE={MidasMetaData.discipline}");
+            midasMetaData.AppendLine($"   PROJECT={MidasMetaData.ProjectNumber}");
+            midasMetaData.AppendLine($";  DESIGNSTAGE={MidasMetaData.DesignStage}");
+            midasMetaData.AppendLine($";  PROJECTLEAD={MidasMetaData.ProjectLead}");
+            midasMetaData.AppendLine($"   REVISION={MidasMetaData.Revision}");
+            midasMetaData.AppendLine($"   USER={MidasMetaData.Author}");
+            midasMetaData.AppendLine($"   EMAIL={MidasMetaData.Email}");
+            midasMetaData.AppendLine($"   ADDRESS={MidasMetaData.Location.Replace(System.Environment.NewLine, ", ")}");
+            midasMetaData.AppendLine($"   CLIENT={MidasMetaData.Client}");
+            midasMetaData.AppendLine($"   TITLE={MidasMetaData.ProjectName}");
+            midasMetaData.AppendLine($"   ENGINEER={MidasMetaData.Author}");
+            midasMetaData.AppendLine($"   EDATE={MidasMetaData.CreationDate}");
+            midasMetaData.AppendLine($";  DESCRIPTION={MidasMetaData.Description}");
+            midasMetaData.AppendLine($";  DISCIPLINE={MidasMetaData.Discipline}");
 
 
-            if (MidasMetaData.reviewer != null && MidasMetaData.reviewer.Count >= 1)
+            if (MidasMetaData.Reviewer != null && MidasMetaData.Reviewer.Count >= 1)
             {
-                int index = MidasMetaData.reviewer.Count;
-                midasMetaData.AppendLine($"   CHECK1={MidasMetaData.reviewer[0]}");
+                int index = MidasMetaData.Reviewer.Count;
+                midasMetaData.AppendLine($"   CHECK1={MidasMetaData.Reviewer[0]}");
 
-                if (MidasMetaData.approved)
+                if (MidasMetaData.Approved)
                 {
                     index -= 1;
-                    midasMetaData.AppendLine($"   APPROVE={MidasMetaData.reviewer[index]}");
+                    midasMetaData.AppendLine($"   APPROVE={MidasMetaData.Reviewer[index]}");
                 }
                 if (index >= 3)
                 {
                     index -= 1;
-                    midasMetaData.AppendLine($"   CHECK3={MidasMetaData.reviewer[index]}");
-                    if(index >= 3) { Engine.Reflection.Compute.RecordWarning($"More than three checkers will only record first and last two"); }
+                    midasMetaData.AppendLine($"   CHECK3={MidasMetaData.Reviewer[index]}");
+                    if(index >= 3) { Engine.Reflection.Compute.RecordWarning($"More than three checkers detected, only the first and last two will be pushed."); }
                 }
                 if (index >= 2)
                 {
                     index -= 1;
-                    midasMetaData.AppendLine($"   CHECK2={MidasMetaData.reviewer[index]}");
+                    midasMetaData.AppendLine($"   CHECK2={MidasMetaData.Reviewer[index]}");
                 }
             }
 
-            if (MidasMetaData.reviewDate != null && MidasMetaData.reviewDate.Count >= 1)
+            if (MidasMetaData.ReviewDate != null && MidasMetaData.ReviewDate.Count >= 1)
             {
-                int index = MidasMetaData.reviewDate.Count;
-                midasMetaData.AppendLine($"   CDATE1={MidasMetaData.reviewDate[0]}");
+                int index = MidasMetaData.ReviewDate.Count;
+                midasMetaData.AppendLine($"   CDATE1={MidasMetaData.ReviewDate[0]}");
 
-                if (MidasMetaData.approved)
+                if (MidasMetaData.Approved)
                 {
                     index -= 1;
-                    midasMetaData.AppendLine($"   ADATE={MidasMetaData.reviewDate[index]}");
+                    midasMetaData.AppendLine($"   ADATE={MidasMetaData.ReviewDate[index]}");
                 }
                 if (index >= 3)
                 {
                     index -= 1;
-                    midasMetaData.AppendLine($"   CDATE3={MidasMetaData.reviewDate[index]}");
+                    midasMetaData.AppendLine($"   CDATE3={MidasMetaData.ReviewDate[index]}");
 
                 }
                 if (index >= 2)
                 {
                     index -= 1;
-                    midasMetaData.AppendLine($"   CDATE2={MidasMetaData.reviewDate[index]}");
+                    midasMetaData.AppendLine($"   CDATE2={MidasMetaData.ReviewDate[index]}");
                 }
             }
 
-            int counter = MidasMetaData.comments.Count;
-            if (counter > 16) { Engine.Reflection.Compute.RecordWarning($"The maximum amount of comments is 16, only the first 16 comments will be pushed"); }
+            int counter = MidasMetaData.Comments.Count;
+            if (counter > 16) { Engine.Reflection.Compute.RecordWarning($"The maximum amount of comments is 16, only the first 16 comments will be pushed."); }
             int i = 0;
             midasMetaData.AppendLine($"   COMMENT=This Model Was Created Using BHoM Version: {BH.Engine.Reflection.Query.BHoMVersion()}");
             while (i <= System.Math.Min(16, counter - 1))
             {
-                midasMetaData.AppendLine($"   COMMENT={MidasMetaData.comments[i]}");
+                midasMetaData.AppendLine($"   COMMENT={MidasMetaData.Comments[i]}");
                 i++;
             }
 
@@ -224,18 +223,18 @@ namespace BH.Adapter.MidasCivil
 
             foreach (string dataItem in Data)
             {
-                if(dataItem.Contains("PROJECT=")) { metaData.projectNumber = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("REVISION=")) { metaData.revision = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("USER=")) { metaData.author = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("EMAIL=")) { metaData.email = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("ADDRESS=")) { metaData.location = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("CLIENT=")) { metaData.client = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("TITLE=")) { metaData.projectName = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("EDATE=")) { metaData.creationDate = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains(";DESIGNSTAGE=")) { metaData.designStage = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains(";PROJECTLEAD=")) { metaData.projectLead = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains(";DESCRIPTION=")) { metaData.description = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains(";DISCIPLINE=")) { metaData.discipline = dataItem.Split('=')[1]; }
+                if(dataItem.Contains("PROJECT=")) { metaData.ProjectNumber = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("REVISION=")) { metaData.Revision = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("USER=")) { metaData.Author = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("EMAIL=")) { metaData.Email = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("ADDRESS=")) { metaData.Location = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("CLIENT=")) { metaData.Client = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("TITLE=")) { metaData.ProjectName = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("EDATE=")) { metaData.CreationDate = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";DESIGNSTAGE=")) { metaData.DesignStage = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";PROJECTLEAD=")) { metaData.ProjectLead = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";DESCRIPTION=")) { metaData.Description = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";DISCIPLINE=")) { metaData.Discipline = dataItem.Split('=')[1]; }
 
                 if (dataItem.Contains("CHECK1=")|| dataItem.Contains("CHECK2=")|| dataItem.Contains("CHECK3="))
                 {
@@ -244,7 +243,7 @@ namespace BH.Adapter.MidasCivil
                 else if (dataItem.Contains("APPROVE="))
                 {
                     reviewers.Add(dataItem.Split('=')[1]);
-                    metaData.approved = true;
+                    metaData.Approved = true;
                 }
                 if (dataItem.Contains("CDATE1=") || dataItem.Contains("CDATE2=") || dataItem.Contains("CDATE3="))
                 {
@@ -253,16 +252,16 @@ namespace BH.Adapter.MidasCivil
                 else if (dataItem.Contains("ADATE="))
                 {
                     reviewDates.Add(dataItem.Split('=')[1]);
-                    metaData.approved = true;
+                    metaData.Approved = true;
                 }
                 else if (dataItem.Contains("COMMENT="))
                 {
                     if(!dataItem.Contains("COMMENT=This Model Was Created Using BHoM Version:")) { comments.Add(dataItem.Split('=')[1]); }
                 }
             }
-            metaData.reviewer = reviewers;
-            metaData.reviewDate = reviewDates;
-            metaData.comments = comments;
+            metaData.Reviewer = reviewers;
+            metaData.ReviewDate = reviewDates;
+            metaData.Comments = comments;
 
             return metaData;
         }

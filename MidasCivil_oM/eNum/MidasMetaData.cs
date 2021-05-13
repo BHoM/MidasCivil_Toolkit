@@ -20,10 +20,8 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapters.MidasCivil;
 using BH.oM.Base;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BH.oM.Adapters.MidasCivil
 {
@@ -31,25 +29,25 @@ namespace BH.oM.Adapters.MidasCivil
     public class MetaData : BHoMObject //Suggest making this universal
     {
 
-        public virtual string projectNumber { get; set; }
-        public virtual string projectName { get; set; }
-        public virtual string location { get; set; }
-        public virtual string client { get; set; }
-        public virtual string designStage { get; set; }
-        public virtual string projectLead { get; set; }
-        public virtual string revision { get; set; }
+        public virtual string ProjectNumber { get; set; }
+        public virtual string ProjectName { get; set; }
+        public virtual string Location { get; set; }
+        public virtual string Client { get; set; }
+        public virtual string DesignStage { get; set; }
+        public virtual string ProjectLead { get; set; }
+        public virtual string Revision { get; set; }
 
-        public virtual string author { get; set; }
-        public virtual string creationDate { get; set; }
-        public virtual string email { get; set; }
+        public virtual string Author { get; set; }
+        public virtual string CreationDate { get; set; }
+        public virtual string Email { get; set; }
 
-        public virtual string description { get; set; }
-        public virtual string discipline { get; set; }
+        public virtual string Description { get; set; }
+        public virtual string Discipline { get; set; }
 
-        public virtual List<string> reviewer { get; set; }
-        public virtual List<string> reviewDate { get; set; }
-        public virtual List<string> comments { get; set; }
-        public virtual bool approved { get; set; }
+        public virtual List<string> Reviewer { get; set; }
+        public virtual List<string> ReviewDate { get; set; }
+        public virtual List<string> Comments { get; set; }
+        public virtual bool Approved { get; set; }
 
     }
 }

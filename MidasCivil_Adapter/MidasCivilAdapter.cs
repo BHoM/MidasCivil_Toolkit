@@ -20,12 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.IO;
 using BH.Engine.Base.Objects;
 using BH.oM.Adapters.MidasCivil;
 using BH.oM.Structure.Elements;
@@ -37,7 +34,6 @@ using BH.oM.Structure.Loads;
 using BH.Engine.Adapters.MidasCivil.Comparer;
 using BH.Engine.Structure;
 using BH.oM.Adapter.Commands;
-using BH.Engine.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {

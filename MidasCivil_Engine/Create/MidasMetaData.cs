@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
 using BH.oM.Adapters.MidasCivil;
 using BH.oM.Reflection.Attributes;
@@ -35,43 +34,43 @@ namespace BH.Engine.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Assigns meta data to a file.")]
-        [Input("location", "Where is the project based")]
-        [Input("description", "Any information about the project, or the script that maybe useful to others.")]
-        [Input("discpline", "Which discpline is the primary lead")]
-        [Input("creationDate", "The creation date will default to the current date if another date is not inputted.")]
-        [Input("approved", "All review comments have been changed, and the script is approved for use.")]
-        [Input("reviewer", "Who has reviewed this document, input as list for multple reviews/reviwers.")]
-        [Input("reviewDate", "Review date, list length should be equal to the number of reviewers.")]
-        [Output("Meta data to be used for MIDAS CIVIL")]
+        [Description("An object containing various metadata for the model.")]
+        [Input("location", "Where the project is based.")]
+        [Input("description", "A short description of the project or the script that maybe useful to others.")]
+        [Input("discpline", "The discipline responsible for the model.")]
+        [Input("creationDate", "The creation date of the model. This will default to the current date if no date is provided.")]
+        [Input("approved", "The model is approved for it's intended use.")]
+        [Input("reviewer", "A list of reviewers who have reviewed the model.")]
+        [Input("reviewDate", "The date when the model was reviewed.")]
+        [Output("An object containing various meta data for the model.")]
 
-        public static MetaData MidasCivilMetaData(string projectNumber = "", string projectName = "", string location = "", string client = "", 
-            string designStage = "", string projectLead = "", string revision = "", string author = "", string creationDate = null, string email = "", 
+        public static MetaData MetaData(string projectNumber = "", string projectName = "", string location = "", string client = "", 
+            string designStage = "", string projectLead = "", string revision = "", string author = "", string creationDate = "Today", string email = "", 
             string description = "", string discipline = "", List<string> reviewer = null, List<string> reviewDate = null, List<string> comments = null, 
             bool approved = false)
         {
-            if(creationDate == null) { creationDate = DateTime.Now.ToString("dd/MM/yyyy"); }
+            if(creationDate == "Today") { creationDate = DateTime.Now.ToString("dd/MM/yyyy"); }
 
             MetaData Data = new MetaData();
-            Data.projectNumber = projectNumber;
-            Data.projectName = projectName;
-            Data.location = location;
-            Data.client = client;
-            Data.designStage = designStage;
-            Data.projectLead = projectLead;
-            Data.revision = revision;
+            Data.ProjectNumber = projectNumber;
+            Data.ProjectName = projectName;
+            Data.Location = location;
+            Data.Client = client;
+            Data.DesignStage = designStage;
+            Data.ProjectLead = projectLead;
+            Data.Revision = revision;
 
-            Data.author = author;
-            Data.creationDate = creationDate;
-            Data.email = email;
+            Data.Author = author;
+            Data.CreationDate = creationDate;
+            Data.Email = email;
 
-            Data.description = description;
-            Data.discipline = discipline;
+            Data.Description = description;
+            Data.Discipline = discipline;
 
-            Data.reviewer = reviewer;
-            Data.reviewDate = reviewDate;
-            Data.comments = comments;
-            Data.approved = approved;
+            Data.Reviewer = reviewer;
+            Data.ReviewDate = reviewDate;
+            Data.Comments = comments;
+            Data.Approved = approved;
 
             return Data;
         }
