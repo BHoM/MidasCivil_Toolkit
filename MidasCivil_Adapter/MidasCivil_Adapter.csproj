@@ -138,7 +138,6 @@
     <Compile Include="Convert\ToBHoM\Loads\ToAreaDifferentialTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformlyDistributedLoad.cs" />
-    <Compile Include="Convert\ToBHoM\Loads\ToBarDifferentialTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToBarPointLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToBarUniformTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToBarUniformlyDistributedLoad.cs" />
@@ -168,7 +167,6 @@
     <Compile Include="Convert\ToMidasCivil\Loads\FromAreaDifferentialTemperatureLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromAreaUniformTemperatureLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromAreaUniformlyDistributedLoad.cs" />
-    <Compile Include="Convert\ToMidasCivil\Loads\FromBarDifferentialTemperatureLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromBarPointLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromBarUniformTemperatureLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromBarUniformlyDistributedLoad.cs" />
@@ -220,11 +218,7 @@
     <Compile Include="CRUD\Create\Elements\RigidLink.cs" />
     <Compile Include="CRUD\Create\Elements\Element.cs" />
     <Compile Include="CRUD\Create\Elements\Node.cs" />
-<<<<<<< HEAD
     <Compile Include="CRUD\Create\Loads\AreaDifferentialTemperatureLoad.cs" />
-=======
-    <Compile Include="CRUD\Create\Loads\BarDifferentialTemperatureLoad.cs" />
->>>>>>> master
     <Compile Include="CRUD\Create\Loads\Loadcase.cs" />
     <Compile Include="CRUD\Create\Loads\AreaUniformTemperatureLoads.cs" />
     <Compile Include="CRUD\Create\Loads\AreaUniformlyDistributedLoads.cs" />
@@ -260,11 +254,7 @@
     <Compile Include="CRUD\Delete\Properties\BarReleases.cs" />
     <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
-<<<<<<< HEAD
     <Compile Include="CRUD\Read\Loads\AreaDifferentialTemperatureLoad.cs" />
-=======
-    <Compile Include="CRUD\Read\Loads\BarDifferentialTemperatureLoad.cs" />
->>>>>>> master
     <Compile Include="CRUD\Read\Results\BarResults.cs" />
     <Compile Include="CRUD\Read\Results\MeshResults.cs" />
     <Compile Include="CRUD\Read\Results\NodeResults.cs" />
