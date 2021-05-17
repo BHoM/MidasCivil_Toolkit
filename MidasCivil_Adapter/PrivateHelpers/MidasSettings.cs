@@ -29,17 +29,8 @@ namespace BH.Adapter.MidasCivil
     {
         private bool SetUnits(string length = "M", string force = "N", string temperature = "C", string heat = "KJ")
         {
-            string path = m_directory + @"\TextFiles";
+                string path = CreateSectionFile("UNIT");
 
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            path += "\\UNIT.txt";
-
-            if (!File.Exists(path))
-            {
                 string units = "*UNIT\n";
 
                 string[] lengths = { "M", "CM", "MM", "FT", "IN" };
@@ -86,30 +77,16 @@ namespace BH.Adapter.MidasCivil
                     units += "C";
                 }
                 units += "\n";
-
                 File.WriteAllText(path, units);
-            }
 
             return true;
         }
 
         private bool SetVersion(string version)
         {
-            string path = m_directory + @"\TextFiles";
+            string path = CreateSectionFile("VERSION");
 
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            path += "\\VERSION.txt";
-
-            if (File.Exists(path))
-            {
-                Engine.Reflection.Compute.RecordWarning($"VERSION.txt already exists, version number has been updated.");
-            }
-
-            File.WriteAllText(path, $"\n*VERSION\n   {version}\n");
+            File.WriteAllText(path, $"*VERSION\n   {version}\n");
 
             return true;
         }

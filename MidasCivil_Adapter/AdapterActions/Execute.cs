@@ -212,17 +212,6 @@ namespace BH.Adapter.MidasCivil
 
             }
 
-            /*if (m_midasMetaData != null)
-            {
-                SetMetaData(m_midasMetaData);
-            }
-            else if(File.Exists(m_directory + @"\TextFiles\PROJINFO.txt"))
-            {
-                m_midasMetaData = getMetaData(m_directory + @"\TextFiles\PROJINFO.txt");
-            }*/
-            SetVersion(m_midasCivilVersion);
-            //SetUnits(m_lengthUnit, m_forceUnit, m_temperatureUnit, m_heatUnit);
-            SetUnits();
 
             return true;
         }
