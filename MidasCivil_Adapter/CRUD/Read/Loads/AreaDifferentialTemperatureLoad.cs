@@ -66,18 +66,26 @@ namespace BH.Adapter.MidasCivil
                             if (areaDifferentialTempatureElements[i] == areaUniformTempatureElements[i])
                             {
                                 List<string> globalDelimitted = areaUniformTemperatureLoadText[i].Split(',').ToList();
+                                //When an area uniform temp offset load is detected,  it is added as an additional string to the area diff. temp list of string.
                                 differentialDelimitted.Add(globalDelimitted[1].Trim());
                             }
                             else
                             {
-                                Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load at Element number " + areaDifferentialTempatureElements[i].Trim().ToString() + " due to the two loads are assigned to differnt element");
-                                Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section at Element number " + areaDifferentialTempatureElements[i].Trim().ToString());
+
+                                Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load at Element number "
+                                    + areaDifferentialTempatureElements[i].Trim().ToString() + " \n due to the two loads are assigned to differnt element." +
+                                " \n Area Differential Temperature load will be applied at the centroid of the cross section at Element number "
+                                + areaDifferentialTempatureElements[i].Trim().ToString());
+                                differentialDelimitted.Add(string.Format("0"));
                             }
                         }
                         else
                         {
-                            Compute.RecordWarning("No Area Uniform Temperature Load is detected at Element number " + areaDifferentialTempatureElements[i].Trim().ToString());
-                            Compute.RecordWarning("Area Differential Temperature load will be applied at the centroid of the cross section at Element number " + areaDifferentialTempatureElements[i].Trim().ToString());
+                            Compute.RecordWarning("No Area Uniform Temperature Load is detected at Element number " 
+                            + areaDifferentialTempatureElements[i].Trim().ToString()+
+                            ". \n Area Differential Temperature load will be applied at the centroid of the cross section at Element number" 
+                            + areaDifferentialTempatureElements[i].Trim().ToString());
+                            differentialDelimitted.Add(string.Format("0"));
                         }
                         feMeshComparison.Add(String.Join(",", differentialDelimitted));
                     }

@@ -51,19 +51,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
             }
             double temperature = double.Parse(delimitted[1].Trim());
-            double topTemperature = new double();
-            double botTemperature = new double();
-            if (delimitted.Count > 5)
-            {
-                double temperatureRange = double.Parse(delimitted[5].Trim());
-                topTemperature = temperature / 2 + temperatureRange;
-                botTemperature = -temperature / 2 + temperatureRange;
-            }
-            else
-            {
-                topTemperature = temperature / 2;
-                botTemperature = -topTemperature;
-            }
+            double temperatureOffset = double.Parse(delimitted[5].Trim());
+            double topTemperature = temperature / 2 + temperatureOffset;
+            double botTemperature = -temperature / 2 + temperatureOffset;
             string name;
             if (string.IsNullOrWhiteSpace(delimitted[4]))
             {
