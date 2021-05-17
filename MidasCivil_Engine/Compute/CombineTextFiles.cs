@@ -48,7 +48,7 @@ namespace BH.Engine.Adapters.MidasCivil
                 DateTime Date = DateTime.Now;
                 string intro = ";---------------------------------------------------------------------------"
                     + "\n;   MIDAS/Civil Text(MCT) File"
-                    + $"\n;   Created from using the BHoM v{BH.Engine.Reflection.Query.BHoMVersion()}"
+                    + $"\n;   Created using the BHoM v{BH.Engine.Reflection.Query.BHoMVersion()}"
                     + $"\n;   Date: {Date.ToString("yyyy-MM-dd")}"
                     + "\n;---------------------------------------------------------------------------\n\n";
 
