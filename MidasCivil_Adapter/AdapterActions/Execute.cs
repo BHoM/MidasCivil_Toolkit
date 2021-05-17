@@ -68,13 +68,12 @@ namespace BH.Adapter.MidasCivil
                 i++;
             }
 
-            string unitExtension = "\\TextFiles\\00_MetaData\\" + "UNIT" + ".txt";
-            string versionExtension = "\\TextFiles\\00_MetaData\\" + "VERSION" + ".txt";
+            string unitExtension = "\\TextFiles\\" + "UNIT" + ".txt";
+            string versionExtension = "\\TextFiles\\" + "VERSION" + ".txt";
             string unitFile = m_directory + unitExtension;
             string versionFile = m_directory + versionExtension;
 
             Directory.CreateDirectory(newDirectory + "\\TextFiles");
-            Directory.CreateDirectory(newDirectory + "\\TextFiles\\00_MetaData");
 
             if (!File.Exists(unitFile))
                 File.Copy(unitFile, newDirectory + unitExtension);
@@ -170,7 +169,7 @@ namespace BH.Adapter.MidasCivil
                     SetSectionText();
                 }
 
-                string versionFile = m_directory + "\\TextFiles\\00_MetaData\\" + "VERSION" + ".txt";
+                string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
                 if (!(m_midasCivilVersion == ""))
                 {
                     m_midasCivilVersion = m_midasCivilVersion.Trim();
@@ -181,7 +180,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else if (File.Exists(versionFile))
                 {
-                    List<string> versionText = GetSectionText("00_MetaData\\VERSION");
+                    List<string> versionText = GetSectionText("VERSION");
                     m_midasCivilVersion = versionText[0].Trim();
                 }
                 else
@@ -192,7 +191,7 @@ namespace BH.Adapter.MidasCivil
 
                 try
                 {
-                    List<string> units = GetSectionText("00_MetaData\\UNIT")[0].Split(',').ToList();
+                    List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
                     m_forceUnit = units[0].Trim();
                     m_lengthUnit = units[1].Trim();
                     m_heatUnit = units[2].Trim();
@@ -213,14 +212,14 @@ namespace BH.Adapter.MidasCivil
 
             }
 
-            if (m_midasMetaData != null)
+            /*if (m_midasMetaData != null)
             {
                 SetMetaData(m_midasMetaData);
             }
-            else if(File.Exists(m_directory + @"\TextFiles\00_MetaData\PROJINFO.txt"))
+            else if(File.Exists(m_directory + @"\TextFiles\PROJINFO.txt"))
             {
-                m_midasMetaData = getMetaData(m_directory + @"\TextFiles\00_MetaData\PROJINFO.txt");
-            }
+                m_midasMetaData = getMetaData(m_directory + @"\TextFiles\PROJINFO.txt");
+            }*/
             SetVersion(m_midasCivilVersion);
             //SetUnits(m_lengthUnit, m_forceUnit, m_temperatureUnit, m_heatUnit);
             SetUnits();

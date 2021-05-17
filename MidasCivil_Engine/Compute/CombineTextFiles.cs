@@ -128,7 +128,6 @@ namespace BH.Engine.Adapters.MidasCivil
                 independents.Add("LOADCOMB");
 
                 List<string> loadcases = Directory.GetDirectories(directory).ToList();
-                loadcases.Remove(directory + "\\00_MetaData");
 
                 using (var combined = File.Create(path))
                 {
@@ -138,11 +137,11 @@ namespace BH.Engine.Adapters.MidasCivil
                         writer.Flush();
                         foreach (string file in MetaData)
                         {
-                            if (File.Exists(directory + "\\00_MetaData\\" + file + ".txt"))
+                            if (File.Exists(directory + file + ".txt"))
                             {
-                                using (var input = File.OpenRead(directory + "\\00_MetaData\\" + file + ".txt"))
+                                using (var input = File.OpenRead(directory + file + ".txt"))
                                 {
-                                    if (new FileInfo(directory + "\\00_MetaData\\" + file + ".txt").Length != 0)
+                                    if (new FileInfo(directory + file + ".txt").Length != 0)
                                     {
                                         input.CopyTo(combined);
                                         input.Close();

@@ -96,12 +96,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compute\MidasMetaData.cs" />
     <Compile Include="Compute\FEMeshToPanel.cs" />
     <Compile Include="Objects\AdapterIdName.cs" />
     <Compile Include="Objects\ArrayComparer.cs" />
     <Compile Include="Objects\MeshCentreComparer.cs" />
     <Compile Include="Compute\CombineTextFiles.cs" />
+    <Compile Include="Create\MetaData.cs" />
+    <Compile Include="Objects\MetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -20,34 +20,33 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
+using System.IO;
 using System.Collections.Generic;
+using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Adapters.MidasCivil;
+using System.Text;
 
-namespace BH.oM.Adapters.MidasCivil
+namespace BH.Adapter.MidasCivil
 {
-
-    public class MetaData : BHoMObject //Suggest making this universal
+    public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
 
-        public virtual string ProjectNumber { get; set; }
-        public virtual string ProjectName { get; set; }
-        public virtual string Location { get; set; }
-        public virtual string Client { get; set; }
-        public virtual string DesignStage { get; set; }
-        public virtual string ProjectLead { get; set; }
-        public virtual string Revision { get; set; }
+        private bool CreateCollection(MetaData metaData)
+        {
+            string path = CreateSectionFile("PROJINFO");
+            StringBuilder midasMetaData = new StringBuilder();
 
-        public virtual string Author { get; set; }
-        public virtual string CreationDate { get; set; }
-        public virtual string Email { get; set; }
+            midasMetaData = Adapters.MidasCivil.Convert.FromMetaData(metaData);
 
-        public virtual string Description { get; set; }
-        public virtual string Discipline { get; set; }
+            File.WriteAllText(path, midasMetaData.ToString());
 
-        public virtual List<string> Reviewer { get; set; }
-        public virtual List<string> ReviewDate { get; set; }
-        public virtual List<string> Comments { get; set; }
-        public virtual bool Approved { get; set; }
+            return true;
+        }
+
+        /***************************************************/
 
     }
 }

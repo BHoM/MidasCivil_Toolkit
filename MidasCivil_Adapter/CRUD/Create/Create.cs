@@ -30,6 +30,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
 using BH.Engine.Adapters.MidasCivil;
+using BH.oM.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -45,6 +46,10 @@ namespace BH.Adapter.MidasCivil
 
             if (objects.Count() > 0)
             {
+                if (objects.First() is MetaData)
+                {
+                    success = CreateCollection(objects.First() as MetaData);
+                }
                 if (objects.First() is Node)
                 {
                     success = CreateCollection(objects as IEnumerable<Node>);

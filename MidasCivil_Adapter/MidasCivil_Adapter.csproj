@@ -186,6 +186,7 @@
     <Compile Include="Convert\ToMidasCivil\Properties\FromSpring.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromSupport.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromSurfaceProperty.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromMetaData.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromTag.cs" />
     <Compile Include="Convert\Units\AreaMomentOfInertiaToSI.cs" />
     <Compile Include="Convert\Units\AreaToSI.cs" />
@@ -231,7 +232,9 @@
     <Compile Include="CRUD\Create\Properties\BarReleases.cs" />
     <Compile Include="CRUD\Create\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
-    <Compile Include="PrivateHelpers\MetaData.cs" />
+    <Compile Include="CRUD\Create\Properties\MetaData.cs" />
+    <Compile Include="CRUD\Read\Properties\MetaData.cs" />
+    <Compile Include="PrivateHelpers\MidasSettings.cs" />
     <Compile Include="CRUD\Create\Properties\SurfaceProperty.cs" />
     <Compile Include="CRUD\Delete\Elements\RigidLink.cs" />
     <Compile Include="CRUD\Delete\Elements\Element.cs" />

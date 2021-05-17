@@ -45,7 +45,7 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
-        public MidasCivilAdapter(string filePath, bool active = false, string version = "", MetaData metaData = null)
+        public MidasCivilAdapter(string filePath, bool active = false, string version = "")
         {
             if (active)
             {
@@ -94,10 +94,6 @@ namespace BH.Adapter.MidasCivil
 
                 m_midasCivilVersion = version;
 
-                if(metaData != null)
-                {
-                    m_midasMetaData = metaData;
-                }
                 /*if(units != null)
                 {
                     units = units.ToUpper();
@@ -132,7 +128,6 @@ namespace BH.Adapter.MidasCivil
         private readonly int m_groupCharacterLimit = 80;
         private readonly int m_sectionPropertyCharacterLimit = 28;
         private readonly int m_materialCharacterLimit = 15;
-        private MetaData m_midasMetaData;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
 
         /***************************************************/
