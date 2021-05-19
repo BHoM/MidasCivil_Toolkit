@@ -21,8 +21,6 @@
  */
 
 using System.IO;
-using System.Collections.Generic;
-using BH.oM.Structure.SurfaceProperties;
 using BH.oM.Adapters.MidasCivil;
 using System.Text;
 

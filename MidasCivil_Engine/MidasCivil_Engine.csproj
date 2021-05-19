@@ -102,7 +102,6 @@
     <Compile Include="Objects\MeshCentreComparer.cs" />
     <Compile Include="Compute\CombineTextFiles.cs" />
     <Compile Include="Create\MetaData.cs" />
-    <Compile Include="Objects\MetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

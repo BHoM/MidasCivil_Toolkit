@@ -45,8 +45,15 @@ namespace BH.oM.Adapters.MidasCivil
         public virtual string Description { get; set; }
         public virtual string Discipline { get; set; }
 
-        public virtual List<string> Reviewer { get; set; }
-        public virtual List<DateTime> ReviewDate { get; set; }
+        public virtual List<Review> Reviews { get; set; }
+
+    }
+
+    public class Review : BHoMObject
+    {
+
+        public virtual string Reviewer { get; set; }
+        public virtual DateTime ReviewDate { get; set; }
         public virtual List<string> Comments { get; set; }
         public virtual bool Approved { get; set; }
 

@@ -25,8 +25,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using BH.oM.Adapters.MidasCivil;
 using BH.oM.Reflection.Attributes;
-using System.Globalization;
-using BH.Engine;
+
 
 namespace BH.Engine.Adapters.MidasCivil
 {
@@ -40,15 +39,12 @@ namespace BH.Engine.Adapters.MidasCivil
         [Input("location", "Where the project is based.")]
         [Input("description", "A short description of the project or the script that maybe useful to others.")]
         [Input("discpline", "The discipline responsible for the model.")]
-        [Input("creationDate", "The creation date of the model inputted as YYYY-MM-DD. This will default to the current date if no date is provided.")]
-        [Input("approved", "The model is approved for it's intended use.")]
-        [Input("reviewer", "A list of reviewers who have reviewed the model.")]
-        [Input("reviewDate", "The date when the model was reviewed by each reviewer.")]
+        [Input("creationDate", "The creation date of the model inputted as yyyy-MM-dd. This will default to the current date if no date is provided.")]
+        [Input("reviews", "A list of reviews inputted as a review object.")]
         [Output("An object containing various meta data for the model.")]
         public static MetaData MetaData(string projectNumber = "", string projectName = "", string location = "", string client = "", 
-            string designStage = "", string projectLead = "", string revision = "", string author = "", string creationDate = "Today", string email = "", 
-            string description = "", string discipline = "", List<string> reviewer = null, List<string> reviewDate = null, List<string> comments = null, 
-            bool approved = false)
+            string designStage = "", string projectLead = "", string revision = "", string author = "", object creationDate = null, string email = "", 
+            string description = "", string discipline = "", List<Review> reviews = null)
         {
             MetaData Data = new MetaData();
             Data.ProjectNumber = projectNumber;
@@ -65,86 +61,49 @@ namespace BH.Engine.Adapters.MidasCivil
             Data.Description = description;
             Data.Discipline = discipline;
 
-            Data.Comments = comments;
-            Data.Approved = approved;
+            Data.Reviews = reviews;
 
-            if (creationDate == "Today") { Data.CreationDate = DateTime.Now; }
+            if (creationDate == null) { Data.CreationDate = DateTime.Now; }
             else
             {
-                Data.CreationDate = convertDate(creationDate);
+                Data.CreationDate = (DateTime)convertDate(creationDate);
             }
-
-            List<DateTime> dates = new List<DateTime>();
-            if (reviewer.Count != reviewDate.Count)
-            {
-                Reflection.Compute.RecordWarning("List of reviewers should be equal in length to list of review dates.");
-            }
-            else
-            {
-                foreach(string date in reviewDate)
-                {
-                    dates.Add(convertDate(date));
-                    Data.Reviewer = reviewer;
-                    Data.ReviewDate = dates;
-                }
-            }
-
 
             return Data;
         }
 
-        [Input("creationDate", "The creation date of the model inputted as from a calendar. This will default to the current date if no date is provided.")]
-        [Input("reviews", "A dictionary containing a list of reviewers as string keys, and date values as DateTimes.")]
-        public static MetaData MetaData(string projectNumber = "", string projectName = "", string location = "", string client = "",
-            string designStage = "", string projectLead = "", string revision = "", string author = "", DateTime? creationDate = null, string email = "",
-            string description = "", string discipline = "", Dictionary<string,DateTime> reviews = null, List<string> comments = null,
-            bool approved = false)
+        [Description("An object for creating a review to be inputted into metdata object.")]
+        [Input("reviewer", "A list of reviewers who have reviewed the model.")]
+        [Input("reviewDate", "The date when the model was reviewed by each reviewer either as a string in the format yyyy-MM-dd, or DateTime object.")]
+        [Input("approved", "The model is approved for it's intended use.")]
+        [Output("An object containing a review of the model.")]
+        public static Review Review(string reviewer = null, object reviewDate = null, List<string> comments = null, bool approved = false)
         {
-            if (creationDate == null) { creationDate = DateTime.Now; }
-
-            MetaData Data = new MetaData();
-            Data.ProjectNumber = projectNumber;
-            Data.ProjectName = projectName;
-            Data.Location = location;
-            Data.Client = client;
-            Data.DesignStage = designStage;
-            Data.ProjectLead = projectLead;
-            Data.Revision = revision;
-
-            Data.Author = author;
-            Data.CreationDate = (DateTime)creationDate;
-            Data.Email = email;
-
-            Data.Description = description;
-            Data.Discipline = discipline;
-
-
-            List<string> reviewers = new List<string>();
-            foreach(string reviewer in reviews.Keys)
-            {
-                reviewers.Add(reviewer);
-            }
-            Data.Reviewer = reviewers;
-
-            List<DateTime> reviewDates = new List<DateTime>();
-            foreach (DateTime reviewDate in reviews.Values)
-            {
-                reviewDates.Add(reviewDate);
-            }
-            Data.ReviewDate = reviewDates;
-
-            Data.Comments = comments;
-            Data.Approved = approved;
-
-            return Data;
+            Review Review = new Review();
+            Review.Reviewer = reviewer;
+            Review.ReviewDate = (DateTime)convertDate(reviewDate);
+            Review.Comments = comments;
+            Review.Approved = approved;
+            return Review;
         }
 
-        /***************************************************/
-        private static DateTime convertDate(string date)
+        private static DateTime? convertDate(object date)
         {
-            date = date.Replace(@"/", "").Replace("-", "").Replace(".", "").Replace(@"\", "");
-            return DateTime.ParseExact(date, "yyyyMMdd",
-              System.Globalization.CultureInfo.InvariantCulture);
+            if (date.GetType() == typeof(string))
+            {
+                string date_ = ((string)date).Replace(@"/", "").Replace("-", "").Replace(".", "").Replace(@"\", "");
+                return DateTime.ParseExact(date_, "yyyyMMdd",
+                  System.Globalization.CultureInfo.InvariantCulture);
+            }
+            else if(date.GetType() == typeof(DateTime))
+            {
+                return (DateTime)date;
+            }
+            else
+            {
+                Engine.Reflection.Compute.RecordError($"Date can not be inputted as {date.GetType()}, please input as DateTime or string.");
+                return null;
+            }
         }
     }
 }

@@ -46,6 +46,7 @@
     <Compile Include="Enum\ForceUnit.cs" />
     <Compile Include="Enum\HeatUnit.cs" />
     <Compile Include="Enum\LengthUnit.cs" />
+    <Compile Include="Settings\MetaData.cs" />
     <Compile Include="Enum\TemperatureUnit.cs" />
     <Compile Include="Fragments\MidasCivilId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

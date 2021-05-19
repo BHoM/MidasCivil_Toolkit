@@ -22,6 +22,7 @@
 
 using System.Text;
 using BH.oM.Adapters.MidasCivil;
+using System.Collections.Generic;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -34,7 +35,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         public static StringBuilder FromMetaData(MetaData MidasMetaData)
         {
             StringBuilder midasMetaData = new StringBuilder();
-
+            List<Review> reviews = MidasMetaData.Reviews;
             midasMetaData.AppendLine("*PROJINFO");
             midasMetaData.AppendLine($"PROJECT={MidasMetaData.ProjectNumber}");
             midasMetaData.AppendLine($";DESIGNSTAGE={MidasMetaData.DesignStage}");
@@ -46,68 +47,41 @@ namespace BH.Adapter.Adapters.MidasCivil
             midasMetaData.AppendLine($"CLIENT={MidasMetaData.Client}");
             midasMetaData.AppendLine($"TITLE={MidasMetaData.ProjectName}");
             midasMetaData.AppendLine($"ENGINEER={MidasMetaData.Author}");
-            midasMetaData.AppendLine($"EDATE={MidasMetaData.CreationDate.ToString("yyyy-mm-dd")}");
+            midasMetaData.AppendLine($"EDATE={MidasMetaData.CreationDate.ToString("yyyy-MM-dd")}");
             midasMetaData.AppendLine($";DESCRIPTION={MidasMetaData.Description}");
             midasMetaData.AppendLine($";DISCIPLINE={MidasMetaData.Discipline}");
 
-
-
-            if (MidasMetaData.Reviewer != null && MidasMetaData.Reviewer.Count >= 1)
+            if(reviews.Count > 4)
             {
-                int index = MidasMetaData.Reviewer.Count;
-                midasMetaData.AppendLine($"CHECK1={MidasMetaData.Reviewer[0]}");
-
-                if (MidasMetaData.Approved)
-                {
-                    index -= 1;
-                    midasMetaData.AppendLine($"APPROVE={MidasMetaData.Reviewer[index]}");
-                }
-                if (index >= 3)
-                {
-                    index -= 1;
-                    midasMetaData.AppendLine($"CHECK3={MidasMetaData.Reviewer[index]}");
-                    if (index >= 3) { Engine.Reflection.Compute.RecordWarning($"More than three checkers detected, only the first and last two will be pushed."); }
-                }
-                if (index >= 2)
-                {
-                    index -= 1;
-                    midasMetaData.AppendLine($"CHECK2={MidasMetaData.Reviewer[index]}");
-                }
+                reviews.RemoveRange(1, reviews.Count - 2);
+                Engine.Reflection.Compute.RecordWarning("The number of reviews exceeds the limit of MidasCivil. Only the first, last and second to last reviews will be recorded.");
+            }
+            if(reviews.Count >= 1)
+            {
+                midasMetaData.AppendLine($"CHECK1={reviews[0].Reviewer}");
+                midasMetaData.AppendLine($"CDATE1={reviews[0].ReviewDate.ToString("yyyy-MM-dd")}");
+            }
+            if (reviews.Count >= 2)
+            {
+                midasMetaData.AppendLine($"CHECK2={reviews[1].Reviewer}");
+                midasMetaData.AppendLine($"CDATE2={reviews[1].ReviewDate.ToString("yyyy-MM-dd")}");
+                Engine.Reflection.Compute.RecordWarning("Only comments from the last review will be pushed to MidasCivil.");
+            }
+            if (reviews.Count >= 3)
+            {
+                midasMetaData.AppendLine($"CHECK3={reviews[2].Reviewer}");
+                midasMetaData.AppendLine($"CDATE3={reviews[2].ReviewDate.ToString("yyyy-MM-dd")}");
+            }
+            if(reviews[reviews.Count - 1].Approved)
+            {
+                midasMetaData.AppendLine($"APPROVE={reviews[reviews.Count - 1].Reviewer}");
+                midasMetaData.AppendLine($"ADATE={reviews[reviews.Count - 1].ReviewDate.ToString("yyyy-MM-dd")}");
             }
 
-            if (MidasMetaData.ReviewDate != null && MidasMetaData.ReviewDate.Count >= 1)
+            foreach(string comment in reviews[reviews.Count - 1].Comments)
             {
-                int index = MidasMetaData.ReviewDate.Count;
-                midasMetaData.AppendLine($"CDATE1={MidasMetaData.ReviewDate[0].ToString("yyyy-mm-dd")}");
-
-                if (MidasMetaData.Approved)
-                {
-                    index -= 1;
-                    midasMetaData.AppendLine($"ADATE={MidasMetaData.ReviewDate[index].ToString("yyyy-mm-dd")}");
-                }
-                if (index >= 3)
-                {
-                    index -= 1;
-                    midasMetaData.AppendLine($"CDATE3={MidasMetaData.ReviewDate[index].ToString("yyyy-mm-dd")}");
-
-                }
-                if (index >= 2)
-                {
-                    index -= 1;
-                    midasMetaData.AppendLine($"CDATE2={MidasMetaData.ReviewDate[index].ToString("yyyy-mm-dd")}");
-                }
+                midasMetaData.AppendLine($"COMMENT={comment}");
             }
-
-            int counter = MidasMetaData.Comments.Count;
-            if (counter > 16) { Engine.Reflection.Compute.RecordWarning($"The maximum amount of comments is 16, only the first 16 comments will be pushed."); }
-            int i = 0;
-            midasMetaData.AppendLine($"COMMENT=This Model Was Created Using BHoM Version: {BH.Engine.Reflection.Query.BHoMVersion()}");
-            while (i <= System.Math.Min(16, counter - 1))
-            {
-                midasMetaData.AppendLine($"COMMENT={MidasMetaData.Comments[i]}");
-                i++;
-            }
-
 
             return midasMetaData;
         }

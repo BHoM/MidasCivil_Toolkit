@@ -29,7 +29,6 @@ using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
-using BH.Engine.Adapters.MidasCivil;
 using BH.oM.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
