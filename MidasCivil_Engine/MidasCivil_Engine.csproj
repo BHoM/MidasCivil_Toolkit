@@ -97,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compute\FEMeshToPanel.cs" />
+    <Compile Include="Create\ConvertDate.cs" />
+    <Compile Include="Create\Review.cs" />
     <Compile Include="Objects\AdapterIdName.cs" />
     <Compile Include="Objects\ArrayComparer.cs" />
     <Compile Include="Objects\MeshCentreComparer.cs" />

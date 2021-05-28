@@ -93,18 +93,6 @@ namespace BH.Adapter.MidasCivil
                 };
 
                 m_midasCivilVersion = version;
-
-                /*if(units != null)
-                {
-                    units = units.ToUpper();
-                    units = units.Replace(" ", "");
-                    string[] unit = units.Split(',');
-                    m_forceUnit = unit[0];
-                    m_lengthUnit = unit[1];
-                    m_temperatureUnit = unit[2];
-                    m_heatUnit = unit[3];
-                }*/
-
                 Execute(new Open() { FileName = filePath });
             }
         }

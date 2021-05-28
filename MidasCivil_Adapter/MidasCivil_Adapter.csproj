@@ -233,7 +233,8 @@
     <Compile Include="CRUD\Create\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Create\Properties\Supports.cs" />
     <Compile Include="CRUD\Create\Properties\MetaData.cs" />
-    <Compile Include="CRUD\Read\Properties\MetaData.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToMetaData.cs" />
+    <Compile Include="CRUD\Read\Properties\ReadMetaData.cs" />
     <Compile Include="PrivateHelpers\MidasSettings.cs" />
     <Compile Include="CRUD\Create\Properties\SurfaceProperty.cs" />
     <Compile Include="CRUD\Delete\Elements\RigidLink.cs" />

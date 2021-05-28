@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using BH.oM.Adapters.MidasCivil;
+using System.Globalization;
 using BH.oM.Reflection.Attributes;
 
 
@@ -35,13 +36,13 @@ namespace BH.Engine.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("An object containing various metadata for the model.")]
+        [Description("Creates a MetaData object from a variety of inputs.")]
         [Input("location", "Where the project is based.")]
-        [Input("description", "A short description of the project or the script that maybe useful to others.")]
+        [Input("description", "A short description of the project and model.")]
         [Input("discpline", "The discipline responsible for the model.")]
-        [Input("creationDate", "The creation date of the model inputted as yyyy-MM-dd. This will default to the current date if no date is provided.")]
-        [Input("reviews", "A list of reviews inputted as a review object.")]
-        [Output("An object containing various meta data for the model.")]
+        [Input("creationDate", "The creation date of the model inputted as yyyy-MM-dd. This will default to the current date if no date is provided.", typeof(string))]
+        [Input("reviews", "A list of reviews containing reviewers, their comments and the date of review.")]
+        [Output("A summary of relevant information for the model.")]
         public static MetaData MetaData(string projectNumber = "", string projectName = "", string location = "", string client = "", 
             string designStage = "", string projectLead = "", string revision = "", string author = "", object creationDate = null, string email = "", 
             string description = "", string discipline = "", List<Review> reviews = null)
@@ -63,47 +64,22 @@ namespace BH.Engine.Adapters.MidasCivil
 
             Data.Reviews = reviews;
 
+            DateTime creationDate_;
             if (creationDate == null) { Data.CreationDate = DateTime.Now; }
+            else if(DateTime.TryParseExact((string)creationDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out creationDate_))
+            {
+                Data.CreationDate = creationDate_;
+            }
+            else if (creationDate.GetType() == typeof(DateTime))
+            {
+                Data.CreationDate = (DateTime)creationDate;
+            }
             else
             {
-                Data.CreationDate = (DateTime)convertDate(creationDate);
+                Engine.Reflection.Compute.RecordError($"creationDate does not support a {creationDate.GetType().ToString()} input.");
             }
 
             return Data;
-        }
-
-        [Description("An object for creating a review to be inputted into metdata object.")]
-        [Input("reviewer", "A list of reviewers who have reviewed the model.")]
-        [Input("reviewDate", "The date when the model was reviewed by each reviewer either as a string in the format yyyy-MM-dd, or DateTime object.")]
-        [Input("approved", "The model is approved for it's intended use.")]
-        [Output("An object containing a review of the model.")]
-        public static Review Review(string reviewer = null, object reviewDate = null, List<string> comments = null, bool approved = false)
-        {
-            Review Review = new Review();
-            Review.Reviewer = reviewer;
-            Review.ReviewDate = (DateTime)convertDate(reviewDate);
-            Review.Comments = comments;
-            Review.Approved = approved;
-            return Review;
-        }
-
-        private static DateTime? convertDate(object date)
-        {
-            if (date.GetType() == typeof(string))
-            {
-                string date_ = ((string)date).Replace(@"/", "").Replace("-", "").Replace(".", "").Replace(@"\", "");
-                return DateTime.ParseExact(date_, "yyyyMMdd",
-                  System.Globalization.CultureInfo.InvariantCulture);
-            }
-            else if(date.GetType() == typeof(DateTime))
-            {
-                return (DateTime)date;
-            }
-            else
-            {
-                Engine.Reflection.Compute.RecordError($"Date can not be inputted as {date.GetType()}, please input as DateTime or string.");
-                return null;
-            }
         }
     }
 }

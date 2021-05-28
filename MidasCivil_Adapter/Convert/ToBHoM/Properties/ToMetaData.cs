@@ -20,11 +20,10 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.IO;
 using System.Collections.Generic;
 using BH.oM.Adapters.MidasCivil;
+using BH.Engine.Adapters.MidasCivil;
 using System;
-using System.Globalization;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -34,18 +33,18 @@ namespace BH.Adapter.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private IEnumerable<MetaData> ReadMetaData(string id = null)
+        private IEnumerable<MetaData> ToMetaData(string id = null)
         {
             MetaData metaData = new MetaData();
             List<Review> reviews = new List<Review>();
             List<string> comments = new List<string>();
-            List<string> Data = GetSectionText("PROJINFO");
+            List<string> data = GetSectionText("PROJINFO");
             Review review1 = new Review();
             Review review2 = new Review();
             Review review3 = new Review();
             Review review4 = new Review();
 
-            foreach (string dataItem in Data)
+            foreach (string dataItem in data)
             {
 
                 if (dataItem.Contains("PROJECT=")) { metaData.ProjectNumber = dataItem.Split('=')[1]; }
@@ -57,7 +56,7 @@ namespace BH.Adapter.MidasCivil
                 else if (dataItem.Contains("TITLE=")) { metaData.ProjectName = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains("EDATE="))
                 {
-                    metaData.CreationDate = (DateTime)convertDate(dataItem.Split('=')[1]);
+                    metaData.CreationDate = (DateTime)Create.ConvertDate(dataItem.Split('=')[1]);
                 }
                 else if (dataItem.Contains(";DESIGNSTAGE=")) { metaData.DesignStage = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains(";PROJECTLEAD=")) { metaData.ProjectLead = dataItem.Split('=')[1]; }
@@ -85,10 +84,10 @@ namespace BH.Adapter.MidasCivil
                     reviews.Add(review4);
                     review4.Approved = true;
                 }
-                if (dataItem.Contains("CDATE1=")) { review1.ReviewDate = (DateTime)convertDate(dataItem.Split('=')[1]); }
-                else if (dataItem.Contains("CDATE2=")) { review2.ReviewDate = (DateTime)convertDate(dataItem.Split('=')[1]); }
-                else if (dataItem.Contains("CDATE3=")) { review3.ReviewDate = (DateTime)convertDate(dataItem.Split('=')[1]); }
-                else if (dataItem.Contains("ADATE=")) { review4.ReviewDate = (DateTime)convertDate(dataItem.Split('=')[1]); }
+                if (dataItem.Contains("CDATE1=")) { review1.ReviewDate = (DateTime)Create.ConvertDate(dataItem.Split('=')[1]); }
+                else if (dataItem.Contains("CDATE2=")) { review2.ReviewDate = (DateTime)Create.ConvertDate(dataItem.Split('=')[1]); }
+                else if (dataItem.Contains("CDATE3=")) { review3.ReviewDate = (DateTime)Create.ConvertDate(dataItem.Split('=')[1]); }
+                else if (dataItem.Contains("ADATE=")) { review4.ReviewDate = (DateTime)Create.ConvertDate(dataItem.Split('=')[1]); }
                 else if (dataItem.Contains("COMMENT="))
                 {
                     if (!dataItem.Contains("COMMENT=This Model Was Created Using BHoM Version:"))
@@ -113,6 +112,11 @@ namespace BH.Adapter.MidasCivil
                             review1.Comments.Add(dataItem.Split('=')[1]);
                             review1.Comments = comments;
                         }
+                        else
+                        {
+                            review1.Reviewer = "Anonymous";
+                            review1.Comments = comments;
+                        }
                     }
                 }
             }
@@ -126,19 +130,5 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
-
-        private static DateTime? convertDate(string date)
-        {
-            DateTime? result = null;
-            DateTime result_out;
-            if (DateTime.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out result_out)) { return result_out; }
-            else if (DateTime.TryParse(date, CultureInfo.InvariantCulture, DateTimeStyles.None, out result_out)) { return result; }
-            else
-            {
-                Engine.Reflection.Compute.RecordError("Date format not recognised please use yyyy-MM-dd format.");
-            }
-            return result;
-        }
-
     }
 }
