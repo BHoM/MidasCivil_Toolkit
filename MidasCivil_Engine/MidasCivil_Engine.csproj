@@ -107,6 +107,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Convert\" />
     <Folder Include="Modify\" />
   </ItemGroup>
   <ItemGroup>

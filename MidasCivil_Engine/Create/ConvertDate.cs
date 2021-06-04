@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 
 namespace BH.Engine.Adapters.MidasCivil
@@ -30,24 +31,38 @@ namespace BH.Engine.Adapters.MidasCivil
         /***************************************************/
         /**** Private Methods                           ****/
         /***************************************************/
-
-        public static DateTime? ConvertDate(string date)
+        [Description("Converts a string into a DateTime object.")]
+        [Input("date", "Date in the format yyyy-mm-dd")]
+        [Output("A DateTime.")]
+        public static DateTime ConvertDate(string date )
         {
-            DateTime? result = null;
-            DateTime result_out;
-            if (DateTime.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out result_out))
+            string dateFormatted = date.Replace('\\', '-').Replace('/', '-').Replace('.', '-').Replace(',', '-');
+            DateTime resultOut;
+            if (DateTime.TryParseExact(dateFormatted, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out resultOut))
             {
-                return result_out;
+                return resultOut;
             }
-            else if (DateTime.TryParse(date, CultureInfo.InvariantCulture, DateTimeStyles.None, out result_out))
+            else if (DateTime.TryParseExact(dateFormatted, "yy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out resultOut))
             {
-                return result;
+                return resultOut;
+            }
+            else if (DateTime.TryParseExact(dateFormatted, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out resultOut))
+            {
+                return resultOut;
+            }
+            else if (DateTime.TryParseExact(dateFormatted, "yy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out resultOut))
+            {
+                return resultOut;
+            }
+            else if (DateTime.TryParse(date, CultureInfo.InvariantCulture, DateTimeStyles.None, out resultOut))
+            {
+                return resultOut;
             }
             else
             {
                 Engine.Reflection.Compute.RecordError("Date format not recognised please use yyyy-MM-dd format.");
+                return DateTime.MinValue;
             }
-            return result;
         }
     }
 }

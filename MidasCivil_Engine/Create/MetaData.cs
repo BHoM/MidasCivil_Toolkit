@@ -40,47 +40,42 @@ namespace BH.Engine.Adapters.MidasCivil
         [Input("location", "Where the project is based.")]
         [Input("description", "A short description of the project and model.")]
         [Input("discpline", "The discipline responsible for the model.")]
-        [Input("creationDate", "The creation date of the model inputted as yyyy-MM-dd. This will default to the current date if no date is provided.", typeof(string))]
+        [Input("creationDate", "The creation date of the model inputted as yyyy-MM-dd. This will default to the current date if no date is provided.")]
         [Input("reviews", "A list of reviews containing reviewers, their comments and the date of review.")]
         [Output("A summary of relevant information for the model.")]
         public static MetaData MetaData(string projectNumber = "", string projectName = "", string location = "", string client = "", 
-            string designStage = "", string projectLead = "", string revision = "", string author = "", object creationDate = null, string email = "", 
+            string designStage = "", string projectLead = "", string revision = "", string author = "", DateTime? creationDate = null, string email = "", 
             string description = "", string discipline = "", List<Review> reviews = null)
         {
-            MetaData Data = new MetaData();
-            Data.ProjectNumber = projectNumber;
-            Data.ProjectName = projectName;
-            Data.Location = location;
-            Data.Client = client;
-            Data.DesignStage = designStage;
-            Data.ProjectLead = projectLead;
-            Data.Revision = revision;
+            MetaData data = new MetaData();
+            data.ProjectNumber = projectNumber;
+            data.ProjectName = projectName;
+            data.Location = location;
+            data.Client = client;
+            data.DesignStage = designStage;
+            data.ProjectLead = projectLead;
+            data.Revision = revision;
 
-            Data.Author = author;
-            Data.Email = email;
+            data.Author = author;
+            data.Email = email;
 
-            Data.Description = description;
-            Data.Discipline = discipline;
+            data.Description = description;
+            data.Discipline = discipline;
 
-            Data.Reviews = reviews;
+            data.Reviews = reviews;
 
-            DateTime creationDate_;
-            if (creationDate == null) { Data.CreationDate = DateTime.Now; }
-            else if(DateTime.TryParseExact((string)creationDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out creationDate_))
+            if (creationDate == null)
             {
-                Data.CreationDate = creationDate_;
-            }
-            else if (creationDate.GetType() == typeof(DateTime))
-            {
-                Data.CreationDate = (DateTime)creationDate;
+                data.CreationDate = DateTime.Now;
             }
             else
             {
-                Engine.Reflection.Compute.RecordError($"creationDate does not support a {creationDate.GetType().ToString()} input.");
+                data.CreationDate = (DateTime)creationDate;
             }
 
-            return Data;
+            return data;
         }
+
     }
 }
 

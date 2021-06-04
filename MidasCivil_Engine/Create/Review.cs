@@ -38,34 +38,25 @@ namespace BH.Engine.Adapters.MidasCivil
 
         [Description("An object for creating a review to be inputted into metdata object.")]
         [Input("reviewer", "The person who has reviewed the model.")]
-        [Input("reviewDate", "The date when the model was reviewed by the reviewer. As a string in the format yyyy-MM-dd, or DateTime object.",typeof(string))]
+        [Input("reviewDate", "The date when the model was reviewed by the reviewer. As a string in the format yyyy-MM-dd.", typeof(string))]
         [Input("Comments", "A list of comments made by the reviewer.")]
         [Input("approved", "True if the model is approved for its intended use.")]
         [Output("An object containing the reviewer, review date and whether the model has been approved.")]
-        public static Review Review(string reviewer = null, object reviewDate = null, List<string> comments = null, bool approved = false)
+        public static Review Review(string reviewer = null, DateTime? reviewDate = null, List<string> comments = null, bool approved = false)
         {
-            Review Review = new Review();
-            Review.Reviewer = reviewer;
-            DateTime reviewDate_;
+            Review review = new Review();
+            review.Reviewer = reviewer;
             if (reviewDate == null)
             {
-                Review.ReviewDate = DateTime.Now;
-            }
-            else if (DateTime.TryParseExact((string)reviewDate, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out reviewDate_))
-            {
-                Review.ReviewDate = reviewDate_;
-            }
-            else if (reviewDate.GetType() == typeof(DateTime))
-            {
-                Review.ReviewDate = (DateTime)reviewDate;
+                review.ReviewDate = DateTime.Now;
             }
             else
             {
-                Engine.Reflection.Compute.RecordError($"reviewDate does not support a {reviewDate.GetType().ToString()} input.");
+                review.ReviewDate = (DateTime)reviewDate;
             }
-            Review.Comments = comments;
-            Review.Approved = approved;
-            return Review;
+            review.Comments = comments;
+            review.Approved = approved;
+            return review;
         }
     }
 }
