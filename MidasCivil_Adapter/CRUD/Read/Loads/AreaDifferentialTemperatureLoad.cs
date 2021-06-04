@@ -73,7 +73,7 @@ namespace BH.Adapter.MidasCivil
                             {
 
                                 Compute.RecordWarning("No Area Uniform Temperature Load is integrated as part of the Area Differential Temperature Load at Element number "
-                                    + areaDifferentialTempatureElements[i].Trim().ToString() + " \n due to the two loads are assigned to differnt element." +
+                                    + areaDifferentialTempatureElements[i].Trim().ToString() + " \n due to the two loads are assigned to different element." +
                                 " \n Area Differential Temperature load will be applied at the centroid of the cross section at Element number "
                                 + areaDifferentialTempatureElements[i].Trim().ToString());
                                 differentialDelimitted.Add(string.Format("0"));

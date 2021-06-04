@@ -35,7 +35,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
 
         public static AreaDifferentialTemperatureLoad ToAreaDifferentialTemperatureLoad(string temperatureLoad, List<string> associatedFEMeshes, string loadcase,
-            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> femeshDictionary, int count, string temperatureUnit)
+            Dictionary<string, Loadcase> loadcaseDictionary, Dictionary<string, FEMesh> feMeshDictionary, int count, string temperatureUnit)
         {
             List<string> delimitted = new List<string>(temperatureLoad.Split(','));
             List<FEMesh> bhomAssociatedFEMeshes = new List<FEMesh>();
@@ -43,10 +43,10 @@ namespace BH.Adapter.Adapters.MidasCivil
             loadcaseDictionary.TryGetValue(loadcase, out bhomLoadcase);
             foreach (string associatedFEMesh in associatedFEMeshes)
             {
-                if (femeshDictionary.ContainsKey(associatedFEMesh))
+                if (feMeshDictionary.ContainsKey(associatedFEMesh))
                 {
                     FEMesh bhomAssociatedFEMesh;
-                    femeshDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedFEMesh);
+                    feMeshDictionary.TryGetValue(associatedFEMesh, out bhomAssociatedFEMesh);
                     bhomAssociatedFEMeshes.Add(bhomAssociatedFEMesh);
                 }
             }

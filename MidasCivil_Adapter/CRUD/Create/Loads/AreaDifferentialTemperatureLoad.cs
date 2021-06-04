@@ -41,7 +41,7 @@ namespace BH.Adapter.MidasCivil
             foreach (AreaDifferentialTemperatureLoad areaDifferentialTemperatureLoad in areaDifferentialTemperatureLoads)
             {
                 StringBuilder midasTemperatureLoads = new StringBuilder();
-                string FEMeshLoadPath = CreateSectionFile(areaDifferentialTemperatureLoad.Loadcase.Name + "\\THERGRAD");
+                string feMeshLoadPath = CreateSectionFile(areaDifferentialTemperatureLoad.Loadcase.Name + "\\THERGRAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(areaDifferentialTemperatureLoad);
                 List<IAreaElement> assignedElements = areaDifferentialTemperatureLoad.Objects.Elements;
                 List<string> assignedFEMeshes = new List<string>();
@@ -60,16 +60,14 @@ namespace BH.Adapter.MidasCivil
                         assignedFEMeshes.Add(face.AdapterId<string>(typeof(MidasCivilId)));
                     }
                 }
-
                 foreach (string assignedFEMesh in assignedFEMeshes)
                 {
                     midasTemperatureLoads.AppendLine(Adapters.MidasCivil.Convert.FromAreaDifferentialTemperatureLoad(areaDifferentialTemperatureLoad, assignedFEMesh, m_temperatureUnit));
                 }
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
-                RemoveEndOfDataString(FEMeshLoadPath);
-                File.AppendAllText(FEMeshLoadPath, midasTemperatureLoads.ToString());
+                RemoveEndOfDataString(feMeshLoadPath);
+                File.AppendAllText(feMeshLoadPath, midasTemperatureLoads.ToString());
             }
-
             return true;
         }
     }
