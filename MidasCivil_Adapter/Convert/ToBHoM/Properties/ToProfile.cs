@@ -45,7 +45,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     double webSpacing = System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit);
                     double webThickness = System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit);
                     double corbel;
-                    if (webSpacing< oM.Geometry.Tolerance.Distance)
+                    if (webSpacing < oM.Geometry.Tolerance.Distance)
                     {
                         corbel = (width / 2 - webThickness / 2).LengthToSI(lengthUnit);
                     }
@@ -53,7 +53,6 @@ namespace BH.Adapter.Adapters.MidasCivil
                     {
                         corbel = 0;
                     }
-
                     else
                     {
                         corbel = (width / 2 - webSpacing / 2 - webThickness / 2).LengthToSI(lengthUnit);
@@ -62,7 +61,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     if (bottomFlangeThickness < oM.Geometry.Tolerance.Distance)
                     {
                         bottomFlangeThickness = System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit);
-                    }    
+                    }
 
                     bhomProfile = Engine.Spatial.Create.GeneralisedFabricatedBoxProfile(
                             System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), width, webThickness,
@@ -101,8 +100,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                         0, 0);
                     break;
                 case "C":
-                    if (System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit)> oM.Geometry.Tolerance.Distance || System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit) > oM.Geometry.Tolerance.Distance)
-                        {
+                    if (System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit) > oM.Geometry.Tolerance.Distance || System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit) > oM.Geometry.Tolerance.Distance)
+                    {
                         Engine.Reflection.Compute.RecordWarning("Asymmetric channel sections are not yet supported in the BHoM_Engine");
                     }
                     bhomProfile = Engine.Spatial.Create.ChannelProfile(
