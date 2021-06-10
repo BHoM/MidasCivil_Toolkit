@@ -57,6 +57,10 @@ namespace BH.Adapter.Adapters.MidasCivil
                     }
                 }
                 supportName = delimitted[2].Trim();
+                if (supportName=="")
+                {
+                    supportName = assignment;
+                }
             }
             else
             {
@@ -104,6 +108,10 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 }
                             }
                             supportName = delimitted[21].Trim();
+                            if (supportName == "")
+                            {
+                                return null;
+                            }
                             break;
 
                         default:
@@ -138,6 +146,10 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 }
                             }
                             supportName = delimitted[15].Trim();
+                            if (supportName == "")
+                            {
+                                return null;
+                            }
                             break;
                     }
 

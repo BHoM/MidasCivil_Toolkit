@@ -58,7 +58,15 @@ namespace BH.Adapter.MidasCivil
                 switch (section)
                 {
                     case "CONSTRAINT":
-                        propertyAssignments.Add(splitSection[2], propertyAssignment);
+                        if (splitSection[2]=="")
+                        {
+                            propertyAssignments.Add(splitSection[1], propertyAssignment);
+                        }
+                        else
+                        {
+                            propertyAssignments.Add(splitSection[2], propertyAssignment);
+                        }
+
                         break;
                     case "SPRING":
                         switch (m_midasCivilVersion)
@@ -66,10 +74,26 @@ namespace BH.Adapter.MidasCivil
                             case "8.9.5":
                             case "8.9.0":
                             case "8.8.5":
-                                propertyAssignments.Add(splitSection[21], propertyAssignment);
+                                if (splitSection[21] == "")
+                                {
+                                    Engine.Reflection.Compute.RecordWarning("Spring must be under a group when pulling from MidasCivil Toolkit.");
+                                    return null;
+                                }
+                                else
+                                {
+                                    propertyAssignments.Add(splitSection[21], propertyAssignment);
+                                }
                                 break;
                             default:
-                                propertyAssignments.Add(splitSection[15], propertyAssignment);
+                                if (splitSection[15] == "")
+                                {
+                                    Engine.Reflection.Compute.RecordWarning("Spring must be under a group when pulling from MidasCivil Toolkit.");
+                                    return null;
+                                }
+                                else
+                                {
+                                    propertyAssignments.Add(splitSection[15], propertyAssignment);
+                                }
                                 break;
                         }
                         break;
