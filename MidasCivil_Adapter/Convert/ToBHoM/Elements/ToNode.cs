@@ -64,16 +64,18 @@ namespace BH.Adapter.Adapters.MidasCivil
                     break;
                 }
             }
-
-            foreach (KeyValuePair<string, List<int>> springAssignment in springAssignments)
+            if (!(springAssignments == null))
+        
             {
-                if (springAssignment.Value.Contains(bhomID))
+                foreach (KeyValuePair<string, List<int>> springAssignment in springAssignments)
                 {
-                    supportName = springAssignment.Key;
-                    break;
+                    if (springAssignment.Value.Contains(bhomID))
+                    {
+                        supportName = springAssignment.Key;
+                        break;
+                    }
                 }
             }
-
             Constraint6DOF nodeConstraint = null;
             if (!(supportName == ""))
             {
