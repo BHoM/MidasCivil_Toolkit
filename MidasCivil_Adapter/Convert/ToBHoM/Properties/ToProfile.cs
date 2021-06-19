@@ -20,7 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Geometry;
 using BH.oM.Spatial.ShapeProfiles;
+using System;
 using System.Collections.Generic;
 
 namespace BH.Adapter.Adapters.MidasCivil
@@ -34,6 +36,14 @@ namespace BH.Adapter.Adapters.MidasCivil
         public static IProfile ToProfile(List<string> sectionProfile, string shape, string lengthUnit)
         {
             IProfile bhomProfile = null;
+            double width;
+            double webSpacing;
+            double webThickness;
+            double topFlangeThickness;
+            double bottomFlangeThickness;
+            double topFlangeWidth;
+            double bottomFlangeWidth;
+
             switch (shape)
             {
                 case "SB":
@@ -41,31 +51,23 @@ namespace BH.Adapter.Adapters.MidasCivil
                         System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit), 0);
                     break;
                 case "B":
-                    double width = System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit);
-                    double webSpacing = System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit);
-                    double webThickness = System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit);
+                    width = System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit);
+                    webSpacing = System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit);
+                    webThickness = System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit);
                     double corbel;
-                    if (webSpacing < oM.Geometry.Tolerance.Distance)
-                    {
-                        corbel = (width / 2 - webThickness / 2).LengthToSI(lengthUnit);
-                    }
-                    else if (System.Math.Abs(width / 2 - webSpacing / 2 - webThickness / 2) < oM.Geometry.Tolerance.Distance)
-                    {
+                    if (webSpacing < Tolerance.Distance || System.Math.Abs(width / 2 - webSpacing / 2 - webThickness / 2) < Tolerance.Distance)
                         corbel = 0;
-                    }
                     else
-                    {
                         corbel = (width / 2 - webSpacing / 2 - webThickness / 2).LengthToSI(lengthUnit);
-                    }
-                    double bottomFlangeThickness = System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit);
-                    if (bottomFlangeThickness < oM.Geometry.Tolerance.Distance)
-                    {
-                        bottomFlangeThickness = System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit);
-                    }
+
+                    topFlangeThickness = System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit);
+                    bottomFlangeThickness = System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit);
+                    if (bottomFlangeThickness < Tolerance.Distance)
+                        bottomFlangeThickness = topFlangeThickness;
 
                     bhomProfile = Engine.Spatial.Create.GeneralisedFabricatedBoxProfile(
                             System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), width, webThickness,
-                            System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit), bottomFlangeThickness,
+                            topFlangeThickness, bottomFlangeThickness,
                             corbel, corbel);
                     break;
                 case "P":
@@ -77,21 +79,20 @@ namespace BH.Adapter.Adapters.MidasCivil
                          System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit));
                     break;
                 case "H":
-                    double botFlangeWidth = System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit);
-                    double botFlangeThickness = System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit);
-                    if (botFlangeWidth < oM.Geometry.Tolerance.Distance)
-                    {
-                        botFlangeWidth = System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit);
-                    }
-                    if (botFlangeThickness < oM.Geometry.Tolerance.Distance)
-                    {
-                        botFlangeThickness = System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit);
-                    }
+                    topFlangeWidth = System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit);
+                    bottomFlangeWidth = System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit);
+                    topFlangeThickness = System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit);
+                    bottomFlangeThickness = System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit);
+
+                    if (bottomFlangeWidth < Tolerance.Distance)
+                        bottomFlangeWidth = topFlangeWidth;
+                    if (bottomFlangeThickness < Tolerance.Distance)
+                        bottomFlangeThickness = topFlangeThickness;
 
                     bhomProfile = Engine.Spatial.Create.FabricatedISectionProfile(
-                        System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
-                         botFlangeWidth, System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit),
-                        System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit), botFlangeThickness, 0);
+                        System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), topFlangeWidth,
+                         bottomFlangeWidth, System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit),
+                        topFlangeThickness, bottomFlangeThickness, 0);
                     break;
                 case "T":
                     bhomProfile = Engine.Spatial.Create.TSectionProfile(
@@ -100,13 +101,25 @@ namespace BH.Adapter.Adapters.MidasCivil
                         0, 0);
                     break;
                 case "C":
-                    if (System.Convert.ToDouble(sectionProfile[4]).LengthToSI(lengthUnit) > oM.Geometry.Tolerance.Distance || System.Convert.ToDouble(sectionProfile[5]).LengthToSI(lengthUnit) > oM.Geometry.Tolerance.Distance)
+                    topFlangeWidth = System.Convert.ToDouble(sectionProfile[1]);
+                    bottomFlangeWidth = System.Convert.ToDouble(sectionProfile[4]);
+                    topFlangeThickness = System.Convert.ToDouble(sectionProfile[3]);
+                    bottomFlangeThickness = System.Convert.ToDouble(sectionProfile[5]);
+
+                    if(Math.Abs(topFlangeWidth - bottomFlangeWidth) > Tolerance.Distance && bottomFlangeWidth > Tolerance.Distance)
                     {
-                        Engine.Reflection.Compute.RecordWarning("Asymmetric channel sections are not yet supported in the BHoM_Engine");
+                        Engine.Reflection.Compute.RecordWarning("Asymmetric channel sections are not yet supported by the BHoM. The top flange will be used for the profile.");
                     }
+                    
+                    if(Math.Abs(topFlangeThickness - bottomFlangeThickness) > Tolerance.Distance && bottomFlangeThickness > Tolerance.Distance)
+                    {
+                        Engine.Reflection.Compute.RecordWarning("Asymmetric channel sections are not yet supported by the BHoM. The top flange thickness will be used for the profile.");
+                    }
+
+
                     bhomProfile = Engine.Spatial.Create.ChannelProfile(
-                            System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
-                            System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit),
+                            System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), topFlangeWidth,
+                            System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), topFlangeThickness,
                             System.Convert.ToDouble(sectionProfile[6]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[7]).LengthToSI(lengthUnit));
                     break;
                 case "L":
