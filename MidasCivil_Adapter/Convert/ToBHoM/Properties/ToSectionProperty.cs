@@ -39,7 +39,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static ISectionProperty ToSectionProperty(this List<string> sectionProperty, string shape, string lengthUnit)
         {
-            return Create.GenericSectionFromProfile(Convert.ToProfile(sectionProperty, shape, lengthUnit), null);
+            return Create.GenericSectionFromProfile(ToProfile(sectionProperty, shape, lengthUnit), null);
         }
 
         /***************************************************/
