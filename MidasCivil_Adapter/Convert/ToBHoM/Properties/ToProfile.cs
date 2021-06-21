@@ -92,7 +92,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     bhomProfile = Engine.Spatial.Create.FabricatedISectionProfile(
                         System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), topFlangeWidth,
                          bottomFlangeWidth, System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit),
-                        topFlangeThickness, bottomFlangeThickness, 0);
+                        topFlangeThickness, bottomFlangeThickness, System.Convert.ToDouble(sectionProfile[6]).LengthToSI(lengthUnit));
                     break;
                 case "T":
                     bhomProfile = Engine.Spatial.Create.TSectionProfile(
