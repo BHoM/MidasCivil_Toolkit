@@ -51,7 +51,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             double presetWidth = sectionProperty.Area / depth;
             double temperatureProfileCount = load.TemperatureProfile.Keys.Count - 1;
-            string firstLine = ids.Trim() + "," + loadDirection + ",Bot ," + temperatureProfileCount + ", ," + "No";
+            string firstLine = ids.Trim() + "," + loadDirection + ",Bot ," + temperatureProfileCount + load.Name + "No";
             List<string> midasBarLoad = new List<string>();
             midasBarLoad.Add(firstLine);
             for (int i = 1; i < load.TemperatureProfile.Keys.Count; i++)
