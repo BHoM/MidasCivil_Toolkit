@@ -21,6 +21,7 @@
  */
 
 using System.IO;
+using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -35,14 +36,8 @@ namespace BH.Adapter.MidasCivil
             string[] loadGroups = File.ReadAllLines(path);
             bool existing = false;
 
-            for (int i = 0; i < loadGroups.Length; i++)
-            {
-                if (loadGroups[i].Contains(loadGroup))
-                {
-                    existing = true;
-                    break;
-                }
-            }
+            if (loadGroups.Any(x => x == loadGroup))
+                existing = true;
 
             if (!existing)
             {
