@@ -78,7 +78,8 @@ namespace BH.Adapter.MidasCivil
 
                         constraints = constraints.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
-                        File.WriteAllText(path, "\n" + string.Join("\n", constraints));
+                        File.Delete(path);
+                        File.WriteAllLines(path, constraints.ToArray());
                     }
                 }
             }

@@ -80,7 +80,8 @@ namespace BH.Adapter.MidasCivil
 
                     releases = releases.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-                    File.WriteAllText(path, "\n" + string.Join("\n",releases));
+                    File.Delete(path);
+                    File.WriteAllLines(path, releases.ToArray());
                 }
             }
             return success;

@@ -78,7 +78,8 @@ namespace BH.Adapter.MidasCivil
 
                     links = links.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-                    File.WriteAllText(path, "\n" + string.Join("\n",links));
+                    File.Delete(path);
+                    File.WriteAllLines(path, links.ToArray());
                 }
             }
             return success;

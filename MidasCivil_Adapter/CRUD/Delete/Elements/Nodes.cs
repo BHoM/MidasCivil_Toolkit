@@ -75,7 +75,8 @@ namespace BH.Adapter.MidasCivil
 
                     nodes = nodes.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-                    File.WriteAllText(path, "\n" + string.Join("\n",nodes));
+                    File.Delete(path);
+                    File.WriteAllLines(path, nodes.ToArray());
                 }
             }
             return success;

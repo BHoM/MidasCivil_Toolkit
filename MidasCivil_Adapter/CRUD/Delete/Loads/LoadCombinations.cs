@@ -82,7 +82,8 @@ namespace BH.Adapter.MidasCivil
 
                     loadCombinations = loadCombinations.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-                    File.WriteAllText(path, "\n" + string.Join("\n", loadCombinations));
+                    File.Delete(path);
+                    File.WriteAllLines(path, loadCombinations.ToArray());
                 }
             }
             return success;

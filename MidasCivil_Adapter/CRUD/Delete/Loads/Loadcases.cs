@@ -72,7 +72,8 @@ namespace BH.Adapter.MidasCivil
 
                     loadcases = loadcases.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-                    File.WriteAllText(path, "\n" + string.Join("\n", loadcases));
+                    File.Delete(path);
+                    File.WriteAllLines(path, loadcases.ToArray());
                 }
             }
             return success;

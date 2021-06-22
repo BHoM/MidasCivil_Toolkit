@@ -74,7 +74,8 @@ namespace BH.Adapter.MidasCivil
 
                     materials = materials.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
-                    File.WriteAllText(path, "\n" + string.Join("\n", materials));
+                    File.Delete(path);
+                    File.WriteAllLines(path, materials.ToArray());
                 }
             }
             return success;

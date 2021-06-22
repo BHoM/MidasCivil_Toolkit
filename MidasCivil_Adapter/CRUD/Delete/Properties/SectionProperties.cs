@@ -74,7 +74,8 @@ namespace BH.Adapter.MidasCivil
 
                     sectionProperties = sectionProperties.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
 
-                    File.WriteAllText(path, "\n" + string.Join("\n",sectionProperties));
+                    File.Delete(path);
+                    File.WriteAllLines(path, sectionProperties.ToArray());
                 }
             }
             return success;
