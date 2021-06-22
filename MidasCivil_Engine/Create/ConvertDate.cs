@@ -23,6 +23,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using BH.oM.Reflection.Attributes;
 
 namespace BH.Engine.Adapters.MidasCivil
 {
