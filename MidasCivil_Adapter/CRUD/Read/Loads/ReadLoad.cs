@@ -56,6 +56,9 @@ namespace BH.Adapter.MidasCivil
                 case "AreaUniformTemperatureLoad":
                     readLoads = ReadAreaUniformTemperatureLoads(ids as dynamic);
                     break;
+                case "AreaDifferentialTemperatureLoad":
+                    readLoads = ReadAreaDifferentialTemperatureLoads(ids as dynamic);
+                    break;
                 case "PointDisplacement":
                     readLoads = ReadPointDisplacements(ids as dynamic);
                     break;
@@ -64,6 +67,9 @@ namespace BH.Adapter.MidasCivil
                     break;
                 case "BarVaryingDistributedLoad":
                     readLoads = ReadBarVaryingDistributedLoads(ids as dynamic);
+                    break;
+                case "BarDifferentialTemperatureLoad":
+                    readLoads = ReadBarDifferentialTemperatureLoads(ids as dynamic);
                     break;
             }
 

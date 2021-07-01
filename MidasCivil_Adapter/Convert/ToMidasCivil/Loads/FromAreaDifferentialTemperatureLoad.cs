@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
  *
@@ -20,36 +20,25 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.IO;
-using System.Linq;
+using BH.oM.Structure.Loads;
 
-namespace BH.Adapter.MidasCivil
+namespace BH.Adapter.Adapters.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public static partial class Convert
     {
         /***************************************************/
-        /**** Private Methods                           ****/
+        /**** Public Methods                            ****/
         /***************************************************/
 
-        private void CompareLoadGroup(string loadGroup, string path)
+        public static string FromAreaDifferentialTemperatureLoad(this AreaDifferentialTemperatureLoad temperatureProfile, string assignedFEMesh, string temperatureUnit)
         {
-            string[] loadGroups = File.ReadAllLines(path);
-            bool existing = false;
-
-            if (loadGroups.Any(x => x == loadGroup))
-                existing = true;
-
-            if (!existing)
-            {
-                using (StreamWriter sw = new StreamWriter(path, append: true))
-                {
-                    sw.WriteLine(loadGroup);
-                }
-            }
+            string midasFEMeshLoad = null;
+                double temperatureDifference = temperatureProfile.TemperatureProfile[0].DeltaTemperatureToSI(temperatureUnit) - temperatureProfile.TemperatureProfile[1].DeltaTemperatureToSI(temperatureUnit);
+                midasFEMeshLoad = assignedFEMesh + ",2," + temperatureDifference + "," + "YES,0," + temperatureProfile.Name;
+            return midasFEMeshLoad;
         }
 
         /***************************************************/
 
     }
 }
-
