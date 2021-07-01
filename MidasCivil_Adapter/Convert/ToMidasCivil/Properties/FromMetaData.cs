@@ -32,24 +32,24 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static StringBuilder FromMetaData(MetaData MidasMetaData)
+        public static StringBuilder FromMetaData(MetaData midasMetaData)
         {
-            StringBuilder midasMetaData = new StringBuilder();
-            List<Review> reviews = MidasMetaData.Reviews;
-            midasMetaData.AppendLine("*PROJINFO");
-            midasMetaData.AppendLine($"PROJECT={MidasMetaData.ProjectNumber}");
-            midasMetaData.AppendLine($";DESIGNSTAGE={MidasMetaData.DesignStage}");
-            midasMetaData.AppendLine($";PROJECTLEAD={MidasMetaData.ProjectLead}");
-            midasMetaData.AppendLine($"REVISION={MidasMetaData.Revision}");
-            midasMetaData.AppendLine($"USER={MidasMetaData.Author}");
-            midasMetaData.AppendLine($"EMAIL={MidasMetaData.Email}");
-            midasMetaData.AppendLine($"ADDRESS={MidasMetaData.Location.Replace(System.Environment.NewLine, ", ")}");
-            midasMetaData.AppendLine($"CLIENT={MidasMetaData.Client}");
-            midasMetaData.AppendLine($"TITLE={MidasMetaData.ProjectName}");
-            midasMetaData.AppendLine($"ENGINEER={MidasMetaData.Author}");
-            midasMetaData.AppendLine($"EDATE={MidasMetaData.CreationDate.ToString("yyyy-MM-dd")}");
-            midasMetaData.AppendLine($";DESCRIPTION={MidasMetaData.Description}");
-            midasMetaData.AppendLine($";DISCIPLINE={MidasMetaData.Discipline}");
+            StringBuilder midasMetaDataSB = new StringBuilder();
+            List<Review> reviews = midasMetaData.Reviews;
+            midasMetaDataSB.AppendLine("*PROJINFO");
+            midasMetaDataSB.AppendLine($"PROJECT={midasMetaData.ProjectNumber}");
+            midasMetaDataSB.AppendLine($";DESIGNSTAGE={midasMetaData.DesignStage}");
+            midasMetaDataSB.AppendLine($";PROJECTLEAD={midasMetaData.ProjectLead}");
+            midasMetaDataSB.AppendLine($"REVISION={midasMetaData.Revision}");
+            midasMetaDataSB.AppendLine($"USER={midasMetaData.Author}");
+            midasMetaDataSB.AppendLine($"EMAIL={midasMetaData.Email}");
+            midasMetaDataSB.AppendLine($"ADDRESS={midasMetaData.Location.Replace(System.Environment.NewLine, ", ")}");
+            midasMetaDataSB.AppendLine($"CLIENT={midasMetaData.Client}");
+            midasMetaDataSB.AppendLine($"TITLE={midasMetaData.ProjectName}");
+            midasMetaDataSB.AppendLine($"ENGINEER={midasMetaData.Author}");
+            midasMetaDataSB.AppendLine($"EDATE={midasMetaData.CreationDate.ToString("yyyy-MM-dd")}");
+            midasMetaDataSB.AppendLine($";DESCRIPTION={midasMetaData.Description}");
+            midasMetaDataSB.AppendLine($";DISCIPLINE={midasMetaData.Discipline}");
 
             if(reviews.Count > 4)
             {
@@ -58,32 +58,32 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             if(reviews.Count >= 1)
             {
-                midasMetaData.AppendLine($"CHECK1={reviews[0].Reviewer}");
-                midasMetaData.AppendLine($"CDATE1={reviews[0].ReviewDate.ToString("yyyy-MM-dd")}");
+                midasMetaDataSB.AppendLine($"CHECK1={reviews[0].Reviewer}");
+                midasMetaDataSB.AppendLine($"CDATE1={reviews[0].ReviewDate.ToString("yyyy-MM-dd")}");
             }
             if (reviews.Count >= 2)
             {
-                midasMetaData.AppendLine($"CHECK2={reviews[1].Reviewer}");
-                midasMetaData.AppendLine($"CDATE2={reviews[1].ReviewDate.ToString("yyyy-MM-dd")}");
+                midasMetaDataSB.AppendLine($"CHECK2={reviews[1].Reviewer}");
+                midasMetaDataSB.AppendLine($"CDATE2={reviews[1].ReviewDate.ToString("yyyy-MM-dd")}");
                 Engine.Reflection.Compute.RecordWarning("Only comments from the last review will be pushed to MidasCivil.");
             }
             if (reviews.Count >= 3)
             {
-                midasMetaData.AppendLine($"CHECK3={reviews[2].Reviewer}");
-                midasMetaData.AppendLine($"CDATE3={reviews[2].ReviewDate.ToString("yyyy-MM-dd")}");
+                midasMetaDataSB.AppendLine($"CHECK3={reviews[2].Reviewer}");
+                midasMetaDataSB.AppendLine($"CDATE3={reviews[2].ReviewDate.ToString("yyyy-MM-dd")}");
             }
             if(reviews[reviews.Count - 1].Approved)
             {
-                midasMetaData.AppendLine($"APPROVE={reviews[reviews.Count - 1].Reviewer}");
-                midasMetaData.AppendLine($"ADATE={reviews[reviews.Count - 1].ReviewDate.ToString("yyyy-MM-dd")}");
+                midasMetaDataSB.AppendLine($"APPROVE={reviews[reviews.Count - 1].Reviewer}");
+                midasMetaDataSB.AppendLine($"ADATE={reviews[reviews.Count - 1].ReviewDate.ToString("yyyy-MM-dd")}");
             }
 
             foreach(string comment in reviews[reviews.Count - 1].Comments)
             {
-                midasMetaData.AppendLine($"COMMENT={comment}");
+                midasMetaDataSB.AppendLine($"COMMENT={comment}");
             }
 
-            return midasMetaData;
+            return midasMetaDataSB;
         }
 
         /***************************************************/
