@@ -39,7 +39,7 @@ namespace BH.Engine.Adapters.MidasCivil
         [Description("Creates a MetaData object from a variety of inputs.")]
         [Input("location", "Where the project is based.")]
         [Input("description", "A short description of the project and model.")]
-        [Input("discpline", "The discipline responsible for the model.")]
+        [Input("discipline", "The discipline responsible for the model.")]
         [Input("creationDate", "The creation date of the model inputted as yyyy-MM-dd. This will default to the current date if no date is provided.")]
         [Input("reviews", "A list of reviews containing reviewers, their comments and the date of review.")]
         [Output("A summary of relevant information for the model.")]
