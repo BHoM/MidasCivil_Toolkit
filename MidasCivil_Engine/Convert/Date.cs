@@ -27,7 +27,7 @@ using BH.oM.Reflection.Attributes;
 
 namespace BH.Engine.Adapters.MidasCivil
 {
-    public static partial class Create
+    public static partial class Convert
     {
         /***************************************************/
         /**** Private Methods                           ****/
@@ -35,7 +35,7 @@ namespace BH.Engine.Adapters.MidasCivil
         [Description("Converts a string into a DateTime object.")]
         [Input("date", "Date in the format yyyy-mm-dd")]
         [Output("A DateTime.")]
-        public static DateTime ConvertDate(string date )
+        public static DateTime Date(string date)
         {
             string dateFormatted = date.Replace('\\', '-').Replace('/', '-').Replace('.', '-').Replace(',', '-');
             DateTime resultOut;

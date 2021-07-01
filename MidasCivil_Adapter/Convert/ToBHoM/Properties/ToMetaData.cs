@@ -22,8 +22,7 @@
 
 using System.Collections.Generic;
 using BH.oM.Adapters.MidasCivil;
-using BH.Engine.Adapters.MidasCivil;
-using System;
+using MCEngine = BH.Engine.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -56,7 +55,7 @@ namespace BH.Adapter.MidasCivil
                 else if (dataItem.Contains("TITLE=")) { metaData.ProjectName = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains("EDATE="))
                 {
-                    metaData.CreationDate = Create.ConvertDate(dataItem.Split('=')[1]);
+                    metaData.CreationDate = MCEngine.Convert.Date(dataItem.Split('=')[1]);
                 }
                 else if (dataItem.Contains(";DESIGNSTAGE=")) { metaData.DesignStage = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains(";PROJECTLEAD=")) { metaData.ProjectLead = dataItem.Split('=')[1]; }
@@ -84,10 +83,10 @@ namespace BH.Adapter.MidasCivil
                     reviews.Add(review4);
                     review4.Approved = true;
                 }
-                if (dataItem.Contains("CDATE1=")) { review1.ReviewDate = Create.ConvertDate(dataItem.Split('=')[1]); }
-                else if (dataItem.Contains("CDATE2=")) { review2.ReviewDate = Create.ConvertDate(dataItem.Split('=')[1]); }
-                else if (dataItem.Contains("CDATE3=")) { review3.ReviewDate = Create.ConvertDate(dataItem.Split('=')[1]); }
-                else if (dataItem.Contains("ADATE=")) { review4.ReviewDate = Create.ConvertDate(dataItem.Split('=')[1]); }
+                if (dataItem.Contains("CDATE1=")) { review1.ReviewDate = MCEngine.Convert.Date(dataItem.Split('=')[1]); }
+                else if (dataItem.Contains("CDATE2=")) { review2.ReviewDate = MCEngine.Convert.Date(dataItem.Split('=')[1]); }
+                else if (dataItem.Contains("CDATE3=")) { review3.ReviewDate = MCEngine.Convert.Date(dataItem.Split('=')[1]); }
+                else if (dataItem.Contains("ADATE=")) { review4.ReviewDate = MCEngine.Convert.Date(dataItem.Split('=')[1]); }
                 else if (dataItem.Contains("COMMENT="))
                 {
                     if (!dataItem.Contains("COMMENT=This Model Was Created Using BHoM Version:"))
