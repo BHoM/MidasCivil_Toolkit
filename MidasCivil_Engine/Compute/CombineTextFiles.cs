@@ -59,10 +59,10 @@ namespace BH.Engine.Adapters.MidasCivil
                 // Retrieve type strings: select all from directory if none provided
 
                 List<string> typeNames = new List<string>();
-                List<string> MetaData = new List<string>(3);
-                MetaData.Add("VERSION");
-                MetaData.Add("UNIT");
-                MetaData.Add("PROJINFO");
+                List<string> metaData = new List<string>(3);
+                metaData.Add("VERSION");
+                metaData.Add("UNIT");
+                metaData.Add("PROJINFO");
 
                 bool includeLoadcases = true;
 
@@ -135,13 +135,13 @@ namespace BH.Engine.Adapters.MidasCivil
                     {
                         writer.Write(intro);
                         writer.Flush();
-                        foreach (string file in MetaData)
+                        foreach (string file in metaData)
                         {
-                            if (File.Exists(directory + file + ".txt"))
+                            if (File.Exists(directory + "\\" + file + ".txt"))
                             {
-                                using (var input = File.OpenRead(directory + file + ".txt"))
+                                using (var input = File.OpenRead(directory + "\\" + file + ".txt"))
                                 {
-                                    if (new FileInfo(directory + file + ".txt").Length != 0)
+                                    if (new FileInfo(directory + "\\" + file + ".txt").Length != 0)
                                     {
                                         input.CopyTo(combined);
                                         input.Close();
@@ -167,7 +167,7 @@ namespace BH.Engine.Adapters.MidasCivil
                             }
                         }
 
-                        typeNames = typeNames.Except(independents).ToList();
+                        typeNames = typeNames.Except(independents).Except(metaData).ToList();
 
                         if (loadcases.Count() != 0 && includeLoadcases)
                         {
@@ -258,6 +258,7 @@ namespace BH.Engine.Adapters.MidasCivil
                     }
 
                     File.Copy(path, fName + ".mct", true);
+                    if (Path.GetFileName(path) == "Combined.mct") { File.Delete(path); };
 
 
                 }

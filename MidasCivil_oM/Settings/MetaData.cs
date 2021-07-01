@@ -70,21 +70,5 @@ namespace BH.oM.Adapters.MidasCivil
         public virtual List<Review> Reviews { get; set; }
 
     }
-
-    public class Review : BHoMObject
-    {
-        [Description("The person who has reviewed the model.")]
-        public virtual string Reviewer { get; set; }
-
-        [Description("The date when the model was reviewed by the reviewer.In the format yyyy-MM-dd, or DateTime object.")]
-        public virtual DateTime ReviewDate { get; set; }
-
-        [Description("A list of comments made by the reviewer.")]
-        public virtual List<string> Comments { get; set; }
-
-        [Description("True if the model is approved for its intended use.")]
-        public virtual bool Approved { get; set; }
-
-    }
 }
 
