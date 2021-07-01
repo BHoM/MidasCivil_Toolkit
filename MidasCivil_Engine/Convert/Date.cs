@@ -35,7 +35,7 @@ namespace BH.Engine.Adapters.MidasCivil
         [Description("Converts a string into a DateTime object.")]
         [Input("date", "Date in the format yyyy-mm-dd")]
         [Output("A DateTime.")]
-        public static DateTime Date(string date)
+        public static DateTime Date(this string date)
         {
             string dateFormatted = date.Replace('\\', '-').Replace('/', '-').Replace('.', '-').Replace(',', '-');
             DateTime resultOut;
