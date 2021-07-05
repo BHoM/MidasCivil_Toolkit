@@ -341,7 +341,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             double webSpacing = 0;
             if (profile.TopLeftCorbelWidth != 0 || profile.TopRightCorbelWidth != 0 || profile.BotLeftCorbelWidth != 0 || profile.BotRightCorbelWidth != 0)
             {
-                webSpacing = (profile.Width - profile.TopLeftCorbelWidth - profile.TopRightCorbelWidth - profile.WebThickness).LengthFromSI(lengthUnit);
+                webSpacing = (profile.Width - profile.WebThickness).LengthFromSI(lengthUnit);
             }
             string midasSectionProperty = "B, 2," +
                 profile.Height.LengthFromSI(lengthUnit) + "," + profile.Width.LengthFromSI(lengthUnit) + "," + profile.WebThickness.LengthFromSI(lengthUnit) + "," +
