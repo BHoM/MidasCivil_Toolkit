@@ -27,6 +27,9 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
+        /***************************************************/
+        /**** Private Methods                           ****/
+        /***************************************************/
         private bool SetUnits(string length = "M", string force = "N", string temperature = "C", string heat = "KJ")
         {
                 string path = CreateSectionFile("UNIT");
@@ -97,4 +100,3 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
-
