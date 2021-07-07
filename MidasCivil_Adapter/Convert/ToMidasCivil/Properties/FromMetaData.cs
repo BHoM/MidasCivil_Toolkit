@@ -32,7 +32,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static StringBuilder FromMetaData(MetaData midasMetaData)
+        public static StringBuilder FromMetaData(MetaData metaData)
         {
             StringBuilder midasMetaDataSB = new StringBuilder();
             List<Review> reviews = midasMetaData.Reviews;
