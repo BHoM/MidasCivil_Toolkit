@@ -37,11 +37,11 @@ namespace BH.Engine.Adapters.MidasCivil
         /***************************************************/
 
         [Description("An object for creating a review to be inputted into metdata object.")]
-        [Input("reviewer", "The person who has reviewed the model.")]
-        [Input("reviewDate", "The date when the model was reviewed by the reviewer. As a string in the format yyyy-MM-dd.", typeof(string))]
+        [Input("reviewer", "The person or organisation who has reviewed the model.")]
+        [Input("reviewDate", "The date when the model was reviewed by the reviewer."]
         [Input("comments", "A list of comments made by the reviewer.")]
         [Input("approved", "True if the model is approved for its intended use.")]
-        [Output("An object containing the reviewer, review date and whether the model has been approved.")]
+        [Output("review", "An object containing the reviewer, review date, comments and whether the model has been approved.")]
         public static Review Review(string reviewer = null, DateTime? reviewDate = null, List<string> comments = null, bool approved = false)
         {
             Review review = new Review();
@@ -60,4 +60,3 @@ namespace BH.Engine.Adapters.MidasCivil
         }
     }
 }
-
