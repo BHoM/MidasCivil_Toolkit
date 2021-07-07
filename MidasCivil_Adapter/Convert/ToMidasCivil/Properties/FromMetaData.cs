@@ -34,7 +34,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static StringBuilder FromMetaData(MetaData metaData)
         {
-            StringBuilder midasMetaDataSB = new StringBuilder();
+            StringBuilder midasMetaData = new StringBuilder();
             List<Review> reviews = midasMetaData.Reviews;
             midasMetaDataSB.AppendLine("*PROJINFO");
             midasMetaDataSB.AppendLine($"PROJECT={midasMetaData.ProjectNumber}");
