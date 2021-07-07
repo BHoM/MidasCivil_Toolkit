@@ -26,7 +26,7 @@ using MCEngine = BH.Engine.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
-    public partial class MidasCivilAdapter
+    public static partial class Convert
     {
         /***************************************************/
         /**** Private Methods                           ****/
