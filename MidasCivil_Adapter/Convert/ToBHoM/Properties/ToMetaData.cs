@@ -32,7 +32,7 @@ namespace BH.Adapter.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        private IEnumerable<MetaData> ToMetaData(string id = null)
+        public static IEnumerable<MetaData> ToMetaData(string id = null)
         {
             MetaData metaData = new MetaData();
             List<Review> reviews = new List<Review>();
