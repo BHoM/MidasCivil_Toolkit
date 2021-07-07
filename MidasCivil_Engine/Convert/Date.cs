@@ -33,7 +33,7 @@ namespace BH.Engine.Adapters.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
         [Description("Converts a string into a DateTime object.")]
-        [Input("date", "Date in the format yyyy-mm-dd")]
+        [Input("date", "Date in the format yyyy-mm-dd.")]
         [Output("A DateTime.")]
         public static DateTime Date(this string date)
         {
@@ -67,5 +67,4 @@ namespace BH.Engine.Adapters.MidasCivil
         }
     }
 }
-
 
