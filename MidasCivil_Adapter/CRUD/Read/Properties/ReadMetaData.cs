@@ -31,9 +31,9 @@ namespace BH.Adapter.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private IEnumerable<MetaData> ReadMetaData(List<string> ids = null)
+        private IEnumerable<Metadata> ReadMetadata(List<string> ids = null)
         {
-                return ToMetaData(ids[0]);
+                return Convert.ToMetadata(GetSectionText("PROJINFO"));
         }
         /***************************************************/
 

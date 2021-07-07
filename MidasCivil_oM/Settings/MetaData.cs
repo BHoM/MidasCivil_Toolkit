@@ -28,7 +28,7 @@ using System.ComponentModel;
 namespace BH.oM.Adapters.MidasCivil
 {
 
-    public class MetaData : BHoMObject
+    public class Metadata : BHoMObject
     {
         [Description("Defines the project number of the project.")]
         public virtual string ProjectNumber { get; set; }

@@ -36,18 +36,18 @@ namespace BH.Engine.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Creates a MetaData object from a variety of inputs.")]
+        [Description("Creates a Metadataobject from a variety of inputs.")]
         [Input("location", "Where the project is based.")]
         [Input("description", "A short description of the project and model.")]
         [Input("discipline", "The discipline responsible for the model.")]
         [Input("creationDate", "The creation date of the model inputted as yyyy-MM-dd. This will default to the current date if no date is provided.")]
         [Input("reviews", "A list of reviews containing reviewers, their comments and the date of review.")]
         [Output("A summary of relevant information for the model.")]
-        public static MetaData MetaData(string projectNumber = "", string projectName = "", string location = "", string client = "", 
+        public static Metadata Metadata(string projectNumber = "", string projectName = "", string location = "", string client = "", 
             string designStage = "", string projectLead = "", string revision = "", string author = "", DateTime? creationDate = null, string email = "", 
             string description = "", string discipline = "", List<Review> reviews = null)
         {
-            MetaData data = new MetaData();
+            Metadata data = new Metadata();
             data.ProjectNumber = projectNumber;
             data.ProjectName = projectName;
             data.Location = location;

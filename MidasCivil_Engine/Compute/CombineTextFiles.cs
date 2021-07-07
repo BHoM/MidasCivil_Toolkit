@@ -59,10 +59,10 @@ namespace BH.Engine.Adapters.MidasCivil
                 // Retrieve type strings: select all from directory if none provided
 
                 List<string> typeNames = new List<string>();
-                List<string> metaData = new List<string>(3);
-                metaData.Add("VERSION");
-                metaData.Add("UNIT");
-                metaData.Add("PROJINFO");
+                List<string> metadata = new List<string>(3);
+                metadata.Add("VERSION");
+                metadata.Add("UNIT");
+                metadata.Add("PROJINFO");
 
                 bool includeLoadcases = true;
 
@@ -135,7 +135,7 @@ namespace BH.Engine.Adapters.MidasCivil
                     {
                         writer.Write(intro);
                         writer.Flush();
-                        foreach (string file in metaData)
+                        foreach (string file in metadata)
                         {
                             if (File.Exists(directory + "\\" + file + ".txt"))
                             {
@@ -167,7 +167,7 @@ namespace BH.Engine.Adapters.MidasCivil
                             }
                         }
 
-                        typeNames = typeNames.Except(independents).Except(metaData).ToList();
+                        typeNames = typeNames.Except(independents).Except(metadata).ToList();
 
                         if (loadcases.Count() != 0 && includeLoadcases)
                         {

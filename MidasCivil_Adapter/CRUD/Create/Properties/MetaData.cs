@@ -32,14 +32,14 @@ namespace BH.Adapter.MidasCivil
         /**** Private Methods                           ****/
         /***************************************************/
 
-        private bool CreateCollection(MetaData metaData)
+        private bool CreateCollection(Metadata metadata)
         {
             string path = CreateSectionFile("PROJINFO");
-            StringBuilder midasMetaData = new StringBuilder();
+            StringBuilder midasMetadata = new StringBuilder();
 
-            midasMetaData = Adapters.MidasCivil.Convert.FromMetaData(metaData);
+            midasMetadata = Adapters.MidasCivil.Convert.FromMetadata(metadata);
 
-            File.WriteAllText(path, midasMetaData.ToString());
+            File.WriteAllText(path, midasMetadata.ToString());
 
             return true;
         }

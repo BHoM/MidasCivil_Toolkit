@@ -32,12 +32,11 @@ namespace BH.Adapter.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static IEnumerable<MetaData> ToMetaData(string id = null)
+        public static IEnumerable<Metadata> ToMetadata(List<string> data)
         {
-            MetaData metaData = new MetaData();
+            Metadata metadata = new Metadata();
             List<Review> reviews = new List<Review>();
             List<string> comments = new List<string>();
-            List<string> data = GetSectionText("PROJINFO");
             Review review1 = new Review();
             Review review2 = new Review();
             Review review3 = new Review();
@@ -46,21 +45,21 @@ namespace BH.Adapter.MidasCivil
             foreach (string dataItem in data)
             {
 
-                if (dataItem.Contains("PROJECT=")) { metaData.ProjectNumber = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("REVISION=")) { metaData.Revision = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("USER=")) { metaData.Author = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("EMAIL=")) { metaData.Email = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("ADDRESS=")) { metaData.Location = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("CLIENT=")) { metaData.Client = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains("TITLE=")) { metaData.ProjectName = dataItem.Split('=')[1]; }
+                if (dataItem.Contains("PROJECT=")) { metadata.ProjectNumber = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("REVISION=")) { metadata.Revision = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("USER=")) { metadata.Author = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("EMAIL=")) { metadata.Email = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("ADDRESS=")) { metadata.Location = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("CLIENT=")) { metadata.Client = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains("TITLE=")) { metadata.ProjectName = dataItem.Split('=')[1]; }
                 else if (dataItem.Contains("EDATE="))
                 {
-                    metaData.CreationDate = MCEngine.Convert.Date(dataItem.Split('=')[1]);
+                    metadata.CreationDate = MCEngine.Convert.Date(dataItem.Split('=')[1]);
                 }
-                else if (dataItem.Contains(";DESIGNSTAGE=")) { metaData.DesignStage = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains(";PROJECTLEAD=")) { metaData.ProjectLead = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains(";DESCRIPTION=")) { metaData.Description = dataItem.Split('=')[1]; }
-                else if (dataItem.Contains(";DISCIPLINE=")) { metaData.Discipline = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";DESIGNSTAGE=")) { metadata.DesignStage = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";PROJECTLEAD=")) { metadata.ProjectLead = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";DESCRIPTION=")) { metadata.Description = dataItem.Split('=')[1]; }
+                else if (dataItem.Contains(";DISCIPLINE=")) { metadata.Discipline = dataItem.Split('=')[1]; }
 
                 if (dataItem.Contains("CHECK1="))
                 {
@@ -120,12 +119,12 @@ namespace BH.Adapter.MidasCivil
                 }
             }
             reviews.Reverse();
-            metaData.Reviews = reviews;
+            metadata.Reviews = reviews;
 
-            List<MetaData> returnMetaData = new List<MetaData>(1);
-            returnMetaData.Add(metaData);
+            List<Metadata> returnMetadata = new List<Metadata>(1);
+            returnMetadata.Add(metadata);
 
-            return returnMetaData;
+            return returnMetadata;
         }
 
         /***************************************************/

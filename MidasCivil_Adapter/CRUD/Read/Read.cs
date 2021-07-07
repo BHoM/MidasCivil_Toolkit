@@ -46,8 +46,8 @@ namespace BH.Adapter.MidasCivil
         protected override IEnumerable<IBHoMObject> IRead(Type type, IList ids = null, ActionConfig actionConfig = null)
         {
             //Choose what to pull out depending on the type. Also see example methods below for pulling out bars and dependencies
-            if (type == typeof(MetaData))
-                return ReadMetaData(ids as dynamic);
+            if (type == typeof(Metadata))
+                return ReadMetadata(ids as dynamic);
             else if (type == typeof(Node))
                 return ReadNodes(ids as dynamic);
             else if (type == typeof(Bar))

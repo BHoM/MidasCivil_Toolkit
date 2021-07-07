@@ -46,9 +46,9 @@ namespace BH.Adapter.MidasCivil
 
             if (objects.Count() > 0)
             {
-                if (objects.First() is MetaData)
+                if (objects.First() is Metadata)
                 {
-                    success = CreateCollection(objects.First() as MetaData);
+                    success = CreateCollection(objects.First() as Metadata);
                 }
                 if (objects.First() is Node)
                 {

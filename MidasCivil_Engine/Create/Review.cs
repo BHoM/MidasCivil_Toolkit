@@ -38,7 +38,7 @@ namespace BH.Engine.Adapters.MidasCivil
 
         [Description("An object for creating a review to be inputted into metdata object.")]
         [Input("reviewer", "The person or organisation who has reviewed the model.")]
-        [Input("reviewDate", "The date when the model was reviewed by the reviewer."]
+        [Input("reviewDate", "The date when the model was reviewed by the reviewer.")]
         [Input("comments", "A list of comments made by the reviewer.")]
         [Input("approved", "True if the model is approved for its intended use.")]
         [Output("review", "An object containing the reviewer, review date, comments and whether the model has been approved.")]
