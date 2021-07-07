@@ -43,8 +43,6 @@ namespace BH.Adapter.MidasCivil
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
-            SetVersion(m_midasCivilVersion);
-            SetUnits(m_lengthUnit, m_forceUnit, m_temperatureUnit, m_heatUnit);
 
             if (objects.Count() > 0)
             {
@@ -146,4 +144,3 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
-
