@@ -29,7 +29,7 @@ namespace BH.Adapter.MidasCivil
     public static partial class Convert
     {
         /***************************************************/
-        /**** Private Methods                           ****/
+        /**** Public Methods                            ****/
         /***************************************************/
 
         private IEnumerable<MetaData> ToMetaData(string id = null)
