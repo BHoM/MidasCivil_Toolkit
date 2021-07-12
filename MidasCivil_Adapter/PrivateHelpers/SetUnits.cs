@@ -83,19 +83,7 @@ namespace BH.Adapter.MidasCivil
                 File.WriteAllText(path, units);
 
             return true;
-        }
-
-        private bool SetVersion(string version)
-        {
-            string path = CreateSectionFile("VERSION");
-
-            File.WriteAllText(path, $"*VERSION\n   {version}\n");
-
-            return true;
-        }
-
-
-        
+        }        
         /***************************************************/
 
     }
