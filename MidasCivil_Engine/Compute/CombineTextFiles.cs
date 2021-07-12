@@ -250,16 +250,16 @@ namespace BH.Engine.Adapters.MidasCivil
                     if (File.Exists(fName + ".mct"))
                     {
                         string fName_ = fName;
-                        while (i < 99)
+                        while (i > 0)
                         {
                             if (File.Exists(fName_ + ".mct"))
                             {
                                 i++;
                                 fName_ = $"{fName}_v{i}";
-                                Reflection.Compute.RecordNote($"A file already exists with the name {fName}, therefore a new version has been saved as {fName_}.mct.");
                             }
-                            else { fName = fName_; i = 100;}
+                            else { fName = fName_; i = -1;}
                         }
+                        Reflection.Compute.RecordNote($"A file with this name already exists, therefore a new version has been saved as {fName_}.mct.");
                     }
 
                     File.Copy(path, fName + ".mct", true);
