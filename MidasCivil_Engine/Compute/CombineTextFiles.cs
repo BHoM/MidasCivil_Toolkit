@@ -252,7 +252,12 @@ namespace BH.Engine.Adapters.MidasCivil
                         string fName_ = fName;
                         while (i < 99)
                         {
-                            if (File.Exists(fName_ + ".mct")) { i++; fName_ = $"{fName}_v{i}"; }
+                            if (File.Exists(fName_ + ".mct"))
+                            {
+                                i++;
+                                fName_ = $"{fName}_v{i}";
+                                Reflection.Compute.RecordNote($"A file already exists with the name {fName}, therefore a new version has been saved as {fName_}.mct.");
+                            }
                             else { fName = fName_; i = 100;}
                         }
                     }

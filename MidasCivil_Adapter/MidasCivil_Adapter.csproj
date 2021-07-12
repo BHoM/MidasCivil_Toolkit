@@ -283,7 +283,8 @@
     <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="PrivateHelpers\GetSectionMaterialCombinations.cs" />
     <Compile Include="PrivateHelpers\GetStiffnessVectorModulus.cs" />
-    <Compile Include="PrivateHelpers\MidasSettings.cs" />
+    <Compile Include="PrivateHelpers\SetVersion.cs" />
+    <Compile Include="PrivateHelpers\SetUnits.cs" />
     <Compile Include="Type\NextFreeId.cs" />
     <Compile Include="PrivateHelpers\GetPropertyAssignments.cs" />
     <Compile Include="PrivateHelpers\CompareGroup.cs" />
