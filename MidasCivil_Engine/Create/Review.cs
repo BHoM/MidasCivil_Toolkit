@@ -36,7 +36,7 @@ namespace BH.Engine.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Creates a Review object that stores review data that can be input in to MetaData.")]
+        [Description("Creates a Review object that stores review data that can be input in to Metadata.")]
         [Input("reviewer", "The person or organisation who has reviewed the model.")]
         [Input("reviewDate", "The date when the model was reviewed by the reviewer.")]
         [Input("comments", "A list of comments made by the reviewer.")]
