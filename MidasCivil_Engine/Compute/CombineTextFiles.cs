@@ -259,7 +259,6 @@ namespace BH.Engine.Adapters.MidasCivil
                             }
                             else { fName = fName_; i = -1;}
                         }
-                        Reflection.Compute.RecordNote($"A file with this name already exists, therefore a new version has been saved as {fName_}.mct.");
                     }
 
                     File.Copy(path, fName + ".mct", true);
@@ -306,4 +305,3 @@ namespace BH.Engine.Adapters.MidasCivil
 
     }
 }
-
