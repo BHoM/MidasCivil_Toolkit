@@ -36,7 +36,7 @@ namespace BH.Engine.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Creates a Metadataobject from a variety of inputs.")]
+        [Description("Creates a Metadata object from a variety of inputs.")]
         [Input("location", "Where the project is based.")]
         [Input("description", "A short description of the project and model.")]
         [Input("discipline", "The discipline responsible for the model.")]
@@ -78,4 +78,3 @@ namespace BH.Engine.Adapters.MidasCivil
 
     }
 }
-
