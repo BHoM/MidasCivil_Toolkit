@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning($"Unit input {force} not recognised using Newtons (N) instead");
+                    Engine.Reflection.Compute.RecordWarning($"Unit input {force} not recognised using Newtons (N) instead.");
                     units += "N" + ", ";
                 }
 
@@ -57,7 +57,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning($"Unit input {length} not recognised using meters (m) instead");
+                    Engine.Reflection.Compute.RecordWarning($"Unit input {length} not recognised using meters (m) instead.");
                     units += "M" + ", ";
                 }
 
@@ -67,7 +67,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning($"Unit input {heat} not recognised using kilojoules (kJ) instead");
+                    Engine.Reflection.Compute.RecordWarning($"Unit input {heat} not recognised using kilojoules (kJ) instead.");
                     units += "KJ" + ", ";
                 }
                 if (Array.Exists(temperatures, element => element == temperature))
@@ -76,7 +76,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning($"Unit input {temperature} not recognised using celcius (C) instead");
+                    Engine.Reflection.Compute.RecordWarning($"Unit input {temperature} not recognised using celcius (C) instead.");
                     units += "C";
                 }
                 units += "\n";
