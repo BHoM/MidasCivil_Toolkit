@@ -36,11 +36,10 @@ namespace BH.oM.Adapters.MidasCivil
         public virtual DateTime ReviewDate { get; set; }
 
         [Description("A list of comments made by the reviewer.")]
-        public virtual List<string> Comments { get; set; }
+        public virtual List<string> Comments { get; set; } = new List<string>();
 
         [Description("True if the model is approved for its intended use.")]
         public virtual bool Approved { get; set; }
 
     }
 }
-
