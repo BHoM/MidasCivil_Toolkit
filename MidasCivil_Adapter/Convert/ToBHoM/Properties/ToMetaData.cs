@@ -90,29 +90,21 @@ namespace BH.Adapter.MidasCivil
                 {
                     if (!dataItem.Contains("COMMENT=This Model Was Created Using BHoM Version:"))
                     {
+                        comments.Add(dataItem.Split('=')[1]);
                         if (!string.IsNullOrEmpty(review4.Reviewer))
                         {
-                            comments.Add(dataItem.Split('=')[1]);
                             review4.Comments = comments;
                         }
                         else if (!string.IsNullOrEmpty(review3.Reviewer))
                         {
-                            review3.Comments.Add(dataItem.Split('=')[1]);
                             review3.Comments = comments;
                         }
                         else if (!string.IsNullOrEmpty(review2.Reviewer))
                         {
-                            review2.Comments.Add(dataItem.Split('=')[1]);
                             review2.Comments = comments;
                         }
                         else if (!string.IsNullOrEmpty(review1.Reviewer))
                         {
-                            review1.Comments.Add(dataItem.Split('=')[1]);
-                            review1.Comments = comments;
-                        }
-                        else
-                        {
-                            review1.Reviewer = "Anonymous";
                             review1.Comments = comments;
                         }
                     }
