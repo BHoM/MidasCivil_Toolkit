@@ -48,12 +48,12 @@ namespace BH.Adapter.Adapters.MidasCivil
             midasMetadata.AppendLine($"TITLE={metadata.ProjectName}");
             midasMetadata.AppendLine($"ENGINEER={metadata.Author}");
             midasMetadata.AppendLine($"EDATE={metadata.CreationDate.ToString("yyyy-MM-dd")}");
-            midasMetadata.AppendLine($";DESCRIPTION={metadata.Description}");
+            midasMetadata.AppendLine($";DESCRIPTION={metadata.Description.Replace('*', '†').Replace($"{System.Environment.NewLine}"," ")}");
             midasMetadata.AppendLine($";DISCIPLINE={metadata.Discipline}");
 
             if(reviews.Count > 4)
             {
-                reviews.RemoveRange(1, reviews.Count - 2);
+                reviews.RemoveRange(1, reviews.Count - 3);
                 Engine.Reflection.Compute.RecordWarning("The number of reviews exceeds the limit of MidasCivil. Only the first, last and second to last reviews will be recorded.");
             }
             if(reviews.Count >= 1)
@@ -80,7 +80,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             foreach(string comment in reviews[reviews.Count - 1].Comments)
             {
-                midasMetadata.AppendLine($"COMMENT={comment}");
+                midasMetadata.AppendLine($"COMMENT={comment.Replace('*', '†').Replace($"{System.Environment.NewLine}", $"{System.Environment.NewLine}COMMENT=")}");
             }
 
             return midasMetadata;
