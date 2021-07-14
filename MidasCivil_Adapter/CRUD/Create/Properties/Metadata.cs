@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
 
             midasMetadata = Adapters.MidasCivil.Convert.FromMetadata(metadata);
 
-            File.WriteAllText(path, midasMetadata.ToString(), System.Text.ASCIIEncoding.UTF8);
+            File.WriteAllText(path, midasMetadata.ToString(), System.Text.Encoding.GetEncoding(1252));
 
             return true;
         }
