@@ -23,6 +23,7 @@
 using System.Text;
 using BH.oM.Adapters.MidasCivil;
 using System.Collections.Generic;
+using BH.Engine.Base;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -36,6 +37,8 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             StringBuilder midasMetadata = new StringBuilder();
             List<Review> reviews = metadata.Reviews;
+            reviews = reviews.ShallowClone();
+
             midasMetadata.AppendLine("*PROJINFO");
             midasMetadata.AppendLine($"PROJECT={metadata.ProjectNumber}");
             midasMetadata.AppendLine($";DESIGNSTAGE={metadata.DesignStage}");
