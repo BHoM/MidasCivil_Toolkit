@@ -90,8 +90,7 @@ namespace BH.Adapter.MidasCivil
 
                         loads = loads.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-                        File.Delete(path);
-                        File.WriteAllLines(path, loads.ToArray());
+                        WriteToANSI(path, loads);
                     }
                 }
             }

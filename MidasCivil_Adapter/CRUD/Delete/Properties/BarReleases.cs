@@ -80,8 +80,7 @@ namespace BH.Adapter.MidasCivil
 
                     releases = releases.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-                    File.Delete(path);
-                    File.WriteAllLines(path, releases.ToArray());
+                    WriteToANSI(path, releases);
                 }
             }
             return success;

@@ -83,8 +83,7 @@ namespace BH.Adapter.MidasCivil
 
                     thicknesses = thicknesses.Where(x => !string.IsNullOrEmpty(x)).ToList();
 
-                    File.Delete(path);
-                    File.WriteAllLines(path, thicknesses.ToArray());
+                    WriteToANSI(path, thicknesses);
                 }
             }
             return success;
