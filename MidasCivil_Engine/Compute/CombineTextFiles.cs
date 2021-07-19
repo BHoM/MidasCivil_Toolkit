@@ -130,7 +130,7 @@ namespace BH.Engine.Adapters.MidasCivil
 
                 List<string> loadcases = Directory.GetDirectories(directory).ToList();
 
-                using (var combined = File.Create(path))
+                using (FileStream combined = File.Create(path))
                 {
                     using (StreamWriter writer = new StreamWriter(combined, Encoding.GetEncoding(1252), 512000))
                     {

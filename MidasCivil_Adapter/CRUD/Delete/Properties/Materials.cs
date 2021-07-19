@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -46,7 +47,7 @@ namespace BH.Adapter.MidasCivil
 
                     List<int> indices = stringIndex.Select(x => int.Parse(x)).ToList();
 
-                    List<string> materials = File.ReadAllLines(path).ToList();
+                    List<string> materials = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
                     List<int> materialIndexes = new List<int>();
 
                     foreach (string material in materials)

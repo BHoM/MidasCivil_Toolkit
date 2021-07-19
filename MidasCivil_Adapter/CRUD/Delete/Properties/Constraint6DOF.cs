@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace BH.Adapter.MidasCivil
@@ -46,7 +47,7 @@ namespace BH.Adapter.MidasCivil
                 foreach (string path in paths)
                 {
                     List<string> names = ids.Cast<string>().ToList();
-                    List<string> constraints = File.ReadAllLines(path).ToList();
+                    List<string> constraints = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
                     List<string> constraintNames = new List<string>();
 
                     if (File.Exists(path))

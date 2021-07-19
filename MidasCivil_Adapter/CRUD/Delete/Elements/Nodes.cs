@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace BH.Adapter.MidasCivil
@@ -47,7 +48,7 @@ namespace BH.Adapter.MidasCivil
 
                     List<int> indices = stringIndex.Select(int.Parse).ToList();
 
-                    List<string> nodes = File.ReadAllLines(path).ToList();
+                    List<string> nodes = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
 
                     List<int> nodeIndexes = new List<int>();
                     foreach (string node in nodes)

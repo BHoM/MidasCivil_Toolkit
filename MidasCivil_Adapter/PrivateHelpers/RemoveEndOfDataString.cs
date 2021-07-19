@@ -22,6 +22,7 @@
 
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -33,7 +34,7 @@ namespace BH.Adapter.MidasCivil
 
         private void RemoveEndOfDataString(string path)
         {
-            string[] loads = File.ReadAllLines(path);
+            string[] loads = File.ReadAllLines(path, Encoding.GetEncoding(1252));
 
             for (int i = 0; i < loads.Length; i++)
             {
