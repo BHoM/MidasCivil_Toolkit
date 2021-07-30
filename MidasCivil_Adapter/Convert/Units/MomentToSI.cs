@@ -65,7 +65,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
-                            return moment.FromKilonewtonMetre();
+                            return moment.FromKilonewtonCentimetre();
                         case "CM":
                             return moment.FromKilonewtonCentimetre();
                         case "MM":

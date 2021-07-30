@@ -51,7 +51,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "CM":
                             return pressure.FromNewtonPerSquareCentimetre();
                         case "MM":
-                            return pressure.FromNewtonPerSquareMillimetre();
+                            return pressure.FromNewtonPerMillimetre();
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "IN":
@@ -82,7 +82,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
-                            return pressure.FromKilogramForcePerSquareMetre();
+                            return pressure.FromKilogramForcePerMetre();
                         case "CM":
                             return pressure.FromKilogramForcePerSquareCentimetre();
                         case "MM":
