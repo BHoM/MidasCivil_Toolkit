@@ -20,49 +20,26 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter.MidasCivil;
-using BH.oM.Geometry;
-using BH.Engine.Reflection;
-using BH.oM.Structure.Constraints;
-using BH.oM.Structure.Elements;
-using BH.Engine.Units;
+using BH.oM.Base;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 
-namespace BH.Adapter.Adapters.MidasCivil
+namespace BH.oM.Adapters.MidasCivil
 {
-    public static partial class Convert
+    public class Review : BHoMObject
     {
-        /***************************************************/
-        /**** Public Methods                            ****/
-        /***************************************************/
+        [Description("The person who has reviewed the model.")]
+        public virtual string Reviewer { get; set; }
 
-        public static double ForceToSI(this double force, string forceUnit)
-        {
-            switch (forceUnit)
-            {
-                case "N":
-                    break;
-                case "KN":
-                    return force.FromKilonewton();
-                case "KGF":
-                    return force.FromKilogramForce();
-                case "TONF":
-                    return force.FromTonneForce();
-                case "LBF":
-                    return force.FromPoundForce();
-                case "KIPS":
-                    return force.FromKilopoundForce();
-                default:
-                    Compute.RecordWarning("No force unit detected, MidasCivil force unit assumed to be set to metres. Therefore no unit conversion will occur. ");
-                    break;
-            }
+        [Description("The date when the model was reviewed by the reviewer.In the format yyyy-MM-dd, or DateTime object.")]
+        public virtual DateTime ReviewDate { get; set; }
 
-            return force;
-        }
+        [Description("A list of comments made by the reviewer.")]
+        public virtual List<string> Comments { get; set; } = new List<string>();
 
-        /***************************************************/
+        [Description("True if the model is approved for its intended use.")]
+        public virtual bool Approved { get; set; }
 
     }
 }
-

@@ -20,49 +20,43 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter.MidasCivil;
-using BH.oM.Geometry;
-using BH.Engine.Reflection;
-using BH.oM.Structure.Constraints;
-using BH.oM.Structure.Elements;
-using BH.Engine.Units;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
+using BH.oM.Adapters.MidasCivil;
+using System.Globalization;
+using BH.oM.Reflection.Attributes;
 
-namespace BH.Adapter.Adapters.MidasCivil
+
+namespace BH.Engine.Adapters.MidasCivil
 {
-    public static partial class Convert
+    public static partial class Create
     {
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static double ForceToSI(this double force, string forceUnit)
+        [Description("Creates a Review object that stores review data that can be input in to Metadata.")]
+        [Input("reviewer", "The person or organisation who has reviewed the model.")]
+        [Input("reviewDate", "The date when the model was reviewed by the reviewer.")]
+        [Input("comments", "A list of comments made by the reviewer.")]
+        [Input("approved", "True if the model is approved for its intended use.")]
+        [Output("review", "An object containing the reviewer, review date, comments and whether the model has been approved.")]
+        public static Review Review(string reviewer = null, DateTime? reviewDate = null, List<string> comments = null, bool approved = false)
         {
-            switch (forceUnit)
+            Review review = new Review();
+            review.Reviewer = reviewer;
+            if (reviewDate == null)
             {
-                case "N":
-                    break;
-                case "KN":
-                    return force.FromKilonewton();
-                case "KGF":
-                    return force.FromKilogramForce();
-                case "TONF":
-                    return force.FromTonneForce();
-                case "LBF":
-                    return force.FromPoundForce();
-                case "KIPS":
-                    return force.FromKilopoundForce();
-                default:
-                    Compute.RecordWarning("No force unit detected, MidasCivil force unit assumed to be set to metres. Therefore no unit conversion will occur. ");
-                    break;
+                review.ReviewDate = DateTime.Now;
             }
-
-            return force;
+            else
+            {
+                review.ReviewDate = (DateTime)reviewDate;
+            }
+            review.Comments = comments;
+            review.Approved = approved;
+            return review;
         }
-
-        /***************************************************/
-
     }
 }
-

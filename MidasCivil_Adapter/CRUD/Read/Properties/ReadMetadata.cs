@@ -20,47 +20,21 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.Adapter.MidasCivil;
-using BH.oM.Geometry;
-using BH.Engine.Reflection;
-using BH.oM.Structure.Constraints;
-using BH.oM.Structure.Elements;
-using BH.Engine.Units;
 using System.Collections.Generic;
-using System.Linq;
+using BH.oM.Adapters.MidasCivil;
 
-namespace BH.Adapter.Adapters.MidasCivil
+namespace BH.Adapter.MidasCivil
 {
-    public static partial class Convert
+    public partial class MidasCivilAdapter
     {
         /***************************************************/
-        /**** Public Methods                            ****/
+        /**** Private Methods                           ****/
         /***************************************************/
 
-        public static double ForceToSI(this double force, string forceUnit)
+        private IEnumerable<Metadata> ReadMetadata(List<string> ids = null)
         {
-            switch (forceUnit)
-            {
-                case "N":
-                    break;
-                case "KN":
-                    return force.FromKilonewton();
-                case "KGF":
-                    return force.FromKilogramForce();
-                case "TONF":
-                    return force.FromTonneForce();
-                case "LBF":
-                    return force.FromPoundForce();
-                case "KIPS":
-                    return force.FromKilopoundForce();
-                default:
-                    Compute.RecordWarning("No force unit detected, MidasCivil force unit assumed to be set to metres. Therefore no unit conversion will occur. ");
-                    break;
-            }
-
-            return force;
+                return Convert.ToMetadata(GetSectionText("PROJINFO"));
         }
-
         /***************************************************/
 
     }

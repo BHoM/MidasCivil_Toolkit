@@ -258,7 +258,9 @@ namespace BH.Engine.Adapters.MidasCivil
                                 i++;
                                 fName_ = $"{fName}_v{i}";
                             }
+
                             else { fName = fName_; i = -1; }
+
                         }
                     }
 

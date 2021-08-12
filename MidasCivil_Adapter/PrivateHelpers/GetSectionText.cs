@@ -40,8 +40,13 @@ namespace BH.Adapter.MidasCivil
 
             if (File.Exists(path))
             {
-                sectionText = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                sectionText = File.ReadAllLines(path, m_encoding).ToList();
                 CleanString(ref sectionText);
+
+                if (section != "PROJINFO")
+                {
+                    CleanString(ref sectionText);
+                }
             }
             return sectionText;
         }
