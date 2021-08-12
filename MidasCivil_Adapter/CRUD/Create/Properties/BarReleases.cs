@@ -51,7 +51,7 @@ namespace BH.Adapter.MidasCivil
                 }
             }
 
-            File.AppendAllLines(path, midasBarReleases, Encoding.GetEncoding(1252));
+            File.AppendAllLines(path, midasBarReleases, m_encoding);
 
             return true;
         }

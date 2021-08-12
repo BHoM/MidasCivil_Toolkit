@@ -59,7 +59,7 @@ namespace BH.Adapter.MidasCivil
                 midasElements.Add(Adapters.MidasCivil.Convert.FromBar(bar));
             }
 
-            File.AppendAllLines(path, midasElements, Encoding.GetEncoding(1252));
+            File.AppendAllLines(path, midasElements, m_encoding);
 
             return true;
         }
@@ -80,7 +80,7 @@ namespace BH.Adapter.MidasCivil
 
             CreateGroups(meshes);
 
-            File.AppendAllLines(path, midasElements, Encoding.GetEncoding(1252));
+            File.AppendAllLines(path, midasElements, m_encoding);
 
             return true;
         }

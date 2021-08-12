@@ -45,7 +45,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     List<string> names = ids.Cast<string>().ToList();
 
-                    List<string> loadcases = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                    List<string> loadcases = File.ReadAllLines(path, m_encoding).ToList();
 
                     List<string> loadcaseNames = new List<string>();
                     foreach (string loadcase in loadcases)

@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
                 midasLoadCases.Add(Adapters.MidasCivil.Convert.FromLoadcase(loadcase));
             }
 
-            File.AppendAllLines(path, midasLoadCases, Encoding.GetEncoding(1252));
+            File.AppendAllLines(path, midasLoadCases, m_encoding);
 
             return true;
         }

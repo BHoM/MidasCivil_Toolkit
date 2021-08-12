@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
         {
             string path = m_directory + "\\TextFiles\\" + section + ".txt";
 
-            using (StreamWriter sectionFile = new StreamWriter(path, false, Encoding.GetEncoding(1252), 65536))
+            using (StreamWriter sectionFile = new StreamWriter(path, false, m_encoding, 65536))
             {
                 string trimText = "";
                 foreach (string text in sectionText)
@@ -60,7 +60,7 @@ namespace BH.Adapter.MidasCivil
         {
             string path = subDirectory + "\\" + section + ".txt";
 
-            using (StreamWriter sectionFile = new StreamWriter(path, false, Encoding.GetEncoding(1252), 65536))
+            using (StreamWriter sectionFile = new StreamWriter(path, false, m_encoding, 65536))
             {
                 string trimText = "";
                 foreach (string text in sectionText)

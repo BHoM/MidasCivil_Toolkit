@@ -112,7 +112,7 @@ namespace BH.Adapter.MidasCivil
 
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
                 RemoveEndOfDataString(barLoadPath);
-                File.AppendAllLines(barLoadPath, midasBarLoads, Encoding.GetEncoding(1252));
+                File.AppendAllLines(barLoadPath, midasBarLoads, m_encoding);
             }
             return true;
         }

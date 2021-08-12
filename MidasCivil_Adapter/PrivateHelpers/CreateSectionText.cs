@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
 
             if (!File.Exists(path))
             {
-                using (StreamWriter sectionText = new StreamWriter(path, false, Encoding.GetEncoding(1252), 65536))
+                using (StreamWriter sectionText = new StreamWriter(path, false, m_encoding, 65536))
                 {
                     if (section != "SELFWEIGHT")
                     {
@@ -58,12 +58,12 @@ namespace BH.Adapter.MidasCivil
             }
             else
             {
-                List<string> readSection = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                List<string> readSection = File.ReadAllLines(path, m_encoding).ToList();
                 if (readSection.Count != 0)
                 {
                     if (!(readSection[0].Contains("*" + section)))
                     {
-                        using (StreamWriter sectionText = new StreamWriter(path, false, Encoding.GetEncoding(1252), 65536))
+                        using (StreamWriter sectionText = new StreamWriter(path, false, m_encoding, 65536))
                         {
                             if (section != "SELFWEIGHT")
                             {

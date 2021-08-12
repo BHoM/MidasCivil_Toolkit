@@ -33,7 +33,7 @@ namespace BH.Adapter.MidasCivil
 
         private void CompareGroup(string group, string path)
         {
-            string[] groups = File.ReadAllLines(path, Encoding.GetEncoding(1252));
+            string[] groups = File.ReadAllLines(path, m_encoding);
             bool existing = false;
 
             for (int i = 0; i < groups.Length; i++)
@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
 
             if (!existing)
             {
-                using (StreamWriter sw = new StreamWriter(path, append: true))
+                using (StreamWriter sw = new StreamWriter(path, true, m_encoding))
                 {
                     sw.WriteLine(group);
                 }

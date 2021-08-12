@@ -55,7 +55,7 @@ namespace BH.Adapter.MidasCivil
 
                 RemoveEndOfDataString(PointLoadPath);
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
-                File.AppendAllLines(PointLoadPath, midasPointLoads, Encoding.GetEncoding(1252));
+                File.AppendAllLines(PointLoadPath, midasPointLoads, m_encoding);
             }
 
             return true;

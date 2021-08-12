@@ -34,7 +34,7 @@ namespace BH.Adapter.MidasCivil
 
         private void RemoveEndOfDataString(string path)
         {
-            string[] loads = File.ReadAllLines(path, Encoding.GetEncoding(1252));
+            string[] loads = File.ReadAllLines(path, m_encoding);
 
             for (int i = 0; i < loads.Length; i++)
             {

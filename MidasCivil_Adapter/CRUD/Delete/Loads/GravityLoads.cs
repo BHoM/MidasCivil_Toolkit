@@ -48,7 +48,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (File.Exists(path))
                     {
-                        List<string> loads = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                        List<string> loads = File.ReadAllLines(path, m_encoding).ToList();
 
                         List<string> loadNames = new List<string>();
                         foreach (string load in loads)

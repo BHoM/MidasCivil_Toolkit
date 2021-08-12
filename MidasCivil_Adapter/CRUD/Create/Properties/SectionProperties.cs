@@ -45,7 +45,7 @@ namespace BH.Adapter.MidasCivil
                     midasSectionProperties.AddRange(midasSectionProperty);
             }
 
-            File.AppendAllLines(path, midasSectionProperties, Encoding.GetEncoding(1252));
+            File.AppendAllLines(path, midasSectionProperties, m_encoding);
 
             return true;
         }

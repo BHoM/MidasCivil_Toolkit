@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
                 midasLoadCombinations.AddRange(Adapters.MidasCivil.Convert.FromLoadCombination(loadCombination, m_midasCivilVersion));
             }
 
-            File.AppendAllLines(path, midasLoadCombinations, Encoding.GetEncoding(1252));
+            File.AppendAllLines(path, midasLoadCombinations, m_encoding);
 
             return true;
         }

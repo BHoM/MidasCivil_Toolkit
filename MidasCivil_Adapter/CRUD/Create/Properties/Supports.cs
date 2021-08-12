@@ -64,8 +64,8 @@ namespace BH.Adapter.MidasCivil
                 }
             }
 
-            File.AppendAllLines(supportPath, midasSupports, Encoding.GetEncoding(1252));
-            File.AppendAllLines(springPath, midasSprings, Encoding.GetEncoding(1252));
+            File.AppendAllLines(supportPath, midasSupports, m_encoding);
+            File.AppendAllLines(springPath, midasSprings, m_encoding);
 
             return true;
         }

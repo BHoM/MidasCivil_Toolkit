@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
                 foreach (string path in paths)
                 {
                     List<string> names = ids.Cast<string>().ToList();
-                    List<string> constraints = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                    List<string> constraints = File.ReadAllLines(path, m_encoding).ToList();
                     List<string> constraintNames = new List<string>();
 
                     if (File.Exists(path))

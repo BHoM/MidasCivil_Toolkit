@@ -43,7 +43,7 @@ namespace BH.Adapter.MidasCivil
                 midasMaterials.Add(Adapters.MidasCivil.Convert.FromMaterial(material, m_forceUnit, m_lengthUnit, m_temperatureUnit, m_materialCharacterLimit));
             }
 
-            File.AppendAllLines(path, midasMaterials, Encoding.GetEncoding(1252));
+            File.AppendAllLines(path, midasMaterials, m_encoding);
 
             return true;
         }

@@ -44,7 +44,7 @@ namespace BH.Adapter.MidasCivil
                 if (File.Exists(path))
                 {
                     List<string> names = ids.Cast<string>().ToList();
-                    List<string> links = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                    List<string> links = File.ReadAllLines(path, m_encoding).ToList();
                     List<string> linkNames = new List<string>();
 
                     foreach (string link in links)

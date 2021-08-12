@@ -44,7 +44,7 @@ namespace BH.Adapter.MidasCivil
                 if (File.Exists(path))
                 {
                     List<string> names = ids.Cast<string>().ToList();
-                    List<string> releases = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                    List<string> releases = File.ReadAllLines(path, m_encoding).ToList();
                     List<string> releaseNames = new List<string>();
 
                     for (int i = 0; i < releases.Count; i++)

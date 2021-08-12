@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
 
                     List<int> indices = stringIndex.Select(x => int.Parse(x)).ToList();
 
-                    List<string> materials = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                    List<string> materials = File.ReadAllLines(path, m_encoding).ToList();
                     List<int> materialIndexes = new List<int>();
 
                     foreach (string material in materials)

@@ -101,7 +101,7 @@ namespace BH.Adapter.MidasCivil
             string path = CreateSectionFile("GROUP");
 
 
-            using (StreamWriter sw = new StreamWriter(path, true, Encoding.GetEncoding(1252), 65536))
+            using (StreamWriter sw = new StreamWriter(path, true, m_encoding, 65536))
             {
                 foreach (string key in totalKeys)
                 {
@@ -184,7 +184,7 @@ namespace BH.Adapter.MidasCivil
             string path = CreateSectionFile("GROUP");
 
 
-            using (StreamWriter sw = new StreamWriter(path, true, Encoding.GetEncoding(1252), 65536))
+            using (StreamWriter sw = new StreamWriter(path, true, m_encoding, 65536))
             {
                 foreach (string key in totalKeys)
                 {
@@ -283,7 +283,7 @@ namespace BH.Adapter.MidasCivil
             string path = CreateSectionFile("GROUP");
 
 
-            using (StreamWriter sw = new StreamWriter(path, true, Encoding.GetEncoding(1252), 65536))
+            using (StreamWriter sw = new StreamWriter(path, true, m_encoding, 65536))
             {
                 foreach (string key in totalKeys)
                 {

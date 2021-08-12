@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
                 midasRigidLinks.Add(Adapters.MidasCivil.Convert.FromRigidLink(link));
             }
 
-            File.AppendAllLines(path, midasRigidLinks, Encoding.GetEncoding(1252));
+            File.AppendAllLines(path, midasRigidLinks, m_encoding);
 
             return true;
         }

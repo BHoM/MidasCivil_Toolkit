@@ -61,7 +61,7 @@ namespace BH.Adapter.MidasCivil
                 midasNodes.Add(Adapters.MidasCivil.Convert.FromNode(node, m_lengthUnit));
             }
 
-            File.AppendAllLines(nodePath, midasNodes, Encoding.GetEncoding(1252));
+            File.AppendAllLines(nodePath, midasNodes, m_encoding);
 
             return true;
         }

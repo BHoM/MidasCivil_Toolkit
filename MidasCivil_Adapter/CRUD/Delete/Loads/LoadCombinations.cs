@@ -45,7 +45,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     List<string> names = ids.Cast<string>().ToList();
 
-                    List<string> loadCombinations = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                    List<string> loadCombinations = File.ReadAllLines(path, m_encoding).ToList();
 
                     List<string> loadCombinationNames = new List<string>();
 

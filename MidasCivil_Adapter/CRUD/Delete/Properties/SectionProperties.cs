@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
 
                     List<int> indices = stringIndex.Select(x => int.Parse(x)).ToList();
 
-                    List<string> sectionProperties = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                    List<string> sectionProperties = File.ReadAllLines(path, m_encoding).ToList();
                     List<int> sectionIndexes = new List<int>();
 
                     foreach (string sectionProperty in sectionProperties)

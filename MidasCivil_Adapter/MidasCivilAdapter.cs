@@ -34,6 +34,7 @@ using BH.oM.Structure.Loads;
 using BH.Engine.Adapters.MidasCivil.Comparer;
 using BH.Engine.Structure;
 using BH.oM.Adapter.Commands;
+using System.Text;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -114,6 +115,7 @@ namespace BH.Adapter.MidasCivil
         private string m_lengthUnit = "M";
         private string m_heatUnit = "KJ";
         private string m_temperatureUnit = "C";
+        private Encoding m_encoding = Encoding.GetEncoding(1252);
         private readonly int m_groupCharacterLimit = 80;
         private readonly int m_sectionPropertyCharacterLimit = 28;
         private readonly int m_materialCharacterLimit = 15;

@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
 
                     List<int> indices = stringIndex.Select(int.Parse).ToList();
 
-                    List<string> thicknesses = File.ReadAllLines(path, Encoding.GetEncoding(1252)).ToList();
+                    List<string> thicknesses = File.ReadAllLines(path, m_encoding).ToList();
 
                     List<int> thicknessIndexes = new List<int>();
 

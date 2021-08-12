@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
 
                 midasGravityLoads.AddRange(Adapters.MidasCivil.Convert.FromGravityLoad(gravityLoad));
 
-                string[] exisitingGravityLoads = File.ReadAllLines(gravityLoadPath, Encoding.GetEncoding(1252));
+                string[] exisitingGravityLoads = File.ReadAllLines(gravityLoadPath, m_encoding);
                 bool containsGravity = false;
 
                 foreach (string existingGravityLoad in exisitingGravityLoads)
@@ -61,7 +61,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     CompareLoadGroup(midasLoadGroup, loadGroupPath);
                     RemoveEndOfDataString(gravityLoadPath);
-                    File.AppendAllLines(gravityLoadPath, midasGravityLoads, Encoding.GetEncoding(1252));
+                    File.AppendAllLines(gravityLoadPath, midasGravityLoads, m_encoding);
                 }
             }
 

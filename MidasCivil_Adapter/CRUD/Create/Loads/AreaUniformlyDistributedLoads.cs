@@ -79,7 +79,7 @@ namespace BH.Adapter.MidasCivil
 
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
                 RemoveEndOfDataString(FEMeshLoadPath);
-                File.AppendAllLines(FEMeshLoadPath, midasPressureLoads, Encoding.GetEncoding(1252));
+                File.AppendAllLines(FEMeshLoadPath, midasPressureLoads, m_encoding);
             }
 
             return true;
