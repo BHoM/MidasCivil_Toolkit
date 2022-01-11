@@ -83,7 +83,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateSurfaceProfile(LoadingPanelProperty bhomSurfaceProperty, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("LoadingPanelProperty not supported in MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("LoadingPanelProperty not supported in MidasCivil_Toolkit");
             return null;
         }
 
@@ -91,7 +91,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateSurfaceProfile(Ribbed bhomSurfaceProperty, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("Ribbed not supported in MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("Ribbed not supported in MidasCivil_Toolkit");
             return null;
         }
 
@@ -99,7 +99,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateSurfaceProfile(Waffle bhomSurfaceProperty, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("Waffle not supported in MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("Waffle not supported in MidasCivil_Toolkit");
             return null;
         }
 

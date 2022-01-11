@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
             objects.AddRange(ReadBars());
             objects.AddRange(ReadFEMeshes());
 
-            Engine.Reflection.Compute.RecordWarning("Note: Midas applies Self Weight to all objects in a given loadcase");
+            Engine.Base.Compute.RecordWarning("Note: Midas applies Self Weight to all objects in a given loadcase");
 
             string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 

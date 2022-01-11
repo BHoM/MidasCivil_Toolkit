@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.ComponentModel;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Adapters.MidasCivil
 {
@@ -48,7 +48,7 @@ namespace BH.Engine.Adapters.MidasCivil
                 DateTime Date = DateTime.Now;
                 string intro = ";---------------------------------------------------------------------------"
                     + "\n;   MIDAS/Civil Text(MCT) File"
-                    + $"\n;   Created using the BHoM v{BH.Engine.Reflection.Query.BHoMVersion()}"
+                    + $"\n;   Created using the BHoM v{BH.Engine.Base.Query.BHoMVersion()}"
                     + $"\n;   Date: {Date.ToString("yyyy-MM-dd")}"
                     + "\n;---------------------------------------------------------------------------\n\n";
 
@@ -118,7 +118,7 @@ namespace BH.Engine.Adapters.MidasCivil
                         foreach (string dependent in dependents[i])
                         {
                             if (typeNames.Contains(dependent))
-                                Reflection.Compute.RecordError(dependent + " must have a " + independents[i] + " file associated with it");
+                                Base.Compute.RecordError(dependent + " must have a " + independents[i] + " file associated with it");
                         }
                     }
                 }

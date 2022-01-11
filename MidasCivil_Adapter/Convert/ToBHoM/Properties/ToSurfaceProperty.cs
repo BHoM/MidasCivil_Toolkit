@@ -59,7 +59,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             constantThickness.SetAdapterId(typeof(MidasCivilId), split[0].Trim());
 
             if (split[5].Trim() == "YES")
-                Engine.Reflection.Compute.RecordWarning("SurfaceProperty objects do not have offsets implemented so this information will be lost");
+                Engine.Base.Compute.RecordWarning("SurfaceProperty objects do not have offsets implemented so this information will be lost");
 
             return constantThickness;
         }

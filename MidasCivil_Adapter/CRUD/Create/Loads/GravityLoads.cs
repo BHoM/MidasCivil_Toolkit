@@ -55,7 +55,7 @@ namespace BH.Adapter.MidasCivil
                 }
 
                 if (containsGravity)
-                    Engine.Reflection.Compute.RecordError("Midas only supports one GravityLoad per loadcase");
+                    Engine.Base.Compute.RecordError("Midas only supports one GravityLoad per loadcase");
                 else
                 {
                     CompareLoadGroup(midasLoadGroup, loadGroupPath);

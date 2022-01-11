@@ -56,7 +56,7 @@ namespace BH.Adapter.MidasCivil
 
                 if (type == "STIFFENED")
                 {
-                    Engine.Reflection.Compute.RecordWarning("Stiffened sections not supported in MidasCivil_Toolkit");
+                    Engine.Base.Compute.RecordWarning("Stiffened sections not supported in MidasCivil_Toolkit");
 
                     i = i + 2;
                 }

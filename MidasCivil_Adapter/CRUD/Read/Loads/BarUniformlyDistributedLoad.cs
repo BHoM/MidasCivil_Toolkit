@@ -56,7 +56,7 @@ namespace BH.Adapter.MidasCivil
 
                 if (barUniformlyDistributedLoadText.Contains("LINE"))
                 {
-                    Engine.Reflection.Compute.RecordWarning("MidasCivil_Toolkit does not support line loads");
+                    Engine.Base.Compute.RecordWarning("MidasCivil_Toolkit does not support line loads");
                 }
 
                 List<string> barUniformLoads = barUniformlyDistributedLoadText.Where(x => x.Contains("UNILOAD")).ToList();

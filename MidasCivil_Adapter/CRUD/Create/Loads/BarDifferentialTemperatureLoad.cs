@@ -45,7 +45,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if (barDifferentialTemperatureLoad.TemperatureProfile.Keys.Count > 21)
                 {
-                    Engine.Reflection.Compute.RecordError("MidasCivil can only parse BarDifferentialTemperatureLoads with a maximum of 20 positions.");
+                    Engine.Base.Compute.RecordError("MidasCivil can only parse BarDifferentialTemperatureLoads with a maximum of 20 positions.");
                     continue;
                 }
                 List<string> midasTemperatureLoads = new List<string>();
@@ -53,7 +53,7 @@ namespace BH.Adapter.MidasCivil
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barDifferentialTemperatureLoad);
                 if (barDifferentialTemperatureLoad.Objects.Elements.Any(x => x.SectionProperty == null))
                 {
-                    Engine.Reflection.Compute.RecordError("Section Property is required for inputting differential temperature load");
+                    Engine.Base.Compute.RecordError("Section Property is required for inputting differential temperature load");
                     continue;
                 }
                 var groupedBars = barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty.Name);

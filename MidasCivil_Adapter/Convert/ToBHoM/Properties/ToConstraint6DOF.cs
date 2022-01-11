@@ -62,7 +62,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 if (!(delimitted[1].Trim() == "LINEAR"))
                 {
-                    Engine.Reflection.Compute.RecordWarning(
+                    Engine.Base.Compute.RecordWarning(
                         "MidasCivil_Toolkit does not support tension/compression only springs or multi-linear springs");
                     return null;
                 }

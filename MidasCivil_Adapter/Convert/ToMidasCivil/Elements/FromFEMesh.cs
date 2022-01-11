@@ -61,7 +61,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                 if (meshFace.NodeListIndices.Count < 3)
                 {
-                    BH.Engine.Reflection.Compute.RecordError("Cannot push a FEMesh with less than three nodes");
+                    BH.Engine.Base.Compute.RecordError("Cannot push a FEMesh with less than three nodes");
                 }
 
                 if (meshFace.NodeListIndices.Count == 4)

@@ -73,7 +73,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     }
                     else
                     {
-                        Engine.Reflection.Compute.RecordWarning(
+                        Engine.Base.Compute.RecordWarning(
                                      "Unsupported DOFType in " + new string(constraint6DOF.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) + " assumed to be" + DOFType.Free);
                         support = support + "0";
                     }
