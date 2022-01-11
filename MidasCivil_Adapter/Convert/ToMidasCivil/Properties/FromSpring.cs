@@ -97,14 +97,14 @@ namespace BH.Adapter.Adapters.MidasCivil
                     {
                         stiffness.Add(ForcePerLengthFromSI(1E17,forceUnit, lengthUnit));
                         if (!(springs[i] == ForcePerLengthFromSI(1E17, forceUnit, lengthUnit)))
-                            Engine.Reflection.Compute.RecordWarning(
+                            Engine.Base.Compute.RecordWarning(
                                 DOFType.Fixed + " used, this will overwrite the spring stiffness with 1E+17 N/m");
                     }
                     else
                     {
                         stiffness.Add(MomentFromSI(1E19, forceUnit, lengthUnit));
                         if (!(springs[i] == MomentFromSI(1E19, forceUnit, lengthUnit)))
-                            Engine.Reflection.Compute.RecordWarning(
+                            Engine.Base.Compute.RecordWarning(
                                 DOFType.Fixed + " used, this will overwrite the spring stiffness with 1E+019 Nm/rad");
                     }
                 }
@@ -137,7 +137,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 if (!(MidasCivilAdapter.GetSupportedDOFType(freedom)))
                 {
-                    Engine.Reflection.Compute.RecordWarning(
+                    Engine.Base.Compute.RecordWarning(
                         "Unsupported DOFType in " + new string(constraint6DOF.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) + " assumed to be" + DOFType.Fixed);
                     support = support + "YES,";
                 }

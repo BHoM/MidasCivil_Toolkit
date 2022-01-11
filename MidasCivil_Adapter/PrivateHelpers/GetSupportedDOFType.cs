@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
                 case DOFType.Spring:
                     return true;
                 default:
-                    Engine.Reflection.Compute.RecordWarning(freedom.ToString() + " not supported in MidasCivil_Toolkit");
+                    Engine.Base.Compute.RecordWarning(freedom.ToString() + " not supported in MidasCivil_Toolkit");
                     return false;
             }
         }

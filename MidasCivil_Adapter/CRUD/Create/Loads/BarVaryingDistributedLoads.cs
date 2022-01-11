@@ -44,13 +44,13 @@ namespace BH.Adapter.MidasCivil
             {
                 if (!barVaryingDistributedLoad.RelativePositions)
                 {
-                    Engine.Reflection.Compute.RecordError("The midas adapter can only handle BarVaryingDistributedLoads with relative positions. Please update the loads to be set with this format.");
+                    Engine.Base.Compute.RecordError("The midas adapter can only handle BarVaryingDistributedLoads with relative positions. Please update the loads to be set with this format.");
                     continue;
                 }
 
                 if (barVaryingDistributedLoad.StartPosition >= barVaryingDistributedLoad.EndPosition)
                 {
-                    Engine.Reflection.Compute.RecordError("Midas civil only supports start positions less than end positions for BarVaryingDistributedLoads.");
+                    Engine.Base.Compute.RecordError("Midas civil only supports start positions less than end positions for BarVaryingDistributedLoads.");
                     continue;
                 }
 

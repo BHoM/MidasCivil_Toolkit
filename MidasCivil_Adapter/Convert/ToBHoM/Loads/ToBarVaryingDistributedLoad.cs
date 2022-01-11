@@ -124,7 +124,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             if (double.Parse(delimitted[13].Trim()) != 0 || double.Parse(delimitted[15].Trim()) != 0)
             {
-                Engine.Reflection.Compute.RecordWarning("BHoM Bar Varying Distributed Load does not support non trapezoidal varying loads");
+                Engine.Base.Compute.RecordWarning("BHoM Bar Varying Distributed Load does not support non trapezoidal varying loads");
             }
 
             string name;

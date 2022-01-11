@@ -23,7 +23,7 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Adapters.MidasCivil
 {
@@ -61,7 +61,7 @@ namespace BH.Engine.Adapters.MidasCivil
             }
             else
             {
-                Engine.Reflection.Compute.RecordError("Date format not recognised please use yyyy-MM-dd format.");
+                Engine.Base.Compute.RecordError("Date format not recognised please use yyyy-MM-dd format.");
                 return DateTime.MinValue;
             }
         }

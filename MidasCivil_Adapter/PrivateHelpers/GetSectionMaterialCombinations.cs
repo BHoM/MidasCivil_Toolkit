@@ -94,7 +94,7 @@ namespace BH.Adapter.MidasCivil
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericOrthotropicSection);
                         break;
                     default:
-                        Engine.Reflection.Compute.RecordError(material.GetType().ToString().Split('.').Last() + "not recognised");
+                        Engine.Base.Compute.RecordError(material.GetType().ToString().Split('.').Last() + "not recognised");
                         break;
                 }
             }

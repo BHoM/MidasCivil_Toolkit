@@ -72,7 +72,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (numberColumns == 16)
                     {
-                        Engine.Reflection.Compute.RecordWarning("Library sections are not yet supported in the MidasCivil_Toolkit");
+                        Engine.Base.Compute.RecordWarning("Library sections are not yet supported in the MidasCivil_Toolkit");
                     }
                     else
                     {
@@ -100,7 +100,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning(type + " not supported in the MidasCivil_Toolkit");
+                    Engine.Base.Compute.RecordWarning(type + " not supported in the MidasCivil_Toolkit");
                 }
 
                 if (bhomSectionProperty != null)

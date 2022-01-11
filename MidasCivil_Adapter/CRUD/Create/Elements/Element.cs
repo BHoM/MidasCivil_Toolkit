@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if (new string(bar.Release.DescriptionOrName().Replace(",", "").Take(m_groupCharacterLimit).ToArray()) != "FixFix" && bar.FEAType == BarFEAType.TensionOnly)
                 {
-                    Engine.Reflection.Compute.RecordError("Tension only elements cannot support bar releases in Midas");
+                    Engine.Base.Compute.RecordError("Tension only elements cannot support bar releases in Midas");
                 }
 
                 if (!(bar.Release == null) && new string(bar.Release.DescriptionOrName().Replace(",", "").Take(m_groupCharacterLimit).ToArray()) != "FixFix")

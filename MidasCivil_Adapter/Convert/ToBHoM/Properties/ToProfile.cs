@@ -111,12 +111,12 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                     if(Math.Abs(topFlangeWidth - bottomFlangeWidth) > Tolerance.Distance && bottomFlangeWidth > Tolerance.Distance)
                     {
-                        Engine.Reflection.Compute.RecordWarning("Asymmetric channel sections are not yet supported by the BHoM. The top flange width will be used for the profile.");
+                        Engine.Base.Compute.RecordWarning("Asymmetric channel sections are not yet supported by the BHoM. The top flange width will be used for the profile.");
                     }
                     
                     if(Math.Abs(topFlangeThickness - bottomFlangeThickness) > Tolerance.Distance && bottomFlangeThickness > Tolerance.Distance)
                     {
-                        Engine.Reflection.Compute.RecordWarning("Asymmetric channel sections are not yet supported by the BHoM. The top flange thickness will be used for the profile.");
+                        Engine.Base.Compute.RecordWarning("Asymmetric channel sections are not yet supported by the BHoM. The top flange thickness will be used for the profile.");
                     }
 
 
