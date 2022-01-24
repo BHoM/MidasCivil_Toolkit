@@ -76,7 +76,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 name = delimitted[4].Trim();
             }
 
-            RigidLink bhomRigidLink = Engine.Structure.Create.RigidLink(primaryNode, secondaryNodes, constraint);
+            RigidLink bhomRigidLink = new RigidLink { PrimaryNode = primaryNode, SecondaryNodes = secondaryNodes, Constraint = constraint };
             bhomRigidLink.Name = name;
             bhomRigidLink.SetAdapterId(typeof(MidasCivilId), name);
 

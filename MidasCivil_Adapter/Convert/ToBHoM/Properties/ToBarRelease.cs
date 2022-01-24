@@ -66,7 +66,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 releaseName = "BR" + count.ToString();
             }
 
-            BarRelease bhomBarRelease = Engine.Structure.Create.BarRelease(startConstraint, endConstraint, releaseName);
+            BarRelease bhomBarRelease = new BarRelease { StartRelease = startConstraint, EndRelease = endConstraint, Name = releaseName };
             bhomBarRelease.SetAdapterId(typeof(MidasCivilId), bhomBarRelease.Name);
 
             return bhomBarRelease;
