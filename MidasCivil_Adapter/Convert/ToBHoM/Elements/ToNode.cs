@@ -41,14 +41,15 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             List<string> delimitted = node.Split(',').ToList();
 
-            Node bhomNode = Engine.Structure.Create.Node(
-                new Point
+            Node bhomNode = new Node
+            {
+                Position = new Point
                 {
                     X = double.Parse(delimitted[1].Trim()).LengthToSI(lengthUnit),
                     Y = double.Parse(delimitted[2].Trim()).LengthToSI(lengthUnit),
                     Z = double.Parse(delimitted[3].Trim()).LengthToSI(lengthUnit)
                 }
-                );
+            };
 
             bhomNode.SetAdapterId(typeof(MidasCivilId), delimitted[0].Trim());
             int bhomID = bhomNode.AdapterId<int>(typeof(MidasCivilId));

@@ -94,7 +94,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             double orientationAngle = double.Parse(delimitted[6].Trim());
 
-            Bar bhomBar = Engine.Structure.Create.Bar(startNode, endNode, sectionProperty, orientationAngle, barRelease, feaType);
+            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, SectionProperty = sectionProperty, OrientationAngle = orientationAngle, Release = barRelease, FEAType = feaType };
             bhomBar.SetAdapterId(typeof(MidasCivilId), bhomID);
 
             return bhomBar;
