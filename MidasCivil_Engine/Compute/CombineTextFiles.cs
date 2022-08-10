@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -25,8 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.ComponentModel;
-using BH.oM.Reflection.Attributes;
-using System.Text;
+using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Adapters.MidasCivil
 {
@@ -49,7 +48,7 @@ namespace BH.Engine.Adapters.MidasCivil
                 DateTime Date = DateTime.Now;
                 string intro = ";---------------------------------------------------------------------------"
                     + "\n;   MIDAS/Civil Text(MCT) File"
-                    + $"\n;   Created using the BHoM v{BH.Engine.Reflection.Query.BHoMVersion()}"
+                    + $"\n;   Created using the BHoM v{BH.Engine.Base.Query.BHoMVersion()}"
                     + $"\n;   Date: {Date.ToString("yyyy-MM-dd")}"
                     + "\n;---------------------------------------------------------------------------\n\n";
 
@@ -119,7 +118,7 @@ namespace BH.Engine.Adapters.MidasCivil
                         foreach (string dependent in dependents[i])
                         {
                             if (typeNames.Contains(dependent))
-                                Reflection.Compute.RecordError(dependent + " must have a " + independents[i] + " file associated with it");
+                                Base.Compute.RecordError(dependent + " must have a " + independents[i] + " file associated with it");
                         }
                     }
                 }
@@ -308,3 +307,5 @@ namespace BH.Engine.Adapters.MidasCivil
 
     }
 }
+
+

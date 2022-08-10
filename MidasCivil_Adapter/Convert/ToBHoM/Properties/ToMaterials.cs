@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -79,7 +79,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 Density = density,
                                 DampingRatio = double.Parse(delimited[8].Trim())
                             };
-                            Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Isotropic material");
+                            Engine.Base.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Isotropic material");
                         }
                         else if ((delimited[9].Trim()) == "3")
                         {
@@ -110,7 +110,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 DampingRatio = double.Parse(delimited[8].Trim())
 
                             };
-                            Engine.Reflection.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Orthotropic material");
+                            Engine.Base.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Orthotropic material");
                         }
                         break;
                     case "STEEL":
@@ -127,7 +127,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         }
                         else
                         {
-                            Engine.Reflection.Compute.RecordWarning("Material not found in BHoM Library: S355 Steel properties assumed");
+                            Engine.Base.Compute.RecordWarning("Material not found in BHoM Library: S355 Steel properties assumed");
                             bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "S355");
                         }
                         break;
@@ -147,11 +147,11 @@ namespace BH.Adapter.Adapters.MidasCivil
                         }
                         else
                         {
-                            Engine.Reflection.Compute.RecordWarning("Material not found in BHoM Library.");
+                            Engine.Base.Compute.RecordWarning("Material not found in BHoM Library.");
                         }
                         break;
                     case "SRC":
-                        Engine.Reflection.Compute.RecordError("BHoM does not support Reinforced Concrete Sections");
+                        Engine.Base.Compute.RecordError("BHoM does not support Reinforced Concrete Sections");
                         break;
                 }
             }
@@ -164,5 +164,6 @@ namespace BH.Adapter.Adapters.MidasCivil
 
     }
 }
+
 
 

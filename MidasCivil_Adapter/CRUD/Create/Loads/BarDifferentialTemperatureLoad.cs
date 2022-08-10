@@ -1,6 +1,6 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if (barDifferentialTemperatureLoad.TemperatureProfile.Keys.Count > 21)
                 {
-                    Engine.Reflection.Compute.RecordError("MidasCivil can only parse BarDifferentialTemperatureLoads with a maximum of 20 positions.");
+                    Engine.Base.Compute.RecordError("MidasCivil can only parse BarDifferentialTemperatureLoads with a maximum of 20 positions.");
                     continue;
                 }
                 List<string> midasTemperatureLoads = new List<string>();
@@ -54,7 +54,7 @@ namespace BH.Adapter.MidasCivil
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barDifferentialTemperatureLoad);
                 if (barDifferentialTemperatureLoad.Objects.Elements.Any(x => x.SectionProperty == null))
                 {
-                    Engine.Reflection.Compute.RecordError("Section Property is required for inputting differential temperature load");
+                    Engine.Base.Compute.RecordError("Section Property is required for inputting differential temperature load");
                     continue;
                 }
                 var groupedBars = barDifferentialTemperatureLoad.Objects.Elements.GroupBy(x => x.SectionProperty.Name);
@@ -77,3 +77,4 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
     }
 }
+

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning($"Unit input {force} not recognised using Newtons (N) instead.");
+                    Engine.Base.Compute.RecordWarning($"Unit input {force} not recognised using Newtons (N) instead.");
                     units += "N" + ", ";
                 }
 
@@ -57,7 +57,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning($"Unit input {length} not recognised using meters (m) instead.");
+                    Engine.Base.Compute.RecordWarning($"Unit input {length} not recognised using meters (m) instead.");
                     units += "M" + ", ";
                 }
 
@@ -67,7 +67,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning($"Unit input {heat} not recognised using kilojoules (kJ) instead.");
+                    Engine.Base.Compute.RecordWarning($"Unit input {heat} not recognised using kilojoules (kJ) instead.");
                     units += "KJ" + ", ";
                 }
                 if (Array.Exists(temperatures, element => element == temperature))
@@ -76,7 +76,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning($"Unit input {temperature} not recognised using celcius (C) instead.");
+                    Engine.Base.Compute.RecordWarning($"Unit input {temperature} not recognised using celcius (C) instead.");
                     units += "C";
                 }
                 units += "\n";
@@ -88,3 +88,4 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+

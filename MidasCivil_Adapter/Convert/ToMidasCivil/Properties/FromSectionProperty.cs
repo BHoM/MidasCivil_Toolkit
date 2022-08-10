@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -56,7 +56,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 List<IProfile> profiles = new List<IProfile>(taperedProfile.Profiles.Values);
                 if (profiles.Any(x => x.Shape != profiles.First().Shape))
                 {
-                    Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
+                    Engine.Base.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
                     return null;
                 }
                 else
@@ -89,7 +89,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 List<IProfile> profiles = new List<IProfile>(taperedProfile.Profiles.Values);
                 if (profiles.Any(x => x.Shape != profiles.First().Shape))
                 {
-                    Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
+                    Engine.Base.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
                     return null;
                 }
                 else
@@ -122,7 +122,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 List<IProfile> profiles = new List<IProfile>(taperedProfile.Profiles.Values);
                 if (profiles.Any(x => x.Shape != profiles.First().Shape))
                 {
-                    Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
+                    Engine.Base.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
                     return null;
                 }
                 else
@@ -155,7 +155,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 List<IProfile> profiles = new List<IProfile>(taperedProfile.Profiles.Values);
                 if (profiles.Any(x => x.Shape != profiles.First().Shape))
                 {
-                    Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
+                    Engine.Base.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
                     return null;
                 }
                 else
@@ -188,7 +188,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 List<IProfile> profiles = new List<IProfile>(taperedProfile.Profiles.Values);
                 if (profiles.Any(x => x.Shape != profiles.First().Shape))
                 {
-                    Engine.Reflection.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
+                    Engine.Base.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
                     return null;
                 }
                 else
@@ -214,7 +214,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateSection(ExplicitSection sectionProperty, string lengthUnit, int sectionPropertyCharacterLimit)
         {
-            Engine.Reflection.Compute.RecordError("ExplicitSection not supported in MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("ExplicitSection not supported in MidasCivil_Toolkit");
 
             return null;
         }
@@ -307,7 +307,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 profile.WebThickness.LengthFromSI(lengthUnit) + "," + profile.TopFlangeThickness.LengthFromSI(lengthUnit) + "," + profile.BotFlangeWidth.LengthFromSI(lengthUnit) + "," +
                 profile.BotFlangeThickness.LengthFromSI(lengthUnit) + "," + profile.WeldSize.LengthFromSI(lengthUnit) +
                 ", 0, 0, 0";
-            Engine.Reflection.Compute.RecordWarning("The weld size for the FabiricatedISectionProfile been assumed equal to the root radius parameter in MidasCivil");
+            Engine.Base.Compute.RecordWarning("The weld size for the FabiricatedISectionProfile been assumed equal to the root radius parameter in MidasCivil");
 
             return midasSectionProperty;
         }
@@ -345,7 +345,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 webSpacing = (profile.Width - profile.WebThickness).LengthFromSI(lengthUnit);
                 flangeWidth = (flangeWidth + profile.TopLeftCorbelWidth + profile.TopRightCorbelWidth);
 
-                Engine.Reflection.Compute.RecordWarning("MidasCivil does not support unequal corbel widths. Therefore the section width has been calculated using the TopCorbelWidths.");
+                Engine.Base.Compute.RecordWarning("MidasCivil does not support unequal corbel widths. Therefore the section width has been calculated using the TopCorbelWidths.");
             }
             string midasSectionProperty = "B, 2," +
                 profile.Height.LengthFromSI(lengthUnit) + "," + flangeWidth.LengthFromSI(lengthUnit) + "," + profile.WebThickness.LengthFromSI(lengthUnit) + "," +
@@ -359,7 +359,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateProfile(ZSectionProfile profile, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("ZSectionProfile not supported by the MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("ZSectionProfile not supported by the MidasCivil_Toolkit");
 
             return null;
         }
@@ -368,7 +368,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateProfile(FreeFormProfile profile, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("FreeFormProfile not supported by the MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("FreeFormProfile not supported by the MidasCivil_Toolkit");
 
             return null;
         }
@@ -377,7 +377,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateProfile(KiteProfile profile, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("KiteProfile not supported by the MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("KiteProfile not supported by the MidasCivil_Toolkit");
 
             return null;
         }
@@ -386,7 +386,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateProfile(GeneralisedTSectionProfile profile, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("GeneralisedTSectionProfile not supported by the MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("GeneralisedTSectionProfile not supported by the MidasCivil_Toolkit");
 
             return null;
         }
@@ -398,7 +398,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             List<IProfile> profiles = new List<IProfile>(profile.Profiles.Values);
 
             if (profiles.Count > 2)
-                Engine.Reflection.Compute.RecordWarning("MidasCivil only supports TaperedProfiles with a startProfile and endProfile, any intermediate profiles will be ignored.");
+                Engine.Base.Compute.RecordWarning("MidasCivil only supports TaperedProfiles with a startProfile and endProfile, any intermediate profiles will be ignored.");
 
             List<string> startProfile = new List<string>(CreateProfile(profiles[0] as dynamic, lengthUnit).Split(','));
             List<string> endProfile = new List<string>(CreateProfile(profiles[profiles.Count - 1] as dynamic, lengthUnit).Split(','));
@@ -584,3 +584,4 @@ namespace BH.Adapter.Adapters.MidasCivil
 
     }
 }
+

@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
             objects.AddRange(ReadBars());
             objects.AddRange(ReadFEMeshes());
 
-            Engine.Reflection.Compute.RecordWarning("Note: Midas applies Self Weight to all objects in a given loadcase");
+            Engine.Base.Compute.RecordWarning("Note: Midas applies Self Weight to all objects in a given loadcase");
 
             string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
@@ -82,3 +82,4 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+

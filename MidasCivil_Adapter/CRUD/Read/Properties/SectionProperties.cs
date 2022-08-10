@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -72,7 +72,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (numberColumns == 16)
                     {
-                        Engine.Reflection.Compute.RecordWarning("Library sections are not yet supported in the MidasCivil_Toolkit");
+                        Engine.Base.Compute.RecordWarning("Library sections are not yet supported in the MidasCivil_Toolkit");
                     }
                     else
                     {
@@ -100,7 +100,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    Engine.Reflection.Compute.RecordWarning(type + " not supported in the MidasCivil_Toolkit");
+                    Engine.Base.Compute.RecordWarning(type + " not supported in the MidasCivil_Toolkit");
                 }
 
                 if (bhomSectionProperty != null)
@@ -114,4 +114,5 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+
 

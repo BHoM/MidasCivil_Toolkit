@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -56,7 +56,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             if(reviews.Count > 4)
             {
                 reviews.RemoveRange(1, reviews.Count - 3);
-                Engine.Reflection.Compute.RecordWarning("The number of reviews exceeds the limit of MidasCivil. Only the first, last and second to last reviews will be recorded.");
+                Engine.Base.Compute.RecordWarning("The number of reviews exceeds the limit of MidasCivil. Only the first, last and second to last reviews will be recorded.");
             }
             if(reviews.Count >= 1)
             {
@@ -67,7 +67,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 midasMetadata.AppendLine($"CHECK2={reviews[1].Reviewer}");
                 midasMetadata.AppendLine($"CDATE2={reviews[1].ReviewDate.ToString("yyyy-MM-dd")}");
-                Engine.Reflection.Compute.RecordWarning("Only comments from the last review will be pushed to MidasCivil.");
+                Engine.Base.Compute.RecordWarning("Only comments from the last review will be pushed to MidasCivil.");
             }
             if (reviews.Count >= 3)
             {
@@ -92,3 +92,4 @@ namespace BH.Adapter.Adapters.MidasCivil
 
     }
 }
+

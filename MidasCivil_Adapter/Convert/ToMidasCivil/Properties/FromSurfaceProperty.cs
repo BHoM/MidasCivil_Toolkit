@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -83,7 +83,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateSurfaceProfile(LoadingPanelProperty bhomSurfaceProperty, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("LoadingPanelProperty not supported in MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("LoadingPanelProperty not supported in MidasCivil_Toolkit");
             return null;
         }
 
@@ -91,7 +91,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateSurfaceProfile(Ribbed bhomSurfaceProperty, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("Ribbed not supported in MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("Ribbed not supported in MidasCivil_Toolkit");
             return null;
         }
 
@@ -99,7 +99,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         private static string CreateSurfaceProfile(Waffle bhomSurfaceProperty, string lengthUnit)
         {
-            Engine.Reflection.Compute.RecordError("Waffle not supported in MidasCivil_Toolkit");
+            Engine.Base.Compute.RecordError("Waffle not supported in MidasCivil_Toolkit");
             return null;
         }
 
@@ -107,4 +107,5 @@ namespace BH.Adapter.Adapters.MidasCivil
 
     }
 }
+
 

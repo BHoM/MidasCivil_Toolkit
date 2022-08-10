@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.Engine.Adapter;
 using BH.oM.Adapter;
-using BH.oM.Reflection;
+using BH.oM.Base;
 using BH.oM.Adapter.Commands;
 using BH.oM.Structure.Loads;
 using System.Runtime.InteropServices;
@@ -96,7 +96,7 @@ namespace BH.Adapter.MidasCivil
 
         public bool RunCommand(Save command)
         {
-            Engine.Reflection.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+            Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
             return false;
         }
 
@@ -108,7 +108,7 @@ namespace BH.Adapter.MidasCivil
 
             if (Directory.Exists(newDirectory))
             {
-                Engine.Reflection.Compute.RecordError("File with the same name already exists, please choose another.");
+                Engine.Base.Compute.RecordError("File with the same name already exists, please choose another.");
                 return false;
             }
 
@@ -141,7 +141,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if (IsApplicationRunning())
                 {
-                    Engine.Reflection.Compute.RecordWarning("MidasCivil process already running");
+                    Engine.Base.Compute.RecordWarning("MidasCivil process already running");
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace BH.Adapter.MidasCivil
                     m_midasCivilVersion = m_midasCivilVersion.Trim();
                     if (File.Exists(versionFile))
                     {
-                        Engine.Reflection.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
+                        Engine.Base.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
                     }
                 }
                 else if (File.Exists(versionFile))
@@ -187,7 +187,7 @@ namespace BH.Adapter.MidasCivil
                 else
                 {
                     m_midasCivilVersion = "8.8.1";
-                    Engine.Reflection.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
+                    Engine.Base.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
                 }
 
                 try
@@ -200,12 +200,12 @@ namespace BH.Adapter.MidasCivil
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    Engine.Reflection.Compute.RecordWarning(
+                    Engine.Base.Compute.RecordWarning(
                         "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    Engine.Reflection.Compute.RecordWarning(
+                    Engine.Base.Compute.RecordWarning(
                         "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                 }
 
@@ -221,7 +221,7 @@ namespace BH.Adapter.MidasCivil
 
         public bool RunCommand(Analyse command)
         {
-            Engine.Reflection.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+            Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
             return false;
         }
 
@@ -229,7 +229,7 @@ namespace BH.Adapter.MidasCivil
 
         public bool RunCommand(AnalyseLoadCases command)
         {
-            Engine.Reflection.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+            Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
             return false;
         }
 
@@ -250,7 +250,7 @@ namespace BH.Adapter.MidasCivil
 
         public bool RunCommand(IExecuteCommand command)
         {
-            Engine.Reflection.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+            Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
             return false;
         }
 
@@ -283,3 +283,4 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+

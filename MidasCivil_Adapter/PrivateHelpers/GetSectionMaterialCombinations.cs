@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -94,7 +94,7 @@ namespace BH.Adapter.MidasCivil
                         materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericOrthotropicSection);
                         break;
                     default:
-                        Engine.Reflection.Compute.RecordError(material.GetType().ToString().Split('.').Last() + "not recognised");
+                        Engine.Base.Compute.RecordError(material.GetType().ToString().Split('.').Last() + "not recognised");
                         break;
                 }
             }
@@ -106,4 +106,5 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+
 
