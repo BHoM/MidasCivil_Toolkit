@@ -26,6 +26,7 @@ using System.Linq;
 using System.IO;
 using System.ComponentModel;
 using BH.oM.Base.Attributes;
+using System.Text;
 
 namespace BH.Engine.Adapters.MidasCivil
 {
