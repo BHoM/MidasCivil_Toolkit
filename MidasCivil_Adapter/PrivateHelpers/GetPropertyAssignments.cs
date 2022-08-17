@@ -76,7 +76,7 @@ namespace BH.Adapter.MidasCivil
                             case "8.8.5":
                                 if (splitSection[21] == "")
                                 {
-                                    Engine.Reflection.Compute.RecordWarning("Spring must be under a group name when pulling from MidasCivil Toolkit.");
+                                    Engine.Base.Compute.RecordWarning("Spring must be under a group name when pulling from MidasCivil Toolkit.");
                                     return null;
                                 }
                                 else
@@ -87,7 +87,7 @@ namespace BH.Adapter.MidasCivil
                             default:
                                 if (splitSection[15] == "")
                                 {
-                                    Engine.Reflection.Compute.RecordWarning("Spring must be under a group name when pulling from MidasCivil Toolkit.");
+                                    Engine.Base.Compute.RecordWarning("Spring must be under a group name when pulling from MidasCivil Toolkit.");
                                     return null;
                                 }
                                 else
