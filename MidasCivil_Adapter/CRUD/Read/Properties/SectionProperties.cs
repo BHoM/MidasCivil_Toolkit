@@ -45,7 +45,7 @@ namespace BH.Adapter.MidasCivil
             {
                 string sectionProperty = sectionProperties[i];
                 string type = sectionProperty.Split(',')[1].Trim();
-
+                string typeS = sectionProperty.Split(',')[16].Trim();
                 ISectionProperty bhomSectionProperty = null;
 
                 if (type == "VALUE")
@@ -69,11 +69,11 @@ namespace BH.Adapter.MidasCivil
                 else if (type == "DBUSER")
                 {
                     int numberColumns = sectionProperty.Split(',').Count();
-
-                    if (numberColumns == 16)
+                    if (typeS == "1")
                     {
-                        Engine.Base.Compute.RecordWarning("Library sections are not yet supported in the MidasCivil_Toolkit");
+
                     }
+
                     else
                     {
                         List<string> split = sectionProperty.Split(',').ToList();
