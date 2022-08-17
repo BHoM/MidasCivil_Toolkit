@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -66,7 +66,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 if (!(delimitted[1].Trim() == "LINEAR"))
                 {
-                    Engine.Reflection.Compute.RecordWarning(
+                    Engine.Base.Compute.RecordWarning(
                         "MidasCivil_Toolkit does not support tension/compression only springs or multi-linear springs");
                     return null;
                 }
@@ -164,3 +164,4 @@ namespace BH.Adapter.Adapters.MidasCivil
         }
     }
 }
+

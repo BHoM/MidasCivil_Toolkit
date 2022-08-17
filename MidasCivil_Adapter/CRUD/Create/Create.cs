@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -29,6 +29,7 @@ using BH.oM.Structure.MaterialFragments;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
+using BH.oM.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -42,8 +43,13 @@ namespace BH.Adapter.MidasCivil
         {
             bool success = true;        //boolean returning if the creation was successfull or not
 
+
             if (objects.Count() > 0)
             {
+                if (objects.First() is Metadata)
+                {
+                    success = CreateCollection(objects.First() as Metadata);
+                }
                 if (objects.First() is Node)
                 {
                     success = CreateCollection(objects as IEnumerable<Node>);
@@ -103,6 +109,9 @@ namespace BH.Adapter.MidasCivil
                             break;
                         case "BH.oM.Structure.Loads.AreaUniformTemperatureLoad":
                             success = CreateCollection(objects as IEnumerable<AreaUniformTemperatureLoad>);
+                            break;
+                        case "BH.oM.Structure.Loads.AreaDifferentialTemperatureLoad":
+                            success = CreateCollection(objects as IEnumerable<AreaDifferentialTemperatureLoad>);
                             break;
                         case "BH.oM.Structure.Loads.PointDisplacement":
                             success = CreateCollection(objects as IEnumerable<PointDisplacement>);

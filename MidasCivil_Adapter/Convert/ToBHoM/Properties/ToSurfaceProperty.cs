@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -42,24 +42,32 @@ namespace BH.Adapter.Adapters.MidasCivil
             {
                 case "8.9.5":
                 case "8.9.0":
-                    constantThickness = Engine.Structure.Create.ConstantThickness(
-                        System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit), null, "t = " + split[4].Trim());
+                    constantThickness = new ConstantThickness
+                    {
+                        Thickness = System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit),
+                        Name = "t = " + split[4].Trim()
+                    };
                     break;
                 case "8.8.5":
-                    constantThickness = Engine.Structure.Create.ConstantThickness(
-                        System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit), null, split[1]);
+                    constantThickness =new ConstantThickness
+                    {
+                        Thickness = System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit),
+                        Name = split[1]
+                    };
                     break;
                 default:
-                    constantThickness = Engine.Structure.Create.ConstantThickness(
-                        System.Convert.ToDouble(split[3].Trim()).LengthToSI(lengthUnit));
-                    constantThickness.Name = "t = " + split[3].Trim();
+                    constantThickness = new ConstantThickness
+                    {
+                        Thickness = System.Convert.ToDouble(split[3].Trim()).LengthToSI(lengthUnit),
+                        Name = "t = " + split[3].Trim()
+                    };
                     break;
             }
 
             constantThickness.SetAdapterId(typeof(MidasCivilId), split[0].Trim());
 
             if (split[5].Trim() == "YES")
-                Engine.Reflection.Compute.RecordWarning("SurfaceProperty objects do not have offsets implemented so this information will be lost");
+                Engine.Base.Compute.RecordWarning("SurfaceProperty objects do not have offsets implemented so this information will be lost");
 
             return constantThickness;
         }
@@ -68,4 +76,5 @@ namespace BH.Adapter.Adapters.MidasCivil
 
     }
 }
+
 

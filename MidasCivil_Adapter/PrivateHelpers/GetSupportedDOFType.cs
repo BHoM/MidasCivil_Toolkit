@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
                 case DOFType.Spring:
                     return true;
                 default:
-                    Engine.Reflection.Compute.RecordWarning(freedom.ToString() + " not supported in MidasCivil_Toolkit");
+                    Engine.Base.Compute.RecordWarning(freedom.ToString() + " not supported in MidasCivil_Toolkit");
                     return false;
             }
         }
@@ -48,3 +48,4 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+

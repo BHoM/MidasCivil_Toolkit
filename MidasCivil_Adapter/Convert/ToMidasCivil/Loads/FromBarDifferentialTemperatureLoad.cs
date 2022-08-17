@@ -1,6 +1,6 @@
-﻿/*
+/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -51,7 +51,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             }
             double presetWidth = sectionProperty.Area / depth;
             double temperatureProfileCount = load.TemperatureProfile.Keys.Count - 1;
-            string firstLine = ids.Trim() + "," + loadDirection + ",Bot ," + temperatureProfileCount + ", ," + "No";
+            string firstLine = ids.Trim() + "," + loadDirection + ",Bot ," + temperatureProfileCount + "," + load.Name + "," + "No";
             List<string> midasBarLoad = new List<string>();
             midasBarLoad.Add(firstLine);
             for (int i = 1; i < load.TemperatureProfile.Keys.Count; i++)
@@ -68,3 +68,4 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
     }
 }
+

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BH.Adapter.MidasCivil</RootNamespace>
     <AssemblyName>MidasCivil_Adapter</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,30 +33,37 @@
     <Reference Include="Adapter_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Adapter_Engine.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Adapter_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Adapter_oM.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Analytical_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Analytical_oM.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="BHoM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="BHoM_Adapter">
       <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Adapter.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="BHoM_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\BHoM_Engine.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Data_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Data_oM.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Dimensional_oM">
       <SpecificVersion>False</SpecificVersion>
@@ -66,14 +73,17 @@
     <Reference Include="Geometry_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_Engine.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Geometry_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Geometry_oM.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Library_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Library_Engine.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
@@ -84,34 +94,30 @@
       <HintPath>C:\ProgramData\BHoM\Assemblies\Physical_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Reflection_Engine">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_Engine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Reflection_oM">
-      <HintPath>C:\ProgramData\BHoM\Assemblies\Reflection_oM.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Spatial_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Spatial_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Spatial_oM.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Structure_AdapterModules">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_AdapterModules.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Structure_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_Engine.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Structure_oM">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Structure_oM.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -126,6 +132,7 @@
     <Reference Include="Units_Engine">
       <HintPath>C:\ProgramData\BHoM\Assemblies\Units_Engine.dll</HintPath>
       <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +142,7 @@
     <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToPanel.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToRigidLink.cs" />
+    <Compile Include="Convert\ToBHoM\Loads\ToAreaDifferentialTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformTemperatureLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToAreaUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToBHoM\Loads\ToBarDifferentialTemperatureLoad.cs" />
@@ -164,6 +172,7 @@
     <Compile Include="Convert\ToMidasCivil\Elements\FromFEMesh.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromNode.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromRigidLink.cs" />
+    <Compile Include="Convert\ToMidasCivil\Loads\FromAreaDifferentialTemperatureLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromAreaUniformTemperatureLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromAreaUniformlyDistributedLoad.cs" />
     <Compile Include="Convert\ToMidasCivil\Loads\FromBarDifferentialTemperatureLoad.cs" />
@@ -184,6 +193,7 @@
     <Compile Include="Convert\ToMidasCivil\Properties\FromDOFType.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromFixity.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromMaterial.cs" />
+    <Compile Include="Convert\ToMidasCivil\Properties\FromMetadata.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromSectionProperty.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromSpring.cs" />
     <Compile Include="Convert\ToMidasCivil\Properties\FromSupport.cs" />
@@ -218,6 +228,7 @@
     <Compile Include="CRUD\Create\Elements\RigidLink.cs" />
     <Compile Include="CRUD\Create\Elements\Element.cs" />
     <Compile Include="CRUD\Create\Elements\Node.cs" />
+    <Compile Include="CRUD\Create\Loads\AreaDifferentialTemperatureLoad.cs" />
     <Compile Include="CRUD\Create\Loads\BarDifferentialTemperatureLoad.cs" />
     <Compile Include="CRUD\Create\Loads\Loadcase.cs" />
     <Compile Include="CRUD\Create\Loads\AreaUniformTemperatureLoads.cs" />
@@ -254,11 +265,13 @@
     <Compile Include="CRUD\Delete\Properties\BarReleases.cs" />
     <Compile Include="CRUD\Delete\Properties\SectionProperties.cs" />
     <Compile Include="CRUD\Delete\Properties\SurfaceProperties.cs" />
+    <Compile Include="CRUD\Read\Loads\AreaDifferentialTemperatureLoad.cs" />
     <Compile Include="CRUD\Read\Loads\BarDifferentialTemperatureLoad.cs" />
     <Compile Include="CRUD\Read\Results\BarResults.cs" />
     <Compile Include="CRUD\Read\Results\MeshResults.cs" />
     <Compile Include="CRUD\Read\Results\NodeResults.cs" />
     <Compile Include="CRUD\Read\Results\ReadResults.cs" />
+    <Compile Include="CRUD\Read\Properties\ReadMetadata.cs" />
     <Compile Include="PrivateHelpers\AssignBarRelease.cs" />
     <Compile Include="PrivateHelpers\CombineLoads.cs" />
     <Compile Include="PrivateHelpers\CreateAssignmentString.cs" />
@@ -277,6 +290,8 @@
     <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="PrivateHelpers\GetSectionMaterialCombinations.cs" />
     <Compile Include="PrivateHelpers\GetStiffnessVectorModulus.cs" />
+    <Compile Include="PrivateHelpers\SetVersion.cs" />
+    <Compile Include="PrivateHelpers\SetUnits.cs" />
     <Compile Include="Type\NextFreeId.cs" />
     <Compile Include="PrivateHelpers\GetPropertyAssignments.cs" />
     <Compile Include="PrivateHelpers\CompareGroup.cs" />
@@ -309,6 +324,8 @@
     <Compile Include="CRUD\Update\UpdateObjects.cs" />
     <Compile Include="MidasCivilAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CRUD\Create\Properties\Metadata.cs" />
+    <Compile Include="Convert\ToBHoM\Properties\ToMetadata.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MidasCivil_Engine\MidasCivil_Engine.csproj">
@@ -330,11 +347,4 @@
 xcopy "$(TargetDir)$(TargetFileName)"  "C:\ProgramData\BHoM\Assemblies" /Y
     </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

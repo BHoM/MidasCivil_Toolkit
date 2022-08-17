@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -61,7 +61,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                 if (meshFace.NodeListIndices.Count < 3)
                 {
-                    BH.Engine.Reflection.Compute.RecordError("Cannot push a FEMesh with less than three nodes");
+                    BH.Engine.Base.Compute.RecordError("Cannot push a FEMesh with less than three nodes");
                 }
 
                 if (meshFace.NodeListIndices.Count == 4)
@@ -95,3 +95,4 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
     }
 }
+

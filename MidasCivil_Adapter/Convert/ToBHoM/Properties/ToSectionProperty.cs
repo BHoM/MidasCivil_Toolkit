@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -39,7 +39,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static ISectionProperty ToSectionProperty(this List<string> sectionProperty, string shape, string lengthUnit)
         {
-            return Create.GenericSectionFromProfile(Convert.ToProfile(sectionProperty, shape, lengthUnit), null);
+            return Create.GenericSectionFromProfile(ToProfile(sectionProperty, shape, lengthUnit), null);
         }
 
         /***************************************************/
@@ -84,3 +84,4 @@ namespace BH.Adapter.Adapters.MidasCivil
 
     }
 }
+

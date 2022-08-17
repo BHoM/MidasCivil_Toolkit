@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -54,8 +54,8 @@ namespace BH.Adapter.MidasCivil
                 System.Convert.ToDouble(delimitted[12]).ForceToSI(forceUnit),
                 System.Convert.ToDouble(delimitted[13]).ForceToSI(forceUnit),
                 System.Convert.ToDouble(delimitted[14]).MomentToSI(forceUnit, lengthUnit),
-                System.Convert.ToDouble(delimitted[15]).MomentToSI(forceUnit, lengthUnit),
-                System.Convert.ToDouble(delimitted[16]).MomentToSI(forceUnit, lengthUnit)
+                -System.Convert.ToDouble(delimitted[15]).MomentToSI(forceUnit, lengthUnit),
+                -System.Convert.ToDouble(delimitted[16]).MomentToSI(forceUnit, lengthUnit)
                 );
             return barforce;
         }
@@ -87,5 +87,6 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+
 
 

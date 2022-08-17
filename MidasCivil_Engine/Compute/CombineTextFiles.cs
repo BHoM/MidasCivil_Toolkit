@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.ComponentModel;
-using BH.oM.Reflection.Attributes;
+using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Adapters.MidasCivil
 {
@@ -45,18 +45,25 @@ namespace BH.Engine.Adapters.MidasCivil
         {
             if (active)
             {
-                string directory;
-                List<string> delimited = filePath.Split(new Char[] { '\\' }).ToList();
-                delimited.Reverse();
-                delimited.RemoveAt(0);
-                delimited.Reverse();
-                directory = string.Join("\\", delimited) + "\\TextFiles";
+                DateTime Date = DateTime.Now;
+                string intro = ";---------------------------------------------------------------------------"
+                    + "\n;   MIDAS/Civil Text(MCT) File"
+                    + $"\n;   Created using the BHoM v{BH.Engine.Base.Query.BHoMVersion()}"
+                    + $"\n;   Date: {Date.ToString("yyyy-MM-dd")}"
+                    + "\n;---------------------------------------------------------------------------\n\n";
 
-                string path = directory + "\\" + "COMBINED.mct";
+                string directory = Path.GetDirectoryName(filePath) + "\\TextFiles";
+
+                string path = directory + "\\" + "Combined.mct";
 
                 // Retrieve type strings: select all from directory if none provided
 
                 List<string> typeNames = new List<string>();
+                List<string> metadata = new List<string>(3);
+                metadata.Add("VERSION");
+                metadata.Add("UNIT");
+                metadata.Add("PROJINFO");
+
                 bool includeLoadcases = true;
 
                 if (types.Count == 0)
@@ -111,14 +118,12 @@ namespace BH.Engine.Adapters.MidasCivil
                         foreach (string dependent in dependents[i])
                         {
                             if (typeNames.Contains(dependent))
-                                Reflection.Compute.RecordError(dependent + " must have a " + independents[i] + " file associated with it");
+                                Base.Compute.RecordError(dependent + " must have a " + independents[i] + " file associated with it");
                         }
                     }
                 }
 
                 independents.Insert(0, "REBAR-MATL-CODE");
-                independents.Insert(0, "UNIT");
-                independents.Insert(0, "VERSION");
                 independents.Add("LOAD-GROUP");
                 independents.Add("LOADCOMB");
 
@@ -128,6 +133,25 @@ namespace BH.Engine.Adapters.MidasCivil
                 {
                     using (StreamWriter writer = new StreamWriter(combined))
                     {
+                        writer.Write(intro);
+                        writer.Flush();
+                        foreach (string file in metadata)
+                        {
+                            if (File.Exists(directory + "\\" + file + ".txt"))
+                            {
+                                using (var input = File.OpenRead(directory + "\\" + file + ".txt"))
+                                {
+                                    if (new FileInfo(directory + "\\" + file + ".txt").Length != 0)
+                                    {
+                                        input.CopyTo(combined);
+                                        input.Close();
+                                    }
+                                }
+                                writer.Write(System.Environment.NewLine);
+                                writer.Flush();
+                            }
+                        }
+
                         foreach (string independent in independents)
                         {
                             if (typeNames.Contains(independent))
@@ -136,13 +160,14 @@ namespace BH.Engine.Adapters.MidasCivil
                                 {
                                     var input = File.OpenRead(directory + "\\" + independent + ".txt");
                                     input.CopyTo(combined);
+                                    input.Close();
                                     writer.Write(System.Environment.NewLine);
                                     writer.Flush();
                                 }
                             }
                         }
 
-                        typeNames = typeNames.Except(independents).ToList();
+                        typeNames = typeNames.Except(independents).Except(metadata).ToList();
 
                         if (loadcases.Count() != 0 && includeLoadcases)
                         {
@@ -183,6 +208,7 @@ namespace BH.Engine.Adapters.MidasCivil
                                     using (var input = File.OpenRead(loadcase + "\\" + load))
                                     {
                                         input.CopyTo(combined);
+                                        input.Close();
                                     }
 
                                     writer.Write(System.Environment.NewLine);
@@ -206,6 +232,7 @@ namespace BH.Engine.Adapters.MidasCivil
                                 if (new FileInfo(directory + "\\" + file + ".txt").Length != 0)
                                 {
                                     input.CopyTo(combined);
+                                    input.Close();
                                 }
                             }
                             writer.Write(System.Environment.NewLine);
@@ -214,8 +241,30 @@ namespace BH.Engine.Adapters.MidasCivil
 
                         writer.Write("*ENDDATA");
                         writer.Flush();
+                        writer.Close();
                     }
                     combined.Close();
+
+                    string fName = $"{Path.GetDirectoryName(filePath)}\\{ Date.ToString("yyMMdd")}_{ Path.GetFileNameWithoutExtension(filePath).Replace(" ", "_")}";
+                    int i = 1;
+                    if (File.Exists(fName + ".mct"))
+                    {
+                        string fName_ = fName;
+                        while (i > 0)
+                        {
+                            if (File.Exists(fName_ + ".mct"))
+                            {
+                                i++;
+                                fName_ = $"{fName}_v{i}";
+                            }
+                            else { fName = fName_; i = -1;}
+                        }
+                    }
+
+                    File.Copy(path, fName + ".mct", true);
+                    if (Path.GetFileName(path) == "Combined.mct") { File.Delete(path); };
+
+
                 }
 
                 return true;

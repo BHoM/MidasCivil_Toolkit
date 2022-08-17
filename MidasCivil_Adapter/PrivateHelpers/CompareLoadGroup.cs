@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -21,6 +21,7 @@
  */
 
 using System.IO;
+using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -35,14 +36,8 @@ namespace BH.Adapter.MidasCivil
             string[] loadGroups = File.ReadAllLines(path);
             bool existing = false;
 
-            for (int i = 0; i < loadGroups.Length; i++)
-            {
-                if (loadGroups[i].Contains(loadGroup))
-                {
-                    existing = true;
-                    break;
-                }
-            }
+            if (loadGroups.Any(x => x == loadGroup))
+                existing = true;
 
             if (!existing)
             {
@@ -57,4 +52,5 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+
 

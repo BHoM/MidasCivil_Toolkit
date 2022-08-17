@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2021, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2022, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -22,7 +22,7 @@
 
 using BH.Adapter.MidasCivil;
 using BH.oM.Geometry;
-using BH.Engine.Reflection;
+using BH.Engine.Base;
 using BH.oM.Structure.Constraints;
 using BH.oM.Structure.Elements;
 using BH.Engine.Units;
@@ -51,7 +51,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         case "CM":
                             return pressure.FromNewtonPerSquareCentimetre();
                         case "MM":
-                            return pressure.FromNewtonPerMillimetre();
+                            return pressure.FromNewtonPerSquareMillimetre();
                         case "FT":
                             throw new Exception("No conversion method found for" + forceUnit + " " + lengthUnit);
                         case "IN":
@@ -82,7 +82,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (lengthUnit)
                     {
                         case "M":
-                            return pressure.FromKilogramForcePerMetre();
+                            return pressure.FromKilogramForcePerSquareMetre();
                         case "CM":
                             return pressure.FromKilogramForcePerSquareCentimetre();
                         case "MM":
@@ -159,4 +159,5 @@ namespace BH.Adapter.Adapters.MidasCivil
 
     }
 }
+
 
