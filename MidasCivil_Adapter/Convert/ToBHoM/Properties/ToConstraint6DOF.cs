@@ -58,9 +58,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 supportName = delimitted[2].Trim();
                 if (supportName=="")
-                {
                     supportName = assignment;
-                }
+                
             }
             else
             {
@@ -110,8 +109,11 @@ namespace BH.Adapter.Adapters.MidasCivil
                             supportName = delimitted[21].Trim();
                             if (supportName == "")
                             {
-                                return null;
+                                Constraint6DOF name = Engine.Structure.Create.Constraint6DOF(supportName, fixity, stiffness);
+                                supportName = BH.Engine.Structure.Query.Description(name);
                             }
+
+                                
                             break;
 
                         default:
@@ -147,16 +149,22 @@ namespace BH.Adapter.Adapters.MidasCivil
                             }
                             supportName = delimitted[15].Trim();
                             if (supportName == "")
+
                             {
-                                return null;
+                                Constraint6DOF name = Engine.Structure.Create.Constraint6DOF(supportName, fixity, stiffness);
+                                supportName = BH.Engine.Structure.Query.Description(name);
                             }
+                            
                             break;
                     }
+
+
 
                 }
             }
 
             Constraint6DOF bhomConstraint6DOF = Engine.Structure.Create.Constraint6DOF(supportName, fixity, stiffness);
+            
             bhomConstraint6DOF.SetAdapterId(typeof(MidasCivilId), supportName);
 
             return bhomConstraint6DOF;
