@@ -72,6 +72,7 @@ namespace BH.Adapter.MidasCivil
                     if (typeS == "1")
                     {
                         string typess = sectionProperty.Split(',')[14].Trim();
+                        
                         //switch statement "BS" + I SECTION
                         bhomSectionProperty = (ISectionProperty)BH.Engine.Library.Query.Match("UK_SteelSections", typess, true, true);
                     }
