@@ -65,7 +65,6 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
             }
             if (!(springAssignments == null))
-        
             {
                 foreach (KeyValuePair<string, List<int>> springAssignment in springAssignments)
                 {
