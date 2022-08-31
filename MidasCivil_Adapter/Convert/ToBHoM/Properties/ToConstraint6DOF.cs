@@ -109,8 +109,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                             supportName = delimitted[21].Trim();
                             if (supportName == "")
                             {
-                                Constraint6DOF name = Engine.Structure.Create.Constraint6DOF(supportName, fixity, stiffness);
-                                supportName = BH.Engine.Structure.Query.Description(name);
+                                supportName = "Fx="+delimitted[8]+"Fy="+delimitted[9]+"Fz="+delimitted[10]+"Rx="+delimitted[11]+"Ry="+delimitted[12]+"Rz="+delimitted[13];
                             }
 
                                 
@@ -149,12 +148,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                             }
                             supportName = delimitted[15].Trim();
                             if (supportName == "")
-
                             {
-                                Constraint6DOF name = Engine.Structure.Create.Constraint6DOF(supportName, fixity, stiffness);
-                                supportName = BH.Engine.Structure.Query.Description(name);
+                                supportName = "Fx=" + delimitted[2] + "Fy=" + delimitted[3] + "Fz=" + delimitted[4] + "Rx=" + delimitted[5] + "Ry=" + delimitted[6] + "Rz=" + delimitted[7];
                             }
-                            
                             break;
                     }
 
