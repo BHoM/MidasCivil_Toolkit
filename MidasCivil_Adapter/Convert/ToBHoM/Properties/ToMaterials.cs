@@ -37,38 +37,66 @@ namespace BH.Adapter.Adapters.MidasCivil
         public static IMaterialFragment ToMaterial(this string material, string forceUnit, string lengthUnit, string temperatureUnit)
         {
             string[] delimited = material.Split(',');
-            string type = delimited[1].Trim();
+            string materialType = delimited[1].Trim();
             string name = delimited[2].Trim();
             IMaterialFragment bhomMaterial = null;
+            int length = delimited.Count();
+            int type = int.Parse(delimited[9]);
 
-            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials", name);
-
-            double density = 0;
-
-            if (delimited.Count() == 15)
+            if (type == 1)
             {
-                density = double.Parse(delimited[14].Trim()).DensityToSI(forceUnit, lengthUnit);
-                if (density == 0)
+                string standard = delimited[10].Trim();
+                string grade = delimited[12].Trim();
+                switch (standard)
                 {
-                    density = (double.Parse(delimited[13].Trim()) / 9.806).DensityToSI(forceUnit, lengthUnit);
+                    case "EN(S)":
+                    case "EN05-SW(S)":
+                        bhomMaterial = (IMaterialFragment)Engine.Library.Query.PartialMatch("Materials\\MaterialsEurope\\Steel", grade, true, true)[0];
+                        break;
+                    case "EN05(S)":
+                    case "EN05-PS(S)": 
+                        bhomMaterial = (IMaterialFragment)Engine.Library.Query.PartialMatch("Materials\\MaterialsEurope\\Steel(Grade)", grade, true, true)[0];
+                        break;
+                    case "EN(RC)":
+                    case "EN04(RC)":
+                        bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsEurope\\Concrete", grade, true, true);
+                        break;
+                    case "ASTM(RC)":
+                        bhomMaterial = (IMaterialFragment)Engine.Library.Query.PartialMatch("Materials\\MaterialsUSA\\Concrete", grade.Substring(grade.LastIndexOf('C') + 1), true, true)[0]; 
+                        break;
+                    case "ASTM(S)":
+                    case "ASTM09(S)":
+                        bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsUSA\\Steel", grade, true, true);//Subgrade refinement needed
+                        break;
+                    default:
+                        break;
                 }
             }
-            else if (delimited.Count() == 24)
+            else
             {
-                density = double.Parse(delimited[23].Trim()).DensityToSI(forceUnit, lengthUnit);
-                if (density == 0)
+                double density = 0;
+
+                if (length == 15)
                 {
-                    density = (double.Parse(delimited[22].Trim()) / 9.806).DensityToSI(forceUnit, lengthUnit);
+                    density = double.Parse(delimited[14].Trim()).DensityToSI(forceUnit, lengthUnit);
+                    if (density == 0)
+                    {
+                        density = (double.Parse(delimited[13].Trim()) / 9.806).DensityToSI(forceUnit, lengthUnit);
+                    }
                 }
-            }
+                else if (length == 24)
+                {
+                    density = double.Parse(delimited[23].Trim()).DensityToSI(forceUnit, lengthUnit);
+                    if (density == 0)
+                    {
+                        density = (double.Parse(delimited[22].Trim()) / 9.806).DensityToSI(forceUnit, lengthUnit);
+                    }
+                }
 
-
-            if (bhomMaterial == null)
-            {
-                switch (type)
+                switch (materialType)
                 {
                     case "USER":
-                        if ((delimited[9].Trim()) == "2")
+                        if (type == 2)
                         {
                             bhomMaterial = new GenericIsotropicMaterial()
                             {
@@ -81,7 +109,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                             };
                             Engine.Base.Compute.RecordWarning("Material " + name + " is a USER defined material and will default to a Generic Isotropic material");
                         }
-                        else if ((delimited[9].Trim()) == "3")
+                        else if (type == 3)
                         {
                             bhomMaterial = new GenericOrthotropicMaterial()
                             {
@@ -114,7 +142,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         }
                         break;
                     case "STEEL":
-                        if (delimited.Count() == 15)
+                        if (length == 15)
                         {
                             bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Steel(
                                 name,
@@ -128,12 +156,12 @@ namespace BH.Adapter.Adapters.MidasCivil
                         else
                         {
                             Engine.Base.Compute.RecordWarning("Material not found in BHoM Library: S355 Steel properties assumed");
-                            bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "S355");
+                            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials", "S355");
                         }
                         break;
 
                     case "CONC":
-                        if (delimited.Count() == 15)
+                        if (length == 15)
                         {
                             bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Concrete(
                                 name,
@@ -155,6 +183,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                         break;
                 }
             }
+
+
 
             bhomMaterial.SetAdapterId(typeof(MidasCivilId), delimited[0].Trim());
             return bhomMaterial;
