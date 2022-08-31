@@ -52,23 +52,59 @@ namespace BH.Adapter.Adapters.MidasCivil
                     case "EN(S)":
                     case "EN05-SW(S)":
                         bhomMaterial = (IMaterialFragment)Engine.Library.Query.PartialMatch("Materials\\MaterialsEurope\\Steel", grade, true, true)[0];
+                        if (bhomMaterial is null)
+                        {
+                            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsEurope\\Steel", "S355", true, true);
+                            Engine.Base.Compute.RecordWarning("Material not found in BHoM_Datasets, default material assigned.");
+                        }
                         break;
                     case "EN05(S)":
                     case "EN05-PS(S)": 
                         bhomMaterial = (IMaterialFragment)Engine.Library.Query.PartialMatch("Materials\\MaterialsEurope\\Steel(Grade)", grade, true, true)[0];
+                        if (bhomMaterial is null)
+                        {
+                            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsEurope\\Steel", "S355", true, true);
+                            Engine.Base.Compute.RecordWarning("Material not found in BHoM_Datasets, default material assigned.");
+                        }
                         break;
                     case "EN(RC)":
                     case "EN04(RC)":
                         bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsEurope\\Concrete", grade, true, true);
+                        if (bhomMaterial is null)
+                        {
+                            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsEurope\\Concrete", "C30/37", true, true);
+                            Engine.Base.Compute.RecordWarning("Material not found in BHoM_Datasets, default material assigned.");
+                        }
                         break;
                     case "ASTM(RC)":
-                        bhomMaterial = (IMaterialFragment)Engine.Library.Query.PartialMatch("Materials\\MaterialsUSA\\Concrete", grade.Substring(grade.LastIndexOf('C') + 1), true, true)[0]; 
+                        bhomMaterial = (IMaterialFragment)Engine.Library.Query.PartialMatch("Materials\\MaterialsUSA\\Concrete", grade.Substring(grade.LastIndexOf('C') + 1), true, true)[0];
+                        if (bhomMaterial is null)
+                        {
+                            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsUSA\\Concrete", "8000psiNW", true, true);
+                            Engine.Base.Compute.RecordWarning("Material not found in BHoM_Datasets, default material assigned.");
+                        }
                         break;
                     case "ASTM(S)":
                     case "ASTM09(S)":
                         bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsUSA\\Steel", grade, true, true);//Subgrade refinement needed
+                        if (bhomMaterial is null)
+                        {
+                            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsUSA\\Steel", "A500GrC50", true, true);
+                            Engine.Base.Compute.RecordWarning("Material not found in BHoM_Datasets, default material assigned.");
+                        }
                         break;
                     default:
+                        if(materialType == "STEEL")
+                        {
+                            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsEurope\\Steel", "S355", true, true);
+                            Engine.Base.Compute.RecordWarning("Material not found in BHoM_Datasets, default material assigned.");
+                        }
+                        else if (materialType == "CONC")
+                        {
+                            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials\\MaterialsEurope\\Concrete", "C30/37", true, true);
+                            Engine.Base.Compute.RecordWarning("Material not found in BHoM_Datasets, default material assigned.");
+                        }
+                        Engine.Base.Compute.RecordError("The standard used in MidasCivil is not supported in BHoM_Datasets");
                         break;
                 }
             }
