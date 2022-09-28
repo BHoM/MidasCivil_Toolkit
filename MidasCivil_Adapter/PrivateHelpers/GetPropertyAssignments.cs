@@ -67,6 +67,9 @@ namespace BH.Adapter.MidasCivil
                     case "SPRING":
                         switch (m_midasCivilVersion)
                         {
+                            case "9.1.0":
+                            case "9.0.5":
+                            case "9.0.0":
                             case "8.9.5":
                             case "8.9.0":
                             case "8.8.5":
