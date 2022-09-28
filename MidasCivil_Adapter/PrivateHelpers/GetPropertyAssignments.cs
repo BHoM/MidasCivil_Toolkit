@@ -58,10 +58,10 @@ namespace BH.Adapter.MidasCivil
                 switch (section)
                 {
                     case "CONSTRAINT":
-                        if (splitSection[2]=="")
+                        if (splitSection[2] == "")
                             propertyAssignments.Add(splitSection[1], propertyAssignment);
                         else
-                            propertyAssignments.Add(splitSection[2], propertyAssignment);                        
+                            propertyAssignments.Add(splitSection[2], propertyAssignment);
 
                         break;
                     case "SPRING":
@@ -70,15 +70,15 @@ namespace BH.Adapter.MidasCivil
                             case "8.9.5":
                             case "8.9.0":
                             case "8.8.5":
-                                if (splitSection[21]=="")
+                                if (splitSection[21] == "")
                                 {
-                                    string name = "Fx="+splitSection[8]+"Fy="+splitSection[9]+"Fz="+splitSection[10]+"Rx="+splitSection[11]+
-                                        "Ry="+splitSection[12]+"Rz="+splitSection[13];
+                                    string name = "Fx=" + splitSection[8] + "Fy=" + splitSection[9] + "Fz=" + splitSection[10] + "Rx=" + splitSection[11] +
+                                        "Ry=" + splitSection[12] + "Rz=" + splitSection[13];
                                     propertyAssignments.Add(name, propertyAssignment);
                                 }
-                                    
+
                                 else
-                                propertyAssignments.Add(splitSection[21], propertyAssignment);
+                                    propertyAssignments.Add(splitSection[21], propertyAssignment);
 
                                 break;
                             default:
