@@ -36,13 +36,29 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromAreaUniformlyDistributedLoad(this AreaUniformlyDistributedLoad femeshLoad, string assignedFEMesh, string forceUnit, string lengthUnit)
+        public static string FromAreaUniformlyDistributedLoad(this AreaUniformlyDistributedLoad femeshLoad, string assignedFEMesh, string version,
+            string forceUnit, string lengthUnit)
         {
             string direction = FromVector(femeshLoad.Pressure);
-            string midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
-                                    ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) + ", " +
-                                    FromVectorDirection(femeshLoad.Pressure, direction).PressureFromSI(forceUnit, lengthUnit).ToString() +
-                                    ", 0, 0, 0, 0, " + femeshLoad.Name;
+            string midasFEMeshLoad = "";
+
+            switch (version)
+            {
+                case "9.1.0":
+                    assignedFEMesh = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
+                                ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) + ", " +
+                                FromVectorDirection(femeshLoad.Pressure, direction).PressureFromSI(forceUnit, lengthUnit).ToString() +
+                                ", 0, 0, 0, 0, " + femeshLoad.Name + ",0";
+                    break;
+                default:
+                    assignedFEMesh = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
+                    ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) + ", " +
+                    FromVectorDirection(femeshLoad.Pressure, direction).PressureFromSI(forceUnit, lengthUnit).ToString() +
+                    ", 0, 0, 0, 0, " + femeshLoad.Name;
+                    break;
+            }
+
+
 
             return midasFEMeshLoad;
         }
