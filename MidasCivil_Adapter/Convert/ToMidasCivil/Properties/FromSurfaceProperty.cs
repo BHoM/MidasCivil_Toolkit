@@ -57,6 +57,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 string midasSurfaceProperty = "";
                 switch (version)
                 {
+                    case "9.1.0":
+                    case "9.0.5":
+                    case "9.0.0":
                     case "8.9.5":
                     case "8.9.0":
                         midasSurfaceProperty =
