@@ -45,13 +45,13 @@ namespace BH.Adapter.Adapters.MidasCivil
             switch (version)
             {
                 case "9.1.0":
-                    assignedFEMesh = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
+                    midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
                                 ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) + ", " +
                                 FromVectorDirection(femeshLoad.Pressure, direction).PressureFromSI(forceUnit, lengthUnit).ToString() +
                                 ", 0, 0, 0, 0, " + femeshLoad.Name + ",0";
                     break;
                 default:
-                    assignedFEMesh = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
+                    midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
                     ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) + ", " +
                     FromVectorDirection(femeshLoad.Pressure, direction).PressureFromSI(forceUnit, lengthUnit).ToString() +
                     ", 0, 0, 0, 0, " + femeshLoad.Name;
