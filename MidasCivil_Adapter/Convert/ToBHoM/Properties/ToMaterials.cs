@@ -41,7 +41,7 @@ namespace BH.Adapter.Adapters.MidasCivil
             string name = delimited[2].Trim();
             IMaterialFragment bhomMaterial = null;
 
-            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Materials", name);
+            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Structure\\Materials", name);
 
             double density = 0;
 
@@ -128,7 +128,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         else
                         {
                             Engine.Base.Compute.RecordWarning("Material not found in BHoM Library: S355 Steel properties assumed");
-                            bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Materials", "S355");
+                            bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Structure\\Materials", "S355");
                         }
                         break;
 
