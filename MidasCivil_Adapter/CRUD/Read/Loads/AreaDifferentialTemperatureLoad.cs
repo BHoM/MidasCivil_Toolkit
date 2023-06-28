@@ -80,9 +80,9 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            Compute.RecordWarning("No Area Uniform Temperature Load is detected at Element number " 
-                            + areaDifferentialTempatureElements[i].Trim().ToString()+
-                            ". \n Area Differential Temperature load will be applied at the centroid of the cross section at Element number" 
+                            Compute.RecordWarning("No Area Uniform Temperature Load is detected at Element number "
+                            + areaDifferentialTempatureElements[i].Trim().ToString() +
+                            ". \n Area Differential Temperature load will be applied at the centroid of the cross section at Element number"
                             + areaDifferentialTempatureElements[i].Trim().ToString());
                             differentialDelimitted.Add(string.Format("0"));
                         }
