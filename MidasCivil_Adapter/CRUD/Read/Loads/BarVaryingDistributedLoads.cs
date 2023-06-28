@@ -92,7 +92,7 @@ namespace BH.Adapter.MidasCivil
                                 Adapters.MidasCivil.Convert.ToBarVaryingDistributedLoad(
                                     distinctBarLoad, matchingBars, loadcase, loadcaseDictionary, barDictionary, i, m_forceUnit, m_lengthUnit);
 
-                            if(bhomBarVaryingDistributedLoad != null)
+                            if (bhomBarVaryingDistributedLoad != null)
                                 bhomBarVaryingDistributedLoads.Add(bhomBarVaryingDistributedLoad);
 
 
