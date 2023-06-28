@@ -38,9 +38,8 @@ namespace BH.Adapter.MidasCivil
         private List<ILoad> ReadGravityLoads(List<string> ids = null)
         {
             List<ILoad> bhomGravityLoads = new List<ILoad>();
-            List<Loadcase> bhomLoadcases = ReadLoadcases();
-            Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
-                        x => x.Name);
+            List<Loadcase> bhomLoadcases = GetCachedOrRead<Loadcase>();
+            Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(x => x.Name);
 
             List<BHoMObject> objects = new List<BHoMObject>();
             objects.AddRange(ReadBars());
