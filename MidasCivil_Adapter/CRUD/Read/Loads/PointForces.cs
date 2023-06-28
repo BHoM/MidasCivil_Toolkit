@@ -41,9 +41,8 @@ namespace BH.Adapter.MidasCivil
         private List<ILoad> ReadPointLoads(List<string> ids = null)
         {
             List<ILoad> bhomPointLoads = new List<ILoad>();
-            List<Loadcase> bhomLoadcases = ReadLoadcases();
-            Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
-                        x => x.Name);
+            List<Loadcase> bhomLoadcases = GetCachedOrRead<Loadcase>();
+            Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(x => x.Name);
 
             string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
@@ -56,9 +55,8 @@ namespace BH.Adapter.MidasCivil
 
                 if (PointLoadText.Count != 0)
                 {
-                    List<Node> bhomNodes = ReadNodes();
-                    Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(
-                                                                x => x.AdapterId<string>(typeof(MidasCivilId)));
+                    List<Node> bhomNodes = GetCachedOrRead<Node>();
+                    Dictionary<string, Node> nodeDictionary = bhomNodes.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
                     List<string> PointLoadComparison = new List<string>();
                     List<string> PointLoadNodes = new List<string>();

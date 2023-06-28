@@ -44,15 +44,13 @@ namespace BH.Adapter.MidasCivil
             List<string> meshText = elementsText.Where(x => x.Contains("PLATE")).ToList();
             Dictionary<string, List<int>> elementGroups = GetTags("GROUP", 2);
 
-            IEnumerable<Node> bhomNodesList = ReadNodes();
-            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
-                x => x.AdapterId<string>(typeof(MidasCivilId)));
+            IEnumerable<Node> bhomNodesList = GetCachedOrRead<Node>();
+            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
-            IEnumerable<ISurfaceProperty> bhomSurfacePropertiesList = ReadSurfaceProperties();
-            Dictionary<string, ISurfaceProperty> bhomSuraceProperties = bhomSurfacePropertiesList.ToDictionary(
-                x => x.AdapterId<string>(typeof(MidasCivilId)));
+            IEnumerable<ISurfaceProperty> bhomSurfacePropertiesList = GetCachedOrRead<ISurfaceProperty>();
+            Dictionary<string, ISurfaceProperty> bhomSuraceProperties = bhomSurfacePropertiesList.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
-            IEnumerable<IMaterialFragment> bhomMaterialList = ReadMaterials();
+            IEnumerable<IMaterialFragment> bhomMaterialList = GetCachedOrRead<IMaterialFragment>();
             Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             foreach (string mesh in meshText)

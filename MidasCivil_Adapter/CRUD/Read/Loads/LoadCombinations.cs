@@ -40,9 +40,8 @@ namespace BH.Adapter.MidasCivil
             List<LoadCombination> bhomLoadCombinations = new List<LoadCombination>();
             List<string> loadCombinationText = GetSectionText("LOADCOMB");
 
-            IEnumerable<Loadcase> bhomLoadCases = ReadLoadcases();
-            Dictionary<string, Loadcase> bhomLoadCaseDictionary = bhomLoadCases.ToDictionary(
-                x => x.AdapterId<string>(typeof(MidasCivilId)));
+            IEnumerable<Loadcase> bhomLoadCases = GetCachedOrRead<Loadcase>();
+            Dictionary<string, Loadcase> bhomLoadCaseDictionary = bhomLoadCases.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             for (int i = 0; i < loadCombinationText.Count; i += 2)
             {

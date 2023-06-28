@@ -41,9 +41,8 @@ namespace BH.Adapter.MidasCivil
         {
             List<ILoad> bhomBarDifferentialTemperatureLoads = new List<ILoad>();
 
-            List<Loadcase> bhomLoadcases = ReadLoadcases();
-            Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
-                        x => x.Name);
+            List<Loadcase> bhomLoadcases = GetCachedOrRead<Loadcase>();
+            Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(x => x.Name);
             string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
             int i = 1;
             foreach (string loadcaseFolder in loadcaseFolders)
@@ -77,7 +76,7 @@ namespace BH.Adapter.MidasCivil
                     }
                     if (barDifferntialTemperatureSets.Count != 0)
                     {
-                        List<Bar> bhomBars = ReadBars();
+                        List<Bar> bhomBars = GetCachedOrRead<Bar>();
                         Dictionary<string, Bar> barDictionary = bhomBars.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
                         for (int j = 0; j < barDifferntialTemperatureSets.Count; j++)
                         {

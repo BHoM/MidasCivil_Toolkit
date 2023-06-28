@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
 
             Dictionary<string, List<int>> nodeGroups = GetTags("GROUP", 1);
 
-            List<Constraint6DOF> supportsList = Read6DOFConstraints();
+            List<Constraint6DOF> supportsList = GetCachedOrRead<Constraint6DOF>();
             Dictionary<string, Constraint6DOF> supports = supportsList.ToDictionary(x => x.Name.ToString());
 
             Dictionary<string, List<int>> supportAssignments = GetPropertyAssignments("CONSTRAINT", "Support");
