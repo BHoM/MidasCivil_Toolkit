@@ -40,7 +40,7 @@ namespace BH.Adapter.MidasCivil
             List<RigidLink> bhomRigidLinks = new List<RigidLink>();
 
             List<string> linkText = GetSectionText("RIGIDLINK");
-            List<Node> nodes = ReadNodes();
+            List<Node> nodes = GetCachedOrRead<Node>();
             Dictionary<string, Node> nodeDictionary = nodes.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             int count = 0;

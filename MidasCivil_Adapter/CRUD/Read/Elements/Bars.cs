@@ -55,18 +55,16 @@ namespace BH.Adapter.MidasCivil
                 }
             }
 
-            IEnumerable<Node> bhomNodesList = ReadNodes();
-            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(
-                x => x.AdapterId<string>(typeof(MidasCivilId)));
+            IEnumerable<Node> bhomNodesList = GetCachedOrRead<Node>();
+            Dictionary<string, Node> bhomNodes = bhomNodesList.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             IEnumerable<BarRelease> bhomBarReleaseList = ReadBarReleases();
             Dictionary<string, BarRelease> bhomBarReleases = bhomBarReleaseList.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
-            IEnumerable<ISectionProperty> bhomSectionPropertyList = ReadSectionProperties();
-            Dictionary<string, ISectionProperty> bhomSectionProperties = bhomSectionPropertyList.ToDictionary(
-                x => x.AdapterId<string>(typeof(MidasCivilId)));
+            IEnumerable<ISectionProperty> bhomSectionPropertyList = GetCachedOrRead<ISectionProperty>();
+            Dictionary<string, ISectionProperty> bhomSectionProperties = bhomSectionPropertyList.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
-            IEnumerable<IMaterialFragment> bhomMaterialList = ReadMaterials();
+            IEnumerable<IMaterialFragment> bhomMaterialList = GetCachedOrRead<IMaterialFragment>();
             Dictionary<string, IMaterialFragment> bhomMaterials = bhomMaterialList.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             Dictionary<string, List<int>> barReleaseAssignments = GetBarReleaseAssignments("FRAME-RLS", "barRelease");

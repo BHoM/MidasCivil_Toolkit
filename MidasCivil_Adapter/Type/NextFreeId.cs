@@ -60,7 +60,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (ExistsSection(section))
                     {
-                        List<Node> nodes = ReadNodes();
+                        List<Node> nodes = GetCachedOrRead<Node>();
                         List<int> nodeID = new List<int>();
                         nodes.ForEach(x => nodeID.Add(System.Convert.ToInt32(x.AdapterId<string>(typeof(MidasCivilId)))));
                         nodeID.Sort();

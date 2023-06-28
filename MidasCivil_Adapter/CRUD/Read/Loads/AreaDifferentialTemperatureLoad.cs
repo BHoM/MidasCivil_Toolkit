@@ -38,9 +38,8 @@ namespace BH.Adapter.MidasCivil
         {
             List<ILoad> bhomAreaDifferentialTemperatureLoads = new List<ILoad>();
 
-            List<Loadcase> bhomLoadcases = ReadLoadcases();
-            Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(
-                        x => x.Name);
+            List<Loadcase> bhomLoadcases = GetCachedOrRead<Loadcase>();
+            Dictionary<string, Loadcase> loadcaseDictionary = bhomLoadcases.ToDictionary(x => x.Name);
 
             string[] loadcaseFolders = Directory.GetDirectories(m_directory + "\\TextFiles");
 
