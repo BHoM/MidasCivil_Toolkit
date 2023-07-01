@@ -39,16 +39,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             switch (version)
             {
-                case "9.1.0":
-                case "9.0.5":
-                case "9.0.0":
-                case "8.9.5":
-                case "8.9.0":
-                case "8.8.5":
-                    line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0, 0";
+                case "8.8.1":
+                case "8.7.5":
+                case "8.6.5":
+                    line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0";
                     break;
                 default:
-                    line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0";
+                    line1 = "NAME=" + loadCombination.Name + ", GEN, ACTIVE, 0, 0, , 0, 0, 0";
                     break;
             }
 
