@@ -74,6 +74,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                     switch (version)
                     {
                         case "8.6.5":
+                        case "8.7.0":
                         case "8.7.5":
                         case "8.8.1":
                             for (int i = 2; i < 8; i++)
