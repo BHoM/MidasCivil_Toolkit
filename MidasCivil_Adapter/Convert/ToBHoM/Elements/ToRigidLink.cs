@@ -32,7 +32,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 {
     public static partial class Convert
     {
-        public static RigidLink ToRigidLink(string rigidLink, Dictionary<string, Node> nodes, int count)
+        public static RigidLink ToRigidLink(string rigidLink, Dictionary<string, Node> nodes, int count, string version)
         {
             /***************************************************/
             /**** Public Methods                            ****/
@@ -41,9 +41,44 @@ namespace BH.Adapter.Adapters.MidasCivil
             string[] delimitted = rigidLink.Split(',');
             List<Node> secondaryNodes = new List<Node>();
 
-            string primaryId = delimitted[1].Trim();
-            string fixity = delimitted[2].Replace(" ", "");
-            List<string> secondaryIds = delimitted[3].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
+            string primaryId = "";
+            string fixity = "";
+            List<string> secondaryIds = new List<string>();
+
+            string name = "";
+
+            switch (version)
+            {
+                case "9.0.5":
+                case "9.1.0":
+                case "9.4.0":
+                    primaryId = delimitted[0].Trim();
+                    fixity = delimitted[1].Replace(" ", "");
+                    secondaryIds = delimitted[2].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
+                    if (string.IsNullOrWhiteSpace(delimitted[3]))
+                    {
+                        name = "RL" + count;
+                    }
+                    else
+                    {
+                        name = delimitted[3].Trim();
+                    }
+                    break;
+                default:
+                    primaryId = delimitted[1].Trim();
+                    fixity = delimitted[2].Replace(" ", "");
+                    secondaryIds = delimitted[3].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();
+                    if (string.IsNullOrWhiteSpace(delimitted[4]))
+                    {
+                        name = "RL" + count;
+                    }
+                    else
+                    {
+                        name = delimitted[4].Trim();
+                    }
+                    break;
+            }
+
             List<int> assignments = MidasCivilAdapter.GetAssignmentIds(secondaryIds);
 
             bool x = FromFixity(fixity.Substring(0, 1));
@@ -63,17 +98,6 @@ namespace BH.Adapter.Adapters.MidasCivil
                 Node secondaryNode;
                 nodes.TryGetValue(assignment.ToString(), out secondaryNode);
                 secondaryNodes.Add(secondaryNode);
-            }
-
-            string name = "";
-
-            if (string.IsNullOrWhiteSpace(delimitted[4]))
-            {
-                name = "RL" + count;
-            }
-            else
-            {
-                name = delimitted[4].Trim();
             }
 
             RigidLink bhomRigidLink = new RigidLink { PrimaryNode = primaryNode, SecondaryNodes = secondaryNodes, Constraint = constraint };

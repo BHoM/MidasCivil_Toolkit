@@ -32,7 +32,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static string FromRigidLink(this RigidLink link)
+        public static string FromRigidLink(this RigidLink link, string version)
         {
             string midasLink = "";
 
@@ -51,7 +51,17 @@ namespace BH.Adapter.Adapters.MidasCivil
                             BoolToFixity(link.Constraint.YYtoYY) +
                             BoolToFixity(link.Constraint.ZZtoZZ);
 
-            midasLink = "1, " + primaryId + "," + fixity + "," + secondaryId + "," + link.Name;
+            switch (version)
+            {
+                case "9.0.5":
+                case "9.1.0":
+                case "9.4.0":
+                    midasLink = primaryId + "," + fixity + "," + secondaryId + "," + link.Name;
+                    break;
+                default:
+                    midasLink = "1, " + primaryId + "," + fixity + "," + secondaryId + "," + link.Name;
+                    break;
+            }
 
             return midasLink;
         }
