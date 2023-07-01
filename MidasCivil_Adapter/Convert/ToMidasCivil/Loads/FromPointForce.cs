@@ -35,8 +35,9 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             string midasPointLoad = "";
 
-            switch(version)
+            switch (version)
             {
+                case "9.4.0":
                 case "9.1.0":
                     midasPointLoad = assignedNode + "," + pointLoad.Force.X.ForceFromSI(forceUnit).ToString() +
                                                     "," + pointLoad.Force.Y.ForceFromSI(forceUnit).ToString() +

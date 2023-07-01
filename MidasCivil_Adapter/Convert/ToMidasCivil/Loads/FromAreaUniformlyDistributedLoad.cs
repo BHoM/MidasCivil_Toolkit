@@ -44,6 +44,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             switch (version)
             {
+                case "9.4.0":
                 case "9.1.0":
                     midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
                                 ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) + ", " +

@@ -73,52 +73,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 {
                     switch (version)
                     {
-                        case "9.1.0":
-                        case "9.0.5":
-                        case "9.0.0":
-                        case "8.9.5":
-                        case "8.9.0":
-                        case "8.8.5":
-                            for (int i = 2; i < 8; i++)
-                            {
-                                if (delimitted[i].Trim() == "YES")
-                                {
-                                    fixity.Add(true);
-                                    stiffness.Add(0);
-                                }
-                                else if (delimitted[i].Trim() == "NO")
-                                {
-                                    double spring;
-                                    if (i < 5)
-                                    {
-                                        spring = double.Parse(delimitted[i + 6]).ForcePerLengthToSI(forceUnit, lengthUnit);
-                                    }
-                                    else
-                                    {
-                                        spring = double.Parse(delimitted[i + 6]).MomentToSI(forceUnit, lengthUnit);
-                                    }
-                                    if (spring > 1E+017.ForcePerLengthToSI(forceUnit, lengthUnit) || spring > 1E+19.MomentToSI(forceUnit, lengthUnit))
-                                    {
-                                        fixity.Add(true);
-                                        stiffness.Add(0);
-                                    }
-                                    else
-                                    {
-                                        fixity.Add(false);
-                                        stiffness.Add(spring);
-                                    }
-                                }
-                            }
-                            supportName = delimitted[21].Trim();
-                            if (supportName == "")
-                            {
-                                supportName = "Fx=" + delimitted[8] + "Fy=" + delimitted[9] + "Fz=" + delimitted[10] + "Rx=" + delimitted[11] + "Ry=" + delimitted[12] + "Rz=" + delimitted[13];
-                            }
-
-
-                            break;
-
-                        default:
+                        case "8.6.5":
+                        case "8.7.5":
+                        case "8.8.1":
                             for (int i = 2; i < 8; i++)
                             {
                                 if (delimitted[i] == "")
@@ -155,10 +112,44 @@ namespace BH.Adapter.Adapters.MidasCivil
                                 supportName = "Fx=" + delimitted[2] + "Fy=" + delimitted[3] + "Fz=" + delimitted[4] + "Rx=" + delimitted[5] + "Ry=" + delimitted[6] + "Rz=" + delimitted[7];
                             }
                             break;
+                        default:
+                            for (int i = 2; i < 8; i++)
+                            {
+                                if (delimitted[i].Trim() == "YES")
+                                {
+                                    fixity.Add(true);
+                                    stiffness.Add(0);
+                                }
+                                else if (delimitted[i].Trim() == "NO")
+                                {
+                                    double spring;
+                                    if (i < 5)
+                                    {
+                                        spring = double.Parse(delimitted[i + 6]).ForcePerLengthToSI(forceUnit, lengthUnit);
+                                    }
+                                    else
+                                    {
+                                        spring = double.Parse(delimitted[i + 6]).MomentToSI(forceUnit, lengthUnit);
+                                    }
+                                    if (spring > 1E+017.ForcePerLengthToSI(forceUnit, lengthUnit) || spring > 1E+19.MomentToSI(forceUnit, lengthUnit))
+                                    {
+                                        fixity.Add(true);
+                                        stiffness.Add(0);
+                                    }
+                                    else
+                                    {
+                                        fixity.Add(false);
+                                        stiffness.Add(spring);
+                                    }
+                                }
+                            }
+                            supportName = delimitted[21].Trim();
+                            if (supportName == "")
+                            {
+                                supportName = "Fx=" + delimitted[8] + "Fy=" + delimitted[9] + "Fz=" + delimitted[10] + "Rx=" + delimitted[11] + "Ry=" + delimitted[12] + "Rz=" + delimitted[13];
+                            }
+                            break;
                     }
-
-
-
                 }
             }
 

@@ -67,12 +67,19 @@ namespace BH.Adapter.MidasCivil
                     case "SPRING":
                         switch (m_midasCivilVersion)
                         {
-                            case "9.1.0":
-                            case "9.0.5":
-                            case "9.0.0":
-                            case "8.9.5":
-                            case "8.9.0":
-                            case "8.8.5":
+                            case "8.8.1":
+                            case "8.7.5":
+                            case "8.6.5":
+                                if (splitSection[15] == "")
+                                {
+                                    string name = "Fx=" + splitSection[2] + "Fy=" + splitSection[3] + "Fz=" + splitSection[4] + "Rx=" + splitSection[5] +
+                                       "Ry=" + splitSection[6] + "Rz=" + splitSection[7];
+                                    propertyAssignments.Add(name, propertyAssignment);
+                                }
+                                else
+                                    propertyAssignments.Add(splitSection[15], propertyAssignment);
+                                break;
+                            default:
                                 if (splitSection[21] == "")
                                 {
                                     string name = "Fx=" + splitSection[8] + "Fy=" + splitSection[9] + "Fz=" + splitSection[10] + "Rx=" + splitSection[11] +
@@ -82,17 +89,6 @@ namespace BH.Adapter.MidasCivil
 
                                 else
                                     propertyAssignments.Add(splitSection[21], propertyAssignment);
-
-                                break;
-                            default:
-                                if (splitSection[15] == "")
-                                {
-                                    string name = "Fx=" + splitSection[2] + "Fy=" + splitSection[3] + "Fz=" + splitSection[4] + "Rx=" + splitSection[5] +
-                                       "Ry=" + splitSection[6] + "Rz=" + splitSection[7];
-                                    propertyAssignments.Add(name, propertyAssignment);
-                                }
-                                else
-                                    propertyAssignments.Add(splitSection[15], propertyAssignment);
                                 break;
                         }
                         break;
