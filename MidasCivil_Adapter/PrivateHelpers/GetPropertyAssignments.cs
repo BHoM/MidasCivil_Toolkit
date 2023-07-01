@@ -69,6 +69,7 @@ namespace BH.Adapter.MidasCivil
                         {
                             case "8.8.1":
                             case "8.7.5":
+                            case "8.7.0":
                             case "8.6.5":
                                 if (splitSection[15] == "")
                                 {
