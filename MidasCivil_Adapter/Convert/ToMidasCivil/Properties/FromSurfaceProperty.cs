@@ -64,6 +64,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         break;
                     case "8.8.1":
                     case "8.7.5":
+                    case "8.7.0":
                     case "8.6.5":
                         midasSurfaceProperty =
                         bhomSurfaceProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE,Yes," +
