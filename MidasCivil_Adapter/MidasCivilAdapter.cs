@@ -50,7 +50,7 @@ namespace BH.Adapter.MidasCivil
             if (active)
             {
                 AdapterIdFragmentType = typeof(MidasCivilId);
-                this.m_AdapterSettings.CacheCRUDobjects = false;
+                this.m_AdapterSettings.CacheCRUDobjects = true;
                 Modules.Structure.ModuleLoader.LoadModules(this);
 
                 AdapterComparers = new Dictionary<Type, object>

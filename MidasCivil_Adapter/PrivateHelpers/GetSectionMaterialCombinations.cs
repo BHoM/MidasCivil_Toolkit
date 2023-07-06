@@ -51,52 +51,61 @@ namespace BH.Adapter.MidasCivil
                 materials.TryGetValue(materialId.ToString(), out material);
                 sectionProperties.TryGetValue(sectionPropertyId.ToString(), out section);
 
-                GenericSection genericSection = (GenericSection)section;
-
-                switch (material.GetType().ToString().Split('.').Last())
+                if (section is ISectionProperty)
                 {
-                    case "Concrete":
-                        ConcreteSection concreteSection = Engine.Structure.Create.ConcreteSectionFromProfile(genericSection.SectionProfile, (Concrete)material);
-                        concreteSection.Name = genericSection.Name;
-                        concreteSection.SetAdapterId(typeof(MidasCivilId),sectionPropertyId);
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), concreteSection);
-                        break;
-                    case "Steel":
-                        SteelSection steelSection = Engine.Structure.Create.SteelSectionFromProfile(genericSection.SectionProfile, (Steel)material);
-                        steelSection.Name = genericSection.Name;
-                        steelSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), steelSection);
-                        break;
-                    case "Aluminium":
-                        AluminiumSection aluminiumSection = Engine.Structure.Create.AluminiumSectionFromProfile(genericSection.SectionProfile, (Aluminium)material);
-                        aluminiumSection.Name = genericSection.Name;
-                        aluminiumSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), aluminiumSection);
-                        break;
-                    case "Timber":
-                        TimberSection timberSection = Engine.Structure.Create.TimberSectionFromProfile(genericSection.SectionProfile, (Timber)material);
-                        timberSection.Name = genericSection.Name;
-                        timberSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), timberSection);
-                        break;
-                    case "GenericIsotropicMaterial":
-                        GenericSection genericIsoptropicSection =
-                            Engine.Structure.Create.GenericSectionFromProfile(genericSection.SectionProfile, (GenericIsotropicMaterial)material);
-                        genericIsoptropicSection.Name = genericSection.Name;
-                        genericIsoptropicSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericIsoptropicSection);
-                        break;
-                    case "GenericOrthotropicMaterial":
-                        GenericSection genericOrthotropicSection =
-                            Engine.Structure.Create.GenericSectionFromProfile(genericSection.SectionProfile, (GenericOrthotropicMaterial)material);
-                        genericOrthotropicSection.Name = genericSection.Name;
-                        genericOrthotropicSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
-                        materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericOrthotropicSection);
-                        break;
-                    default:
-                        Engine.Base.Compute.RecordError(material.GetType().ToString().Split('.').Last() + "not recognised");
-                        break;
+                    //Needed to get the ShapeProfile
+                    GenericSection genericSection = (GenericSection)section;
+
+                    switch (material.GetType().ToString().Split('.').Last())
+                    {
+                        case "Concrete":
+                            ConcreteSection concreteSection = Engine.Structure.Create.ConcreteSectionFromProfile(genericSection.SectionProfile, (Concrete)material);
+                            concreteSection.Name = genericSection.Name;
+                            concreteSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
+                            materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), concreteSection);
+                            break;
+                        case "Steel":
+                            SteelSection steelSection = Engine.Structure.Create.SteelSectionFromProfile(genericSection.SectionProfile, (Steel)material);
+                            steelSection.Name = genericSection.Name;
+                            steelSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
+                            materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), steelSection);
+                            break;
+                        case "Aluminium":
+                            AluminiumSection aluminiumSection = Engine.Structure.Create.AluminiumSectionFromProfile(genericSection.SectionProfile, (Aluminium)material);
+                            aluminiumSection.Name = genericSection.Name;
+                            aluminiumSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
+                            materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), aluminiumSection);
+                            break;
+                        case "Timber":
+                            TimberSection timberSection = Engine.Structure.Create.TimberSectionFromProfile(genericSection.SectionProfile, (Timber)material);
+                            timberSection.Name = genericSection.Name;
+                            timberSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
+                            materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), timberSection);
+                            break;
+                        case "GenericIsotropicMaterial":
+                            GenericSection genericIsoptropicSection =
+                                Engine.Structure.Create.GenericSectionFromProfile(genericSection.SectionProfile, (GenericIsotropicMaterial)material);
+                            genericIsoptropicSection.Name = genericSection.Name;
+                            genericIsoptropicSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
+                            materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericIsoptropicSection);
+                            break;
+                        case "GenericOrthotropicMaterial":
+                            GenericSection genericOrthotropicSection =
+                                Engine.Structure.Create.GenericSectionFromProfile(genericSection.SectionProfile, (GenericOrthotropicMaterial)material);
+                            genericOrthotropicSection.Name = genericSection.Name;
+                            genericOrthotropicSection.SetAdapterId(typeof(MidasCivilId), sectionPropertyId);
+                            materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), genericOrthotropicSection);
+                            break;
+                        default:
+                            Engine.Base.Compute.RecordError(material.GetType().ToString().Split('.').Last() + "not recognised");
+                            break;
+                    }
                 }
+                else
+                {
+                    materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(),section);
+                }
+
             }
 
             return materialSections;
