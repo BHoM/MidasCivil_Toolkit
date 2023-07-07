@@ -33,7 +33,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static IProfile ToProfile(List<string> sectionProfile, string shape, string lengthUnit)
+        public static IProfile ToProfile(List<string> sectionProfile, string shape, string lengthUnit, List<Polyline> edges = null)
         {
             IProfile bhomProfile = null;
             double width;
@@ -130,6 +130,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                             System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
                             System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit),
                             0, 0, false, true);
+                    break;
+                case "GEN":
+                    bhomProfile = Engine.Spatial.Create.FreeFormProfile(edges);
                     break;
             }
 
