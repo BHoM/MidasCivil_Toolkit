@@ -21,7 +21,9 @@
  */
 
 using BH.oM.Adapters.MidasCivil;
+using BH.oM.Geometry;
 using BH.Engine.Adapter;
+using BH.Engine.Geometry;
 using BH.oM.Structure.SectionProperties;
 using System;
 using System.Collections.Generic;
@@ -107,7 +109,105 @@ namespace BH.Adapter.MidasCivil
                     bhomSectionProperties.Add(bhomSectionProperty);
             }
 
-            return bhomSectionProperties;
+            // Read PSCValue sections which are effectively Freeform Profiles (ids are aligned with SECTION)
+            List<string> pscSectionProperties = GetSectionText("SECT-PSCVALUE");
+            for (int i = 0; i < pscSectionProperties.Count; i++)
+            {
+                int iEnd = pscSectionProperties.IndexOf("SECT", i + 1);
+                if (iEnd == -1)
+                    iEnd = pscSectionProperties.Count() - 1;
+
+                List<string> pscSectionProperty = pscSectionProperties.GetRange(i, iEnd - i + 1);
+
+                string sectionProperty = pscSectionProperty[0];
+                string type = sectionProperty.Split(',')[1].Trim();
+
+                if (type == "VALUE")
+                {
+                    string sectionProfile = sectionProperty;
+                    string sectionProperties1 = pscSectionProperty[i + 1];
+                    string sectionProperties2 = pscSectionProperty[i + 2];
+                    string sectionProperties3 = pscSectionProperty[i + 3];
+
+                    int iOPolyStart = pscSectionProperty.IndexOf("OPOLY", i);
+                    int iOPolyEnd = pscSectionProperty.IndexOf("IPOLY", i) - 1;
+
+                    if (iOPolyEnd == -1)
+                        iOPolyEnd = pscSectionProperty.Count() - 1;
+
+                    Polyline oPoly = new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iOPolyStart, iOPolyEnd, "OPOLY") };
+
+                    List<Polyline> polys = new List<Polyline>();
+
+                    //Generate inner polyline if they exist
+                    if(pscSectionProperty.Contains("IPOLY"))
+                    {
+                        int iPolyStart = iOPolyEnd + 1;
+                        int iPolyEnd = pscSectionProperty.IndexOf("IPOLY", iPolyStart + 1);
+
+                        // Iterate through each IPoly 
+                        while(!(iPolyEnd == -1))
+                        {
+                            polys.Add(new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iPolyStart, iPolyEnd, "IPOLY") });
+
+                            iPolyStart = iPolyEnd + 1;
+                            iPolyEnd = pscSectionProperty.IndexOf("IPOLY", iPolyStart + 1);
+                        }
+
+                        // For the final IPoly
+                        if (iPolyEnd == -1)
+                            iPolyEnd = pscSectionProperty.Count - 1;
+
+                        polys.Add(new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iPolyStart, iPolyEnd, "IPOLY") });
+                    }
+
+                    List<string> split = sectionProfile.Split(',').ToList();
+
+                    ISectionProperty bhomSectionProperty = null;
+
+                    bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(
+                        split.GetRange(14, sectionProperty.Split(',').Count() - 15), sectionProperties1, sectionProperties2, sectionProperties3,
+                        split[12].Trim(), m_lengthUnit);
+
+                    bhomSectionProperty.Name = split[2].Trim();
+                    bhomSectionProperty.SetAdapterId(typeof(MidasCivilId), split[0].Split('=')[1].Trim());
+
+                    if (bhomSectionProperty != null)
+                        bhomSectionProperties.Add(bhomSectionProperty);
+
+                    //Set i index for next section property
+                    i = iEnd;
+
+                }
+            }
+
+
+
+                return bhomSectionProperties;
+        }
+
+        /***************************************************/
+
+        private List<Point> ParsePoints(List<string> text, int start, int end, string excluder)
+        {
+            List<Point> parsedPoints = new List<Point>();
+            
+            //Generate polyline by extracting points from each line (variable number of points per line)
+            for (int i = start; i < end + 1; i++)
+            {
+                //Extract single line and remove any text that cannot be parsed
+                string polyText = text[i];
+                if (polyText.Contains(excluder))
+                    polyText = polyText.Split('=')[1];
+
+                string[] polyCoords = polyText.Split(',');
+
+                // Each point is formatted X, Y in pairs with each line containing up to four points
+                for (int j = 0; j < polyCoords.Count() - 2; j++)
+                    parsedPoints.Add(new Point() { X = Int32.Parse(polyCoords[j]), Y = Int32.Parse(polyCoords[j + 1]) });
+            }
+
+            return parsedPoints;
         }
 
         /***************************************************/
