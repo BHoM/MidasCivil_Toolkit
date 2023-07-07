@@ -113,7 +113,8 @@ namespace BH.Adapter.MidasCivil
             List<string> pscSectionProperties = GetSectionText("SECT-PSCVALUE");
             for (int i = 0; i < pscSectionProperties.Count; i++)
             {
-                int iEnd = pscSectionProperties.IndexOf("SECT", i + 1);
+                int iEnd = pscSectionProperties.FindIndex(i + 1, x => x.Contains("SECT"));
+
                 if (iEnd == -1)
                     iEnd = pscSectionProperties.Count() - 1;
 
@@ -129,8 +130,8 @@ namespace BH.Adapter.MidasCivil
                     string sectionProperties2 = pscSectionProperty[i + 2];
                     string sectionProperties3 = pscSectionProperty[i + 3];
 
-                    int iOPolyStart = pscSectionProperty.IndexOf("OPOLY", i);
-                    int iOPolyEnd = pscSectionProperty.IndexOf("IPOLY", i) - 1;
+                    int iOPolyStart = pscSectionProperty.FindIndex(i, x => x.Contains("OPOLY"));
+                    int iOPolyEnd = pscSectionProperty.FindIndex(i, x => x.Contains("IPOLY")) - 1;
 
                     if (iOPolyEnd == -1)
                         iOPolyEnd = pscSectionProperty.Count() - 1;
@@ -143,15 +144,15 @@ namespace BH.Adapter.MidasCivil
                     if(pscSectionProperty.Contains("IPOLY"))
                     {
                         int iPolyStart = iOPolyEnd + 1;
-                        int iPolyEnd = pscSectionProperty.IndexOf("IPOLY", iPolyStart + 1);
+                        int iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY"));
 
                         // Iterate through each IPoly 
-                        while(!(iPolyEnd == -1))
+                        while (!(iPolyEnd == -1))
                         {
                             polys.Add(new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iPolyStart, iPolyEnd, "IPOLY") });
 
                             iPolyStart = iPolyEnd + 1;
-                            iPolyEnd = pscSectionProperty.IndexOf("IPOLY", iPolyStart + 1);
+                            iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY"));
                         }
 
                         // For the final IPoly
@@ -177,7 +178,6 @@ namespace BH.Adapter.MidasCivil
 
                     //Set i index for next section property
                     i = iEnd;
-
                 }
             }
 
