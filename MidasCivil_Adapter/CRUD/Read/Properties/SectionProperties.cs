@@ -113,9 +113,9 @@ namespace BH.Adapter.MidasCivil
             List<string> pscSectionProperties = GetSectionText("SECT-PSCVALUE");
             for (int i = 0; i < pscSectionProperties.Count; i++)
             {
-                int iEnd = pscSectionProperties.FindIndex(i + 1, x => x.Contains("SECT"));
+                int iEnd = pscSectionProperties.FindIndex(i + 1, x => x.Contains("SECT")) - 1;
 
-                if (iEnd == -1)
+                if (iEnd == -2)
                     iEnd = pscSectionProperties.Count() - 1;
 
                 List<string> pscSectionProperty = pscSectionProperties.GetRange(i, iEnd - i + 1);
@@ -126,37 +126,44 @@ namespace BH.Adapter.MidasCivil
                 if (type == "VALUE")
                 {
                     string sectionProfile = sectionProperty;
-                    string sectionProperties1 = pscSectionProperty[i + 1];
-                    string sectionProperties2 = pscSectionProperty[i + 2];
-                    string sectionProperties3 = pscSectionProperty[i + 3];
+                    string sectionProperties1 = pscSectionProperty[1];
+                    string sectionProperties2 = pscSectionProperty[2];
+                    string sectionProperties3 = pscSectionProperty[3];
 
-                    int iOPolyStart = pscSectionProperty.FindIndex(i, x => x.Contains("OPOLY"));
-                    int iOPolyEnd = pscSectionProperty.FindIndex(i, x => x.Contains("IPOLY")) - 1;
+                    // Searching pscSectionProperty which contains a single section and therefore only one OPOLY
+                    int iOPolyStart = pscSectionProperty.FindIndex(x => x.Contains("OPOLY"));
+                    int iOPolyEnd = pscSectionProperty.FindIndex(x => x.Contains("IPOLY")) - 1;
 
-                    if (iOPolyEnd == -1)
+                    // If there is no inner polylines, then the section only contains outer polylines
+                    if (iOPolyEnd == -2)
                         iOPolyEnd = pscSectionProperty.Count() - 1;
 
                     Polyline oPoly = new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iOPolyStart, iOPolyEnd, "OPOLY") };
 
-                    List<Polyline> polys = new List<Polyline>();
+                    List<Polyline> polys = new List<Polyline>() { oPoly };
 
                     //Generate inner polyline if they exist
-                    if(pscSectionProperty.Contains("IPOLY"))
+                    if (pscSectionProperty.Any(x => x.Contains("IPOLY")))
                     {
+                        // Inner polylines always follow outer, find the start of the next IPOLY otherwise it's the end of the PSC Section
                         int iPolyStart = iOPolyEnd + 1;
-                        int iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY"));
+                        int iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY")) - 1;
+
+                        if (iPolyEnd == -2)
+                            iPolyEnd = pscSectionProperty.Count - 1;
 
                         // Iterate through each IPoly 
-                        while (!(iPolyEnd == -1))
+                        while (!(iPolyEnd == -2))
                         {
                             polys.Add(new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iPolyStart, iPolyEnd, "IPOLY") });
 
+                            // Get indexes for next polyline
                             iPolyStart = iPolyEnd + 1;
-                            iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY"));
+                            iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY")) - 1;
                         }
 
-                        // For the final IPoly
-                        if (iPolyEnd == -1)
+                        // For the final inner polyline
+                        if (iPolyEnd == -2)
                             iPolyEnd = pscSectionProperty.Count - 1;
 
                         polys.Add(new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iPolyStart, iPolyEnd, "IPOLY") });
@@ -168,7 +175,7 @@ namespace BH.Adapter.MidasCivil
 
                     bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(
                         split.GetRange(14, sectionProperty.Split(',').Count() - 15), sectionProperties1, sectionProperties2, sectionProperties3,
-                        split[12].Trim(), m_lengthUnit);
+                        split[12].Trim(), m_lengthUnit, polys);
 
                     bhomSectionProperty.Name = split[2].Trim();
                     bhomSectionProperty.SetAdapterId(typeof(MidasCivilId), split[0].Split('=')[1].Trim());
@@ -203,9 +210,12 @@ namespace BH.Adapter.MidasCivil
                 string[] polyCoords = polyText.Split(',');
 
                 // Each point is formatted X, Y in pairs with each line containing up to four points
-                for (int j = 0; j < polyCoords.Count() - 2; j++)
-                    parsedPoints.Add(new Point() { X = Int32.Parse(polyCoords[j]), Y = Int32.Parse(polyCoords[j + 1]) });
+                for (int j = 0; j < polyCoords.Count() - 1; j+=2)
+                    parsedPoints.Add(new Point() { X = double.Parse(polyCoords[j].Trim()), Y = double.Parse(polyCoords[j + 1].Trim()) });
+
             }
+
+            parsedPoints.Add(parsedPoints[0]);
 
             return parsedPoints;
         }
