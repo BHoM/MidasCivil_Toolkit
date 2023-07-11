@@ -53,7 +53,7 @@ namespace BH.Adapter.MidasCivil
                         else
                             midasSectionProperties.AddRange(midasSectionProperty);
                     }
-                    if (sectionProperty is ConcreteSection)
+                    else if (sectionProperty is ConcreteSection)
                     {
                         ConcreteSection concreteSection = (ConcreteSection)sectionProperty;
                         if (concreteSection.SectionProfile is FreeFormProfile)
@@ -61,7 +61,7 @@ namespace BH.Adapter.MidasCivil
                         else
                             midasSectionProperties.AddRange(midasSectionProperty);
                     }
-                    if (sectionProperty is TimberSection)
+                    else if (sectionProperty is TimberSection)
                     {
                         TimberSection timberSection = (TimberSection)sectionProperty;
                         if (timberSection.SectionProfile is FreeFormProfile)
@@ -69,7 +69,7 @@ namespace BH.Adapter.MidasCivil
                         else
                             midasSectionProperties.AddRange(midasSectionProperty);
                     }
-                    if (sectionProperty is AluminiumSection)
+                    else if (sectionProperty is AluminiumSection)
                     {
                         AluminiumSection aluminiumSection = (AluminiumSection)sectionProperty;
                         if (aluminiumSection.SectionProfile is FreeFormProfile)
