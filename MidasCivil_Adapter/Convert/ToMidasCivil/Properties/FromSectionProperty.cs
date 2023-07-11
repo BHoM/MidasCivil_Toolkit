@@ -89,7 +89,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 // 5th and 6th number is the shear factor for shear stress (Qyb, Qzb) - contacting Midas how to resolve
                 midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
-                    sectionProperty.Vpy.LengthFromSI(lengthUnit) + sectionProperty.Vpz.LengthFromSI(lengthUnit));
+                    sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
                 List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
@@ -629,7 +629,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         {
             List<string> profile = new List<string>();
 
-            List<ICurve> edges = sectionProfile.Edges.OrderBy(x => x.ILength()).ToList();
+            List<ICurve> edges = sectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
 
             List<Point> oPolyPoints = edges[0].IControlPoints();
 
