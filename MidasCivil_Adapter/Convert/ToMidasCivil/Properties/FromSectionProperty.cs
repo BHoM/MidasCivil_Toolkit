@@ -127,6 +127,39 @@ namespace BH.Adapter.Adapters.MidasCivil
                     Engine.Base.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
                     return null;
                 }
+                else if (sectionProperty.SectionProfile is FreeFormProfile)
+                {
+                    FreeFormProfile freeformProfile = (FreeFormProfile)sectionProperty.SectionProfile;
+
+                    // Add the preamble required for the section property
+                    midasSectionProperty.Add("SECT=" + sectionProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE," +
+                            new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
+                            ",CC, 0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + ",YES,YES");
+                    // Add the values corresponding to the section properties, Asy and Asz are currently quite different between MidasCivil and BHoM (ticket raised)
+                    midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
+                        sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
+
+                    List<ICurve> perimeters = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+                    double outerPerimeter = perimeters[0].ILength();
+                    double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
+
+                    // 5th and 6th number is the shear factor for shear stress (Qyb, Qzb) - contacting Midas how to resolve
+                    midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
+                        + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
+                        sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
+
+                    //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
+                    List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
+
+                    Point p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
                 else
                 {
                     midasSectionProperty.Add(sectionProperty.AdapterId<string>(typeof(MidasCivilId)) + ",TAPERED," +
@@ -159,6 +192,39 @@ namespace BH.Adapter.Adapters.MidasCivil
                 {
                     Engine.Base.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
                     return null;
+                }
+                else if (sectionProperty.SectionProfile is FreeFormProfile)
+                {
+                    FreeFormProfile freeformProfile = (FreeFormProfile)sectionProperty.SectionProfile;
+
+                    // Add the preamble required for the section property
+                    midasSectionProperty.Add("SECT=" + sectionProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE," +
+                            new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
+                            ",CC, 0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + ",YES,YES");
+                    // Add the values corresponding to the section properties, Asy and Asz are currently quite different between MidasCivil and BHoM (ticket raised)
+                    midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
+                        sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
+
+                    List<ICurve> perimeters = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+                    double outerPerimeter = perimeters[0].ILength();
+                    double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
+
+                    // 5th and 6th number is the shear factor for shear stress (Qyb, Qzb) - contacting Midas how to resolve
+                    midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
+                        + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
+                        sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
+
+                    //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
+                    List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
+
+                    Point p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
                 }
                 else
                 {
@@ -193,6 +259,39 @@ namespace BH.Adapter.Adapters.MidasCivil
                     Engine.Base.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
                     return null;
                 }
+                else if (sectionProperty.SectionProfile is FreeFormProfile)
+                {
+                    FreeFormProfile freeformProfile = (FreeFormProfile)sectionProperty.SectionProfile;
+
+                    // Add the preamble required for the section property
+                    midasSectionProperty.Add("SECT=" + sectionProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE," +
+                            new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
+                            ",CC, 0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + ",YES,YES");
+                    // Add the values corresponding to the section properties, Asy and Asz are currently quite different between MidasCivil and BHoM (ticket raised)
+                    midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
+                        sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
+
+                    List<ICurve> perimeters = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+                    double outerPerimeter = perimeters[0].ILength();
+                    double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
+
+                    // 5th and 6th number is the shear factor for shear stress (Qyb, Qzb) - contacting Midas how to resolve
+                    midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
+                        + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
+                        sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
+
+                    //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
+                    List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
+
+                    Point p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
                 else
                 {
                     midasSectionProperty.Add(sectionProperty.AdapterId<string>(typeof(MidasCivilId)) + ",TAPERED," +
@@ -225,6 +324,39 @@ namespace BH.Adapter.Adapters.MidasCivil
                 {
                     Engine.Base.Compute.RecordError("MidasCivil_Toolkit does not support TaperedProfiles with different section shapes.");
                     return null;
+                }
+                else if (sectionProperty.SectionProfile is FreeFormProfile)
+                {
+                    FreeFormProfile freeformProfile = (FreeFormProfile)sectionProperty.SectionProfile;
+
+                    // Add the preamble required for the section property
+                    midasSectionProperty.Add("SECT=" + sectionProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE," +
+                            new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
+                            ",CC, 0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + ",YES,YES");
+                    // Add the values corresponding to the section properties, Asy and Asz are currently quite different between MidasCivil and BHoM (ticket raised)
+                    midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
+                        sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
+
+                    List<ICurve> perimeters = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+                    double outerPerimeter = perimeters[0].ILength();
+                    double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
+
+                    // 5th and 6th number is the shear factor for shear stress (Qyb, Qzb) - contacting Midas how to resolve
+                    midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
+                        + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
+                        sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
+
+                    //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
+                    List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
+
+                    Point p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
                 }
                 else
                 {
