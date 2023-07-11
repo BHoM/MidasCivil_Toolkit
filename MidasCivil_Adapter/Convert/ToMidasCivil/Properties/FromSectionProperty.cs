@@ -99,8 +99,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                 Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
                 Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
 
-                midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p1.Y.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p2.Y.LengthFromSI(lengthUnit)}, " +
-                    $"{p3.X.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                    $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
                 midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
             }
             else
@@ -675,6 +675,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                         else
                             remainderPoints = remainderPoints + "," + polyPoints[j].X + "," + polyPoints[j].Y;
                     }
+
+                    poly.Add(remainderPoints);
+
                 }
             }
 
