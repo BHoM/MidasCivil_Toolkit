@@ -78,7 +78,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasSectionProperty.Add("SECT=" + sectionProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE," +
                         new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
                         ",CC, 0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + ",YES,YES");
-                // Add the values corresponding to the section properties
+                // Add the values corresponding to the section properties, Asy and Asz are currently quite different between MidasCivil and BHoM (ticket raised)
                 midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
                     sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
 

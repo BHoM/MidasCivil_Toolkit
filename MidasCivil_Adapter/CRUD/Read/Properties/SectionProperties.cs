@@ -190,7 +190,7 @@ namespace BH.Adapter.MidasCivil
 
 
 
-                return bhomSectionProperties;
+            return bhomSectionProperties;
         }
 
         /***************************************************/
@@ -198,7 +198,7 @@ namespace BH.Adapter.MidasCivil
         private List<Point> ParsePoints(List<string> text, int start, int end, string excluder)
         {
             List<Point> parsedPoints = new List<Point>();
-            
+
             //Generate polyline by extracting points from each line (variable number of points per line)
             for (int i = start; i < end + 1; i++)
             {
@@ -210,7 +210,7 @@ namespace BH.Adapter.MidasCivil
                 string[] polyCoords = polyText.Split(',');
 
                 // Each point is formatted X, Y in pairs with each line containing up to four points
-                for (int j = 0; j < polyCoords.Count() - 1; j+=2)
+                for (int j = 0; j < polyCoords.Count() - 1; j += 2)
                     parsedPoints.Add(new Point() { X = double.Parse(polyCoords[j].Trim()), Y = double.Parse(polyCoords[j + 1].Trim()) });
 
             }

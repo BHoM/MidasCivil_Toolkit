@@ -48,7 +48,7 @@ namespace BH.Adapter.MidasCivil
                     if (sectionProperty is SteelSection)
                     {
                         SteelSection steelSection = (SteelSection)sectionProperty;
-                        if(steelSection.SectionProfile is FreeFormProfile)
+                        if (steelSection.SectionProfile is FreeFormProfile)
                             midasPSCSectionProperties.AddRange(midasSectionProperty);
                         else
                             midasSectionProperties.AddRange(midasSectionProperty);
