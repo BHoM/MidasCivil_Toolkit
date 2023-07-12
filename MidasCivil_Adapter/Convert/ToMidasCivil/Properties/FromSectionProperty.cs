@@ -103,8 +103,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 if (controlPoints.Count == 4)
                 {
                     p1 = controlPoints[0];
-                    p2 = controlPoints[1];
-                    p3 = controlPoints[2];
+                    p2 = controlPoints[0];
+                    p3 = controlPoints[1];
+                    p4 = controlPoints[2];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
