@@ -168,6 +168,14 @@ namespace BH.Adapter.MidasCivil
                             else
                                 iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY")) - 1;
                         }
+
+                        // For the final inner polyline contained on a single line
+                        if (iPolyStart == pscSectionProperty.Count -1 && iPolyEnd == -2)
+                        {
+                            iPolyEnd = pscSectionProperty.Count - 1;
+                            polys.Add(new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iPolyStart, iPolyEnd, "IPOLY") });
+                        }    
+
                     }
 
                     List<string> split = sectionProfile.Split(',').ToList();
