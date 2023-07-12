@@ -91,17 +91,36 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
-                List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
+                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
+                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                Point p1 = null;
+                Point p2 = null;
+                Point p3 = null;
+                Point p4 = null;
 
-                midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                    $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                if (controlPoints.Count == 4)
+                {
+                    p1 = controlPoints[0];
+                    p2 = controlPoints[1];
+                    p3 = controlPoints[2];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
+                else
+                {
+                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
             }
             else
             {
@@ -157,17 +176,36 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
-                List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
+                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
+                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                Point p1 = null;
+                Point p2 = null;
+                Point p3 = null;
+                Point p4 = null;
 
-                midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                    $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                if (controlPoints.Count == 4)
+                {
+                    p1 = controlPoints[0];
+                    p2 = controlPoints[1];
+                    p3 = controlPoints[2];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
+                else
+                {
+                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
             }
             else
             {
@@ -223,17 +261,36 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
-                List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
+                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
+                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                Point p1 = null;
+                Point p2 = null;
+                Point p3 = null;
+                Point p4 = null;
 
-                midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                    $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                if (controlPoints.Count == 4)
+                {
+                    p1 = controlPoints[0];
+                    p2 = controlPoints[1];
+                    p3 = controlPoints[2];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
+                else
+                {
+                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
             }
             else
             {
@@ -289,17 +346,36 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
-                List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
+                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
+                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                Point p1 = null;
+                Point p2 = null;
+                Point p3 = null;
+                Point p4 = null;
 
-                midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                    $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                if (controlPoints.Count == 4)
+                {
+                    p1 = controlPoints[0];
+                    p2 = controlPoints[1];
+                    p3 = controlPoints[2];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
+                else
+                {
+                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
             }
             else
             {
@@ -355,17 +431,36 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left)
-                List<Point> controlPoints = sectionProperty.SectionProfile.Edges.Select(x => x.IControlPoints()).SelectMany(x => x).ToList();
+                //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
+                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                Point p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                Point p1 = null;
+                Point p2 = null;
+                Point p3 = null;
+                Point p4 = null;
 
-                midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                    $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                if (controlPoints.Count == 4)
+                {
+                    p1 = controlPoints[0];
+                    p2 = controlPoints[1];
+                    p3 = controlPoints[2];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
+                else
+                {
+                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+
+                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
+                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
+                }
             }
             else
             {
@@ -752,14 +847,14 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             List<ICurve> edges = sectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
 
-            List<Point> oPolyPoints = edges[0].IControlPoints();
+            List<Point> oPolyPoints = Engine.Geometry.Compute.ISortAlongCurve(edges[0].IControlPoints(),edges[0]).Distinct().ToList();
 
             profile.AddRange(CreatePolystring(oPolyPoints, "OPOLY", lengthUnit));
 
             if (edges.Count > 1)
             {
-                for (int i = 1; i < edges.Count - 1; i++)
-                    profile.AddRange(CreatePolystring(edges[i].IControlPoints(), "IPOLY", lengthUnit));
+                for (int i = 1; i < edges.Count; i++)
+                    profile.AddRange(CreatePolystring(Engine.Geometry.Compute.ISortAlongCurve(edges[i].IControlPoints(),edges[i]).Distinct().ToList(), "IPOLY", lengthUnit));
             }
             return profile;
         }
@@ -775,21 +870,21 @@ namespace BH.Adapter.Adapters.MidasCivil
             poly.Add($"{polytype}={polyPoints[0].X.LengthFromSI(lengthUnit)},{polyPoints[0].Y.LengthFromSI(lengthUnit)},{polyPoints[1].X.LengthFromSI(lengthUnit)},{polyPoints[1].Y.LengthFromSI(lengthUnit)}," +
                 $"{polyPoints[2].X.LengthFromSI(lengthUnit)},{polyPoints[2].Y.LengthFromSI(lengthUnit)}");
 
-            if (polyCount > 4)
+            if (polyCount > 3)
             {
-                for (int i = 3; i < polyCount - 4; i += 4)
+                for (int i = 3; i < polyCount - 3; i += 4)
                 {
                     poly.Add($"{polyPoints[i].X.LengthFromSI(lengthUnit)},{polyPoints[i].Y.LengthFromSI(lengthUnit)},{polyPoints[i + 1].X.LengthFromSI(lengthUnit)},{polyPoints[i + 1].Y.LengthFromSI(lengthUnit)}," +
                         $"{polyPoints[i + 2].X.LengthFromSI(lengthUnit)},{polyPoints[i + 2].Y.LengthFromSI(lengthUnit)},{polyPoints[i + 3].X.LengthFromSI(lengthUnit)},{polyPoints[i + 3].Y.LengthFromSI(lengthUnit)}");
                 }
 
-                // 4 because 3 initial points and last point we do not want (as it is a duplicate)
-                int remainderPointsCount = (polyCount - 4) % 4;
+                // 3 because 3 initial points (no duplicate points as Dinstict() used in input for this method)
+                int remainderPointsCount = (polyCount - 3) % 4;
 
                 if (remainderPointsCount > 0)
                 {
                     string remainderPoints = "";
-                    for (int j = polyCount - 2; j > polyCount - remainderPointsCount - 2; j--)
+                    for (int j = polyCount - remainderPointsCount; j < polyCount; j++)
                     {
                         if (remainderPoints == "")
                             remainderPoints = polyPoints[j].X.LengthFromSI(lengthUnit) + "," + polyPoints[j].Y.LengthFromSI(lengthUnit);
