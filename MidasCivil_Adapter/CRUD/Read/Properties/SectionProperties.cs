@@ -147,26 +147,27 @@ namespace BH.Adapter.MidasCivil
                     {
                         // Inner polylines always follow outer, find the start of the next IPOLY otherwise it's the end of the PSC Section
                         int iPolyStart = iOPolyEnd + 1;
-                        int iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY")) - 1;
+                        int iPolyEnd = -2;
+                        if(!(iPolyStart + 1 > pscSectionProperty.Count - 1))
+                            iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY")) - 1;
 
+                        // This is the case where IPOLY is contained on a single line (i.e. three points)
                         if (iPolyEnd == -2)
                             iPolyEnd = pscSectionProperty.Count - 1;
 
-                        // Iterate through each IPoly 
+                        // Iterate through each IPoly, index of -2 identifies no more IPOLY
                         while (!(iPolyEnd == -2))
                         {
                             polys.Add(new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iPolyStart, iPolyEnd, "IPOLY") });
 
-                            // Get indexes for next polyline
+                            // Get indexes for next polyline, IF statement to avoid out of index if there is a single IPOLY
                             iPolyStart = iPolyEnd + 1;
-                            iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY")) - 1;
+                            //This is the last IPOLY
+                            if(iPolyStart > pscSectionProperty.Count() -1)
+                                iPolyEnd = -2;
+                            else
+                                iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY")) - 1;
                         }
-
-                        // For the final inner polyline
-                        if (iPolyEnd == -2)
-                            iPolyEnd = pscSectionProperty.Count - 1;
-
-                        polys.Add(new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iPolyStart, iPolyEnd, "IPOLY") });
                     }
 
                     List<string> split = sectionProfile.Split(',').ToList();
