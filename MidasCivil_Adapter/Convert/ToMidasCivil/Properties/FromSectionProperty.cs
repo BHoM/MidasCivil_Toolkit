@@ -189,8 +189,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 if (controlPoints.Count == 4)
                 {
                     p1 = controlPoints[0];
-                    p2 = controlPoints[1];
-                    p3 = controlPoints[2];
+                    p2 = controlPoints[0];
+                    p3 = controlPoints[1];
+                    p4 = controlPoints[2];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
@@ -274,8 +275,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 if (controlPoints.Count == 4)
                 {
                     p1 = controlPoints[0];
-                    p2 = controlPoints[1];
-                    p3 = controlPoints[2];
+                    p2 = controlPoints[0];
+                    p3 = controlPoints[1];
+                    p4 = controlPoints[2];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
@@ -359,8 +361,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 if (controlPoints.Count == 4)
                 {
                     p1 = controlPoints[0];
-                    p2 = controlPoints[1];
-                    p3 = controlPoints[2];
+                    p2 = controlPoints[0];
+                    p3 = controlPoints[1];
+                    p4 = controlPoints[2];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
@@ -444,8 +447,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 if (controlPoints.Count == 4)
                 {
                     p1 = controlPoints[0];
-                    p2 = controlPoints[1];
-                    p3 = controlPoints[2];
+                    p2 = controlPoints[0];
+                    p3 = controlPoints[1];
+                    p4 = controlPoints[2];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
@@ -848,14 +852,25 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             List<ICurve> edges = sectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
 
-            List<Point> oPolyPoints = Engine.Geometry.Compute.ISortAlongCurve(edges[0].IControlPoints(),edges[0]).Distinct().ToList();
+            // oPoly needs to be clockwise and iPoly needs to be anti-clockwise to visual correctly in MidasCivil
+            Polyline oPoly = (Polyline)edges[0];
 
-            profile.AddRange(CreatePolystring(oPolyPoints, "OPOLY", lengthUnit));
+            if (!oPoly.IsClockwise(oPoly.Centroid().Translate(new Vector() { Z = 1 })))
+                oPoly = oPoly.Flip();
+
+            profile.AddRange(CreatePolystring(Engine.Geometry.Compute.ISortAlongCurve(oPoly.IControlPoints(), oPoly).Distinct().ToList(), "OPOLY", lengthUnit));
 
             if (edges.Count > 1)
             {
                 for (int i = 1; i < edges.Count; i++)
-                    profile.AddRange(CreatePolystring(Engine.Geometry.Compute.ISortAlongCurve(edges[i].IControlPoints(),edges[i]).Distinct().ToList(), "IPOLY", lengthUnit));
+                {
+                    Polyline iPoly = (Polyline)edges[i];
+
+                    if (iPoly.IsClockwise(iPoly.Centroid().Translate(new Vector() { Z = 1 })))
+                        iPoly = iPoly.Flip();
+
+                    profile.AddRange(CreatePolystring(Engine.Geometry.Compute.ISortAlongCurve(iPoly.IControlPoints(), iPoly).Distinct().ToList(), "IPOLY", lengthUnit));
+                }
             }
             return profile;
         }
