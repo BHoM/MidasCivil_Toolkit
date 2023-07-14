@@ -113,10 +113,50 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 else
                 {
-                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    // In general there will be a point in each quadrant, but there are instances where they are not 
+                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+
+                    List<Point> p1p2p3p4 = new List<Point>();
+
+                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int j = 0;
+                        while (j < 4)
+                        {
+                            if (q1.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q1[i]);
+                                j = j + 1;
+                            }
+                            if (q2.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q2[i]);
+                                j = j + 1;
+                            }
+                            if (q3.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q3[i]);
+                                j = j + 1;
+                            }
+                            if (q4.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q4[i]);
+                                j = j + 1;
+                            }
+                        }
+
+                        if (j == 4)
+                            break;
+                    }
+
+                    p1 = p1p2p3p4[0];
+                    p2 = p1p2p3p4[1];
+                    p3 = p1p2p3p4[2];
+                    p4 = p1p2p3p4[3];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
@@ -199,10 +239,50 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 else
                 {
-                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    // In general there will be a point in each quadrant, but there are instances where they are not 
+                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+
+                    List<Point> p1p2p3p4 = new List<Point>();
+
+                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int j = 0;
+                        while (j < 4)
+                        {
+                            if (q1.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q1[i]);
+                                j = j + 1;
+                            }
+                            if (q2.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q2[i]);
+                                j = j + 1;
+                            }
+                            if (q3.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q3[i]);
+                                j = j + 1;
+                            }
+                            if (q4.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q4[i]);
+                                j = j + 1;
+                            }
+                        }
+
+                        if (j == 4)
+                            break;
+                    }
+
+                    p1 = p1p2p3p4[0];
+                    p2 = p1p2p3p4[1];
+                    p3 = p1p2p3p4[2];
+                    p4 = p1p2p3p4[3];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
@@ -285,10 +365,50 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 else
                 {
-                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    // In general there will be a point in each quadrant, but there are instances where they are not 
+                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+
+                    List<Point> p1p2p3p4 = new List<Point>();
+
+                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int j = 0;
+                        while (j < 4)
+                        {
+                            if (q1.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q1[i]);
+                                j = j + 1;
+                            }
+                            if (q2.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q2[i]);
+                                j = j + 1;
+                            }
+                            if (q3.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q3[i]);
+                                j = j + 1;
+                            }
+                            if (q4.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q4[i]);
+                                j = j + 1;
+                            }
+                        }
+
+                        if (j == 4)
+                            break;
+                    }
+
+                    p1 = p1p2p3p4[0];
+                    p2 = p1p2p3p4[1];
+                    p3 = p1p2p3p4[2];
+                    p4 = p1p2p3p4[3];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
@@ -371,10 +491,50 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 else
                 {
-                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    // In general there will be a point in each quadrant, but there are instances where they are not 
+                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+
+                    List<Point> p1p2p3p4 = new List<Point>();
+
+                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int j = 0;
+                        while (j < 4)
+                        {
+                            if (q1.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q1[i]);
+                                j = j + 1;
+                            }
+                            if (q2.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q2[i]);
+                                j = j + 1;
+                            }
+                            if (q3.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q3[i]);
+                                j = j + 1;
+                            }
+                            if (q4.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q4[i]);
+                                j = j + 1;
+                            }
+                        }
+
+                        if (j == 4)
+                            break;
+                    }
+
+                    p1 = p1p2p3p4[0];
+                    p2 = p1p2p3p4[1];
+                    p3 = p1p2p3p4[2];
+                    p4 = p1p2p3p4[3];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
@@ -446,6 +606,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
                 if (controlPoints.Count == 4)
                 {
+                    // For a triangle, a single point need to be repeated
                     p1 = controlPoints[0];
                     p2 = controlPoints[0];
                     p3 = controlPoints[1];
@@ -457,10 +618,50 @@ namespace BH.Adapter.Adapters.MidasCivil
                 }
                 else
                 {
-                    p1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
-                    p4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList()[0];
+                    // In general there will be a point in each quadrant, but there are instances where they are not 
+                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+
+                    List<Point> p1p2p3p4 = new List<Point>();
+
+                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int j = 0;
+                        while (j < 4)
+                        {
+                            if (q1.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q1[i]);
+                                j = j + 1;
+                            }
+                            if (q2.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q2[i]);
+                                j = j + 1;
+                            }
+                            if (q3.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q3[i]);
+                                j = j + 1;
+                            }
+                            if (q4.ElementAtOrDefault(i) != null)
+                            {
+                                p1p2p3p4.Add(q4[i]);
+                                j = j + 1;
+                            }
+                        }
+
+                        if (j == 4)
+                            break;
+                    }
+
+                    p1 = p1p2p3p4[0];
+                    p2 = p1p2p3p4[1];
+                    p3 = p1p2p3p4[2];
+                    p4 = p1p2p3p4[3];
 
                     midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
                         $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
