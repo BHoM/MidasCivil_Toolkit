@@ -51,7 +51,11 @@ namespace BH.Adapter.MidasCivil
                 materials.TryGetValue(materialId.ToString(), out material);
                 sectionProperties.TryGetValue(sectionPropertyId.ToString(), out section);
 
-                if (section is ISectionProperty)
+                if(section is SteelSection || section is ConcreteSection || section is AluminiumSection || section is TimberSection)
+                {
+                    materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(), section);
+                }
+                else
                 {
                     //Needed to get the ShapeProfile
                     GenericSection genericSection = (GenericSection)section;
@@ -100,10 +104,6 @@ namespace BH.Adapter.MidasCivil
                             Engine.Base.Compute.RecordError(material.GetType().ToString().Split('.').Last() + "not recognised");
                             break;
                     }
-                }
-                else
-                {
-                    materialSections.Add(materialId.ToString() + "," + sectionPropertyId.ToString(),section);
                 }
 
             }
