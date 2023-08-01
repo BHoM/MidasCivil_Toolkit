@@ -48,8 +48,8 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             for (int i = 0; i < 6; i++)
             {
-                bhomStartFixity.Add(FromFixity(startFixity.Substring(i, 1)));
-                bhomEndFixity.Add(FromFixity(endFixity.Substring(i, 1)));
+                bhomStartFixity.Add(FromFixity(startFixity.Substring(i, 1),true));
+                bhomEndFixity.Add(FromFixity(endFixity.Substring(i, 1), true));
             }
 
             Constraint6DOF startConstraint = Engine.Structure.Create.Constraint6DOF(bhomStartFixity[0], bhomStartFixity[1], bhomStartFixity[2],
