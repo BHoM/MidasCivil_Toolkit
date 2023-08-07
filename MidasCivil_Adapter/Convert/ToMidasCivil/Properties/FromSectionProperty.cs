@@ -86,10 +86,24 @@ namespace BH.Adapter.Adapters.MidasCivil
                 double outerPerimeter = perimeters[0].ILength();
                 double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
 
-                // 5th and 6th number is the shear factor for shear stress (Qyb, Qzb) - contacting Midas how to resolve
+                //Calculate total width of section
+                BoundingBox outerBounds = perimeters[0].IBounds();
+                double totalWidth = outerBounds.Max.X - outerBounds.Min.X;
+                double totalDepth = outerBounds.Max.Y - outerBounds.Min.Y;
+
+                // Calculate the width of the openings and subtract from the width of the section
+                for (int i = 1; i < perimeters.Count; i++)
+                {
+                    totalWidth = totalWidth - (perimeters[i].IBounds().Max.X - perimeters[i].IBounds().Min.X);
+                    totalDepth = totalDepth - (perimeters[i].IBounds().Max.Y - perimeters[i].IBounds().Min.Y);
+                }
+
                 midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
-                    + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) + "," + outerPerimeter + "," + innerPerimeter + "," +
+                    + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit)/totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit)/totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
+
+                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
 
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
                 ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
