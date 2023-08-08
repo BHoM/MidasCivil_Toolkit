@@ -82,100 +82,29 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
                     sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
 
-                List<ICurve> perimeters = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+                List<ICurve> perimeters = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+
                 double outerPerimeter = perimeters[0].ILength();
                 double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
-
-                //Calculate total width of section
-                BoundingBox outerBounds = perimeters[0].IBounds();
-                double totalWidth = outerBounds.Max.X - outerBounds.Min.X;
-                double totalDepth = outerBounds.Max.Y - outerBounds.Min.Y;
-
-                // Calculate the width of the openings and subtract from the width of the section
-                for (int i = 1; i < perimeters.Count; i++)
-                {
-                    totalWidth = totalWidth - (perimeters[i].IBounds().Max.X - perimeters[i].IBounds().Min.X);
-                    totalDepth = totalDepth - (perimeters[i].IBounds().Max.Y - perimeters[i].IBounds().Min.Y);
-                }
+                double totalWidth = CulmalativeWidth(perimeters);
+                double totalDepth = CulmalativeDepth(perimeters);
 
                 midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
-                    + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit)/totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit)/totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
+                    + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
                 Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
                 Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
 
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
-                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
                 List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = null;
-                Point p2 = null;
-                Point p3 = null;
-                Point p4 = null;
+                // ExtremePoints
+                midasSectionProperty.Add(ExtremePoints(controlPoints, lengthUnit));
 
-                if (controlPoints.Count == 4)
-                {
-                    p1 = controlPoints[0];
-                    p2 = controlPoints[0];
-                    p3 = controlPoints[1];
-                    p4 = controlPoints[2];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
-                else
-                {
-                    // In general there will be a point in each quadrant, but there are instances where they are not 
-                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-
-                    List<Point> p1p2p3p4 = new List<Point>();
-
-                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
-                    for (int i = 0; i < 4; i++)
-                    {
-                        int j = 0;
-                        while (j < 4)
-                        {
-                            if (q1.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q1[i]);
-                                j = j + 1;
-                            }
-                            if (q2.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q2[i]);
-                                j = j + 1;
-                            }
-                            if (q3.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q3[i]);
-                                j = j + 1;
-                            }
-                            if (q4.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q4[i]);
-                                j = j + 1;
-                            }
-                        }
-
-                        if (j == 4)
-                            break;
-                    }
-
-                    p1 = p1p2p3p4[0];
-                    p2 = p1p2p3p4[1];
-                    p3 = p1p2p3p4[2];
-                    p4 = p1p2p3p4[3];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
+                // Add OPOLY and IPOLY
+                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
             }
             else
             {
@@ -222,97 +151,29 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
                     sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
 
-                List<ICurve> perimeters = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+                List<ICurve> perimeters = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+
                 double outerPerimeter = perimeters[0].ILength();
                 double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
-
-                //Calculate total width of section
-                BoundingBox outerBounds = perimeters[0].IBounds();
-                double totalWidth = outerBounds.Max.X - outerBounds.Min.X;
-                double totalDepth = outerBounds.Max.Y - outerBounds.Min.Y;
-
-                // Calculate the width of the openings and subtract from the width of the section
-                for (int i = 1; i < perimeters.Count; i++)
-                {
-                    totalWidth = totalWidth - (perimeters[i].IBounds().Max.X - perimeters[i].IBounds().Min.X);
-                    totalDepth = totalDepth - (perimeters[i].IBounds().Max.Y - perimeters[i].IBounds().Min.Y);
-                }
+                double totalWidth = CulmalativeWidth(perimeters);
+                double totalDepth = CulmalativeDepth(perimeters);
 
                 midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
+                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
+
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
-                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
                 List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = null;
-                Point p2 = null;
-                Point p3 = null;
-                Point p4 = null;
+                // ExtremePoints
+                midasSectionProperty.Add(ExtremePoints(controlPoints, lengthUnit));
 
-                if (controlPoints.Count == 4)
-                {
-                    p1 = controlPoints[0];
-                    p2 = controlPoints[0];
-                    p3 = controlPoints[1];
-                    p4 = controlPoints[2];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
-                else
-                {
-                    // In general there will be a point in each quadrant, but there are instances where they are not 
-                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-
-                    List<Point> p1p2p3p4 = new List<Point>();
-
-                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
-                    for (int i = 0; i < 4; i++)
-                    {
-                        int j = 0;
-                        while (j < 4)
-                        {
-                            if (q1.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q1[i]);
-                                j = j + 1;
-                            }
-                            if (q2.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q2[i]);
-                                j = j + 1;
-                            }
-                            if (q3.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q3[i]);
-                                j = j + 1;
-                            }
-                            if (q4.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q4[i]);
-                                j = j + 1;
-                            }
-                        }
-
-                        if (j == 4)
-                            break;
-                    }
-
-                    p1 = p1p2p3p4[0];
-                    p2 = p1p2p3p4[1];
-                    p3 = p1p2p3p4[2];
-                    p4 = p1p2p3p4[3];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
+                // Add OPOLY and IPOLY
+                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
             }
             else
             {
@@ -359,97 +220,29 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
                     sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
 
-                List<ICurve> perimeters = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+                List<ICurve> perimeters = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+
                 double outerPerimeter = perimeters[0].ILength();
                 double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
-
-                //Calculate total width of section
-                BoundingBox outerBounds = perimeters[0].IBounds();
-                double totalWidth = outerBounds.Max.X - outerBounds.Min.X;
-                double totalDepth = outerBounds.Max.Y - outerBounds.Min.Y;
-
-                // Calculate the width of the openings and subtract from the width of the section
-                for (int i = 1; i < perimeters.Count; i++)
-                {
-                    totalWidth = totalWidth - (perimeters[i].IBounds().Max.X - perimeters[i].IBounds().Min.X);
-                    totalDepth = totalDepth - (perimeters[i].IBounds().Max.Y - perimeters[i].IBounds().Min.Y);
-                }
+                double totalWidth = CulmalativeWidth(perimeters);
+                double totalDepth = CulmalativeDepth(perimeters);
 
                 midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
+                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
+
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
-                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
                 List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = null;
-                Point p2 = null;
-                Point p3 = null;
-                Point p4 = null;
+                // ExtremePoints
+                midasSectionProperty.Add(ExtremePoints(controlPoints, lengthUnit));
 
-                if (controlPoints.Count == 4)
-                {
-                    p1 = controlPoints[0];
-                    p2 = controlPoints[0];
-                    p3 = controlPoints[1];
-                    p4 = controlPoints[2];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
-                else
-                {
-                    // In general there will be a point in each quadrant, but there are instances where they are not 
-                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-
-                    List<Point> p1p2p3p4 = new List<Point>();
-
-                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
-                    for (int i = 0; i < 4; i++)
-                    {
-                        int j = 0;
-                        while (j < 4)
-                        {
-                            if (q1.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q1[i]);
-                                j = j + 1;
-                            }
-                            if (q2.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q2[i]);
-                                j = j + 1;
-                            }
-                            if (q3.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q3[i]);
-                                j = j + 1;
-                            }
-                            if (q4.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q4[i]);
-                                j = j + 1;
-                            }
-                        }
-
-                        if (j == 4)
-                            break;
-                    }
-
-                    p1 = p1p2p3p4[0];
-                    p2 = p1p2p3p4[1];
-                    p3 = p1p2p3p4[2];
-                    p4 = p1p2p3p4[3];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
+                // Add OPOLY and IPOLY
+                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
             }
             else
             {
@@ -496,97 +289,29 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
                     sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
 
-                List<ICurve> perimeters = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+                List<ICurve> perimeters = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+
                 double outerPerimeter = perimeters[0].ILength();
                 double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
-
-                //Calculate total width of section
-                BoundingBox outerBounds = perimeters[0].IBounds();
-                double totalWidth = outerBounds.Max.X - outerBounds.Min.X;
-                double totalDepth = outerBounds.Max.Y - outerBounds.Min.Y;
-
-                // Calculate the width of the openings and subtract from the width of the section
-                for (int i = 1; i < perimeters.Count; i++)
-                {
-                    totalWidth = totalWidth - (perimeters[i].IBounds().Max.X - perimeters[i].IBounds().Min.X);
-                    totalDepth = totalDepth - (perimeters[i].IBounds().Max.Y - perimeters[i].IBounds().Min.Y);
-                }
+                double totalWidth = CulmalativeWidth(perimeters);
+                double totalDepth = CulmalativeDepth(perimeters);
 
                 midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
+                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
+
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
-                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
                 List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = null;
-                Point p2 = null;
-                Point p3 = null;
-                Point p4 = null;
+                // ExtremePoints
+                midasSectionProperty.Add(ExtremePoints(controlPoints, lengthUnit));
 
-                if (controlPoints.Count == 4)
-                {
-                    p1 = controlPoints[0];
-                    p2 = controlPoints[0];
-                    p3 = controlPoints[1];
-                    p4 = controlPoints[2];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
-                else
-                {
-                    // In general there will be a point in each quadrant, but there are instances where they are not 
-                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-
-                    List<Point> p1p2p3p4 = new List<Point>();
-
-                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
-                    for (int i = 0; i < 4; i++)
-                    {
-                        int j = 0;
-                        while (j < 4)
-                        {
-                            if (q1.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q1[i]);
-                                j = j + 1;
-                            }
-                            if (q2.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q2[i]);
-                                j = j + 1;
-                            }
-                            if (q3.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q3[i]);
-                                j = j + 1;
-                            }
-                            if (q4.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q4[i]);
-                                j = j + 1;
-                            }
-                        }
-
-                        if (j == 4)
-                            break;
-                    }
-
-                    p1 = p1p2p3p4[0];
-                    p2 = p1p2p3p4[1];
-                    p3 = p1p2p3p4[2];
-                    p4 = p1p2p3p4[3];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
+                // Add OPOLY and IPOLY
+                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
             }
             else
             {
@@ -633,98 +358,29 @@ namespace BH.Adapter.Adapters.MidasCivil
                 midasSectionProperty.Add(sectionProperty.Area.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asy.AreaFromSI(lengthUnit).ToString() + "," + sectionProperty.Asz.AreaFromSI(lengthUnit).ToString() + "," +
                     sectionProperty.J.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iy.AreaMomentOfInertiaFromSI(lengthUnit).ToString() + "," + sectionProperty.Iz.AreaMomentOfInertiaFromSI(lengthUnit).ToString());
 
-                List<ICurve> perimeters = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+                List<ICurve> perimeters = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+
                 double outerPerimeter = perimeters[0].ILength();
                 double innerPerimeter = perimeters.Sum(x => x.ILength()) - outerPerimeter;
-
-                //Calculate total width of section
-                BoundingBox outerBounds = perimeters[0].IBounds();
-                double totalWidth = outerBounds.Max.X - outerBounds.Min.X;
-                double totalDepth = outerBounds.Max.Y - outerBounds.Min.Y;
-
-                // Calculate the width of the openings and subtract from the width of the section
-                for (int i = 1; i < perimeters.Count; i++)
-                {
-                    totalWidth = totalWidth - (perimeters[i].IBounds().Max.X - perimeters[i].IBounds().Min.X);
-                    totalDepth = totalDepth - (perimeters[i].IBounds().Max.Y - perimeters[i].IBounds().Min.Y);
-                }
+                double totalWidth = CulmalativeWidth(perimeters);
+                double totalDepth = CulmalativeDepth(perimeters);
 
                 midasSectionProperty.Add(sectionProperty.Vy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vz.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit)
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
+                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
+
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
-                ICurve oPoly = sectionProperty.SectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
+                ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
                 List<Point> controlPoints = oPoly.IControlPoints();
 
-                Point p1 = null;
-                Point p2 = null;
-                Point p3 = null;
-                Point p4 = null;
+                // ExtremePoints
+                midasSectionProperty.Add(ExtremePoints(controlPoints, lengthUnit));
 
-                if (controlPoints.Count == 4)
-                {
-                    // For a triangle, a single point need to be repeated
-                    p1 = controlPoints[0];
-                    p2 = controlPoints[0];
-                    p3 = controlPoints[1];
-                    p4 = controlPoints[2];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
-                else
-                {
-                    // In general there will be a point in each quadrant, but there are instances where they are not 
-                    List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-                    List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
-
-                    List<Point> p1p2p3p4 = new List<Point>();
-
-                    // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
-                    for (int i = 0; i < 4; i++)
-                    {
-                        int j = 0;
-                        while (j < 4)
-                        {
-                            if (q1.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q1[i]);
-                                j = j + 1;
-                            }
-                            if (q2.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q2[i]);
-                                j = j + 1;
-                            }
-                            if (q3.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q3[i]);
-                                j = j + 1;
-                            }
-                            if (q4.ElementAtOrDefault(i) != null)
-                            {
-                                p1p2p3p4.Add(q4[i]);
-                                j = j + 1;
-                            }
-                        }
-
-                        if (j == 4)
-                            break;
-                    }
-
-                    p1 = p1p2p3p4[0];
-                    p2 = p1p2p3p4[1];
-                    p3 = p1p2p3p4[2];
-                    p4 = p1p2p3p4[3];
-
-                    midasSectionProperty.Add($"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
-                        $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}");
-                    midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
-                }
+                // Add OPOLY and IPOLY
+                midasSectionProperty.AddRange(CreatePSCProfile(freeformProfile, lengthUnit));
             }
             else
             {
@@ -927,6 +583,37 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
+        private static List<string> CreatePSCProfile(FreeFormProfile sectionProfile, string lengthUnit)
+        {
+            List<string> profile = new List<string>();
+
+            List<ICurve> edges = sectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
+
+            // oPoly needs to be clockwise and iPoly needs to be anti-clockwise to visual correctly in MidasCivil
+            Polyline oPoly = (Polyline)edges[0];
+
+            if (!oPoly.IsClockwise(oPoly.Centroid().Translate(new Vector() { Z = 1 })))
+                oPoly = oPoly.Flip();
+
+            profile.AddRange(CreatePolystring(Engine.Geometry.Compute.ISortAlongCurve(oPoly.IControlPoints(), oPoly).Distinct().ToList(), "OPOLY", lengthUnit));
+
+            if (edges.Count > 1)
+            {
+                for (int i = 1; i < edges.Count; i++)
+                {
+                    Polyline iPoly = (Polyline)edges[i];
+
+                    if (iPoly.IsClockwise(iPoly.Centroid().Translate(new Vector() { Z = 1 })))
+                        iPoly = iPoly.Flip();
+
+                    profile.AddRange(CreatePolystring(Engine.Geometry.Compute.ISortAlongCurve(iPoly.IControlPoints(), iPoly).Distinct().ToList(), "IPOLY", lengthUnit));
+                }
+            }
+            return profile;
+        }
+
+        /***************************************************/
+
         private static string GetInterpolationOrder(ISectionProperty sectionProperty)
         {
             if (sectionProperty is SteelSection)
@@ -1105,36 +792,6 @@ namespace BH.Adapter.Adapters.MidasCivil
         }
 
         /***************************************************/
-        private static List<string> CreatePSCProfile(FreeFormProfile sectionProfile, string lengthUnit)
-        {
-            List<string> profile = new List<string>();
-
-            List<ICurve> edges = sectionProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList();
-
-            // oPoly needs to be clockwise and iPoly needs to be anti-clockwise to visual correctly in MidasCivil
-            Polyline oPoly = (Polyline)edges[0];
-
-            if (!oPoly.IsClockwise(oPoly.Centroid().Translate(new Vector() { Z = 1 })))
-                oPoly = oPoly.Flip();
-
-            profile.AddRange(CreatePolystring(Engine.Geometry.Compute.ISortAlongCurve(oPoly.IControlPoints(), oPoly).Distinct().ToList(), "OPOLY", lengthUnit));
-
-            if (edges.Count > 1)
-            {
-                for (int i = 1; i < edges.Count; i++)
-                {
-                    Polyline iPoly = (Polyline)edges[i];
-
-                    if (iPoly.IsClockwise(iPoly.Centroid().Translate(new Vector() { Z = 1 })))
-                        iPoly = iPoly.Flip();
-
-                    profile.AddRange(CreatePolystring(Engine.Geometry.Compute.ISortAlongCurve(iPoly.IControlPoints(), iPoly).Distinct().ToList(), "IPOLY", lengthUnit));
-                }
-            }
-            return profile;
-        }
-
-        /***************************************************/
 
         private static List<string> CreatePolystring(List<Point> polyPoints, string polytype, string lengthUnit)
         {
@@ -1175,7 +832,113 @@ namespace BH.Adapter.Adapters.MidasCivil
             return poly;
         }
 
+        private static string ExtremePoints(List<Point> controlPoints, string lengthUnit)
+        {
+            string extremePoints;
+
+            Point p1 = null;
+            Point p2 = null;
+            Point p3 = null;
+            Point p4 = null;
+
+            if (controlPoints.Count == 4)
+            {
+                p1 = controlPoints[0];
+                p2 = controlPoints[0];
+                p3 = controlPoints[1];
+                p4 = controlPoints[2];
+
+                extremePoints = $"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}," +
+                    $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}";
+            }
+            else
+            {
+                // In general there will be a point in each quadrant, but there are instances where they are not 
+                List<Point> q1 = controlPoints.Where(x => x.Y > 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                List<Point> q2 = controlPoints.Where(x => x.Y > 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                List<Point> q3 = controlPoints.Where(x => x.Y < 0).Where(x => x.X < 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+                List<Point> q4 = controlPoints.Where(x => x.Y < 0).Where(x => x.X > 0).OrderBy(x => x.Distance(new Point())).Reverse().ToList();
+
+                List<Point> p1p2p3p4 = new List<Point>();
+
+                // Take the first point from each list - this works for a point in each quadrant and for the scenario where three points exist in a single quadrant 
+                for (int i = 0; i < 4; i++)
+                {
+                    int j = 0;
+                    while (j < 4)
+                    {
+                        if (q1.ElementAtOrDefault(i) != null)
+                        {
+                            p1p2p3p4.Add(q1[i]);
+                            j = j + 1;
+                        }
+                        if (q2.ElementAtOrDefault(i) != null)
+                        {
+                            p1p2p3p4.Add(q2[i]);
+                            j = j + 1;
+                        }
+                        if (q3.ElementAtOrDefault(i) != null)
+                        {
+                            p1p2p3p4.Add(q3[i]);
+                            j = j + 1;
+                        }
+                        if (q4.ElementAtOrDefault(i) != null)
+                        {
+                            p1p2p3p4.Add(q4[i]);
+                            j = j + 1;
+                        }
+                    }
+
+                    if (j == 4)
+                        break;
+                }
+
+                p1 = p1p2p3p4[0];
+                p2 = p1p2p3p4[1];
+                p3 = p1p2p3p4[2];
+                p4 = p1p2p3p4[3];
+
+                extremePoints = $"{p1.X.LengthFromSI(lengthUnit)}, {p2.X.LengthFromSI(lengthUnit)}, {p3.X.LengthFromSI(lengthUnit)}, {p4.X.LengthFromSI(lengthUnit)}," +
+                    $"{p1.Y.LengthFromSI(lengthUnit)},{p2.Y.LengthFromSI(lengthUnit)}, {p3.Y.LengthFromSI(lengthUnit)}, {p4.Y.LengthFromSI(lengthUnit)}";
+            }
+
+            return extremePoints;
+        }
+
         /***************************************************/
+
+        private static double CulmalativeDepth(List<ICurve> perimeters)
+        {           
+            //Calculate total depth of section
+            BoundingBox outerBounds = perimeters[0].IBounds();
+            double totalDepth = outerBounds.Max.Y - outerBounds.Min.Y;
+
+            // Calculate the width of the openings and subtract from the width of the section
+            for (int i = 1; i < perimeters.Count; i++)
+            {
+                totalDepth = totalDepth - (perimeters[i].IBounds().Max.Y - perimeters[i].IBounds().Min.Y);
+            }
+
+            return totalDepth;
+        }
+
+        private static double CulmalativeWidth(List<ICurve> perimeters)
+        {
+            //Calculate total width of section
+            BoundingBox outerBounds = perimeters[0].IBounds();
+            double totalWidth = outerBounds.Max.X - outerBounds.Min.X;
+
+            // Calculate the width of the openings and subtract from the width of the section
+            for (int i = 1; i < perimeters.Count; i++)
+            {
+                totalWidth = totalWidth - (perimeters[i].IBounds().Max.X - perimeters[i].IBounds().Min.X);
+            }
+
+            return totalWidth;
+        }
+
+
+
 
     }
 }
