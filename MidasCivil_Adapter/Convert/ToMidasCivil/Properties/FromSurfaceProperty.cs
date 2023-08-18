@@ -57,24 +57,23 @@ namespace BH.Adapter.Adapters.MidasCivil
                 string midasSurfaceProperty = "";
                 switch (version)
                 {
-                    case "9.1.0":
-                    case "9.0.5":
-                    case "9.0.0":
-                    case "8.9.5":
-                    case "8.9.0":
-                        midasSurfaceProperty =
-                            bhomSurfaceProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE,1,Yes," +
-                            bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,No,0,0";
-                        break;
                     case "8.8.5":
                         midasSurfaceProperty =
                         bhomSurfaceProperty.AdapterId<string>(typeof(MidasCivilId)) + "," + new string(bhomSurfaceProperty.DescriptionOrName().Replace(",", "").Take(groupCharacterLimit).ToArray())
                         + ",VALUE,Yes," + bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,No,0,0";
                         break;
-                    default:
+                    case "8.8.1":
+                    case "8.7.5":
+                    case "8.7.0":
+                    case "8.6.5":
                         midasSurfaceProperty =
                         bhomSurfaceProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE,Yes," +
                         bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,No,0,0";
+                        break;
+                    default:
+                        midasSurfaceProperty =
+                            bhomSurfaceProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE,1,Yes," +
+                            bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,No,0,0";
                         break;
                 }
 

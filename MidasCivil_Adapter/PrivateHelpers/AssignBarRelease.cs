@@ -63,7 +63,7 @@ namespace BH.Adapter.MidasCivil
             }
             else
             {
-                split[0] = bhomID;
+                split[0] = bhomID + " ";
             }
 
             string updatedProperty = split[0];

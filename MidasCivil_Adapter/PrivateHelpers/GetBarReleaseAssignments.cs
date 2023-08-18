@@ -50,6 +50,10 @@ namespace BH.Adapter.MidasCivil
                         Where(x => !string.IsNullOrEmpty(x)).
                         ToList();
                 }
+                else
+                {
+                    geometryAssignments.Add(splitSection.Trim());
+                }
 
                 List<int> propertyAssignment = MidasCivilAdapter.GetAssignmentIds(geometryAssignments);
 

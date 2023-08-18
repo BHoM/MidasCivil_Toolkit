@@ -43,28 +43,25 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             switch (version)
             {
-                case "9.1.0":
-                case "9.0.5":
-                case "9.0.0":
-                case "8.9.5":
-                case "8.9.0":
-                case "8.8.5":
+                case "8.8.1":
+                case "8.7.5":
+                case "8.6.5":
+                    midasSpring = (
+                        " " + "," + "LINEAR" + "," +
+                        stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
+                        stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
+                        stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
+                        + "," + "NO, 0, 0, 0, 0, 0, 0," + new string(constraint6DOF.DescriptionOrName().Replace(",", "").Take(groupCharacterLimit).ToArray()) + "," + "0, 0, 0, 0, 0"
+                        );
+                    break;
+                default:
                     string springFixity = SpringFixity(constraint6DOF, groupCharacterLimit);
                     midasSpring = (
                         " " + "," + "LINEAR" + "," + springFixity +
                         stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
                         stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
-                        + "," + "NO, 0, 0, 0, 0, 0, 0," + new string(constraint6DOF.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) + "," + "0, 0, 0, 0, 0"
-                        );
-                    break;
-                default:
-                    midasSpring = (
-                        " " + "," + "LINEAR" + "," +
-                        stiffness[0].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[1].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," +
-                        stiffness[2].ForcePerLengthFromSI(forceUnit, lengthUnit) + "," + stiffness[3].MomentFromSI(forceUnit, lengthUnit) + "," +
-                        stiffness[4].MomentFromSI(forceUnit, lengthUnit) + "," + stiffness[5].MomentFromSI(forceUnit, lengthUnit)
-                        + "," + "NO, 0, 0, 0, 0, 0, 0," + new string(constraint6DOF.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) + "," + "0, 0, 0, 0, 0"
+                        + "," + "NO, 0, 0, 0, 0, 0, 0," + new string(constraint6DOF.DescriptionOrName().Replace(",", "").Take(groupCharacterLimit).ToArray()) + "," + "0, 0, 0, 0, 0"
                         );
                     break;
             }
@@ -98,7 +95,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 {
                     if (i < 3)
                     {
-                        stiffness.Add(ForcePerLengthFromSI(1E17,forceUnit, lengthUnit));
+                        stiffness.Add(ForcePerLengthFromSI(1E17, forceUnit, lengthUnit));
                         if (!(springs[i] == ForcePerLengthFromSI(1E17, forceUnit, lengthUnit)))
                             Engine.Base.Compute.RecordWarning(
                                 DOFType.Fixed + " used, this will overwrite the spring stiffness with 1E+17 N/m");
@@ -141,7 +138,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 if (!(MidasCivilAdapter.GetSupportedDOFType(freedom)))
                 {
                     Engine.Base.Compute.RecordWarning(
-                        "Unsupported DOFType in " + new string(constraint6DOF.DescriptionOrName().Replace(",","").Take(groupCharacterLimit).ToArray()) + " assumed to be" + DOFType.Fixed);
+                        "Unsupported DOFType in " + new string(constraint6DOF.DescriptionOrName().Replace(",", "").Take(groupCharacterLimit).ToArray()) + " assumed to be" + DOFType.Fixed);
                     support = support + "YES,";
                 }
 
