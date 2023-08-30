@@ -93,8 +93,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
-                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
+                Engine.Base.Compute.RecordWarning("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordWarning("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
 
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
                 ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
@@ -162,8 +162,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
-                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
+                Engine.Base.Compute.RecordWarning("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordWarning("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
 
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
                 ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
@@ -231,8 +231,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
-                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
+                Engine.Base.Compute.RecordWarning("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordWarning("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
 
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
                 ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
@@ -300,8 +300,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
-                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
+                Engine.Base.Compute.RecordWarning("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordWarning("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
 
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
                 ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
@@ -369,8 +369,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                     + "," + sectionProperty.Wely.VolumeFromSI(lengthUnit) / totalWidth + "," + sectionProperty.Welz.VolumeFromSI(lengthUnit) / totalDepth + "," + outerPerimeter + "," + innerPerimeter + "," +
                     sectionProperty.Vpy.LengthFromSI(lengthUnit) + "," + sectionProperty.Vpz.LengthFromSI(lengthUnit));
 
-                Engine.Base.Compute.RecordError("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
-                Engine.Base.Compute.RecordError("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
+                Engine.Base.Compute.RecordWarning("The shear factor (Qby and Qbz) are calculated by determining the thickness of the voided section and can differ from the Midas SPC calcualted values.");
+                Engine.Base.Compute.RecordWarning("The shear areas are calculated using integration and can differ from the Midas SPC calculated value.");
 
                 //Work out extreme points in each corner of the section p1 (top left), p2 (top right), p3 (bottom right), p4 (bottom left) of the outer polyline
                 ICurve oPoly = freeformProfile.Edges.OrderBy(x => x.ILength()).Reverse().ToList()[0];
