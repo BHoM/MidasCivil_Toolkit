@@ -46,6 +46,10 @@ namespace BH.Adapter.MidasCivil
                 {
                     propertyAssignment.AddRange(RangeBySplit(assignment, "to"));
                 }
+                else if(assignment == "")
+                {
+                    continue;
+                }
                 else
                 {
                     int id = System.Convert.ToInt32(assignment);

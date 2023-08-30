@@ -908,37 +908,96 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
 
         private static double CulmalativeDepth(List<ICurve> perimeters)
-        {           
+        {
             //Calculate total depth of section
             BoundingBox outerBounds = perimeters[0].IBounds();
-            double totalDepth = outerBounds.Max.Y - outerBounds.Min.Y;
 
-            // Calculate the width of the openings and subtract from the width of the section
-            for (int i = 1; i < perimeters.Count; i++)
+            // Create a line at the centroid
+            double centreX = perimeters[0].ICentroid().X;
+            Point bottom = new Point() { X = centreX, Y = outerBounds.Min.Y };
+            Point top = new Point() { X = centreX, Y = outerBounds.Max.Y };
+            Line centroid = Engine.Geometry.Create.Line(bottom,top);
+
+            double depth = 0;
+
+            List<Point> pts = centroid.ICurveIntersections(perimeters[0]).OrderBy(pt => pt.Y).ToList();
+
+            // Calculate depth for the outer polyline
+            CalculateDepth(ref depth, pts, perimeters[0], true);
+
+            // Iterate over the inner polyline curves
+            for (int j = 1; j < perimeters.Count; j++)
             {
-                totalDepth = totalDepth - (perimeters[i].IBounds().Max.Y - perimeters[i].IBounds().Min.Y);
+                // Calculate depth reduction because of openings
+                List<Point> innerPoints = centroid.ICurveIntersections(perimeters[j]).OrderBy(pt => pt.Y).ToList();
+                CalculateDepth(ref depth, innerPoints, perimeters[j], false);
             }
 
-            return totalDepth;
+            // Divide by count-1 to average out the depth
+            return depth;
+        }
+
+        private static void CalculateDepth(ref double depth, List<Point> pts, ICurve curve, bool addition)
+        {
+            // Iterate over the points provided 
+            for (int i = 0; i < pts.Count - 1; i++)
+            {
+                //Get a point between sequential points, and get the midpoint - if it's within the curve then the distance between the points can be added to the depth
+                if (curve.IIsContaining(new List<Point>() { Engine.Geometry.Create.Point(pts[i].X + (pts[i + 1].X - pts[i].X), pts[i].Y + (pts[i + 1].Y - pts[i].Y), pts[i].Z + pts[i + 1].Z - pts[i].Z) }))
+                {
+                    if (addition)
+                        depth += pts[i + 1].Y - pts[i].Y;
+                    else
+                        depth -= pts[i + 1].Y - pts[i].Y;
+                }
+            }
         }
 
         private static double CulmalativeWidth(List<ICurve> perimeters)
         {
             //Calculate total width of section
             BoundingBox outerBounds = perimeters[0].IBounds();
-            double totalWidth = outerBounds.Max.X - outerBounds.Min.X;
 
-            // Calculate the width of the openings and subtract from the width of the section
-            for (int i = 1; i < perimeters.Count; i++)
+            // Create a line at the centroid
+            double centreY = perimeters[0].ICentroid().Y;
+            Point left = new Point() { X = outerBounds.Min.X, Y = centreY };
+            Point right = new Point() { X = outerBounds.Max.X, Y = centreY };
+            Line centroid = Engine.Geometry.Create.Line(left, right);
+
+            double depth = 0;
+
+            List<Point> pts = centroid.ICurveIntersections(perimeters[0]).OrderBy(pt => pt.X).ToList();
+
+            // Calculate width for the outer polyline
+            CalculateWidth(ref depth, pts, perimeters[0], true);
+
+            // Iterate over the inner polyline curves
+            for (int j = 1; j < perimeters.Count; j++)
             {
-                totalWidth = totalWidth - (perimeters[i].IBounds().Max.X - perimeters[i].IBounds().Min.X);
+                // Calculate depth reduction because of openings
+                List<Point> innerPoints = centroid.ICurveIntersections(perimeters[j]).OrderBy(pt => pt.X).ToList();
+                CalculateWidth(ref depth, innerPoints, perimeters[j], false);
             }
 
-            return totalWidth;
+            // Divide by count-1 to average out the depth
+            return depth;
         }
 
-
-
+        private static void CalculateWidth(ref double width, List<Point> pts, ICurve curve, bool addition)
+        {
+            // Iterate over the points provided 
+            for (int i = 0; i < pts.Count - 1; i++)
+            {
+                //Get a point between sequential points, and get the midpoint - if it's within the curve then the distance between the points can be added to the depth
+                if (curve.IIsContaining(new List<Point>() { Engine.Geometry.Create.Point(pts[i].X + (pts[i + 1].X - pts[i].X), pts[i].Y + (pts[i + 1].Y - pts[i].Y), pts[i].Z + pts[i + 1].Z - pts[i].Z) }))
+                {
+                    if (addition)
+                        width += pts[i + 1].X - pts[i].X;
+                    else
+                        width -= pts[i + 1].X - pts[i].X;
+                }
+            }
+        }
 
     }
 }
