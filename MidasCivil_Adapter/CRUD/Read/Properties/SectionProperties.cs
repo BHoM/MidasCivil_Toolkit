@@ -195,6 +195,11 @@ namespace BH.Adapter.MidasCivil
                     //Set i index for next section property
                     i = iEnd;
                 }
+                else if(type == "COMPOSITE-GEN")
+                {
+                    Engine.Base.Compute.RecordWarning("MidasCivil_Toolkit does not support COMPOSITE-GEN sections, this section has been skipped.");
+                    i = iEnd;
+                }
             }
 
 
