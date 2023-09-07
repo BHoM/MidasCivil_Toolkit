@@ -43,9 +43,24 @@ namespace BH.Adapter.MidasCivil
 
             List<string> sectionProperties = GetSectionText("SECTION");
 
+            List<string> types = new List<string>() { "VALUE", "DBUSER", "TAPERED", "SRC", "COMBINED", "PSC", "COMPOSITE", "SOD", "COMBINED" };
+
+            List<int> indexes = new List<int>();
+
+            // Determine where the section starts based on the keyword types above occuring in the [1] position
             for (int i = 0; i < sectionProperties.Count; i++)
             {
-                string sectionProperty = sectionProperties[i];
+                string line = sectionProperties[i];
+                if(!(line.Length < 2))
+                {
+                    if (types.Any(x => x == sectionProperties[i].Split(',')[1].Trim()))
+                        indexes.Add(i);
+                }
+            }
+
+            foreach (int index in indexes)
+            {
+                string sectionProperty = sectionProperties[index];
                 string type = sectionProperty.Split(',')[1].Trim();
 
                 ISectionProperty bhomSectionProperty = null;
@@ -53,9 +68,9 @@ namespace BH.Adapter.MidasCivil
                 if (type == "VALUE")
                 {
                     string sectionProfile = sectionProperty;
-                    string sectionProperties1 = sectionProperties[i + 1];
-                    string sectionProperties2 = sectionProperties[i + 2];
-                    string sectionProperties3 = sectionProperties[i + 3];
+                    string sectionProperties1 = sectionProperties[index + 1];
+                    string sectionProperties2 = sectionProperties[index + 2];
+                    string sectionProperties3 = sectionProperties[index + 3];
 
                     List<string> split = sectionProfile.Split(',').ToList();
 
@@ -65,8 +80,6 @@ namespace BH.Adapter.MidasCivil
 
                     bhomSectionProperty.Name = split[2].Trim();
                     bhomSectionProperty.SetAdapterId(typeof(MidasCivilId), split[0].Trim());
-
-                    i = i + 3;
                 }
                 else if (type == "DBUSER")
                 {
@@ -89,7 +102,7 @@ namespace BH.Adapter.MidasCivil
                 else if (type == "TAPERED")
                 {
                     List<string> split = sectionProperty.Split(',').ToList();
-                    List<string> profiles = sectionProperties[i + 1].Split(',').ToList();
+                    List<string> profiles = sectionProperties[index + 1].Split(',').ToList();
                     string shape = split[14].Trim();
                     string interpolationOrder = Math.Max(System.Convert.ToInt32(split[15].Trim()), System.Convert.ToInt32(split[16].Trim())).ToString();
 
@@ -97,12 +110,10 @@ namespace BH.Adapter.MidasCivil
 
                     bhomSectionProperty.SetAdapterId(typeof(MidasCivilId), split[0].Trim());
                     bhomSectionProperty.Name = split[2].Trim();
-
-                    i = i + 1;
                 }
                 else
                 {
-                    Engine.Base.Compute.RecordWarning(type + " not supported in the MidasCivil_Toolkit");
+                    Engine.Base.Compute.RecordWarning(type + " is not supported in the MidasCivil_Toolkit - a null value will be assigned to any Bars referencing it.");
                 }
 
                 if (bhomSectionProperty != null)
@@ -195,9 +206,9 @@ namespace BH.Adapter.MidasCivil
                     //Set i index for next section property
                     i = iEnd;
                 }
-                else if(type == "COMPOSITE-GEN")
+                else
                 {
-                    Engine.Base.Compute.RecordWarning("MidasCivil_Toolkit does not support COMPOSITE-GEN sections, this section has been skipped.");
+                    Engine.Base.Compute.RecordWarning(type + " is not supported in the MidasCivil_Toolkit - a null value will be assigned to any Bars referencing it.");
                     i = iEnd;
                 }
             }
