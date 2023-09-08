@@ -41,7 +41,8 @@ namespace BH.Adapter.Adapters.MidasCivil
             string name = delimited[2].Trim();
             IMaterialFragment bhomMaterial = null;
 
-            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Structure\\Materials", name);
+            // delimitted[12] is the database name of the material
+            bhomMaterial = (IMaterialFragment)Engine.Library.Query.Match("Structure\\Materials", delimited[12].Trim());
 
             double density = 0;
 
@@ -114,9 +115,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                         }
                         break;
                     case "STEEL":
-                        if (delimited.Count() == 15)
+                        if ((delimited[9].Trim()) == "2") // 2 is for user defined materials, database sections do not include material properties in the MCT
                         {
-                            bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Steel(
+                            bhomMaterial = Engine.Structure.Create.Steel(
                                 name,
                                 double.Parse(delimited[10].Trim()).PressureToSI(forceUnit, lengthUnit),
                                 double.Parse(delimited[11].Trim()),
@@ -127,15 +128,14 @@ namespace BH.Adapter.Adapters.MidasCivil
                         }
                         else
                         {
-                            Engine.Base.Compute.RecordWarning("Material not found in BHoM Library: S355 Steel properties assumed");
-                            bhomMaterial = (IMaterialFragment)BH.Engine.Library.Query.Match("Structure\\Materials", "S355");
+                            Engine.Base.Compute.RecordWarning(name + " not found in BHoM Library, a null value has been assigned.");
                         }
                         break;
 
                     case "CONC":
-                        if (delimited.Count() == 15)
+                        if ((delimited[9].Trim()) == "2") // 2 is for user defined materials, database sections do not include material properties in the MCT
                         {
-                            bhomMaterial = (IMaterialFragment)Engine.Structure.Create.Concrete(
+                            bhomMaterial = Engine.Structure.Create.Concrete(
                                 name,
                                 double.Parse(delimited[10].Trim()).PressureToSI(forceUnit, lengthUnit),
                                 double.Parse(delimited[11].Trim()),
@@ -147,16 +147,18 @@ namespace BH.Adapter.Adapters.MidasCivil
                         }
                         else
                         {
-                            Engine.Base.Compute.RecordWarning("Material not found in BHoM Library.");
+                            Engine.Base.Compute.RecordWarning(name + " not found in BHoM Library, a null value has been assigned.");
                         }
                         break;
                     case "SRC":
-                        Engine.Base.Compute.RecordError("BHoM does not support Reinforced Concrete Sections");
+                        Engine.Base.Compute.RecordWarning("BHoM does not support Reinforced Concrete Sections and a null section has been assigned.");
                         break;
                 }
             }
 
-            bhomMaterial.SetAdapterId(typeof(MidasCivilId), delimited[0].Trim());
+            if (bhomMaterial != null)
+                bhomMaterial.SetAdapterId(typeof(MidasCivilId), delimited[0].Trim());
+
             return bhomMaterial;
         }
 
