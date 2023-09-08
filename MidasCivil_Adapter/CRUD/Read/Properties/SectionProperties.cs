@@ -61,7 +61,10 @@ namespace BH.Adapter.MidasCivil
             foreach (int index in indexes)
             {
                 string sectionProperty = sectionProperties[index];
-                string type = sectionProperty.Split(',')[1].Trim();
+                List<string> split = sectionProperty.Split(',').ToList();
+
+                string type = split[1].Trim();
+
 
                 ISectionProperty bhomSectionProperty = null;
 
@@ -71,8 +74,6 @@ namespace BH.Adapter.MidasCivil
                     string sectionProperties1 = sectionProperties[index + 1];
                     string sectionProperties2 = sectionProperties[index + 2];
                     string sectionProperties3 = sectionProperties[index + 3];
-
-                    List<string> split = sectionProfile.Split(',').ToList();
 
                     bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(
                         split.GetRange(14, sectionProperty.Split(',').Count() - 15), sectionProperties1, sectionProperties2, sectionProperties3,
@@ -87,11 +88,18 @@ namespace BH.Adapter.MidasCivil
 
                     if (numberColumns == 16)
                     {
-                        Engine.Base.Compute.RecordWarning("Library sections are not yet supported in the MidasCivil_Toolkit");
+                        // delimitted[15] is the database name of the section
+                        bhomSectionProperty = (ISectionProperty)Engine.Library.Query.Match("Structure\\SectionProperties",split[15]);
+                        if (bhomSectionProperty == null)
+                            Engine.Base.Compute.RecordWarning("The database section " + split[2] + " could not be found in the BHoM datasets - a null value has been assigned.");
+                        else
+                        {
+                            bhomSectionProperty.SetAdapterId(typeof(MidasCivilId), split[0].Trim());
+                            Engine.Base.Compute.RecordWarning("The section " + split[2] + " has been assigned from BHoMDatasets, note the material is the same as the database section.");
+                        }
                     }
                     else
                     {
-                        List<string> split = sectionProperty.Split(',').ToList();
                         bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(split.GetRange(14, numberColumns - 16),
                             split[12].Trim(), m_lengthUnit);
 
@@ -101,7 +109,6 @@ namespace BH.Adapter.MidasCivil
                 }
                 else if (type == "TAPERED")
                 {
-                    List<string> split = sectionProperty.Split(',').ToList();
                     List<string> profiles = sectionProperties[index + 1].Split(',').ToList();
                     string shape = split[14].Trim();
                     string interpolationOrder = Math.Max(System.Convert.ToInt32(split[15].Trim()), System.Convert.ToInt32(split[16].Trim())).ToString();
@@ -212,8 +219,6 @@ namespace BH.Adapter.MidasCivil
                     i = iEnd;
                 }
             }
-
-
 
             return bhomSectionProperties;
         }
