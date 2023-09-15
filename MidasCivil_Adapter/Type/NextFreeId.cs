@@ -131,21 +131,18 @@ namespace BH.Adapter.MidasCivil
                     string section = "SECTION";
                     string pscSection = "SECT-PSCVALUE";
 
-                    int sectionIndex = 0;
-                    int pscSectionIndex = 0;
-
                     if (ExistsSection(section) && ExistsSection(pscSection))
                     {
-                        sectionIndex = Math.Max(GetMaxId(section), GetMaxId(pscSection));
+                        index = Math.Max(GetMaxId(section), GetMaxId(pscSection)) + 1;
                     }
                     else if (ExistsSection(section))
                     {
-                        pscSectionIndex = GetMaxId(section);
+                        index = GetMaxId(section) + 1;
 
                     }
                     else if (ExistsSection(pscSection))
                     {
-                        pscSectionIndex = GetMaxId(pscSection);
+                        index = GetMaxId(pscSection) + 1;
 
                     }
                     else
