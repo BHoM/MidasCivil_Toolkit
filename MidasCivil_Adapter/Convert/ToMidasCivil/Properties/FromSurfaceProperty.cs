@@ -72,7 +72,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                         break;
                     default:
                         midasSurfaceProperty =
-                            bhomSurfaceProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE,1,Yes," +
+                            bhomSurfaceProperty.AdapterId<string>(typeof(MidasCivilId)) + ",VALUE," + new string(bhomSurfaceProperty.DescriptionOrName().Replace(",", "").Take(groupCharacterLimit).ToArray()) + ",Yes," +
                             bhomSurfaceProperty.Thickness.LengthFromSI(lengthUnit) + ",0,No,0,0";
                         break;
                 }
