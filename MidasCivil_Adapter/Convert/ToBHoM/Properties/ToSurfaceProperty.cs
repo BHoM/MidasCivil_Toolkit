@@ -61,8 +61,13 @@ namespace BH.Adapter.Adapters.MidasCivil
                     constantThickness = new ConstantThickness
                     {
                         Thickness = System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit),
-                        Name = "t = " + split[4].Trim()
                     };
+
+                    if (split[2].Trim() != "1")
+                        constantThickness.Name = split[2].Trim();
+                    else
+                        constantThickness.Name = "t = " + split[4].Trim();
+
                     break;
             }
 
