@@ -60,7 +60,7 @@ namespace BH.Adapter.MidasCivil
 
                     if (ExistsSection(section))
                     {
-                        List<Node> nodes = ReadNodes();
+                        List<Node> nodes = GetCachedOrRead<Node>();
                         List<int> nodeID = new List<int>();
                         nodes.ForEach(x => nodeID.Add(System.Convert.ToInt32(x.AdapterId<string>(typeof(MidasCivilId)))));
                         nodeID.Sort();
@@ -129,10 +129,21 @@ namespace BH.Adapter.MidasCivil
                 if (typeof(ISectionProperty).IsAssignableFrom(type))
                 {
                     string section = "SECTION";
+                    string pscSection = "SECT-PSCVALUE";
 
-                    if (ExistsSection(section))
+                    if (ExistsSection(section) && ExistsSection(pscSection))
+                    {
+                        index = Math.Max(GetMaxId(section), GetMaxId(pscSection)) + 1;
+                    }
+                    else if (ExistsSection(section))
                     {
                         index = GetMaxId(section) + 1;
+
+                    }
+                    else if (ExistsSection(pscSection))
+                    {
+                        index = GetMaxId(pscSection) + 1;
+
                     }
                     else
                     {

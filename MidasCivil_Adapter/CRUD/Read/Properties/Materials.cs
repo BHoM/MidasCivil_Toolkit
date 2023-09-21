@@ -40,7 +40,8 @@ namespace BH.Adapter.MidasCivil
             foreach (string material in materialText)
             {
                 IMaterialFragment bhomMaterial = Adapters.MidasCivil.Convert.ToMaterial(material, m_forceUnit, m_lengthUnit, m_temperatureUnit);
-                bhomMaterials.Add(bhomMaterial);
+                if (bhomMaterial != null)
+                    bhomMaterials.Add(bhomMaterial);
             }
 
             return bhomMaterials;

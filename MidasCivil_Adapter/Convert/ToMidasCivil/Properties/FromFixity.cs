@@ -28,15 +28,26 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        internal static bool FromFixity(string number)
+        internal static bool FromFixity(string number, bool release = false)
         {
             bool fixity = true;
 
-            if (int.Parse(number) == 1)
+            if(release)
             {
-                fixity = false;
+                // For bar releases 
+                if (int.Parse(number.Trim()) == 1)
+                {
+                    fixity = false;
+                }
             }
-
+            else
+            {
+                // For constraints, rigid links etc.
+                if (int.Parse(number.Trim()) == 0)
+                {
+                    fixity = false;
+                }
+            }
             return fixity;
         }
 

@@ -40,30 +40,34 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             switch (version)
             {
-                case "9.1.0":
-                case "9.0.5":
-                case "9.0.0":
-                case "8.9.5":
-                case "8.9.0":
-                    constantThickness = new ConstantThickness
-                    {
-                        Thickness = System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit),
-                        Name = "t = " + split[4].Trim()
-                    };
-                    break;
                 case "8.8.5":
-                    constantThickness =new ConstantThickness
+                    constantThickness = new ConstantThickness
                     {
                         Thickness = System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit),
                         Name = split[1]
                     };
                     break;
-                default:
+                case "8.8.1":
+                case "8.7.5":
+                case "8.7.0":
+                case "8.6.5":
                     constantThickness = new ConstantThickness
                     {
                         Thickness = System.Convert.ToDouble(split[3].Trim()).LengthToSI(lengthUnit),
                         Name = "t = " + split[3].Trim()
                     };
+                    break;
+                default:
+                    constantThickness = new ConstantThickness
+                    {
+                        Thickness = System.Convert.ToDouble(split[4].Trim()).LengthToSI(lengthUnit),
+                    };
+
+                    if (split[2].Trim() != "1")
+                        constantThickness.Name = split[2].Trim();
+                    else
+                        constantThickness.Name = "t = " + split[4].Trim();
+
                     break;
             }
 

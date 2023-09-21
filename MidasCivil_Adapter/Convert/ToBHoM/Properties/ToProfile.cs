@@ -33,7 +33,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static IProfile ToProfile(List<string> sectionProfile, string shape, string lengthUnit)
+        public static IProfile ToProfile(List<string> sectionProfile, string shape, string lengthUnit, List<Polyline> edges = null)
         {
             IProfile bhomProfile = null;
             double width;
@@ -109,12 +109,12 @@ namespace BH.Adapter.Adapters.MidasCivil
                     topFlangeThickness = System.Convert.ToDouble(sectionProfile[3]);
                     bottomFlangeThickness = System.Convert.ToDouble(sectionProfile[5]);
 
-                    if(Math.Abs(topFlangeWidth - bottomFlangeWidth) > Tolerance.Distance && bottomFlangeWidth > Tolerance.Distance)
+                    if (Math.Abs(topFlangeWidth - bottomFlangeWidth) > Tolerance.Distance && bottomFlangeWidth > Tolerance.Distance)
                     {
                         Engine.Base.Compute.RecordWarning("Asymmetric channel sections are not yet supported by the BHoM. The top flange width will be used for the profile.");
                     }
-                    
-                    if(Math.Abs(topFlangeThickness - bottomFlangeThickness) > Tolerance.Distance && bottomFlangeThickness > Tolerance.Distance)
+
+                    if (Math.Abs(topFlangeThickness - bottomFlangeThickness) > Tolerance.Distance && bottomFlangeThickness > Tolerance.Distance)
                     {
                         Engine.Base.Compute.RecordWarning("Asymmetric channel sections are not yet supported by the BHoM. The top flange thickness will be used for the profile.");
                     }
@@ -130,6 +130,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                             System.Convert.ToDouble(sectionProfile[0]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[1]).LengthToSI(lengthUnit),
                             System.Convert.ToDouble(sectionProfile[2]).LengthToSI(lengthUnit), System.Convert.ToDouble(sectionProfile[3]).LengthToSI(lengthUnit),
                             0, 0, false, true);
+                    break;
+                case "GEN":
+                    bhomProfile = Engine.Spatial.Create.FreeFormProfile(edges);
                     break;
             }
 

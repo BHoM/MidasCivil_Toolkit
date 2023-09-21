@@ -40,14 +40,14 @@ namespace BH.Adapter.MidasCivil
             List<RigidLink> bhomRigidLinks = new List<RigidLink>();
 
             List<string> linkText = GetSectionText("RIGIDLINK");
-            List<Node> nodes = ReadNodes();
+            List<Node> nodes = GetCachedOrRead<Node>();
             Dictionary<string, Node> nodeDictionary = nodes.ToDictionary(x => x.AdapterId<string>(typeof(MidasCivilId)));
 
             int count = 0;
 
             foreach (string link in linkText)
             {
-                RigidLink bhomRigidLink = Adapters.MidasCivil.Convert.ToRigidLink(link, nodeDictionary, count);
+                RigidLink bhomRigidLink = Adapters.MidasCivil.Convert.ToRigidLink(link, nodeDictionary, count, m_midasCivilVersion);
                 bhomRigidLinks.Add(bhomRigidLink);
 
                 if (string.IsNullOrWhiteSpace(link.Split(',')[3].Trim()))

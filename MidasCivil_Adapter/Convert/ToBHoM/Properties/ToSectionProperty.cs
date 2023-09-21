@@ -20,6 +20,7 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using BH.oM.Geometry;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.MaterialFragments;
 using BH.oM.Spatial.ShapeProfiles;
@@ -45,9 +46,9 @@ namespace BH.Adapter.Adapters.MidasCivil
         /***************************************************/
 
         public static ISectionProperty ToSectionProperty(this List<string> sectionProfile, string sectionProperty1,
-            string sectionProperty2, string sectionProperty3, string shape, string lengthUnit)
+            string sectionProperty2, string sectionProperty3, string shape, string lengthUnit, List<Polyline> edges = null)
         {
-            IProfile bhomProfile = ToProfile(sectionProfile, shape, lengthUnit);
+            IProfile bhomProfile = ToProfile(sectionProfile, shape, lengthUnit, edges);
 
             string[] split1 = sectionProperty1.Split(',');
             string[] split2 = sectionProperty2.Split(',');
@@ -58,8 +59,13 @@ namespace BH.Adapter.Adapters.MidasCivil
             double iz = System.Convert.ToDouble(split1[5]).AreaMomentOfInertiaToSI(lengthUnit);
             double iy = System.Convert.ToDouble(split1[4]).AreaMomentOfInertiaToSI(lengthUnit);
             double iw = bhomProfile.IWarpingConstant().AreaMomentOfInertiaToSI(lengthUnit);
-            double wply = System.Convert.ToDouble(split3[8]).VolumeToSI(lengthUnit);
-            double wplz = System.Convert.ToDouble(split3[9]).VolumeToSI(lengthUnit);
+            double wply = 0;
+            double wplz = 0;
+            if(!(shape == "GEN"))
+            {
+                wply = System.Convert.ToDouble(split3[8]).VolumeToSI(lengthUnit);
+                wplz = System.Convert.ToDouble(split3[9]).VolumeToSI(lengthUnit);
+            }
             double centreZ = System.Convert.ToDouble(split2[9]).LengthToSI(lengthUnit);
             double centreY = -System.Convert.ToDouble(split2[8]).LengthToSI(lengthUnit);
             double zt = System.Convert.ToDouble(split2[2]).LengthToSI(lengthUnit);

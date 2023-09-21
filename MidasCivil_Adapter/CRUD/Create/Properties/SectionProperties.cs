@@ -23,6 +23,7 @@
 using System.IO;
 using System.Collections.Generic;
 using BH.oM.Structure.SectionProperties;
+using BH.oM.Spatial.ShapeProfiles;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -34,17 +35,61 @@ namespace BH.Adapter.MidasCivil
 
         private bool CreateCollection(IEnumerable<ISectionProperty> sectionProperties)
         {
-            string path = CreateSectionFile("SECTION");
+            string sectionPath = CreateSectionFile("SECTION");
+            string pscSectionPath = CreateSectionFile("SECT-PSCVALUE");
             List<string> midasSectionProperties = new List<string>();
+            List<string> midasPSCSectionProperties = new List<string>();
 
             foreach (ISectionProperty sectionProperty in sectionProperties)
             {
                 List<string> midasSectionProperty = Adapters.MidasCivil.Convert.FromSectionProperty(sectionProperty, m_lengthUnit, m_sectionPropertyCharacterLimit);
                 if (midasSectionProperty != null)
-                    midasSectionProperties.AddRange(midasSectionProperty);
+                {
+                    if (sectionProperty is SteelSection)
+                    {
+                        SteelSection steelSection = (SteelSection)sectionProperty;
+                        if (steelSection.SectionProfile is FreeFormProfile)
+                            midasPSCSectionProperties.AddRange(midasSectionProperty);
+                        else
+                            midasSectionProperties.AddRange(midasSectionProperty);
+                    }
+                    else if (sectionProperty is ConcreteSection)
+                    {
+                        ConcreteSection concreteSection = (ConcreteSection)sectionProperty;
+                        if (concreteSection.SectionProfile is FreeFormProfile)
+                            midasPSCSectionProperties.AddRange(midasSectionProperty);
+                        else
+                            midasSectionProperties.AddRange(midasSectionProperty);
+                    }
+                    else if (sectionProperty is TimberSection)
+                    {
+                        TimberSection timberSection = (TimberSection)sectionProperty;
+                        if (timberSection.SectionProfile is FreeFormProfile)
+                            midasPSCSectionProperties.AddRange(midasSectionProperty);
+                        else
+                            midasSectionProperties.AddRange(midasSectionProperty);
+                    }
+                    else if (sectionProperty is AluminiumSection)
+                    {
+                        AluminiumSection aluminiumSection = (AluminiumSection)sectionProperty;
+                        if (aluminiumSection.SectionProfile is FreeFormProfile)
+                            midasPSCSectionProperties.AddRange(midasSectionProperty);
+                        else
+                            midasSectionProperties.AddRange(midasSectionProperty);
+                    }
+                    else
+                    {
+                        GenericSection steelSection = (GenericSection)sectionProperty;
+                        if (steelSection.SectionProfile is FreeFormProfile)
+                            midasPSCSectionProperties.AddRange(midasSectionProperty);
+                        else
+                            midasSectionProperties.AddRange(midasSectionProperty);
+                    }
+                }
             }
 
-            File.AppendAllLines(path, midasSectionProperties);
+            File.AppendAllLines(sectionPath, midasSectionProperties);
+            File.AppendAllLines(pscSectionPath, midasPSCSectionProperties);
 
             return true;
         }
