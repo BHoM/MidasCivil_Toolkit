@@ -34,6 +34,8 @@ using BH.oM.Structure.Loads;
 using BH.Engine.Adapters.MidasCivil.Comparer;
 using BH.Engine.Structure;
 using BH.oM.Adapter.Commands;
+using BH.oM.Adapter;
+using System.IO;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -45,7 +47,7 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
-        public MidasCivilAdapter(string filePath, bool active = false, string version = "")
+        public MidasCivilAdapter(string filePath, MidasCivilAdapterSettings midasCivilAdapterSettings, bool active = false)
         {
             if (active)
             {
@@ -93,7 +95,7 @@ namespace BH.Adapter.MidasCivil
                     {typeof(ILoad), new List<Type> {typeof(Loadcase) } }
                 };
 
-                m_midasCivilVersion = version;
+                m_midasCivilVersion = midasCivilAdapterSettings.Version;               
                 Execute(new Open() { FileName = filePath });
             }
         }
