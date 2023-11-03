@@ -47,7 +47,7 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
-        public MidasCivilAdapter(string filePath, MidasCivilSettings midasCivilSettings, bool active = false)
+        public MidasCivilAdapter(string filePath, MidasCivilSettings midasCivilSettings = null, bool active = false)
         {
             if (active)
             {
