@@ -20,18 +20,24 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Base;
+using BH.oM.Adapters.MidasCivil;
 
-namespace BH.oM.Adapters.MidasCivil
+namespace BH.Engine.Adapters.MidasCivil
 {
-    public class MidasCivilAdapterSettings : BHoMObject
+    public static partial class Create
     {
         /***************************************************/
-        /****            Public Properties              ****/
+        /****           Public Constructors             ****/
         /***************************************************/
 
-        public virtual string Version { get; set; } = "";
+        public static MidasCivilSettings MidasCivilSettings(string version = "")
+        {
+            MidasCivilSettings midasCivilSettings = new MidasCivilSettings();
+            if (version != "")
+                midasCivilSettings.Version = version;
 
+            return  midasCivilSettings;
+        }
         /***************************************************/
     }
 }

@@ -20,24 +20,18 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapters.MidasCivil;
+using BH.oM.Adapter;
 
-namespace BH.Engine.Adapters.MidasCivil
+namespace BH.oM.Adapters.MidasCivil
 {
-    public static partial class Create
+    public class MidasCivilSettings : AdapterSettings
     {
         /***************************************************/
-        /****           Public Constructors             ****/
+        /****            Public Properties              ****/
         /***************************************************/
 
-        public static MidasCivilAdapterSettings MidasCivilAdapterSettings(string version = "")
-        {
-            MidasCivilAdapterSettings midasCivilAdapterSettings = new MidasCivilAdapterSettings();
-            if (version != null)
-                midasCivilAdapterSettings.Version = version;
+        public virtual string Version { get; set; } = "";
 
-            return  midasCivilAdapterSettings;
-        }
         /***************************************************/
     }
 }

@@ -102,7 +102,7 @@
   <ItemGroup>
     <Compile Include="Compute\FEMeshToPanel.cs" />
     <Compile Include="Convert\Date.cs" />
-    <Compile Include="Create\MidasCivilAdapterSettings.cs" />
+    <Compile Include="Create\MidasCivilSettings.cs" />
     <Compile Include="Create\Review.cs" />
     <Compile Include="Objects\AdapterIdName.cs" />
     <Compile Include="Objects\ArrayComparer.cs" />

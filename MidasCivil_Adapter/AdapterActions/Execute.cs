@@ -69,10 +69,7 @@ namespace BH.Adapter.MidasCivil
             }
 
             string unitExtension = "\\TextFiles\\" + "UNIT" + ".txt";
-
-            //Add an if statement that check if there is a specific version defined in the settings and sets the versionExtension to that in that case.
             string versionExtension = "\\TextFiles\\" + "VERSION" + ".txt";
-
             string unitFile = m_directory + unitExtension;
             string versionFile = m_directory + versionExtension;
 
