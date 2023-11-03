@@ -95,7 +95,8 @@ namespace BH.Adapter.MidasCivil
                     {typeof(ILoad), new List<Type> {typeof(Loadcase) } }
                 };
 
-                m_midasCivilVersion = midasCivilSettings.Version;               
+                if (midasCivilSettings != null)
+                    m_midasCivilVersion = midasCivilSettings.Version;               
                 Execute(new Open() { FileName = filePath });
             }
         }
@@ -111,7 +112,7 @@ namespace BH.Adapter.MidasCivil
 
         private List<string> m_midasText;
         private string m_directory;
-        public string m_midasCivilVersion { get; protected set; }
+        public string m_midasCivilVersion { get; protected set; } = "";
         private string m_forceUnit = "N";
         private string m_lengthUnit = "M";
         private string m_heatUnit = "KJ";
