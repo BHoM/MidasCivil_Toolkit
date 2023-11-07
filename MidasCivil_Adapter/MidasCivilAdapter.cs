@@ -36,6 +36,7 @@ using BH.Engine.Structure;
 using BH.oM.Adapter.Commands;
 using BH.oM.Adapter;
 using System.IO;
+using BH.oM.Base.Attributes;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -47,6 +48,7 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
+        [PreviousVersion("6.3", "BH.Adapter.MidasCivil.MidasCivilAdapter(System.String, System.Boolean, System.String)")]
         public MidasCivilAdapter(string filePath, MidasCivilSettings midasCivilSettings = null, bool active = false)
         {
             if (active)
