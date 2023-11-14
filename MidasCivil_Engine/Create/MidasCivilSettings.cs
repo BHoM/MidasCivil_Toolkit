@@ -21,6 +21,8 @@
  */
 
 using BH.oM.Adapters.MidasCivil;
+using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Engine.Adapters.MidasCivil
 {
@@ -30,6 +32,9 @@ namespace BH.Engine.Adapters.MidasCivil
         /****           Public Constructors             ****/
         /***************************************************/
 
+        [Description("MidasCivil adapter settings.")]
+        [Input("version", "The version of MidasCivil to be used by the adapter.")]
+        [Output("MidasCivil specific adapter settings to be used by the adapter.")]
         public static MidasCivilSettings MidasCivilSettings(string version = "")
         {
             MidasCivilSettings midasCivilSettings = new MidasCivilSettings();

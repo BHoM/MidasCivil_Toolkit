@@ -21,6 +21,7 @@
  */
 
 using BH.oM.Adapter;
+using System.ComponentModel;
 
 namespace BH.oM.Adapters.MidasCivil
 {
@@ -30,6 +31,7 @@ namespace BH.oM.Adapters.MidasCivil
         /****            Public Properties              ****/
         /***************************************************/
 
+        [Description("The version of MidasCivil to be used by the adapter.")]
         public virtual string Version { get; set; } = "";
 
         /***************************************************/
