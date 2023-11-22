@@ -175,8 +175,11 @@ namespace BH.Adapter.MidasCivil
                     m_midasCivilVersion = m_midasCivilVersion.Trim();
                     if (File.Exists(versionFile))
                     {
+                        File.Delete(versionFile);
+                        File.AppendAllLines(versionFile, new List<string>() { "*VERSION", m_midasCivilVersion });
                         Engine.Base.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
                     }
+
                 }
                 else if (File.Exists(versionFile))
                 {
