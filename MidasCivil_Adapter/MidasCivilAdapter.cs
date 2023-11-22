@@ -37,6 +37,7 @@ using BH.oM.Adapter.Commands;
 using BH.oM.Adapter;
 using System.IO;
 using BH.oM.Base.Attributes;
+using System.ComponentModel;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -49,6 +50,11 @@ namespace BH.Adapter.MidasCivil
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
         [PreviousVersion("7.0", "BH.Adapter.MidasCivil.MidasCivilAdapter(System.String, System.Boolean, System.String)")]
+        [Description("Adapter to create a .mct file to be used in Midas Civil command shell.")]
+        [Input("filePath", "Path to your .mcb file. It is recommended to save your .mcb file in a separate folder before using the adapter.")]
+        [Input("midasCivilSettings", "General settings that are applicable to all actions performed by this adapter, e.g. version of Midas Civil to be used.")]
+        [Input("active", "Initiate the adapter by setting to 'True'.")]
+        [Output("adapter", "Adapter to MidasCivil.")]
         public MidasCivilAdapter(string filePath, MidasCivilSettings midasCivilSettings = null, bool active = false)
         {
             if (active)
