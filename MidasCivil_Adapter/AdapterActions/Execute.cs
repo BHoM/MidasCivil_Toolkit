@@ -175,8 +175,11 @@ namespace BH.Adapter.MidasCivil
                     m_midasCivilVersion = m_midasCivilVersion.Trim();
                     if (File.Exists(versionFile))
                     {
+                        File.Delete(versionFile);
+                        File.AppendAllLines(versionFile, new List<string>() { "*VERSION", m_midasCivilVersion });
                         Engine.Base.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
                     }
+
                 }
                 else if (File.Exists(versionFile))
                 {
@@ -185,7 +188,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    m_midasCivilVersion = "8.8.1";
+                    m_midasCivilVersion = "9.4.0";
                     Engine.Base.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
                 }
 
