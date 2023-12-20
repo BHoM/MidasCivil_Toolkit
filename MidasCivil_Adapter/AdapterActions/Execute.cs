@@ -103,7 +103,8 @@ namespace BH.Adapter.MidasCivil
 
         public bool RunCommand(SaveAs command)
         {
-            string newDirectory = GetDirectoryRoot(m_directory) + "\\" + command.FileName;
+            string fileName = command.FileName;
+            string newDirectory = GetDirectoryRoot(m_directory) + "\\" + fileName;
 
             if (Directory.Exists(newDirectory))
             {
@@ -114,10 +115,10 @@ namespace BH.Adapter.MidasCivil
             Directory.CreateDirectory(newDirectory);
             string[] mcbFiles = Directory.GetFiles(m_directory, "*.mcb");
             foreach (string mcbFile in mcbFiles)
-                File.Copy(mcbFile, newDirectory);
+                File.Copy(mcbFile, Path.Combine(newDirectory, fileName + ".mcb"));
             string[] mctFiles = Directory.GetFiles(m_directory, "*.mcb");
             foreach (string mctFile in mctFiles)
-                File.Copy(mctFile, newDirectory);
+                File.Copy(mctFile, Path.Combine(newDirectory, fileName + ".mct"));
             CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
             CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
 
@@ -175,8 +176,11 @@ namespace BH.Adapter.MidasCivil
                     m_midasCivilVersion = m_midasCivilVersion.Trim();
                     if (File.Exists(versionFile))
                     {
+                        File.Delete(versionFile);
+                        File.AppendAllLines(versionFile, new List<string>() { "*VERSION", m_midasCivilVersion });
                         Engine.Base.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
                     }
+
                 }
                 else if (File.Exists(versionFile))
                 {
@@ -185,7 +189,7 @@ namespace BH.Adapter.MidasCivil
                 }
                 else
                 {
-                    m_midasCivilVersion = "8.8.1";
+                    m_midasCivilVersion = "9.4.0";
                     Engine.Base.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
                 }
 
