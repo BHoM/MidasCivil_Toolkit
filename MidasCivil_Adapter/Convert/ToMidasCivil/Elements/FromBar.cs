@@ -55,8 +55,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                     break;
             }
 
-            string startNodeID = bar.StartNode.AdapterId<string>(typeof(MidasCivilId));
-            string endNodeID = bar.EndNode.AdapterId<string>(typeof(MidasCivilId));
+            string startNodeID = bar.Start.AdapterId<string>(typeof(MidasCivilId));
+            string endNodeID = bar.End.AdapterId<string>(typeof(MidasCivilId));
             string materialID = "1";
             string sectionID = "1";
 
