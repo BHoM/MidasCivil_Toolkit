@@ -95,6 +95,8 @@ namespace BH.Engine.Adapters.MidasCivil
                     typeNames.Remove("LOADCASE");
                 }
 
+                //Add a check for Rebar and inclusion of nodes or sections here. If nodes or sections exist. remove. Rebar info?
+
                 // Check type dependencies to see if valid
 
                 List<string> independents = new List<string> { "NODE", "ELEMENT", "MATERIAL", "SECTION", "STLDCASE" };
@@ -123,7 +125,10 @@ namespace BH.Engine.Adapters.MidasCivil
                     }
                 }
 
-                independents.Insert(0, "REBAR-MATL-CODE");
+                if (!typeNames.Contains("NODE") || !typeNames.Contains("SECTION"))
+                    typeNames.Remove("REBAR-MATL-CODE");
+                else
+                    independents.Insert(0, "REBAR-MATL-CODE");
                 independents.Add("LOAD-GROUP");
                 independents.Add("LOADCOMB");
 
