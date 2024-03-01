@@ -95,8 +95,6 @@ namespace BH.Engine.Adapters.MidasCivil
                     typeNames.Remove("LOADCASE");
                 }
 
-                //Add a check for Rebar and inclusion of nodes or sections here. If nodes or sections exist. remove. Rebar info?
-
                 // Check type dependencies to see if valid
 
                 List<string> independents = new List<string> { "NODE", "ELEMENT", "MATERIAL", "SECTION", "STLDCASE" };
