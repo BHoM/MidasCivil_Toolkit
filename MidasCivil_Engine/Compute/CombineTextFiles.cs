@@ -123,10 +123,8 @@ namespace BH.Engine.Adapters.MidasCivil
                     }
                 }
 
-                if (!typeNames.Contains("NODE") || !typeNames.Contains("SECTION"))
-                    typeNames.Remove("REBAR-MATL-CODE");
-                else
-                    independents.Insert(0, "REBAR-MATL-CODE");
+                independents.Insert(0, "REBAR-MATL-CODE");
+                independents.Insert(1, "STRUCTYPE");
                 independents.Add("LOAD-GROUP");
                 independents.Add("LOADCOMB");
 
