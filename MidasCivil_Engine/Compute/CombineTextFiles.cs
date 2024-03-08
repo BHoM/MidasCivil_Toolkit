@@ -124,6 +124,7 @@ namespace BH.Engine.Adapters.MidasCivil
                 }
 
                 independents.Insert(0, "REBAR-MATL-CODE");
+                independents.Insert(1, "STRUCTYPE");
                 independents.Add("LOAD-GROUP");
                 independents.Add("LOADCOMB");
 
