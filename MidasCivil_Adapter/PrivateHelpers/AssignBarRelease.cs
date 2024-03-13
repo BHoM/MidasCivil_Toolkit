@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
 
             List<string> propertyText = File.ReadAllLines(path).ToList();
 
-            int index = propertyText.FindIndex(x => x.Contains(propertyName)) - 1;
+            int index = propertyText.FindIndex(x => x.Contains("," + propertyName)) - 1; //"," added to prevent any partial matches
 
             string constraint = propertyText[index];
 
@@ -89,7 +89,3 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
-
-
-
-
