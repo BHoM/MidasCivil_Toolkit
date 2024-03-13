@@ -50,7 +50,7 @@ namespace BH.Adapter.MidasCivil
                     Engine.Base.Compute.RecordError("Tension only elements cannot support bar releases in Midas");
                 }
 
-                if (!(bar.Release == null) && new string(bar.Release.DescriptionOrName().Replace(",", "").Take(m_groupCharacterLimit).ToArray()) != "FixFix")
+                if (!(bar.Release == null))
                 {
                     AssignBarRelease(bar.AdapterId<string>(typeof(MidasCivilId)), new string(bar.Release.DescriptionOrName().Replace(",", "").Take(m_groupCharacterLimit).ToArray()), "FRAME-RLS");
                 }
