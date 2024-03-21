@@ -37,10 +37,18 @@ namespace BH.Engine.Adapters.MidasCivil
         /***************************************************/
 
         [Description("Creates a Metadata object from a variety of inputs.")]
+        [Input("projectNumber", "Unique number for the project.")]
+        [Input("projectName", "The name of the project.")]
         [Input("location", "Where the project is based.")]
-        [Input("description", "A short description of the project and model.")]
-        [Input("discipline", "The discipline responsible for the model.")]
+        [Input("client", "Unique identifier for the client.")]
+        [Input("designStage", "The design stage for the project.")]
+        [Input("projectLead", "The project leader for the project.")]
+        [Input("revision", "The revision for the model.")]
+        [Input("author", "The model author/creator.")]
         [Input("creationDate", "The creation date of the model inputted as yyyy-MM-dd. This will default to the current date if no date is provided.")]
+        [Input("email", "Contact email for the project.")]
+        [Input("description", "Brief description for the project and the model.")]
+        [Input("discipline", "The discipline responsible for the model.")]
         [Input("reviews", "A list of reviews containing reviewers, their comments and the date of review.")]
         [Output("A summary of relevant information for the model.")]
         public static Metadata Metadata(string projectNumber = "", string projectName = "", string location = "", string client = "", 

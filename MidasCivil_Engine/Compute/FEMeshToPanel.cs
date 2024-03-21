@@ -26,6 +26,7 @@ using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using System.Collections.Generic;
 using System.Linq;
+using BH.oM.Base.Attributes;
 
 namespace BH.Engine.Adapters.MidasCivil
 {
@@ -35,6 +36,7 @@ namespace BH.Engine.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
+        [ToBeRemoved("4.2","Method was replaced in 4.2 by BH.Engine.Structure.Convert.FEMeshToPanel.")]
         public static Panel FEMeshToPanel(FEMesh mesh)
         {
             List<Polyline> polylines = new List<Polyline>();
