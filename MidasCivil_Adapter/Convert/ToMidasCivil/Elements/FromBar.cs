@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -55,8 +55,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                     break;
             }
 
-            string startNodeID = bar.StartNode.AdapterId<string>(typeof(MidasCivilId));
-            string endNodeID = bar.EndNode.AdapterId<string>(typeof(MidasCivilId));
+            string startNodeID = bar.Start.AdapterId<string>(typeof(MidasCivilId));
+            string endNodeID = bar.End.AdapterId<string>(typeof(MidasCivilId));
             string materialID = "1";
             string sectionID = "1";
 
@@ -91,5 +91,6 @@ namespace BH.Adapter.Adapters.MidasCivil
 
     }
 }
+
 
 

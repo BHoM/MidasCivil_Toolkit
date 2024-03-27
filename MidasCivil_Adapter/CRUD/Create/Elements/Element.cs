@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -50,7 +50,7 @@ namespace BH.Adapter.MidasCivil
                     Engine.Base.Compute.RecordError("Tension only elements cannot support bar releases in Midas");
                 }
 
-                if (!(bar.Release == null) && new string(bar.Release.DescriptionOrName().Replace(",", "").Take(m_groupCharacterLimit).ToArray()) != "FixFix")
+                if (!(bar.Release == null))
                 {
                     AssignBarRelease(bar.AdapterId<string>(typeof(MidasCivilId)), new string(bar.Release.DescriptionOrName().Replace(",", "").Take(m_groupCharacterLimit).ToArray()), "FRAME-RLS");
                 }
@@ -88,5 +88,6 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+
 
 

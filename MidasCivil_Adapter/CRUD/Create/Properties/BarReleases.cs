@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -42,15 +42,14 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarRelease release in releases)
             {
-                if (release.DescriptionOrName().Replace(",","").Take(m_groupCharacterLimit).ToString() != "FixFix")
-                {
                     string midasBoundaryGroup = Adapters.MidasCivil.Convert.FromTag(new string(release.DescriptionOrName().Replace(",","").Take(m_groupCharacterLimit).ToArray()));
                     CompareGroup(midasBoundaryGroup, boundaryGroupPath);
                     midasBarReleases.AddRange(Adapters.MidasCivil.Convert.FromBarRelease(release, m_groupCharacterLimit));
-                }
             }
 
             File.AppendAllLines(path, midasBarReleases);
+
+
 
             return true;
         }
@@ -59,5 +58,6 @@ namespace BH.Adapter.MidasCivil
 
     }
 }
+
 
 

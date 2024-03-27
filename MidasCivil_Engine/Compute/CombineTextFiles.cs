@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -35,10 +35,10 @@ namespace BH.Engine.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Combines all text files specified by type in to a single MidasCivilText (MCT) to be loaded in to MidasCivil")]
-        [Input("filePath", "The same filepath used for the adapter (pointing to an mcb file)")]
+        [Description("Combines all text files specified by type in to a single MidasCivilText (MCT) to be loaded in to MidasCivil.")]
+        [Input("filePath", "The same filepath used for the adapter (pointing to an mcb file).")]
         [Input("types", "BHoM object types to specify the text files to be combined. A null value will combine all text files.")]
-        [Input("active", "Execute the method")]
+        [Input("active", "Execute the method.")]
         [Output("success", "Was the execution successful?")]
 
         public static bool CombineTextFiles(string filePath, List<Type> types = null, bool active = false)
@@ -124,6 +124,7 @@ namespace BH.Engine.Adapters.MidasCivil
                 }
 
                 independents.Insert(0, "REBAR-MATL-CODE");
+                independents.Insert(1, "STRUCTYPE");
                 independents.Add("LOAD-GROUP");
                 independents.Add("LOADCOMB");
 
@@ -305,5 +306,6 @@ namespace BH.Engine.Adapters.MidasCivil
 
     }
 }
+
 
 

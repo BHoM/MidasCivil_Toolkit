@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -49,7 +49,6 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
 
         //Add any applicable constructors here, such as linking to a specific file or anything else as well as linking to that file through the (if existing) com link via the API
-        [PreviousVersion("7.0", "BH.Adapter.MidasCivil.MidasCivilAdapter(System.String, System.Boolean, System.String)")]
         [Description("Adapter to create a .mct file to be used in Midas Civil command shell.")]
         [Input("filePath", "Path to the .mcb file. It is recommended to save your .mcb file in a separate folder before using the adapter.")]
         [Input("midasCivilSettings", "General settings that are applicable to all actions performed by this adapter, e.g. version of Midas Civil to be used.")]
@@ -133,6 +132,7 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
     }
 }
+
 
 
 

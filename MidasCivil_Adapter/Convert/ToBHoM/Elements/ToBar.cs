@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2023, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -94,7 +94,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             double orientationAngle = double.Parse(delimitted[6].Trim());
 
-            Bar bhomBar = new Bar { StartNode = startNode, EndNode = endNode, SectionProperty = sectionProperty, OrientationAngle = orientationAngle, Release = barRelease, FEAType = feaType };
+            Bar bhomBar = new Bar { Start = startNode, End = endNode, SectionProperty = sectionProperty, OrientationAngle = orientationAngle, Release = barRelease, FEAType = feaType };
             bhomBar.SetAdapterId(typeof(MidasCivilId), bhomID);
 
             return bhomBar;
@@ -104,6 +104,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
     }
 }
+
 
 
 
