@@ -24,6 +24,9 @@ using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
 using BH.Engine.Structure;
 using System.Collections.Generic;
+using System.Linq;
+using BH.Engine.Base;
+using BH.Engine.Geometry;
 
 namespace BH.Engine.Adapters.MidasCivil.Comparer
 {
@@ -57,10 +60,15 @@ namespace BH.Engine.Adapters.MidasCivil.Comparer
             if (mesh1.BHoM_Guid == mesh2.BHoM_Guid)
                 return true;
 
-            Panel panel1 = Compute.FEMeshToPanel(mesh1);
-            Panel panel2 = Compute.FEMeshToPanel(mesh2);
-            List<Point> controlPoints1 = Spatial.Query.ControlPoints(panel1, true);
-            List<Point> controlPoints2 = Spatial.Query.ControlPoints(panel2, true);
+            // Use the indexes to get the Nodes, take an average for each face to get a single control point per face
+            List<Point> controlPoints1 = mesh1.Faces.Select(face => face.NodeListIndices.Select(index => mesh1.Nodes[index])
+                .Select(x => x.Position))
+                    .Select(facePoints => facePoints.Average()).ToList();
+            List<Point> controlPoints2 = mesh2.Faces.Select(face => face.NodeListIndices.Select(index => mesh1.Nodes[index])
+                .Select(x => x.Position))
+                    .Select(facePoints => facePoints.Average()).ToList();
+
+            // Average the control point for the entire FEMesh to compare
             Point centrePoint1 = Geometry.Query.Average(controlPoints1);
             Point centrePoint2 = Geometry.Query.Average(controlPoints2);
 
