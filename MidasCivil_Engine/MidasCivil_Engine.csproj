@@ -113,6 +113,7 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Versioning_73.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MidasCivil_oM\MidasCivil_oM.csproj">
