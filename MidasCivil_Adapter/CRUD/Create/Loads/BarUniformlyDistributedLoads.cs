@@ -27,6 +27,7 @@ using BH.oM.Geometry;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using BH.Engine.Base;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -42,31 +43,32 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarUniformlyDistributedLoad barUniformlyDistributedLoad in barUniformlyDistributedLoads)
             {
+                BarUniformlyDistributedLoad load = barUniformlyDistributedLoad.ShallowClone();
                 List<string> midasBarLoads = new List<string>();
-                string barLoadPath = CreateSectionFile(barUniformlyDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
+                string barLoadPath = CreateSectionFile(load.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barUniformlyDistributedLoad);
 
-                List<string> assignedBars = barUniformlyDistributedLoad.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
+                List<string> assignedBars = load.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
 
-                List<double> loadVectors = new List<double> { barUniformlyDistributedLoad.Force.X,
-                                                              barUniformlyDistributedLoad.Force.Y,
-                                                              barUniformlyDistributedLoad.Force.Z,
-                                                              barUniformlyDistributedLoad.Moment.X,
-                                                              barUniformlyDistributedLoad.Moment.Y,
-                                                              barUniformlyDistributedLoad.Moment.Z};
+                List<double> loadVectors = new List<double> { load.Force.X,
+                                                              load.Force.Y,
+                                                              load.Force.Z,
+                                                              load.Moment.X,
+                                                              load.Moment.Y,
+                                                              load.Moment.Z};
 
                 Vector zeroVector = new Vector { X = 0, Y = 0, Z = 0 };
 
                 for (int i = 0; i < 6; i++)
                 {
-                    barUniformlyDistributedLoad.Force = zeroVector;
-                    barUniformlyDistributedLoad.Moment = zeroVector;
+                    load.Force = zeroVector;
+                    load.Moment = zeroVector;
 
                     if (loadVectors[i] != 0)
                     {
                         if (i < 3)
                         {
-                            barUniformlyDistributedLoad.Force = CreateSingleComponentVector(i, loadVectors[i]);
+                            load.Force = CreateSingleComponentVector(i, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
@@ -75,7 +77,7 @@ namespace BH.Adapter.MidasCivil
                         }
                         else
                         {
-                            barUniformlyDistributedLoad.Moment = CreateSingleComponentVector(i - 3, loadVectors[i]);
+                            load.Moment = CreateSingleComponentVector(i - 3, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
