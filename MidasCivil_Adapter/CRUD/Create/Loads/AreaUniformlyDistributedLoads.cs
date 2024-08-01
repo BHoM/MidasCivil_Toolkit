@@ -22,6 +22,7 @@
 
 using BH.oM.Adapters.MidasCivil;
 using BH.Engine.Adapter;
+using BH.Engine.Base;
 using BH.oM.Structure.Loads;
 using BH.oM.Structure.Elements;
 using BH.oM.Geometry;
@@ -38,11 +39,12 @@ namespace BH.Adapter.MidasCivil
 
             foreach (AreaUniformlyDistributedLoad areaUniformlyDistributedLoad in areaUniformlyDistributedLoads)
             {
+                AreaUniformlyDistributedLoad load = areaUniformlyDistributedLoad.ShallowClone();
                 List<string> midasPressureLoads = new List<string>();
-                string FEMeshLoadPath = CreateSectionFile(areaUniformlyDistributedLoad.Loadcase.Name + "\\PRESSURE");
+                string FEMeshLoadPath = CreateSectionFile(load.Loadcase.Name + "\\PRESSURE");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(areaUniformlyDistributedLoad);
 
-                List<IAreaElement> assignedElements = areaUniformlyDistributedLoad.Objects.Elements;
+                List<IAreaElement> assignedElements = load.Objects.Elements;
 
                 List<string> assignedFEMeshes = new List<string>();
 
@@ -55,23 +57,23 @@ namespace BH.Adapter.MidasCivil
                     }
                 }
 
-                List<double> loadVectors = new List<double> { areaUniformlyDistributedLoad.Pressure.X,
-                                                              areaUniformlyDistributedLoad.Pressure.Y,
-                                                              areaUniformlyDistributedLoad.Pressure.Z};
+                List<double> loadVectors = new List<double> { load.Pressure.X,
+                                                              load.Pressure.Y,
+                                                              load.Pressure.Z};
 
                 Vector zeroVector = new Vector { X = 0, Y = 0, Z = 0 };
 
                 for (int i = 0; i < 3; i++)
                 {
-                    areaUniformlyDistributedLoad.Pressure = zeroVector;
+                    load.Pressure = zeroVector;
 
                     if (loadVectors[i] != 0)
                     {
-                        areaUniformlyDistributedLoad.Pressure = CreateSingleComponentVector(i, loadVectors[i]);
+                        load.Pressure = CreateSingleComponentVector(i, loadVectors[i]);
 
                         foreach (string assignedFEMesh in assignedFEMeshes)
                         {
-                            midasPressureLoads.Add(Adapters.MidasCivil.Convert.FromAreaUniformlyDistributedLoad(areaUniformlyDistributedLoad, assignedFEMesh, m_midasCivilVersion, m_forceUnit, m_lengthUnit));
+                            midasPressureLoads.Add(Adapters.MidasCivil.Convert.FromAreaUniformlyDistributedLoad(load, assignedFEMesh, m_midasCivilVersion, m_forceUnit, m_lengthUnit));
                         }
                     }
                 }

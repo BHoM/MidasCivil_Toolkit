@@ -27,6 +27,7 @@ using BH.oM.Geometry;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using BH.Engine.Base;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -42,67 +43,68 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarVaryingDistributedLoad barVaryingDistributedLoad in barVaryingDistributedLoads)
             {
-                if (!barVaryingDistributedLoad.RelativePositions)
+                BarVaryingDistributedLoad load = barVaryingDistributedLoad.ShallowClone();
+                if (!load.RelativePositions)
                 {
                     Engine.Base.Compute.RecordError("The midas adapter can only handle BarVaryingDistributedLoads with relative positions. Please update the loads to be set with this format.");
                     continue;
                 }
 
-                if (barVaryingDistributedLoad.StartPosition >= barVaryingDistributedLoad.EndPosition)
+                if (load.StartPosition >= load.EndPosition)
                 {
                     Engine.Base.Compute.RecordError("Midas civil only supports start positions less than end positions for BarVaryingDistributedLoads.");
                     continue;
                 }
 
                 List<string> midasBarLoads = new List<string>();
-                string barLoadPath = CreateSectionFile(barVaryingDistributedLoad.Loadcase.Name + "\\BEAMLOAD");
-                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barVaryingDistributedLoad);
+                string barLoadPath = CreateSectionFile(load.Loadcase.Name + "\\BEAMLOAD");
+                string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(load);
 
-                List<string> assignedBars = barVaryingDistributedLoad.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
+                List<string> assignedBars = load.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
 
-                List<double> startLoadVectors = new List<double> { barVaryingDistributedLoad.ForceAtStart.X,
-                                                              barVaryingDistributedLoad.ForceAtStart.Y,
-                                                              barVaryingDistributedLoad.ForceAtStart.Z,
-                                                              barVaryingDistributedLoad.MomentAtStart.X,
-                                                              barVaryingDistributedLoad.MomentAtStart.Y,
-                                                              barVaryingDistributedLoad.MomentAtStart.Z};
+                List<double> startLoadVectors = new List<double> { load.ForceAtStart.X,
+                                                              load.ForceAtStart.Y,
+                                                              load.ForceAtStart.Z,
+                                                              load.MomentAtStart.X,
+                                                              load.MomentAtStart.Y,
+                                                              load.MomentAtStart.Z};
 
-                List<double> endLoadVectors = new List<double> { barVaryingDistributedLoad.ForceAtEnd.X,
-                                                              barVaryingDistributedLoad.ForceAtEnd.Y,
-                                                              barVaryingDistributedLoad.ForceAtEnd.Z,
-                                                              barVaryingDistributedLoad.MomentAtEnd.X,
-                                                              barVaryingDistributedLoad.MomentAtEnd.Y,
-                                                              barVaryingDistributedLoad.MomentAtEnd.Z};
+                List<double> endLoadVectors = new List<double> { load.ForceAtEnd.X,
+                                                              load.ForceAtEnd.Y,
+                                                              load.ForceAtEnd.Z,
+                                                              load.MomentAtEnd.X,
+                                                              load.MomentAtEnd.Y,
+                                                              load.MomentAtEnd.Z};
 
                 Vector zeroVector = new Vector { X = 0, Y = 0, Z = 0 };
 
                 for (int i = 0; i < 6; i++)
                 {
-                    barVaryingDistributedLoad.ForceAtStart = zeroVector;
-                    barVaryingDistributedLoad.MomentAtStart = zeroVector;
-                    barVaryingDistributedLoad.ForceAtEnd = zeroVector;
-                    barVaryingDistributedLoad.MomentAtEnd = zeroVector;
+                    load.ForceAtStart = zeroVector;
+                    load.MomentAtStart = zeroVector;
+                    load.ForceAtEnd = zeroVector;
+                    load.MomentAtEnd = zeroVector;
 
                     if (!(startLoadVectors[i] == 0 && endLoadVectors[i] == 0))
                     {
                         if (i < 3)
                         {
-                            barVaryingDistributedLoad.ForceAtStart = CreateSingleComponentVector(i, startLoadVectors[i]);
-                            barVaryingDistributedLoad.ForceAtEnd = CreateSingleComponentVector(i, endLoadVectors[i]);
+                            load.ForceAtStart = CreateSingleComponentVector(i, startLoadVectors[i]);
+                            load.ForceAtEnd = CreateSingleComponentVector(i, endLoadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(barVaryingDistributedLoad, assignedBar, "Force", m_forceUnit, m_lengthUnit));
+                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(load, assignedBar, "Force", m_forceUnit, m_lengthUnit));
                             }
                         }
                         else
                         {
-                            barVaryingDistributedLoad.MomentAtStart = CreateSingleComponentVector(i - 3, startLoadVectors[i]);
-                            barVaryingDistributedLoad.MomentAtEnd = CreateSingleComponentVector(i - 3, endLoadVectors[i]);
+                            load.MomentAtStart = CreateSingleComponentVector(i - 3, startLoadVectors[i]);
+                            load.MomentAtEnd = CreateSingleComponentVector(i - 3, endLoadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(barVaryingDistributedLoad, assignedBar, "Moment", m_forceUnit, m_lengthUnit));
+                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(load, assignedBar, "Moment", m_forceUnit, m_lengthUnit));
                             }
                         }
 
