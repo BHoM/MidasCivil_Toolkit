@@ -22,12 +22,14 @@
 
 using BH.oM.Adapters.MidasCivil;
 using BH.Engine.Adapter;
+using BH.oM.Structure.Elements;
 using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using BH.Engine.Base;
+using BH.Engine.Spatial;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -48,6 +50,7 @@ namespace BH.Adapter.MidasCivil
                 {
                     Engine.Base.Compute.RecordError("The midas adapter can only handle BarVaryingDistributedLoads with relative positions. Please update the loads to be set with this format.");
                     continue;
+
                 }
 
                 if (load.StartPosition >= load.EndPosition)
@@ -55,12 +58,28 @@ namespace BH.Adapter.MidasCivil
                     Engine.Base.Compute.RecordError("Midas civil only supports start positions less than end positions for BarVaryingDistributedLoads.");
                     continue;
                 }
+                
 
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(load.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(load);
 
                 List<string> assignedBars = load.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
+
+                for (int i = 0; i < assignedBars.Count; i++)
+                {
+                    if (load.RelativePositions==false)
+                    {
+                        Bar bar = (Bar)load.Objects.IItem(i);
+                        double length = bar.Length();
+
+                        double newStartPosition = load.StartPosition/length;
+                        double newEndPosition=barVaryingDistributedLoad.EndPosition/length;
+
+                        barVaryingDistributedLoad.StartPosition=newStartPosition;
+                        barVaryingDistributedLoad.EndPosition=newEndPosition;
+                    }
+                }
 
                 List<double> startLoadVectors = new List<double> { load.ForceAtStart.X,
                                                               load.ForceAtStart.Y,

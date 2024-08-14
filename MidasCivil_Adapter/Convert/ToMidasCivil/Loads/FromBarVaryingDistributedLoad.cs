@@ -23,6 +23,7 @@
 using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
 using System.Collections.Generic;
+using BH.oM.Structure.Elements;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -34,6 +35,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static string FromBarVaryingDistributedLoad(this BarVaryingDistributedLoad barLoad, string assignedBar, string loadType, string forceUnit, string lengthUnit)
         {
+            
             string midasBarLoad = null;
             if (loadType == "Force")
             {
