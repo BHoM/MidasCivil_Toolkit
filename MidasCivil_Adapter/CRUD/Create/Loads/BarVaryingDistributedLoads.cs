@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BH.Engine.Base;
 using BH.Engine.Spatial;
+using BH.Engine.Geometry;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -56,19 +57,9 @@ namespace BH.Adapter.MidasCivil
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(load.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(load);
-
+                
                 List<string> assignedBars = load.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
-                for (int i = 0; i < assignedBars.Count(); i++)
-                {
-                    if (load.RelativePositions == false)
-                    {
-                        Bar bar = load.Objects.Elements[i] as Bar;
-                        double length = bar.Length();
 
-                        load.StartPosition = (load.StartPosition / length);
-                        load.EndPosition = (load.EndPosition / length);
-                    }
-                }
 
                 List<double> startLoadVectors = new List<double> { load.ForceAtStart.X,
                                                               load.ForceAtStart.Y,
