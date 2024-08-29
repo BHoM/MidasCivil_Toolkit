@@ -45,39 +45,28 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarVaryingDistributedLoad barVaryingDistributedLoad in barVaryingDistributedLoads)
             {
-                BarVaryingDistributedLoad load = barVaryingDistributedLoad.ShallowClone();
-                if (!load.RelativePositions)
-                {
-                    Engine.Base.Compute.RecordError("The midas adapter can only handle BarVaryingDistributedLoads with relative positions. Please update the loads to be set with this format.");
-                    continue;
+              BarVaryingDistributedLoad load = barVaryingDistributedLoad.ShallowClone();
 
-                }
-
-                if (load.StartPosition >= load.EndPosition)
-                {
-                    Engine.Base.Compute.RecordError("Midas civil only supports start positions less than end positions for BarVaryingDistributedLoads.");
-                    continue;
-                }
-                
+              if (load.StartPosition >= load.EndPosition)
+              {
+               Engine.Base.Compute.RecordError("Midas civil only supports start positions less than end positions for BarVaryingDistributedLoads.");
+                continue;
+              }
 
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(load.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(load);
 
                 List<string> assignedBars = load.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
-
-                for (int i = 0; i < assignedBars.Count; i++)
+                for (int i = 0; i < assignedBars.Count(); i++)
                 {
-                    if (load.RelativePositions==false)
+                    if (load.RelativePositions == false)
                     {
-                        Bar bar = (Bar)load.Objects.IItem(i);
+                        Bar bar = load.Objects.Elements[i] as Bar;
                         double length = bar.Length();
 
-                        double newStartPosition = load.StartPosition/length;
-                        double newEndPosition=barVaryingDistributedLoad.EndPosition/length;
-
-                        barVaryingDistributedLoad.StartPosition=newStartPosition;
-                        barVaryingDistributedLoad.EndPosition=newEndPosition;
+                        load.StartPosition = (load.StartPosition / length);
+                        load.EndPosition = (load.EndPosition / length);
                     }
                 }
 
