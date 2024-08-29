@@ -24,6 +24,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
 using System.Collections.Generic;
 using BH.oM.Structure.Elements;
+using BH.Engine.Spatial;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -35,29 +36,66 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static string FromBarVaryingDistributedLoad(this BarVaryingDistributedLoad barLoad, string assignedBar, string loadType, string forceUnit, string lengthUnit)
         {
-            
+
             string midasBarLoad = null;
-            if (loadType == "Force")
+            if (barLoad.RelativePositions == false)
             {
-                string direction = FromVector(barLoad.ForceAtStart);
-                midasBarLoad = assignedBar + ",BEAM,UNILOAD," + FromLoadAxis(barLoad.Axis) + direction +
-                                                                    "," + FromLoadProjection(barLoad.Projected) +
-                                                                    ",NO,aDir[1], , , ," + barLoad.StartPosition + "," +
-                                                                    FromVectorDirection(barLoad.ForceAtStart, direction).ForcePerLengthFromSI(forceUnit, lengthUnit).ToString() + "," +
-                                                                    barLoad.EndPosition + ","
-                                                                    + FromVectorDirection(barLoad.ForceAtEnd, direction).ForcePerLengthFromSI(forceUnit, lengthUnit).ToString() +
-                                                                    ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+                Bar bar = barLoad.Objects.Elements[0] as Bar;
+                double length = bar.Length();
+
+                double newStart = (barLoad.StartPosition / length);
+                double newEnd = (barLoad.EndPosition / length);
+
+                barLoad.Objects.Elements.Remove(bar); barLoad.Objects.Elements.Add(bar);
+
+                if (loadType == "Force")
+                {
+                    string direction = FromVector(barLoad.ForceAtStart);
+                    midasBarLoad = assignedBar + ",BEAM,UNILOAD," + FromLoadAxis(barLoad.Axis) + direction +
+                                                                        "," + FromLoadProjection(barLoad.Projected) +
+                                                                        ",NO,aDir[1], , , ," + newStart + "," +
+                                                                        FromVectorDirection(barLoad.ForceAtStart, direction).ForcePerLengthFromSI(forceUnit, lengthUnit).ToString() + "," +
+                                                                        newEnd + ","
+                                                                        + FromVectorDirection(barLoad.ForceAtEnd, direction).ForcePerLengthFromSI(forceUnit, lengthUnit).ToString() +
+                                                                        ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+                }
+                else
+                {
+                        string direction = FromVector(barLoad.MomentAtStart);
+                        midasBarLoad = assignedBar + ",BEAM,UNIMOMENT," + FromLoadAxis(barLoad.Axis) + direction +
+                                                                        "," + FromLoadProjection(barLoad.Projected) +
+                                                                        ",NO,aDir[1], , , ," + newStart + "," +
+                                                                        FromVectorDirection(barLoad.MomentAtStart, direction).MomentPerLengthFromSI(forceUnit, lengthUnit).ToString() + "," +
+                                                                        newEnd + ","
+                                                                        + FromVectorDirection(barLoad.MomentAtEnd, direction).MomentPerLengthFromSI(forceUnit, lengthUnit).ToString() +
+                                                                        ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+                }
+                barLoad.Objects.Elements.Remove(bar); barLoad.Objects.Elements.Add(bar);
             }
             else
             {
-                string direction = FromVector(barLoad.MomentAtStart);
-                midasBarLoad = assignedBar + ",BEAM,UNIMOMENT," + FromLoadAxis(barLoad.Axis) + direction +
-                                                                    "," + FromLoadProjection(barLoad.Projected) +
-                                                                    ",NO,aDir[1], , , ," + barLoad.StartPosition + "," +
-                                                                    FromVectorDirection(barLoad.MomentAtStart, direction).MomentPerLengthFromSI(forceUnit, lengthUnit).ToString() + "," +
-                                                                    barLoad.EndPosition + ","
-                                                                    + FromVectorDirection(barLoad.MomentAtEnd, direction).MomentPerLengthFromSI(forceUnit, lengthUnit).ToString() +
-                                                                    ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+                if (loadType == "Force")
+                {
+                    string direction = FromVector(barLoad.ForceAtStart);
+                    midasBarLoad = assignedBar + ",BEAM,UNILOAD," + FromLoadAxis(barLoad.Axis) + direction +
+                                                                        "," + FromLoadProjection(barLoad.Projected) +
+                                                                        ",NO,aDir[1], , , ," + barLoad.StartPosition + "," +
+                                                                        FromVectorDirection(barLoad.ForceAtStart, direction).ForcePerLengthFromSI(forceUnit, lengthUnit).ToString() + "," +
+                                                                        barLoad.EndPosition + ","
+                                                                        + FromVectorDirection(barLoad.ForceAtEnd, direction).ForcePerLengthFromSI(forceUnit, lengthUnit).ToString() +
+                                                                        ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+                }
+                else
+                {
+                    string direction = FromVector(barLoad.MomentAtStart);
+                    midasBarLoad = assignedBar + ",BEAM,UNIMOMENT," + FromLoadAxis(barLoad.Axis) + direction +
+                                                                        "," + FromLoadProjection(barLoad.Projected) +
+                                                                        ",NO,aDir[1], , , ," + barLoad.StartPosition + "," +
+                                                                        FromVectorDirection(barLoad.MomentAtStart, direction).MomentPerLengthFromSI(forceUnit, lengthUnit).ToString() + "," +
+                                                                        barLoad.EndPosition + ","
+                                                                        + FromVectorDirection(barLoad.MomentAtEnd, direction).MomentPerLengthFromSI(forceUnit, lengthUnit).ToString() +
+                                                                        ",0,0,0,0," + barLoad.Name + ",NO,0,0,NO";
+                }
             }
 
             return midasBarLoad;
