@@ -31,6 +31,8 @@ using System.Linq;
 using BH.Engine.Base;
 using BH.Engine.Spatial;
 using BH.Engine.Geometry;
+using BH.Adapter.Adapters.MidasCivil;
+using System.Data;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -46,13 +48,37 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarVaryingDistributedLoad barVaryingDistributedLoad in barVaryingDistributedLoads)
             {
-              BarVaryingDistributedLoad load = barVaryingDistributedLoad.ShallowClone();
-
-              if (load.StartPosition >= load.EndPosition)
-              {
-               Engine.Base.Compute.RecordError("Midas civil only supports start positions less than end positions for BarVaryingDistributedLoads.");
+                BarVaryingDistributedLoad load = barVaryingDistributedLoad.ShallowClone();
+                
+                if (load.StartPosition >= load.EndPosition)
+                {
+                Engine.Base.Compute.RecordError("MidasCivil only supports start positions less than end positions for BarVaryingDistributedLoads.");
                 continue;
-              }
+                }
+
+                List<double> startPosition = new List<double>();
+                List<double> endPosition = new List<double>();
+
+
+                foreach (Bar bar in load.Objects.Elements)
+                {
+                    if (load.RelativePositions == false)
+                    {
+                        double length = bar.Length();
+
+                        startPosition.Add(barVaryingDistributedLoad.StartPosition / length);
+                        endPosition.Add(barVaryingDistributedLoad.EndPosition / length);
+
+                        if (load.StartPosition / length > 1 || load.EndPosition / length > 1)
+                        {Engine.Base.Compute.RecordError("The load start or end position is outside one or more bars");}
+                    }
+                    else
+                    {
+                        startPosition.Add(barVaryingDistributedLoad.StartPosition);
+                        endPosition.Add(barVaryingDistributedLoad.EndPosition);
+                    }
+                }
+                
 
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(load.Loadcase.Name + "\\BEAMLOAD");
@@ -91,9 +117,10 @@ namespace BH.Adapter.MidasCivil
                             load.ForceAtStart = CreateSingleComponentVector(i, startLoadVectors[i]);
                             load.ForceAtEnd = CreateSingleComponentVector(i, endLoadVectors[i]);
 
-                            foreach (string assignedBar in assignedBars)
+                            for (int j = 0; j < assignedBars.Count; j++)
                             {
-                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(load, assignedBar, "Force", m_forceUnit, m_lengthUnit));
+                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(load, 
+                                    assignedBars[j], "Force", m_forceUnit, m_lengthUnit, startPosition[j], endPosition[j]));
                             }
                         }
                         else
@@ -101,9 +128,10 @@ namespace BH.Adapter.MidasCivil
                             load.MomentAtStart = CreateSingleComponentVector(i - 3, startLoadVectors[i]);
                             load.MomentAtEnd = CreateSingleComponentVector(i - 3, endLoadVectors[i]);
 
-                            foreach (string assignedBar in assignedBars)
+                            for (int j = 0; j < assignedBars.Count; j++)
                             {
-                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(load, assignedBar, "Moment", m_forceUnit, m_lengthUnit));
+                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(load,
+                                    assignedBars[j], "Moment", m_forceUnit, m_lengthUnit, startPosition[j], endPosition[j]));
                             }
                         }
 
