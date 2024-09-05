@@ -49,11 +49,11 @@ namespace BH.Adapter.MidasCivil
             foreach (BarVaryingDistributedLoad barVaryingDistributedLoad in barVaryingDistributedLoads)
             {
                 BarVaryingDistributedLoad load = barVaryingDistributedLoad.ShallowClone();
-                
+
                 if (load.StartPosition >= load.EndPosition)
                 {
-                Engine.Base.Compute.RecordError("MidasCivil only supports start positions less than end positions for BarVaryingDistributedLoads.");
-                continue;
+                    Engine.Base.Compute.RecordError("MidasCivil only supports start positions less than end positions for BarVaryingDistributedLoads.");
+                    continue;
                 }
 
                 List<double> startPosition = new List<double>();
@@ -70,7 +70,7 @@ namespace BH.Adapter.MidasCivil
                         endPosition.Add(barVaryingDistributedLoad.EndPosition / length);
 
                         if (load.StartPosition / length > 1 || load.EndPosition / length > 1)
-                        {Engine.Base.Compute.RecordError("The load start or end position is outside one or more bars");}
+                            Engine.Base.Compute.RecordError("The load start or end position is outside one or more bars");
                     }
                     else
                     {
@@ -78,12 +78,12 @@ namespace BH.Adapter.MidasCivil
                         endPosition.Add(barVaryingDistributedLoad.EndPosition);
                     }
                 }
-                
+
 
                 List<string> midasBarLoads = new List<string>();
                 string barLoadPath = CreateSectionFile(load.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(load);
-                
+
                 List<string> assignedBars = load.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
 
 
@@ -119,7 +119,7 @@ namespace BH.Adapter.MidasCivil
 
                             for (int j = 0; j < assignedBars.Count; j++)
                             {
-                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(load, 
+                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarVaryingDistributedLoad(load,
                                     assignedBars[j], "Force", m_forceUnit, m_lengthUnit, startPosition[j], endPosition[j]));
                             }
                         }
