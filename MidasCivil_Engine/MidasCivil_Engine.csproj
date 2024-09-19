@@ -100,7 +100,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compute\FEMeshToPanel.cs" />
     <Compile Include="Convert\Date.cs" />
     <Compile Include="Create\MidasCivilSettings.cs" />
     <Compile Include="Create\Review.cs" />
@@ -114,6 +113,7 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Versioning_73.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MidasCivil_oM\MidasCivil_oM.csproj">

@@ -24,6 +24,7 @@ using BH.oM.Adapters.MidasCivil;
 using BH.oM.Structure.Loads;
 using BH.oM.Geometry;
 using BH.Engine.Adapter;
+using BH.Engine.Base;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,35 +43,36 @@ namespace BH.Adapter.MidasCivil
 
             foreach (BarPointLoad barPointLoad in barPointLoads)
             {
+                BarPointLoad load = barPointLoad.ShallowClone();
                 List<string> midasBarLoads = new List<string>();
-                string barLoadPath = CreateSectionFile(barPointLoad.Loadcase.Name + "\\BEAMLOAD");
+                string barLoadPath = CreateSectionFile(load.Loadcase.Name + "\\BEAMLOAD");
                 string midasLoadGroup = Adapters.MidasCivil.Convert.FromLoadGroup(barPointLoad);
 
                 List<string> assignedBars = barPointLoad.Objects.Elements.Select(x => x.AdapterId<string>(typeof(MidasCivilId))).ToList();
 
-                List<double> loadVectors = new List<double> { barPointLoad.Force.X,
-                                                              barPointLoad.Force.Y,
-                                                              barPointLoad.Force.Z,
-                                                              barPointLoad.Moment.X,
-                                                              barPointLoad.Moment.Y,
-                                                              barPointLoad.Moment.Z};
+                List<double> loadVectors = new List<double> { load.Force.X,
+                                                              load.Force.Y,
+                                                              load.Force.Z,
+                                                              load.Moment.X,
+                                                              load.Moment.Y,
+                                                              load.Moment.Z};
 
                 Vector zeroVector = new Vector { X = 0, Y = 0, Z = 0 };
 
                 for (int i = 0; i < 6; i++)
                 {
-                    barPointLoad.Force = zeroVector;
-                    barPointLoad.Moment = zeroVector;
+                    load.Force = zeroVector;
+                    load.Moment = zeroVector;
 
                     if (loadVectors[i] != 0)
                     {
                         if (i < 3)
                         {
-                            barPointLoad.Force = CreateSingleComponentVector(i, loadVectors[i]);
+                            load.Force = CreateSingleComponentVector(i, loadVectors[i]);
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Force", m_forceUnit, m_lengthUnit));
+                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarPointLoad(load, assignedBar, "Force", m_forceUnit, m_lengthUnit));
                             }
                         }
                         else
@@ -79,7 +81,7 @@ namespace BH.Adapter.MidasCivil
 
                             foreach (string assignedBar in assignedBars)
                             {
-                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarPointLoad(barPointLoad, assignedBar, "Moment", m_forceUnit, m_lengthUnit));
+                                midasBarLoads.Add(Adapters.MidasCivil.Convert.FromBarPointLoad(load, assignedBar, "Moment", m_forceUnit, m_lengthUnit));
                             }
                         }
 
