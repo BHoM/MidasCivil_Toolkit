@@ -33,7 +33,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static string FromPointLoad(this PointLoad pointLoad, string assignedNode, string version, string forceUnit, string lengthUnit)
         {
-              string midasPointLoad = "";
+            string midasPointLoad = "";
 
             switch (version)
             {
