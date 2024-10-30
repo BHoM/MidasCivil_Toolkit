@@ -4,7 +4,6 @@
 
 This toolkit allows interoperability between the BHoM and MidasCivil. It enables creation, manipulation and reading of structural finite element analysis models and analysis results. Please see the [BHoM MidasCivil Object Relations](https://github.com/BHoM/MidasCivil_Toolkit/wiki/BHoM-MidasCivil-Object-Relations) for a comprehensive list of supported BHoM objects.
 
-https://en.midasuser.com/product/civil_overview.asp
 
 ### Known Versions of Software Supported
 
