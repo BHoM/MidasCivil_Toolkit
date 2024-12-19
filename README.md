@@ -4,13 +4,22 @@
 
 This toolkit allows interoperability between the BHoM and MidasCivil. It enables creation, manipulation and reading of structural finite element analysis models and analysis results. Please see the [BHoM MidasCivil Object Relations](https://github.com/BHoM/MidasCivil_Toolkit/wiki/BHoM-MidasCivil-Object-Relations) for a comprehensive list of supported BHoM objects.
 
-https://en.midasuser.com/product/civil_overview.asp
 
 ### Known Versions of Software Supported
+
+MidasCivil 2018 (v1.1)
 
 MidasCivil 2019 (v1.1, v2.2)
 
 MidasCivil 2020 (v1.1, 1.2, 2.1, 3.1)
+
+MidasCivil 2021 (v1.1, 1.2)
+
+MidasCivil 2022 (v1.1, 1.2)
+
+MidasCivil 2023 (v1.1)
+
+MidasCivil 2024 (v1.1, v2.1)
 
 ### Documentation
 For more information about functionality see the [MidasCivil_Toolkit Wiki](https://github.com/BHoM/MidasCivil_Toolkit/wiki)
