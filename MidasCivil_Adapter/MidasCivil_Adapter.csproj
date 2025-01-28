@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdapterActions\Execute.cs" />
+    <Compile Include="APIClient.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToBar.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToFEMesh.cs" />
     <Compile Include="Convert\ToBHoM\Elements\ToNode.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="PrivateHelpers\AssignBarRelease.cs" />
     <Compile Include="PrivateHelpers\CombineLoads.cs" />
     <Compile Include="PrivateHelpers\CreateAssignmentString.cs" />
+    <Compile Include="PrivateHelpers\CreateJsonFormat.cs" />
     <Compile Include="PrivateHelpers\GetAssignmentIds.cs" />
     <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
     <Compile Include="PrivateHelpers\GetMaxID.cs" />
