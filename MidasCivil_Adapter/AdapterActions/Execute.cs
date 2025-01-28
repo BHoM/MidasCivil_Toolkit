@@ -30,6 +30,8 @@ using BH.oM.Base;
 using BH.oM.Adapter.Commands;
 using BH.oM.Structure.Loads;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -44,24 +46,55 @@ namespace BH.Adapter.MidasCivil
         {
             var output = new Output<List<object>, bool>() { Item1 = null, Item2 = false };
 
-            output.Item2 = RunCommand(command as dynamic);
+            output.Item2 = RunCommandWithTaskCompletionSource(command as dynamic);
 
             return output;
         }
+
+        /**************************************************/
+
+        private bool RunCommandWithTaskCompletionSource(dynamic command)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = await RunCommand(command);
+                    tcs.SetResult(result);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+
+            return tcs.Task.GetAwaiter().GetResult();
+        }
+
 
         /***************************************************/
         /**** Commands                                  ****/
         /***************************************************/
 
-        public bool RunCommand(NewModel command)
+        public async Task<bool> RunCommand(NewModel command)
         {
             string newDirectory = GetDirectoryRoot(m_directory) + "\\Untitled";
 
             bool directoryExists = Directory.Exists(newDirectory);
+            if (m_midasCivilVersion == "9.5.0")
+            {
+                string endpoint = "doc/NEW";
+                string jsonPayload = "{\"Argument\": {}}";
 
             int i = 1;
+                var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+            }
 
             while (directoryExists)
+            else
             {
                 newDirectory = newDirectory + 1;
                 directoryExists = Directory.Exists(newDirectory);
@@ -87,21 +120,35 @@ namespace BH.Adapter.MidasCivil
 
             m_directory = newDirectory;
             Directory.CreateDirectory(newDirectory + "\\Results");
+            }
 
             return true;
         }
 
         /***************************************************/
 
-        public bool RunCommand(Save command)
+        public async Task<bool> RunCommand(Save command)
         {
-            Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
-            return false;
+            if (m_midasCivilVersion == "9.5.0")
+            {
+                string endpoint = "doc/SAVE";
+                string jsonPayload = "{\"Argument\": {}}";
+
+                var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+                return true;
+            }
+
+            else
+            {
+                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+                return false;
+            }
         }
 
         /***************************************************/
 
-        public bool RunCommand(SaveAs command)
+        public async Task<bool> RunCommand(SaveAs command)
         {
             string fileName = command.FileName;
             string newDirectory = GetDirectoryRoot(m_directory) + "\\" + fileName;
@@ -121,15 +168,26 @@ namespace BH.Adapter.MidasCivil
                 File.Copy(mctFile, Path.Combine(newDirectory, fileName + ".mct"));
             CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
             CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
+            if (m_midasCivilVersion == "9.5.0")
+            {
+                string filePath = CreateJsonFilePath(newDirectory);
+
+                string endpoint = "doc/SAVEAS";
+                string jsonPayload = "{\"Argument\": \"" + filePath + ".mcb\"}";
 
             m_directory = newDirectory;
+                var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+            }
+            else
+            {
 
             return true;
         }
 
         /***************************************************/
 
-        public bool RunCommand(Open command)
+        public async Task<bool> RunCommand(Open command)
         {
             string filePath = command.FileName;
 
@@ -140,8 +198,18 @@ namespace BH.Adapter.MidasCivil
             else
             {
                 if (IsApplicationRunning())
+                m_directory = Path.GetDirectoryName(filePath);
+
+                if (m_midasCivilVersion == "9.5.0")
                 {
                     Engine.Base.Compute.RecordWarning("MidasCivil process already running");
+                    filePath = CreateJsonFilePath(filePath);
+
+                    string endpoint = "doc/OPEN";
+                    string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
+
+                    var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                    response.EnsureSuccessStatusCode();
                 }
                 else
                 {
@@ -154,7 +222,6 @@ namespace BH.Adapter.MidasCivil
                         throw new Exception("File does not exist, please reference an .mcb file");
                     }
                 }
-                m_directory = Path.GetDirectoryName(filePath);
                 string fileName = Path.GetFileNameWithoutExtension(filePath);
                 string txtFile = m_directory + "\\" + fileName + ".txt";
                 string mctFile = m_directory + "\\" + fileName + ".mct";
@@ -222,10 +289,23 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public bool RunCommand(Analyse command)
+        public async Task<bool> RunCommand(Analyse command)
         {
-            Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
-            return false;
+            if (m_midasCivilVersion == "9.5.0")
+            {
+                string endpoint = "doc/ANAL";
+                string jsonPayload = "{\"Argument\": {}}";
+
+                var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+                return true;
+            }
+
+            else
+            {
+                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+                return false;
+            }
         }
 
         /***************************************************/
