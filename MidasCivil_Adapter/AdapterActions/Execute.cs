@@ -80,48 +80,50 @@ namespace BH.Adapter.MidasCivil
 
         public async Task<bool> RunCommand(NewModel command)
         {
-            string newDirectory = GetDirectoryRoot(m_directory) + "\\Untitled";
-
-            bool directoryExists = Directory.Exists(newDirectory);
             if (m_midasCivilVersion == "9.5.0")
             {
                 string endpoint = "doc/NEW";
                 string jsonPayload = "{\"Argument\": {}}";
 
-            int i = 1;
                 var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
             }
 
-            while (directoryExists)
             else
             {
-                newDirectory = newDirectory + 1;
-                directoryExists = Directory.Exists(newDirectory);
-                i++;
+                string newDirectory = GetDirectoryRoot(m_directory) + "\\Untitled";
+
+                bool directoryExists = Directory.Exists(newDirectory);
+                int i = 1;
+
+                while (directoryExists)
+                {
+                    newDirectory = newDirectory + 1;
+                    directoryExists = Directory.Exists(newDirectory);
+                    i++;
+                }
+
+                string unitExtension = "\\TextFiles\\" + "UNIT" + ".txt";
+                string versionExtension = "\\TextFiles\\" + "VERSION" + ".txt";
+                string unitFile = m_directory + unitExtension;
+                string versionFile = m_directory + versionExtension;
+
+                Directory.CreateDirectory(newDirectory + "\\TextFiles");
+
+                if (!File.Exists(unitFile))
+                    File.Copy(unitFile, newDirectory + unitExtension);
+                else
+                    File.AppendAllLines(newDirectory + unitExtension, new List<string>() { "*UNIT", "N,M,KJ,C" });
+
+                if (!File.Exists(versionFile))
+                    File.Copy(versionFile, newDirectory + versionExtension);
+                else
+                    File.AppendAllLines(newDirectory + versionExtension, new List<string>() { "*VERSION", m_midasCivilVersion });
+
+                m_directory = newDirectory;
+                Directory.CreateDirectory(newDirectory + "\\Results");
             }
-
-            string unitExtension = "\\TextFiles\\" + "UNIT" + ".txt";
-            string versionExtension = "\\TextFiles\\" + "VERSION" + ".txt";
-            string unitFile = m_directory + unitExtension;
-            string versionFile = m_directory + versionExtension;
-
-            Directory.CreateDirectory(newDirectory + "\\TextFiles");
-
-            if (!File.Exists(unitFile))
-                File.Copy(unitFile, newDirectory + unitExtension);
-            else
-                File.AppendAllLines(newDirectory + unitExtension, new List<string>() { "*UNIT", "N,M,KJ,C" });
-
-            if (!File.Exists(versionFile))
-                File.Copy(versionFile, newDirectory + versionExtension);
-            else
-                File.AppendAllLines(newDirectory + versionExtension, new List<string>() { "*VERSION", m_midasCivilVersion });
-
-            m_directory = newDirectory;
-            Directory.CreateDirectory(newDirectory + "\\Results");
-            }
-
+            
             return true;
         }
 
@@ -158,16 +160,6 @@ namespace BH.Adapter.MidasCivil
                 Engine.Base.Compute.RecordError("File with the same name already exists, please choose another.");
                 return false;
             }
-
-            Directory.CreateDirectory(newDirectory);
-            string[] mcbFiles = Directory.GetFiles(m_directory, "*.mcb");
-            foreach (string mcbFile in mcbFiles)
-                File.Copy(mcbFile, Path.Combine(newDirectory, fileName + ".mcb"));
-            string[] mctFiles = Directory.GetFiles(m_directory, "*.mcb");
-            foreach (string mctFile in mctFiles)
-                File.Copy(mctFile, Path.Combine(newDirectory, fileName + ".mct"));
-            CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
-            CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
             if (m_midasCivilVersion == "9.5.0")
             {
                 string filePath = CreateJsonFilePath(newDirectory);
@@ -175,12 +167,23 @@ namespace BH.Adapter.MidasCivil
                 string endpoint = "doc/SAVEAS";
                 string jsonPayload = "{\"Argument\": \"" + filePath + ".mcb\"}";
 
-            m_directory = newDirectory;
+                m_directory = newDirectory;
                 var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
             }
             else
             {
+
+                Directory.CreateDirectory(newDirectory);
+                string[] mcbFiles = Directory.GetFiles(m_directory, "*.mcb");
+                foreach (string mcbFile in mcbFiles)
+                    File.Copy(mcbFile, Path.Combine(newDirectory, fileName + ".mcb"));
+                string[] mctFiles = Directory.GetFiles(m_directory, "*.mcb");
+                foreach (string mctFile in mctFiles)
+                    File.Copy(mctFile, Path.Combine(newDirectory, fileName + ".mct"));
+                CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
+                CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
+            }
 
             return true;
         }
