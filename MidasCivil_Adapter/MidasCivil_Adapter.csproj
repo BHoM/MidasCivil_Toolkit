@@ -272,6 +272,7 @@
     <Compile Include="CRUD\Read\Results\NodeResults.cs" />
     <Compile Include="CRUD\Read\Results\ReadResults.cs" />
     <Compile Include="CRUD\Read\Properties\ReadMetadata.cs" />
+    <Compile Include="PrivateHelpers\APIClient.cs" />
     <Compile Include="PrivateHelpers\AssignBarRelease.cs" />
     <Compile Include="PrivateHelpers\CombineLoads.cs" />
     <Compile Include="PrivateHelpers\CreateAssignmentString.cs" />
