@@ -54,7 +54,7 @@ namespace BH.Adapter.MidasCivil
 
             catch (HttpRequestException e)
             {
-                Engine.Base.Compute.RecordError("Something went wrong with the request. Please raise an issue and try using the mct-command window by changing the Midas Version Setting");
+                Engine.Base.Compute.RecordError("Something went wrong with the request. Please raise an issue and try using the mct-command window by changing the Midas Version Setting.");
 
                 return new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
