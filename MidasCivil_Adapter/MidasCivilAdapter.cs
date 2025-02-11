@@ -54,7 +54,7 @@ namespace BH.Adapter.MidasCivil
         [Input("midasCivilSettings", "General settings that are applicable to all actions performed by this adapter, e.g. version of Midas Civil to be used.")]
         [Input("active", "Initiate the adapter by setting to True.")]
         [Output("adapter", "Adapter for MidasCivil.")]
-        public MidasCivilAdapter(string filePath, MidasCivilSettings midasCivilSettings = null, bool active = false)
+        public MidasCivilAdapter(string filePath, MidasCivilSettings midasCivilSettings = null, string mapiKey = null, bool active = false)
         {
             if (active)
             {
@@ -103,7 +103,16 @@ namespace BH.Adapter.MidasCivil
                 };
 
                 if (midasCivilSettings != null)
-                    m_midasCivilVersion = midasCivilSettings.Version;               
+                    m_midasCivilVersion = midasCivilSettings.Version.ToLower();
+
+                if (m_midasCivilVersion == "9.5.0.nx")
+                {
+                    if (mapiKey != null)
+                        m_mapiKey = mapiKey;
+                    else
+                        Engine.Base.Compute.RecordError("Please provide the active Midas mapi-key.");
+                }
+
                 Execute(new Open() { FileName = filePath });
             }
         }
@@ -129,6 +138,7 @@ namespace BH.Adapter.MidasCivil
         private readonly int m_materialCharacterLimit = 15;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
 
+        public string m_mapiKey { get; protected set; } = "";
         /***************************************************/
     }
 }
