@@ -129,10 +129,22 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public bool RunCommand(Save command)
+        public async Task<bool> RunCommand(Save command)
         {
-            Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
-            return false;
+            if (m_midasCivilVersion == "9.5.0.nx")
+            {
+                string endpoint = "doc/SAVE";
+                string jsonPayload = "{\"Argument\": {}}";
+
+                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                return true;
+            }
+
+            else
+            {
+                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+                return false;
+            }
         }
 
         /***************************************************/
