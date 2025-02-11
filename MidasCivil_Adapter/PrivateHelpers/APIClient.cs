@@ -24,6 +24,7 @@ using System.Net.Http;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -44,7 +45,22 @@ namespace BH.Adapter.MidasCivil
                 request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
             }
 
-            return await client.SendAsync(request);
+            try
+            {
+                var response = await client.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                return response;
+            }
+
+            catch (HttpRequestException e)
+            {
+                Engine.Base.Compute.RecordError("Something went wrong with the request. Please raise an issue and try using the mct-command window by changing the Midas Version Setting");
+
+                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent($"Error: {e.Message}")
+                };
+            }
         }
     }
 }
