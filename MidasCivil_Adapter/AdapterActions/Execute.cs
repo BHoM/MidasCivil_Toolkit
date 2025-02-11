@@ -85,7 +85,6 @@ namespace BH.Adapter.MidasCivil
                 string jsonPayload = "{\"Argument\": {}}";
 
                 await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
-                return true;
             }
 
             else
@@ -122,9 +121,10 @@ namespace BH.Adapter.MidasCivil
 
                 m_directory = newDirectory;
                 Directory.CreateDirectory(newDirectory + "\\Results");
-
-                return true;
             }
+            
+            return true;
+            
         }
 
         /***************************************************/
@@ -149,7 +149,7 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public bool RunCommand(SaveAs command)
+        public async Task<bool> RunCommand(SaveAs command)
         {
             string fileName = command.FileName;
             string newDirectory = GetDirectoryRoot(m_directory) + "\\" + fileName;
@@ -160,17 +160,30 @@ namespace BH.Adapter.MidasCivil
                 return false;
             }
 
-            Directory.CreateDirectory(newDirectory);
-            string[] mcbFiles = Directory.GetFiles(m_directory, "*.mcb");
-            foreach (string mcbFile in mcbFiles)
-                File.Copy(mcbFile, Path.Combine(newDirectory, fileName + ".mcb"));
-            string[] mctFiles = Directory.GetFiles(m_directory, "*.mcb");
-            foreach (string mctFile in mctFiles)
-                File.Copy(mctFile, Path.Combine(newDirectory, fileName + ".mct"));
-            CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
-            CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
+            if (m_midasCivilVersion == "9.5.0.nx")
+            {
+                string filePath = CreateJsonFilePath(newDirectory);
 
-            m_directory = newDirectory;
+                string endpoint = "doc/SAVEAS";
+                string jsonPayload = "{\"Argument\": \"" + filePath + ".mcb\"}";
+
+                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+            }
+
+            else
+            {
+                Directory.CreateDirectory(newDirectory);
+                string[] mcbFiles = Directory.GetFiles(m_directory, "*.mcb");
+                foreach (string mcbFile in mcbFiles)
+                    File.Copy(mcbFile, Path.Combine(newDirectory, fileName + ".mcb"));
+                string[] mctFiles = Directory.GetFiles(m_directory, "*.mcb");
+                foreach (string mctFile in mctFiles)
+                    File.Copy(mctFile, Path.Combine(newDirectory, fileName + ".mct"));
+                CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
+                CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
+
+                m_directory = newDirectory;
+            } 
 
             return true;
         }
