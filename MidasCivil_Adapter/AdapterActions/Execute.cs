@@ -294,10 +294,22 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public bool RunCommand(Analyse command)
+        public async Task<bool> RunCommand(Analyse command)
         {
-            Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
-            return false;
+            if (m_midasCivilVersion == "9.5.0.nx")
+            {
+                string endpoint = "doc/ANAL";
+                string jsonPayload = "{\"Argument\": {}}";
+
+                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                return true;
+            }
+
+            else
+            {
+                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+                return false;
+            }
         }
 
         /***************************************************/
