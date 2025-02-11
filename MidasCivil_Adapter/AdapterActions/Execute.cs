@@ -190,7 +190,7 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public bool RunCommand(Open command)
+        public async Task<bool> RunCommand(Open command)
         {
             string filePath = command.FileName;
 
@@ -200,83 +200,94 @@ namespace BH.Adapter.MidasCivil
             }
             else
             {
-                if (IsApplicationRunning())
+                if (m_midasCivilVersion == "9.5.0.nx")
                 {
-                    Engine.Base.Compute.RecordWarning("MidasCivil process already running");
+                    filePath = CreateJsonFilePath(filePath);
+
+                    string endpoint = "doc/OPEN";
+                    string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
+
+                    await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
                 }
+
                 else
                 {
+                    if (IsApplicationRunning())
+                    {
+                        Engine.Base.Compute.RecordWarning("MidasCivil process already running");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            System.Diagnostics.Process.Start(filePath);
+                        }
+                        catch (System.ComponentModel.Win32Exception)
+                        {
+                            throw new Exception("File does not exist, please reference an .mcb file");
+                        }
+                    }
+                    m_directory = Path.GetDirectoryName(filePath);
+                    string fileName = Path.GetFileNameWithoutExtension(filePath);
+                    string txtFile = m_directory + "\\" + fileName + ".txt";
+                    string mctFile = m_directory + "\\" + fileName + ".mct";
+
+                    if (File.Exists(txtFile))
+                    {
+                        m_midasText = File.ReadAllLines(txtFile).ToList();
+                        SetSectionText();
+                    }
+                    else if (File.Exists(mctFile))
+                    {
+                        m_midasText = File.ReadAllLines(mctFile).ToList();
+                        SetSectionText();
+                    }
+
+                    string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
+                    if (!(m_midasCivilVersion == ""))
+                    {
+                        m_midasCivilVersion = m_midasCivilVersion.Trim();
+                        if (File.Exists(versionFile))
+                        {
+                            File.Delete(versionFile);
+                            File.AppendAllLines(versionFile, new List<string>() { "*VERSION", m_midasCivilVersion });
+                            Engine.Base.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
+                        }
+
+                    }
+                    else if (File.Exists(versionFile))
+                    {
+                        List<string> versionText = GetSectionText("VERSION");
+                        m_midasCivilVersion = versionText[0].Trim();
+                    }
+                    else
+                    {
+                        m_midasCivilVersion = "9.4.0";
+                        Engine.Base.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
+                    }
+
                     try
                     {
-                        System.Diagnostics.Process.Start(filePath);
+                        List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
+                        m_forceUnit = units[0].Trim();
+                        m_lengthUnit = units[1].Trim();
+                        m_heatUnit = units[2].Trim();
+                        m_temperatureUnit = units[3].Trim();
                     }
-                    catch (System.ComponentModel.Win32Exception)
+                    catch (DirectoryNotFoundException)
                     {
-                        throw new Exception("File does not exist, please reference an .mcb file");
+                        Engine.Base.Compute.RecordWarning(
+                            "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                     }
-                }
-                m_directory = Path.GetDirectoryName(filePath);
-                string fileName = Path.GetFileNameWithoutExtension(filePath);
-                string txtFile = m_directory + "\\" + fileName + ".txt";
-                string mctFile = m_directory + "\\" + fileName + ".mct";
-
-                if (File.Exists(txtFile))
-                {
-                    m_midasText = File.ReadAllLines(txtFile).ToList();
-                    SetSectionText();
-                }
-                else if (File.Exists(mctFile))
-                {
-                    m_midasText = File.ReadAllLines(mctFile).ToList();
-                    SetSectionText();
-                }
-
-                string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
-                if (!(m_midasCivilVersion == ""))
-                {
-                    m_midasCivilVersion = m_midasCivilVersion.Trim();
-                    if (File.Exists(versionFile))
+                    catch (ArgumentOutOfRangeException)
                     {
-                        File.Delete(versionFile);
-                        File.AppendAllLines(versionFile, new List<string>() { "*VERSION", m_midasCivilVersion });
-                        Engine.Base.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
+                        Engine.Base.Compute.RecordWarning(
+                            "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                     }
 
+                    Directory.CreateDirectory(m_directory + "\\Results");
                 }
-                else if (File.Exists(versionFile))
-                {
-                    List<string> versionText = GetSectionText("VERSION");
-                    m_midasCivilVersion = versionText[0].Trim();
-                }
-                else
-                {
-                    m_midasCivilVersion = "9.4.0";
-                    Engine.Base.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
-                }
-
-                try
-                {
-                    List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
-                    m_forceUnit = units[0].Trim();
-                    m_lengthUnit = units[1].Trim();
-                    m_heatUnit = units[2].Trim();
-                    m_temperatureUnit = units[3].Trim();
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    Engine.Base.Compute.RecordWarning(
-                        "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Engine.Base.Compute.RecordWarning(
-                        "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
-                }
-
-                Directory.CreateDirectory(m_directory + "\\Results");
-
             }
-
 
             return true;
         }
