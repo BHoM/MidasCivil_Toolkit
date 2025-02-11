@@ -142,7 +142,7 @@ namespace BH.Adapter.MidasCivil
 
             else
             {
-                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter version.");
                 return false;
             }
         }
@@ -168,6 +168,7 @@ namespace BH.Adapter.MidasCivil
                 string jsonPayload = "{\"Argument\": \"" + filePath + ".mcb\"}";
 
                 await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                m_directory = newDirectory;
             }
 
             else
@@ -200,6 +201,8 @@ namespace BH.Adapter.MidasCivil
             }
             else
             {
+                m_directory = Path.GetDirectoryName(filePath);
+
                 if (m_midasCivilVersion == "9.5.0.nx")
                 {
                     filePath = CreateJsonFilePath(filePath);
@@ -227,7 +230,7 @@ namespace BH.Adapter.MidasCivil
                             throw new Exception("File does not exist, please reference an .mcb file");
                         }
                     }
-                    m_directory = Path.GetDirectoryName(filePath);
+                    
                     string fileName = Path.GetFileNameWithoutExtension(filePath);
                     string txtFile = m_directory + "\\" + fileName + ".txt";
                     string mctFile = m_directory + "\\" + fileName + ".mct";
@@ -299,15 +302,15 @@ namespace BH.Adapter.MidasCivil
             if (m_midasCivilVersion == "9.5.0.nx")
             {
                 string endpoint = "doc/ANAL";
-                string jsonPayload = "{\"Argument\": {}}";
-
+                string jsonPayload = "{}";
+                
                 await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
                 return true;
             }
 
             else
             {
-                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
+                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter version.");
                 return false;
             }
         }
