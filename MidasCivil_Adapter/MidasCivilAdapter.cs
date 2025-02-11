@@ -52,6 +52,7 @@ namespace BH.Adapter.MidasCivil
         [Description("Adapter to create a .mct file to be used in Midas Civil command shell.")]
         [Input("filePath", "Path to the .mcb file. It is recommended to save your .mcb file in a separate folder before using the adapter.")]
         [Input("midasCivilSettings", "General settings that are applicable to all actions performed by this adapter, e.g. version of Midas Civil to be used.")]
+        [Input("mapiKey", "The active mapi key if using a version of Midas Civil with API connection avalable. Found under Apps - API Settings, make sure Midas is connected before running the adapter.")]
         [Input("active", "Initiate the adapter by setting to True.")]
         [Output("adapter", "Adapter for MidasCivil.")]
         public MidasCivilAdapter(string filePath, MidasCivilSettings midasCivilSettings = null, string mapiKey = null, bool active = false)
