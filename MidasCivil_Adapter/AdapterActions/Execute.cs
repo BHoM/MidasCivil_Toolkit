@@ -30,6 +30,7 @@ using BH.oM.Base;
 using BH.oM.Adapter.Commands;
 using BH.oM.Structure.Loads;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -44,9 +45,31 @@ namespace BH.Adapter.MidasCivil
         {
             var output = new Output<List<object>, bool>() { Item1 = null, Item2 = false };
 
-            output.Item2 = RunCommand(command as dynamic);
+            output.Item2 = RunCommandWithTaskCompletionSource(command as dynamic);
 
             return output;
+        }
+
+        /**************************************************/
+
+        private bool RunCommandWithTaskCompletionSource(dynamic command)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var result = await RunCommand(command);
+                    tcs.SetResult(result);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+
+            return tcs.Task.GetAwaiter().GetResult();
         }
 
         /***************************************************/
