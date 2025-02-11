@@ -31,6 +31,7 @@ using BH.oM.Adapter.Commands;
 using BH.oM.Structure.Loads;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -76,42 +77,54 @@ namespace BH.Adapter.MidasCivil
         /**** Commands                                  ****/
         /***************************************************/
 
-        public bool RunCommand(NewModel command)
+        public async Task<bool> RunCommand(NewModel command)
         {
-            string newDirectory = GetDirectoryRoot(m_directory) + "\\Untitled";
-
-            bool directoryExists = Directory.Exists(newDirectory);
-
-            int i = 1;
-
-            while (directoryExists)
+            if (m_midasCivilVersion == "9.5.0.nx")
             {
-                newDirectory = newDirectory + 1;
-                directoryExists = Directory.Exists(newDirectory);
-                i++;
+                string endpoint = "doc/NEW";
+                string jsonPayload = "{\"Argument\": {}}";
+
+                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                return true;
             }
 
-            string unitExtension = "\\TextFiles\\" + "UNIT" + ".txt";
-            string versionExtension = "\\TextFiles\\" + "VERSION" + ".txt";
-            string unitFile = m_directory + unitExtension;
-            string versionFile = m_directory + versionExtension;
-
-            Directory.CreateDirectory(newDirectory + "\\TextFiles");
-
-            if (!File.Exists(unitFile))
-                File.Copy(unitFile, newDirectory + unitExtension);
             else
-                File.AppendAllLines(newDirectory + unitExtension, new List<string>() { "*UNIT", "N,M,KJ,C" });
+            {
+                string newDirectory = GetDirectoryRoot(m_directory) + "\\Untitled";
 
-            if (!File.Exists(versionFile))
-                File.Copy(versionFile, newDirectory + versionExtension);
-            else
-                File.AppendAllLines(newDirectory + versionExtension, new List<string>() { "*VERSION", m_midasCivilVersion });
+                bool directoryExists = Directory.Exists(newDirectory);
 
-            m_directory = newDirectory;
-            Directory.CreateDirectory(newDirectory + "\\Results");
+                int i = 1;
 
-            return true;
+                while (directoryExists)
+                {
+                    newDirectory = newDirectory + 1;
+                    directoryExists = Directory.Exists(newDirectory);
+                    i++;
+                }
+
+                string unitExtension = "\\TextFiles\\" + "UNIT" + ".txt";
+                string versionExtension = "\\TextFiles\\" + "VERSION" + ".txt";
+                string unitFile = m_directory + unitExtension;
+                string versionFile = m_directory + versionExtension;
+
+                Directory.CreateDirectory(newDirectory + "\\TextFiles");
+
+                if (!File.Exists(unitFile))
+                    File.Copy(unitFile, newDirectory + unitExtension);
+                else
+                    File.AppendAllLines(newDirectory + unitExtension, new List<string>() { "*UNIT", "N,M,KJ,C" });
+
+                if (!File.Exists(versionFile))
+                    File.Copy(versionFile, newDirectory + versionExtension);
+                else
+                    File.AppendAllLines(newDirectory + versionExtension, new List<string>() { "*VERSION", m_midasCivilVersion });
+
+                m_directory = newDirectory;
+                Directory.CreateDirectory(newDirectory + "\\Results");
+
+                return true;
+            }
         }
 
         /***************************************************/
