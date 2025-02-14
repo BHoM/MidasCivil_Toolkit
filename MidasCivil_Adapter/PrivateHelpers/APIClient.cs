@@ -54,7 +54,7 @@ namespace BH.Adapter.MidasCivil
 
             catch (HttpRequestException e)
             {
-                Engine.Base.Compute.RecordError("Something went wrong with the request. Make sure the API is active and the mapiKey correct. If this does not solve the issue, please raise it on GitHub and try using the mct-command window by changing the Midas Version Setting.");
+                Engine.Base.Compute.RecordError("Something went wrong with the request. Make sure the API is active and the mapikey is correct. If this does not solve the issue, try using the MCT command shell by remvoing NX from the MidasCivil version.");
 
                 return new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
