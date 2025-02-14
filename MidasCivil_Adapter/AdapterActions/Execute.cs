@@ -46,14 +46,14 @@ namespace BH.Adapter.MidasCivil
         {
             var output = new Output<List<object>, bool>() { Item1 = null, Item2 = false };
 
-            output.Item2 = RunCommandWithTaskCompletionSource(command as dynamic);
+            output.Item2 = RunCommandWithTaskCompletionSource(command);
 
             return output;
         }
 
         /**************************************************/
 
-        private bool RunCommandWithTaskCompletionSource(dynamic command)
+        private bool RunCommandWithTaskCompletionSource(IExecuteCommand command)
         {
             var tcs = new TaskCompletionSource<bool>();
 
@@ -61,7 +61,7 @@ namespace BH.Adapter.MidasCivil
             {
                 try
                 {
-                    var result = await RunCommand(command);
+                    var result = await RunCommand(command as dynamic);
                     tcs.SetResult(result);
                 }
                 catch (Exception ex)
@@ -122,9 +122,9 @@ namespace BH.Adapter.MidasCivil
                 m_directory = newDirectory;
                 Directory.CreateDirectory(newDirectory + "\\Results");
             }
-            
+
             return true;
-            
+
         }
 
         /***************************************************/
@@ -162,7 +162,7 @@ namespace BH.Adapter.MidasCivil
 
             if (m_midasCivilVersion == "9.5.0.nx")
             {
-                string filePath = CreateJsonFilePath(newDirectory);
+                string filePath = newDirectory.Replace("\\", "\\\\");
 
                 string endpoint = "doc/SAVEAS";
                 string jsonPayload = "{\"Argument\": \"" + filePath + ".mcb\"}";
@@ -184,7 +184,7 @@ namespace BH.Adapter.MidasCivil
                 CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
 
                 m_directory = newDirectory;
-            } 
+            }
 
             return true;
         }
@@ -205,7 +205,7 @@ namespace BH.Adapter.MidasCivil
 
                 if (m_midasCivilVersion == "9.5.0.nx")
                 {
-                    filePath = CreateJsonFilePath(filePath);
+                    filePath = filePath.Replace("\\", "\\\\");
 
                     string endpoint = "doc/OPEN";
                     string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
@@ -230,7 +230,7 @@ namespace BH.Adapter.MidasCivil
                             throw new Exception("File does not exist, please reference an .mcb file");
                         }
                     }
-                    
+
                     string fileName = Path.GetFileNameWithoutExtension(filePath);
                     string txtFile = m_directory + "\\" + fileName + ".txt";
                     string mctFile = m_directory + "\\" + fileName + ".mct";
@@ -303,7 +303,7 @@ namespace BH.Adapter.MidasCivil
             {
                 string endpoint = "doc/ANAL";
                 string jsonPayload = "{}";
-                
+
                 await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
                 return true;
             }
