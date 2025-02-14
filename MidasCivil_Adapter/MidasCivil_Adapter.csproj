@@ -291,7 +291,6 @@
     <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="PrivateHelpers\GetSectionMaterialCombinations.cs" />
     <Compile Include="PrivateHelpers\GetStiffnessVectorModulus.cs" />
-    <Compile Include="PrivateHelpers\JsonConverter.cs" />
     <Compile Include="PrivateHelpers\SetVersion.cs" />
     <Compile Include="PrivateHelpers\SetUnits.cs" />
     <Compile Include="Type\NextFreeId.cs" />
