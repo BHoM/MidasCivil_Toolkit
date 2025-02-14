@@ -44,7 +44,6 @@ namespace BH.Adapter.MidasCivil
             {
                 request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
             }
-
             try
             {
                 var response = await client.SendAsync(request);
