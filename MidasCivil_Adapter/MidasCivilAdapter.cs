@@ -38,6 +38,7 @@ using BH.oM.Adapter;
 using System.IO;
 using BH.oM.Base.Attributes;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -103,8 +104,8 @@ namespace BH.Adapter.MidasCivil
                 };
 
                 if (midasCivilSettings != null)
-                    m_midasCivilVersion = Regex.Replace(midasCivilSettings.Version, @"\s+", "").ToLower()
-
+                    m_midasCivilVersion = Regex.Replace(midasCivilSettings.Version, @"\s+", "").ToLower();
+                
                 if (m_midasCivilVersion == "9.5.0.nx")
                 {
                     if (midasCivilSettings.mApiKey != null)
