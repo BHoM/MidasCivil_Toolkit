@@ -205,7 +205,10 @@ namespace BH.Adapter.MidasCivil
 
                 if (m_midasCivilVersion == "9.5.0.nx")
                 {
-                    filePath = filePath.Replace("\\", "\\\\");
+                    if (File.Exists(filePath))
+                        filePath = filePath.Replace("\\", "\\\\");
+                    else
+                        throw new ArgumentException("The given file path does not exist");
 
                     string endpoint = "doc/OPEN";
                     string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
