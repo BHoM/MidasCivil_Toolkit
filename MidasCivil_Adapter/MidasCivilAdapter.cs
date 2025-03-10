@@ -103,7 +103,7 @@ namespace BH.Adapter.MidasCivil
                 };
 
                 if (midasCivilSettings != null)
-                    m_midasCivilVersion = midasCivilSettings.Version.ToLower();
+                    m_midasCivilVersion = Regex.Replace(midasCivilSettings.Version, @"\s+", "").ToLower()
 
                 if (m_midasCivilVersion == "9.5.0.nx")
                 {
