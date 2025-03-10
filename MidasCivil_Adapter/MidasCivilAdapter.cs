@@ -38,6 +38,7 @@ using BH.oM.Adapter;
 using System.IO;
 using BH.oM.Base.Attributes;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -103,7 +104,16 @@ namespace BH.Adapter.MidasCivil
                 };
 
                 if (midasCivilSettings != null)
-                    m_midasCivilVersion = midasCivilSettings.Version;               
+                    m_midasCivilVersion = Regex.Replace(midasCivilSettings.Version, @"\s+", "").ToLower();
+                
+                if (m_midasCivilVersion == "9.5.0.nx")
+                {
+                    if (midasCivilSettings.mApiKey != null)
+                        m_mapiKey = midasCivilSettings.mApiKey;
+                    else
+                        Engine.Base.Compute.RecordError("Please provide the active Midas mApi-key.");
+                }
+
                 Execute(new Open() { FileName = filePath });
             }
         }
@@ -129,6 +139,7 @@ namespace BH.Adapter.MidasCivil
         private readonly int m_materialCharacterLimit = 15;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
 
+        public string m_mapiKey { get; protected set; } = "";
         /***************************************************/
     }
 }
