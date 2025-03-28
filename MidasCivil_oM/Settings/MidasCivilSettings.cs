@@ -1,6 +1,6 @@
 /*
  * This file is part of the Buildings and Habitats object Model (BHoM)
- * Copyright (c) 2015 - 2024, the respective contributors. All rights reserved.
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
  *
  * Each contributor holds copyright over their respective contributions.
  * The project versioning (Git) records all such contribution source information.
@@ -34,6 +34,10 @@ namespace BH.oM.Adapters.MidasCivil
         [Description("The version of MidasCivil to be used by the adapter.")]
         public virtual string Version { get; set; } = "";
 
+        [Description("The active mApi-key when using a version of Midas Civil with API connection available. Found under Apps - API Settings. Make sure Midas is connected to the API before running the adapter.")]
+        public virtual string mApiKey { get; set; } = "";
+
         /***************************************************/
     }
 }
+
