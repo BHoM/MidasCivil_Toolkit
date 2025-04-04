@@ -319,6 +319,29 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
+        public async Task<bool> RunCommand(Import command)
+        {
+            if (m_midasCivilVersion == "9.5.0.nx")
+            {
+                string filePath = command.FilePath;
+                if (File.Exists(filePath))
+                    filePath = filePath.Replace("\\", "\\\\");
+                else
+                    Engine.Base.Compute.RecordError("The given file path does not exist.");
+
+                string endpoint = "doc/IMPORTMXT";
+                string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
+
+                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                return true;
+            }
+
+            else
+            {
+                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter version.");
+                return false;
+            }
+        }
 
         public bool RunCommand(AnalyseLoadCases command)
         {
