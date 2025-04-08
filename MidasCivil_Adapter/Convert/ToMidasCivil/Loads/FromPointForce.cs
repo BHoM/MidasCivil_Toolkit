@@ -41,6 +41,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 case "9.1.0":
                 case "9.4.5":
                 case "9.5.0":
+                case "9.5.0.nx":
                     midasPointLoad = assignedNode + "," + pointLoad.Force.X.ForceFromSI(forceUnit).ToString() +
                                                     "," + pointLoad.Force.Y.ForceFromSI(forceUnit).ToString() +
                                                     "," + pointLoad.Force.Z.ForceFromSI(forceUnit).ToString() +

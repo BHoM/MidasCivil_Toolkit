@@ -58,6 +58,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 case "9.4.0":
                 case "9.4.5":
                 case "9.5.0":
+                case "9.5.0.nx":
                     midasLink = primaryId + "," + fixity + "," + secondaryId + "," + link.Name;
                     break;
                 default:
