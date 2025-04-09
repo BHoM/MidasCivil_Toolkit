@@ -30,6 +30,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Text.Json;
+
+
 
 namespace BH.Adapter.MidasCivil
 {
@@ -42,15 +47,6 @@ namespace BH.Adapter.MidasCivil
 
         public IEnumerable<IResult> ReadResults(NodeResultRequest request, ActionConfig actionConfig)
         {
-            if (m_midasCivilVersion == "9.5.0.nx")
-            {
-                string endpoint = "post/TABLE";
-
-                string jsonPayload = "{\"Argument\": {\"TABLE_NAME\": \"Reaction(Global)\", \"TABLE_TYPE\": \"REACTIONG\", \"UNIT\": {\"FORCE\": \"N\", \"DIST\": \"m\"}, \"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 12}, \"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\", \"Mb\"]}}";
-
-                var respons = SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
-            }
-
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);
             List<string> loadCases = GetLoadcaseIDs(request);
@@ -58,7 +54,14 @@ namespace BH.Adapter.MidasCivil
             switch (request.ResultType)
             {
                 case NodeResultType.NodeReaction:
-                    results = ExtractNodeReaction(objectIds, loadCases).ToList();
+                    if (m_midasCivilVersion == "9.5.0.nx")
+                    {
+                        results = Task.Run(() => ExtractNodeReactionAPI(objectIds, loadCases)).Result.ToList();
+                    }
+
+                    else
+                        results = ExtractNodeReaction(objectIds, loadCases).ToList();
+
                     break;
                 case NodeResultType.NodeDisplacement:
                     results = ExtractNodeDisplacement(objectIds, loadCases).ToList();
@@ -131,6 +134,36 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
+
+        private async Task<IEnumerable<IResult>> ExtractNodeReactionAPI(List<int> ids, List<string> loadcaseIds)
+        {
+            List<NodeReaction> nodeReactions = new List<NodeReaction>();
+
+            string endpoint = "post/TABLE";
+            string jsonPayload = "{\"Argument\": " +
+                "{\"TABLE_NAME\": \"Reaction(Global)\", \"TABLE_TYPE\": \"REACTIONG\", " +
+                "\"UNIT\": {\"FORCE\": \"N\", \"DIST\": \"m\"}, \"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 3}, " +
+                "\"COMPONENTS\": [\"Node\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"]}}";
+
+            var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            List<int> indices = new List<int>();
+
+            using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
+            {
+                JsonElement dataElement = doc.RootElement.GetProperty("Reaction(Global)").GetProperty("DATA");
+
+                foreach (JsonElement item in dataElement.EnumerateArray())
+                {
+
+                    indices.Add(item[1].GetInt32());
+                }
+
+            }
+            
+            return nodeReactions;
+        }
 
     }
 }
