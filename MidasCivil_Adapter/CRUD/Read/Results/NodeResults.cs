@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -41,6 +42,15 @@ namespace BH.Adapter.MidasCivil
 
         public IEnumerable<IResult> ReadResults(NodeResultRequest request, ActionConfig actionConfig)
         {
+            if (m_midasCivilVersion == "9.5.0.nx")
+            {
+                string endpoint = "post/TABLE";
+
+                string jsonPayload = "{\"Argument\": {\"TABLE_NAME\": \"Reaction(Global)\", \"TABLE_TYPE\": \"REACTIONG\", \"UNIT\": {\"FORCE\": \"N\", \"DIST\": \"m\"}, \"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 12}, \"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\", \"Mb\"]}}";
+
+                var respons = SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+            }
+
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);
             List<string> loadCases = GetLoadcaseIDs(request);
