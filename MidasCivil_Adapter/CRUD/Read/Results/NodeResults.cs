@@ -32,7 +32,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
-using System.Text.Json;
+using System.Text;
 
 
 
@@ -139,28 +139,26 @@ namespace BH.Adapter.MidasCivil
         {
             List<NodeReaction> nodeReactions = new List<NodeReaction>();
 
-            string endpoint = "post/TABLE";
+            const string endpoint = "post/TABLE";
+
+            string nodes = ids.Count > 0
+             ? $"\"NODE_ELEMS\": {{ \"KEYS\": [{string.Join(", ", ids)}] }},"
+             : string.Empty;
+
+            string loadCases = loadcaseIds.Count > 0
+            ? $"\"LOAD_CASE_NAMES\": [{string.Join(", ", loadcaseIds.Select(id => $"\"{id}\""))}],"
+            : string.Empty;
+
             string jsonPayload = "{\"Argument\": " +
                 "{\"TABLE_NAME\": \"Reaction(Global)\", \"TABLE_TYPE\": \"REACTIONG\", " +
                 "\"UNIT\": {\"FORCE\": \"N\", \"DIST\": \"m\"}, \"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 3}, " +
-                "\"COMPONENTS\": [\"Node\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"]}}";
+                nodes + loadCases +
+                "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"]}}";
 
             var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
-
             string jsonResponse = await response.Content.ReadAsStringAsync();
-            List<int> indices = new List<int>();
 
-            using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
-            {
-                JsonElement dataElement = doc.RootElement.GetProperty("Reaction(Global)").GetProperty("DATA");
-
-                foreach (JsonElement item in dataElement.EnumerateArray())
-                {
-
-                    indices.Add(item[1].GetInt32());
-                }
-
-            }
+            nodeReactions = Adapters.MidasCivil.Convert.ToNodeReactionJson(jsonResponse);
             
             return nodeReactions;
         }

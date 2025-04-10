@@ -24,6 +24,8 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.Results;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.Json;
+using BH.oM.Adapters.MidasCivil;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -54,6 +56,41 @@ namespace BH.Adapter.Adapters.MidasCivil
                 );
 
             return nodeReaction;
+        }
+
+        /***************************************************/
+
+        public static List<NodeReaction> ToNodeReactionJson(string json)
+        {
+            List<NodeReaction> nodeReactions = new List<NodeReaction>();
+
+            int mode = -1;
+            double timeStep = 0;
+
+            using (JsonDocument doc = JsonDocument.Parse(json))
+            {
+                var dataElement = doc.RootElement.GetProperty("Reaction(Global)").GetProperty("DATA");
+
+                foreach (var item in dataElement.EnumerateArray())
+                {
+                    nodeReactions.Add(new NodeReaction(
+                    System.Convert.ToInt32(item[1].ToString()),
+                    item[2].ToString(),
+                    mode,
+                    timeStep,
+                    oM.Geometry.Basis.XY,
+                    System.Convert.ToDouble(item[3].ToString()),
+                    System.Convert.ToDouble(item[4].ToString()),
+                    System.Convert.ToDouble(item[5].ToString()),
+                    System.Convert.ToDouble(item[6].ToString()),
+                    System.Convert.ToDouble(item[7].ToString()),
+                    System.Convert.ToDouble(item[8].ToString())
+                ));
+                }
+
+            }
+
+            return nodeReactions;
         }
 
         /***************************************************/
