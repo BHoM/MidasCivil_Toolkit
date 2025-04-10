@@ -60,21 +60,13 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        public static List<NodeReaction> ToNodeReactionJson(string json)
+        public static NodeReaction ToNodeReactionJson(JsonElement item)
         {
-            List<NodeReaction> nodeReactions = new List<NodeReaction>();
-
             int mode = -1;
             double timeStep = 0;
 
-            using (JsonDocument doc = JsonDocument.Parse(json))
-            {
-                var dataElement = doc.RootElement.GetProperty("Reaction(Global)").GetProperty("DATA");
-
-                foreach (var item in dataElement.EnumerateArray())
-                {
-                    nodeReactions.Add(new NodeReaction(
-                    System.Convert.ToInt32(item[1].ToString()),
+            NodeReaction nodeReaction = new NodeReaction(
+                System.Convert.ToInt32(item[1].ToString()),
                     item[2].ToString(),
                     mode,
                     timeStep,
@@ -85,12 +77,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                     System.Convert.ToDouble(item[6].ToString()),
                     System.Convert.ToDouble(item[7].ToString()),
                     System.Convert.ToDouble(item[8].ToString())
-                ));
-                }
-
-            }
-
-            return nodeReactions;
+                );
+            
+            return nodeReaction;
         }
 
         /***************************************************/

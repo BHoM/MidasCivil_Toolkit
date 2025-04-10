@@ -33,6 +33,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Text;
+using System.Text.Json;
 
 
 
@@ -139,26 +140,35 @@ namespace BH.Adapter.MidasCivil
         {
             List<NodeReaction> nodeReactions = new List<NodeReaction>();
 
-            const string endpoint = "post/TABLE";
+            const string endpoint = "post/TABLE"; //Will be the same for all
 
             string nodes = ids.Count > 0
-             ? $"\"NODE_ELEMS\": {{ \"KEYS\": [{string.Join(", ", ids)}] }},"
+             ? $"\"NODE_ELEMS\": {{ \"KEYS\": [{string.Join(", ", ids)}] }}," //Will be the same for all
              : string.Empty;
 
             string loadCases = loadcaseIds.Count > 0
-            ? $"\"LOAD_CASE_NAMES\": [{string.Join(", ", loadcaseIds.Select(id => $"\"{id}\""))}],"
+            ? $"\"LOAD_CASE_NAMES\": [{string.Join(", ", loadcaseIds.Select(id => $"\"{id}\""))}]," //Will be the same for all
             : string.Empty;
 
             string jsonPayload = "{\"Argument\": " +
-                "{\"TABLE_NAME\": \"Reaction(Global)\", \"TABLE_TYPE\": \"REACTIONG\", " +
+                "{\"TABLE_NAME\": \"Reaction(Global)\", \"TABLE_TYPE\": \"REACTIONG\", " +  //Different
                 "\"UNIT\": {\"FORCE\": \"N\", \"DIST\": \"m\"}, \"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 3}, " +
                 nodes + loadCases +
                 "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"]}}";
 
-            var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
-            string jsonResponse = await response.Content.ReadAsStringAsync();
+            var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false); //Will be the same for all
+            string jsonResponse = await response.Content.ReadAsStringAsync(); //Will be the same for all
 
-            nodeReactions = Adapters.MidasCivil.Convert.ToNodeReactionJson(jsonResponse);
+
+            using (JsonDocument doc = JsonDocument.Parse(jsonResponse)) 
+            {
+                var dataElement = doc.RootElement.GetProperty("Reaction(Global)").GetProperty("DATA"); //Different
+
+                foreach (var item in dataElement.EnumerateArray())
+                {
+                    nodeReactions.Add(Adapters.MidasCivil.Convert.ToNodeReactionJson(item));    //Different
+                }
+            }
             
             return nodeReactions;
         }
