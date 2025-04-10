@@ -32,6 +32,7 @@ using BH.oM.Structure.Loads;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -319,6 +320,52 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
+        public async Task<bool> RunCommand(ImportFile command)
+        {
+            if (m_midasCivilVersion == "9.5.0.nx")
+            {
+                string endpoint = "";
+                string filePath = command.FilePath;
+
+                if (File.Exists(filePath))
+                {
+                    string extension = Path.GetExtension(filePath).ToLower();
+
+                    if (extension == ".mct" || extension == ".mgt" || extension == ".txt")
+                        endpoint = "doc/IMPORTMXT";
+
+                    else if (extension == ".json")
+                        endpoint = "doc/IMPORT";
+
+                    else
+                    {
+                        Engine.Base.Compute.RecordError("The given file type is not supported by this Adapter.");
+                        return false;
+                    }
+
+                }
+
+                else
+                {
+                    Engine.Base.Compute.RecordError("The given file path does not exist.");
+                    return false;
+                }
+
+                filePath = filePath.Replace("\\", "\\\\");
+
+                string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
+
+                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+
+                return true;
+            }
+
+            else
+            {
+                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter version.");
+                return false;
+            }
+        }
 
         public bool RunCommand(AnalyseLoadCases command)
         {
