@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -45,19 +46,26 @@ namespace BH.Adapter.MidasCivil
             List<int> objectIds = GetObjectIDs(request);
             List<string> loadCases = GetLoadcaseIDs(request);
 
-            switch (request.ResultType)
+            if (m_midasCivilVersion == "9.5.0.nx")
+                results = Task.Run(() => ExtractResultAPI(request.ResultType.ToString(), objectIds, loadCases)).Result.ToList();
+
+            else
             {
-                case NodeResultType.NodeReaction:
-                    results = ExtractNodeReaction(objectIds, loadCases).ToList();
-                    break;
-                case NodeResultType.NodeDisplacement:
-                    results = ExtractNodeDisplacement(objectIds, loadCases).ToList();
-                    break;
-                default:
-                    Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the MidasCivil_Toolkit.");
-                    results = new List<IResult>();
-                    break;
+                switch (request.ResultType)
+                {
+                    case NodeResultType.NodeReaction:
+                        results = ExtractNodeReaction(objectIds, loadCases).ToList();
+                        break;
+                    case NodeResultType.NodeDisplacement:
+                        results = ExtractNodeDisplacement(objectIds, loadCases).ToList();
+                        break;
+                    default:
+                        Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the MidasCivil_Toolkit.");
+                        results = new List<IResult>();
+                        break;
+                }
             }
+
             results.Sort();
             return results;
         }

@@ -25,14 +25,82 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using BH.oM.Analytical.Results;
+using BH.oM.Structure.Results;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Linq;
+using BH.oM.Data.Requests;
+
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public async Task ReadResultAPI(string endpoint, HttpMethod method, string jsonPayload = "")
+        private async Task<IEnumerable<IResult>> ExtractResultAPI(string resultType, List<int> ids, List<string> loadcaseIds)
         {
-            
+            List<IResult> results = new List<IResult>();
+
+            const string endpoint = "post/TABLE";
+
+            string jsonPayload = "";
+
+            string units = "\"UNIT\": {\"FORCE\": \"N\", \"DIST\": \"m\"}, ";
+            string format = "\"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 3}";
+
+            string objectIds = ids.Count > 0
+             ? $"\"NODE_ELEMS\": {{ \"KEYS\": [{string.Join(", ", ids)}] }},"
+             : string.Empty;
+
+            string loadCases = loadcaseIds.Count > 0
+             ? $"\"LOAD_CASE_NAMES\": [{string.Join(", ", loadcaseIds.Select(id => $"\"{id}\""))}],"
+             : string.Empty;
+
+            switch (resultType)
+            {
+                case "NodeReaction":
+                    jsonPayload = "{\"Argument\": {" +
+                    "\"TABLE_NAME\": \"Reaction(Global)\", \"TABLE_TYPE\": \"REACTIONG\", " +
+                    "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], " +
+                    objectIds + loadCases + units + format +
+                    "}}";
+                    break;
+
+                case "NodeDisplacement":
+                    jsonPayload = "{\"Argument\": {" +
+                    "\"TABLE_NAME\": \"Displacements(Global)\", \"TABLE_TYPE\": \"DISPLACEMENTG\", " +
+                    "\"COMPONENTS\": [\"Node\", \"Load\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], " +
+                    objectIds + loadCases + units + format +
+                    "}}";
+                    break;
+            }
+
+
+            List<string> test = new List<string>();
+            var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false); 
+            string jsonResponse = await response.Content.ReadAsStringAsync(); 
+
+            using (JsonDocument doc = JsonDocument.Parse(jsonResponse)) 
+            {
+                var dataElement = new JsonElement();
+                switch (resultType)
+                {
+                    case "NodeReaction":
+                        dataElement = doc.RootElement.GetProperty("Reaction(Global)").GetProperty("DATA");
+                        foreach (var item in dataElement.EnumerateArray())
+                             results.Add(Adapters.MidasCivil.Convert.ToNodeReactionAPI(item)); 
+                        break;
+
+                    case "NodeDisplacement":
+                        dataElement = doc.RootElement.GetProperty("Displacements(Global)").GetProperty("DATA");
+                        foreach (var item in dataElement.EnumerateArray())
+                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacementAPI(item));
+                        break;
+
+                }
+            }
+
+            return results;
         }
     }
 }

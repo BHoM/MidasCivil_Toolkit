@@ -49,7 +49,13 @@ namespace BH.Adapter.MidasCivil
 
             if (ids == null || ids.Count == 0)
             {
-                return GetAllIds(request as dynamic);
+                if (m_midasCivilVersion == "9.5.0.nx")
+                {
+                    List<int> emptyIds= new List<int>();
+                    return emptyIds;
+                }
+                else
+                    return GetAllIds(request as dynamic);
             }
             else
             {
@@ -131,6 +137,9 @@ namespace BH.Adapter.MidasCivil
             List<string> caseNames = new List<string>();
             if (cases == null || cases.Count == 0)
             {
+                if (m_midasCivilVersion == "9.5.0.nx")
+                    return caseNames;
+
                 caseNames = GetSectionText("STLDCASE").Select(x => x.Split(',')[0].Trim()).ToList();
 
                 List<string> loadCombinationText = GetSectionText("LOADCOMB");
