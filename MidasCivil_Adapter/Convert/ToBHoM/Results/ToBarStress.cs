@@ -25,6 +25,8 @@ using BH.oM.Structure.Results;
 using System.Linq;
 using System.Collections.Generic;
 using BH.Adapter.Adapters.MidasCivil;
+using System.Text.Json;
+using System;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -65,6 +67,43 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
+        public static BarStress ToBarStressAPI(JsonElement item)
+        {
+            double position = GetBarResultPosition(item[3].ToString());
+
+            double combBendPos = Math.Max(Math.Max(System.Convert.ToDouble(item[11].ToString()), System.Convert.ToDouble(item[12].ToString())),
+             Math.Max(System.Convert.ToDouble(item[13].ToString()), System.Convert.ToDouble(item[14].ToString())));
+
+            double combBendNeg = Math.Min(Math.Min(System.Convert.ToDouble(item[11].ToString()), System.Convert.ToDouble(item[12].ToString())),
+             Math.Min(System.Convert.ToDouble(item[13].ToString()), System.Convert.ToDouble(item[14].ToString())));
+
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+            int divisions = 0;
+
+            BarStress barstress = new BarStress(
+                System.Convert.ToInt32(item[1].ToString()),
+                item[2].ToString(),
+                mode,
+                timeStep,
+                position,
+                divisions,
+                System.Convert.ToDouble(item[4].ToString()),
+                System.Convert.ToDouble(item[5].ToString()),
+                System.Convert.ToDouble(item[6].ToString()),
+                System.Convert.ToDouble(item[7].ToString()),
+                System.Convert.ToDouble(item[8].ToString()),
+                System.Convert.ToDouble(item[9].ToString()),
+                System.Convert.ToDouble(item[10].ToString()),
+                combBendPos,
+                combBendNeg
+                );
+
+            return barstress;
+        }
+
+        /***************************************************/
     }
 }
 

@@ -73,10 +73,24 @@ namespace BH.Adapter.MidasCivil
                     objectIds + loadCases + units + format +
                     "}}";
                     break;
+
+                case "BarForce":
+                    jsonPayload = "{\"Argument\": {" +
+                    "\"TABLE_NAME\": \"BeamForce\", \"TABLE_TYPE\": \"BEAMFORCE\", " +
+                    "\"COMPONENTS\": [\"Elem\", \"Load\", \"Part\", \"Axial\", \"Shear-y\", \"Shear-z\", \"Torsion\", \"Moment-y\", \"Moment-z\"], " +
+                    objectIds + loadCases + units + format +
+                    "}}";
+                    break;
+
+                case "BarStress":
+                    jsonPayload = "{\"Argument\": {" +
+                    "\"TABLE_NAME\": \"BeamStress\", \"TABLE_TYPE\": \"BEAMSTRESS\", " +
+                    "\"COMPONENTS\": [\"Elem\", \"Load\", \"Part\", \"Axial\", \"Shear-y\", \"Shear-z\", \"Bend(+y)\", \"Bend(-y)\", \"Bend(+z)\", \"Bend(-z)\", \"Cb1(-y+z)\", \"Cb2(+y+z)\", \"Cb3(+y-z)\", \"Cb4(-y-z)\"], " +
+                    objectIds + loadCases + units + format +
+                    "}}";
+                    break;
             }
 
-
-            List<string> test = new List<string>();
             var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false); 
             string jsonResponse = await response.Content.ReadAsStringAsync(); 
 
@@ -95,6 +109,18 @@ namespace BH.Adapter.MidasCivil
                         dataElement = doc.RootElement.GetProperty("Displacements(Global)").GetProperty("DATA");
                         foreach (var item in dataElement.EnumerateArray())
                             results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacementAPI(item));
+                        break;
+
+                    case "BarForce":
+                        dataElement = doc.RootElement.GetProperty("BeamForce").GetProperty("DATA");
+                        foreach (var item in dataElement.EnumerateArray())
+                            results.Add(Convert.ToBarForceAPI(item));
+                        break;
+
+                    case "BarStress":
+                        dataElement = doc.RootElement.GetProperty("BeamStress").GetProperty("DATA");
+                        foreach (var item in dataElement.EnumerateArray())
+                            results.Add(Convert.ToBarStressAPI(item));
                         break;
 
                 }

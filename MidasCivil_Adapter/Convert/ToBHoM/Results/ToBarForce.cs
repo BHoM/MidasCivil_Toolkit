@@ -26,6 +26,7 @@ using BH.oM.Structure.Results;
 using System.Linq;
 using System.Collections.Generic;
 using BH.Adapter.Adapters.MidasCivil;
+using System.Text.Json;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -56,6 +57,32 @@ namespace BH.Adapter.MidasCivil
                 System.Convert.ToDouble(delimitted[14]).MomentToSI(forceUnit, lengthUnit),
                 -System.Convert.ToDouble(delimitted[15]).MomentToSI(forceUnit, lengthUnit),
                 -System.Convert.ToDouble(delimitted[16]).MomentToSI(forceUnit, lengthUnit)
+                );
+            return barforce;
+        }
+
+        /***************************************************/
+        public static BarForce ToBarForceAPI(JsonElement item)
+        {
+            double position = GetBarResultPosition(item[3].ToString());
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+            int divisions = 0;
+
+            BarForce barforce = new BarForce(
+                System.Convert.ToInt32(item[1].ToString()),
+                item[2].ToString(),
+                mode,
+                timeStep,
+                position,
+                divisions,
+                System.Convert.ToDouble(item[4].ToString()),
+                System.Convert.ToDouble(item[5].ToString()),
+                System.Convert.ToDouble(item[6].ToString()),
+                System.Convert.ToDouble(item[7].ToString()),
+                -System.Convert.ToDouble(item[8].ToString()),
+                -System.Convert.ToDouble(item[9].ToString())
                 );
             return barforce;
         }
