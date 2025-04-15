@@ -25,6 +25,7 @@ using BH.oM.Structure.Results;
 using System.Linq;
 using System.Collections.Generic;
 using BH.oM.Geometry;
+using System.Text.Json;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -54,6 +55,32 @@ namespace BH.Adapter.MidasCivil
             System.Convert.ToDouble(delimitted[11]), System.Convert.ToDouble(delimitted[11]), System.Convert.ToDouble(delimitted[12]),
             System.Convert.ToDouble(delimitted[13]), 0);
 
+            return Meshstress;
+        }
+
+        /***************************************************/
+
+        public static MeshStress ToMeshStressAPI(List<string> item)
+        {
+            double LayerPosition = 1;
+            MeshResultLayer meshResultLayer = MeshResultLayer.Upper;
+
+            if (item[4].Contains("Bot"))
+            {
+                LayerPosition = 0;
+                meshResultLayer = MeshResultLayer.Lower;
+            }
+
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+
+            MeshStress Meshstress = new MeshStress(System.Convert.ToInt32(item[1]), item[3], 0,
+            item[2], mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,
+            System.Convert.ToDouble(item[5]), System.Convert.ToDouble(item[6]), 0,
+            System.Convert.ToDouble(item[7]), System.Convert.ToDouble(item[7]), 
+            System.Convert.ToDouble(item[8]), System.Convert.ToDouble(item[9]), 0);
+                
             return Meshstress;
         }
 

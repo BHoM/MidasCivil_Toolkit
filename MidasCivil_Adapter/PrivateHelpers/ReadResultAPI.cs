@@ -89,11 +89,46 @@ namespace BH.Adapter.MidasCivil
                     objectIds + loadCases + units + format +
                     "}}";
                     break;
+
+                case "Forces":
+                     jsonPayload = "{\"Argument\": {" +
+                     "\"TABLE_NAME\": \"PlateForce(UnitLength:Local)\", " +
+                     "\"TABLE_TYPE\": \"PLATEFORCEUL\", " +
+                     "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Fxx\", \"Fyy\", \"Fxy\", \"Mxx\", \"Myy\", \"Mxy\", \"Vxx\", \"Vyy\"], " +
+                     objectIds + loadCases + units + format +
+                    "}}";
+                    break;
+
+                case "Stresses":
+                case "VonMises":
+                    jsonPayload = "{\"Argument\": {" +
+                    "\"TABLE_NAME\": \"PlateStress(Local)\", " +
+                    "\"TABLE_TYPE\": \"PLATESTRESSL\", " +
+                    "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Part\", \"Sig-xx\", \"Sig-yy\", \"Sig-xy\", \"Sig-Max\", \"Sig-Min\", \"Sig-EFF\"], " +
+                    objectIds + loadCases + units + format +
+                   "}}";
+                    break;
+
+                default:
+                    Engine.Base.Compute.RecordError($"Pulling back results of type {resultType} is not yet supported through the MidasCivil API.");
+                    return results;
+
             }
+            
+            var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
 
-            var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false); 
-            string jsonResponse = await response.Content.ReadAsStringAsync(); 
+            if (!response.IsSuccessStatusCode)
+            {
+                Engine.Base.Compute.RecordError($"Something went wrong with the request, please ensure the connected model is solved and check for errors in the MidasCivil window.");
+                return results;
+            }
+            string jsonResponse = await response.Content.ReadAsStringAsync();
 
+            if (jsonResponse.StartsWith("{\"message\":"))
+            {
+                Engine.Base.Compute.RecordError($"The conected model does not seem to contain any results matching the request. Please check the filters in your request.");
+                return results;
+            }
             using (JsonDocument doc = JsonDocument.Parse(jsonResponse)) 
             {
                 var dataElement = new JsonElement();
@@ -121,6 +156,40 @@ namespace BH.Adapter.MidasCivil
                         dataElement = doc.RootElement.GetProperty("BeamStress").GetProperty("DATA");
                         foreach (var item in dataElement.EnumerateArray())
                             results.Add(Convert.ToBarStressAPI(item));
+                        break;
+
+                    case "Forces":
+                        dataElement = doc.RootElement.GetProperty("PlateForce(UnitLength:Local)").GetProperty("DATA");
+                        foreach (var item in dataElement.EnumerateArray())
+                            results.Add(Convert.ToMeshForceAPI(item));
+                        break;
+
+                    case "Stresses":
+                        dataElement = doc.RootElement.GetProperty("PlateStress(Local)").GetProperty("DATA");
+                        foreach (var item in dataElement.EnumerateArray())
+                        {
+                            var itemList = item.EnumerateArray().Select(x => x.ToString()).ToList();
+
+                            var topElement = itemList.Take(12).ToList();
+                            results.Add(Convert.ToMeshStressAPI(topElement));
+
+                            var bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
+                            results.Add(Convert.ToMeshStressAPI(bottomElement));
+                        }
+                        break;
+
+                    case "VonMises":
+                        dataElement = doc.RootElement.GetProperty("PlateStress(Local)").GetProperty("DATA");
+                        foreach (var item in dataElement.EnumerateArray())
+                        {
+                            var itemList = item.EnumerateArray().Select(x => x.ToString()).ToList();
+
+                            var topElement = itemList.Take(11).ToList();
+                            results.Add(Convert.ToMeshVonMisesAPI(topElement));
+
+                            var bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
+                            results.Add(Convert.ToMeshVonMisesAPI(bottomElement));
+                        }
                         break;
 
                 }

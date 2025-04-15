@@ -64,9 +64,9 @@ namespace BH.Adapter.MidasCivil
                         results = new List<IResult>();
                         break;
                 }
+                results.Sort();
             }
 
-            results.Sort();
             return results;
         }
 
