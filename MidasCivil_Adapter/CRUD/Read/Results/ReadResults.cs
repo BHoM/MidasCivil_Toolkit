@@ -51,7 +51,7 @@ namespace BH.Adapter.MidasCivil
             {
                 if (m_midasCivilVersion == "9.5.0.nx")
                 {
-                    List<int> emptyIds= new List<int>();
+                    List<int> emptyIds = new List<int>();
                     return emptyIds;
                 }
                 else
@@ -148,19 +148,34 @@ namespace BH.Adapter.MidasCivil
                     caseNames.Add(loadCombinationText[i].Split(',')[0].Split('=')[1].Trim());
                 }
             }
-                foreach (object thisCase in cases)
+
+            foreach (object thisCase in cases)
+            {
+                if (thisCase is ICase)
                 {
-                    if (thisCase is ICase)
-                    {
-                        ICase bhCase = thisCase as ICase;
-                        caseNames.Add(bhCase.Name.ToString());
-                    }
-                    else if (thisCase is string)
-                    {
-                        string caseId = thisCase as string;
-                        caseNames.Add(caseId);
-                    }
+                    ICase bhCase = thisCase as ICase;
+                    caseNames.Add(bhCase.Name.ToString());
                 }
+                else if (thisCase is string)
+                {
+                    string caseId = thisCase as string;
+                    caseNames.Add(caseId);
+                }
+            }
+
+            if (m_midasCivilVersion == "9.5.0.nx")
+            {
+                List<string> loadCombinations = new List<string>();
+                List<string> loadCombinationText = GetSectionText("LOADCOMB");
+
+                for (int i = 0; i < loadCombinationText.Count; i += 2)
+                {
+                    loadCombinations.Add(loadCombinationText[i].Split(',')[0].Split('=')[1].Trim());
+                }
+
+                caseNames = CaseNamesAPI(caseNames, GetSectionText("STLDCASE").Select(x => x.Split(',')[0].Trim()).ToList(), loadCombinations);
+            }
+
             return caseNames;
         }
 
@@ -181,7 +196,7 @@ namespace BH.Adapter.MidasCivil
                     Application excel = new Application();
                     Workbook xlsFile = excel.Workbooks.Open(path);
                     Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)xlsFile.Sheets[1];
-                                   
+
                     sheet.SaveAs(
                         csvPath,
                         Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV,
@@ -212,6 +227,24 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
+        private List<string> CaseNamesAPI(List<string> names, List<string> loadCases, List<string> loadComb)
+        {
+            List<string> sortedNames = new List<string>();
+
+            foreach (var name in names)
+            {
+                if (loadCases.Contains(name))
+                    sortedNames.Add(name + "(ST)");
+
+                else if (loadComb.Contains(name))
+                    sortedNames.Add(name + "(CB)");
+
+                else
+                    Engine.Base.Compute.RecordWarning("Case" + name + "could not be found and was removed from the list.");
+            }
+
+            return sortedNames;
+        }
     }
 }
 

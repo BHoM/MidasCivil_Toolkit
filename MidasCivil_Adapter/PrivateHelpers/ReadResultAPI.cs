@@ -112,7 +112,6 @@ namespace BH.Adapter.MidasCivil
                 default:
                     Engine.Base.Compute.RecordError($"Pulling back results of type {resultType} is not yet supported through the MidasCivil API.");
                     return results;
-
             }
             
             var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
@@ -129,6 +128,7 @@ namespace BH.Adapter.MidasCivil
                 Engine.Base.Compute.RecordError($"The conected model does not seem to contain any results matching the request. Please check the filters in your request.");
                 return results;
             }
+
             using (JsonDocument doc = JsonDocument.Parse(jsonResponse)) 
             {
                 var dataElement = new JsonElement();
@@ -170,7 +170,7 @@ namespace BH.Adapter.MidasCivil
                         {
                             var itemList = item.EnumerateArray().Select(x => x.ToString()).ToList();
 
-                            var topElement = itemList.Take(12).ToList();
+                            var topElement = itemList.Take(11).ToList();
                             results.Add(Convert.ToMeshStressAPI(topElement));
 
                             var bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
