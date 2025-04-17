@@ -67,15 +67,14 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public static BarStress ToBarStressAPI(JsonElement item)
+        public static BarStress ToBarStress(JsonElement item)
         {
             double position = GetBarResultPosition(item[3].ToString());
 
-            double combBendPos = Math.Max(Math.Max(System.Convert.ToDouble(item[11].ToString()), System.Convert.ToDouble(item[12].ToString())),
-             Math.Max(System.Convert.ToDouble(item[13].ToString()), System.Convert.ToDouble(item[14].ToString())));
-
-            double combBendNeg = Math.Min(Math.Min(System.Convert.ToDouble(item[11].ToString()), System.Convert.ToDouble(item[12].ToString())),
-             Math.Min(System.Convert.ToDouble(item[13].ToString()), System.Convert.ToDouble(item[14].ToString())));
+            List<double> combBends = new List<double> { System.Convert.ToDouble(item[11].ToString()), System.Convert.ToDouble(item[12].ToString()), System.Convert.ToDouble(item[13].ToString()), System.Convert.ToDouble(item[14].ToString()) };
+            
+            double combBendPos = combBends.Max();
+            double combBendNeg = combBends.Min();
 
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;

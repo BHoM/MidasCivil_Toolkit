@@ -62,7 +62,7 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
-        public static BarForce ToBarForceAPI(JsonElement item)
+        public static BarForce ToBarForce(JsonElement item)
         {
             double position = GetBarResultPosition(item[3].ToString());
             //TODO: resolve below identifiers extractable through the API

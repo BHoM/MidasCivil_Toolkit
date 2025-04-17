@@ -46,7 +46,7 @@ namespace BH.Adapter.MidasCivil
             List<string> loadCases = GetLoadcaseIDs(request);
 
             if (m_midasCivilVersion == "9.5.0.nx")
-                results = Task.Run(() => ExtractResultAPI(request.ResultType.ToString(), objectIds, loadCases)).Result.ToList();
+                results = Task.Run(() => ReadResultAPI(request.ResultType.ToString(), objectIds, loadCases)).Result.ToList();
             else
             {
                 switch (request.ResultType)
@@ -68,9 +68,8 @@ namespace BH.Adapter.MidasCivil
                         results = new List<IResult>();
                         break;
                 }
-                results.Sort();
             }
-
+            results.Sort();
             return results;
         }
 

@@ -37,16 +37,19 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private async Task<IEnumerable<IResult>> ExtractResultAPI(string resultType, List<int> ids, List<string> loadcaseIds)
+        private async Task<IEnumerable<IResult>> ReadResultAPI(string resultType, List<int> ids, List<string> loadcaseIds)
         {
             List<IResult> results = new List<IResult>();
 
             const string endpoint = "post/TABLE";
 
             string jsonPayload = "";
+            string tableName = "";
+            string tableType = "";
+            string components = "";
 
             string units = "\"UNIT\": {\"FORCE\": \"N\", \"DIST\": \"m\"}, ";
-            string format = "\"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 3}";
+            string format = "\"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 6}";
 
             string objectIds = ids.Count > 0
              ? $"\"NODE_ELEMS\": {{ \"KEYS\": [{string.Join(", ", ids)}] }},"
@@ -59,61 +62,51 @@ namespace BH.Adapter.MidasCivil
             switch (resultType)
             {
                 case "NodeReaction":
-                    jsonPayload = "{\"Argument\": {" +
-                    "\"TABLE_NAME\": \"Reaction(Global)\", \"TABLE_TYPE\": \"REACTIONG\", " +
-                    "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], " +
-                    objectIds + loadCases + units + format +
-                    "}}";
+                    tableName = "\"TABLE_NAME\": \"Reaction(Global)\", ";
+                    tableType = "\"TABLE_TYPE\": \"REACTIONG\", ";
+                    components = "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], ";
                     break;
 
                 case "NodeDisplacement":
-                    jsonPayload = "{\"Argument\": {" +
-                    "\"TABLE_NAME\": \"Displacements(Global)\", \"TABLE_TYPE\": \"DISPLACEMENTG\", " +
-                    "\"COMPONENTS\": [\"Node\", \"Load\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], " +
-                    objectIds + loadCases + units + format +
-                    "}}";
+                    tableName = "\"TABLE_NAME\": \"Displacements(Global)\", ";
+                    tableType = "\"TABLE_TYPE\": \"DISPLACEMENTG\", ";
+                    components = "\"COMPONENTS\": [\"Node\", \"Load\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], ";
                     break;
 
                 case "BarForce":
-                    jsonPayload = "{\"Argument\": {" +
-                    "\"TABLE_NAME\": \"BeamForce\", \"TABLE_TYPE\": \"BEAMFORCE\", " +
-                    "\"COMPONENTS\": [\"Elem\", \"Load\", \"Part\", \"Axial\", \"Shear-y\", \"Shear-z\", \"Torsion\", \"Moment-y\", \"Moment-z\"], " +
-                    objectIds + loadCases + units + format +
-                    "}}";
+                    tableName = "\"TABLE_NAME\": \"BeamForce\", ";
+                    tableType = "\"TABLE_TYPE\": \"BEAMFORCE\", ";
+                    components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Part\", \"Axial\", \"Shear-y\", \"Shear-z\", \"Torsion\", \"Moment-y\", \"Moment-z\"], ";
                     break;
 
                 case "BarStress":
-                    jsonPayload = "{\"Argument\": {" +
-                    "\"TABLE_NAME\": \"BeamStress\", \"TABLE_TYPE\": \"BEAMSTRESS\", " +
-                    "\"COMPONENTS\": [\"Elem\", \"Load\", \"Part\", \"Axial\", \"Shear-y\", \"Shear-z\", \"Bend(+y)\", \"Bend(-y)\", \"Bend(+z)\", \"Bend(-z)\", \"Cb1(-y+z)\", \"Cb2(+y+z)\", \"Cb3(+y-z)\", \"Cb4(-y-z)\"], " +
-                    objectIds + loadCases + units + format +
-                    "}}";
+                    tableName = "\"TABLE_NAME\": \"BeamStress\", ";
+                    tableType = "\"TABLE_TYPE\": \"BEAMSTRESS\", ";
+                    components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Part\", \"Axial\", \"Shear-y\", \"Shear-z\", \"Bend(+y)\", \"Bend(-y)\", \"Bend(+z)\", \"Bend(-z)\", \"Cb1(-y+z)\", \"Cb2(+y+z)\", \"Cb3(+y-z)\", \"Cb4(-y-z)\"], ";
                     break;
 
                 case "Forces":
-                     jsonPayload = "{\"Argument\": {" +
-                     "\"TABLE_NAME\": \"PlateForce(UnitLength:Local)\", " +
-                     "\"TABLE_TYPE\": \"PLATEFORCEUL\", " +
-                     "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Fxx\", \"Fyy\", \"Fxy\", \"Mxx\", \"Myy\", \"Mxy\", \"Vxx\", \"Vyy\"], " +
-                     objectIds + loadCases + units + format +
-                    "}}";
+                    tableName = "\"TABLE_NAME\": \"PlateForce(UnitLength:Local)\", ";
+                    tableType = "\"TABLE_TYPE\": \"PLATEFORCEUL\", ";
+                    components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Fxx\", \"Fyy\", \"Fxy\", \"Mxx\", \"Myy\", \"Mxy\", \"Vxx\", \"Vyy\"], ";
                     break;
 
                 case "Stresses":
                 case "VonMises":
-                    jsonPayload = "{\"Argument\": {" +
-                    "\"TABLE_NAME\": \"PlateStress(Local)\", " +
-                    "\"TABLE_TYPE\": \"PLATESTRESSL\", " +
-                    "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Part\", \"Sig-xx\", \"Sig-yy\", \"Sig-xy\", \"Sig-Max\", \"Sig-Min\", \"Sig-EFF\"], " +
-                    objectIds + loadCases + units + format +
-                   "}}";
+                    tableName = "\"TABLE_NAME\": \"PlateStress(Local)\", ";
+                    tableType = "\"TABLE_TYPE\": \"PLATESTRESSL\", ";
+                    components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Part\", \"Sig-xx\", \"Sig-yy\", \"Sig-xy\", \"Sig-Max\", \"Sig-Min\", \"Sig-EFF\"], ";
                     break;
 
                 default:
                     Engine.Base.Compute.RecordError($"Pulling back results of type {resultType} is not yet supported through the MidasCivil API.");
                     return results;
             }
-            
+
+            jsonPayload = "{\"Argument\": {" +
+                    tableName + tableType + components + objectIds + loadCases + units + format +
+                    "}}";
+
             var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
@@ -121,11 +114,12 @@ namespace BH.Adapter.MidasCivil
                 Engine.Base.Compute.RecordError($"Something went wrong with the request, please ensure the connected model is solved and check for errors in the MidasCivil window.");
                 return results;
             }
+
             string jsonResponse = await response.Content.ReadAsStringAsync();
 
             if (jsonResponse.StartsWith("{\"message\":"))
             {
-                Engine.Base.Compute.RecordError($"The conected model does not seem to contain any results matching the request. Please check the filters in your request.");
+                Engine.Base.Compute.RecordError($"The connected model does not seem to contain any results matching the request. Please check the filters in your request.");
                 return results;
             }
 
@@ -137,31 +131,31 @@ namespace BH.Adapter.MidasCivil
                     case "NodeReaction":
                         dataElement = doc.RootElement.GetProperty("Reaction(Global)").GetProperty("DATA");
                         foreach (var item in dataElement.EnumerateArray())
-                             results.Add(Adapters.MidasCivil.Convert.ToNodeReactionAPI(item)); 
+                             results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item)); 
                         break;
 
                     case "NodeDisplacement":
                         dataElement = doc.RootElement.GetProperty("Displacements(Global)").GetProperty("DATA");
                         foreach (var item in dataElement.EnumerateArray())
-                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacementAPI(item));
+                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
                         break;
 
                     case "BarForce":
                         dataElement = doc.RootElement.GetProperty("BeamForce").GetProperty("DATA");
                         foreach (var item in dataElement.EnumerateArray())
-                            results.Add(Convert.ToBarForceAPI(item));
+                            results.Add(Convert.ToBarForce(item));
                         break;
 
                     case "BarStress":
                         dataElement = doc.RootElement.GetProperty("BeamStress").GetProperty("DATA");
                         foreach (var item in dataElement.EnumerateArray())
-                            results.Add(Convert.ToBarStressAPI(item));
+                            results.Add(Convert.ToBarStress(item));
                         break;
 
                     case "Forces":
                         dataElement = doc.RootElement.GetProperty("PlateForce(UnitLength:Local)").GetProperty("DATA");
                         foreach (var item in dataElement.EnumerateArray())
-                            results.Add(Convert.ToMeshForceAPI(item));
+                            results.Add(Convert.ToMeshForce(item));
                         break;
 
                     case "Stresses":
