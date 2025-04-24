@@ -59,14 +59,14 @@ namespace BH.Adapter.MidasCivil
                         requestNames.Add(thisCase as string);
                 }
 
-                var taskComb = SendRequestAsync("db/LCOM-GEN", HttpMethod.Get, "");
-                var taskCase = SendRequestAsync("db/STLD", HttpMethod.Get, "");
+                Task<HttpResponseMessage> taskComb = SendRequestAsync("db/LCOM-GEN", HttpMethod.Get, "");
+                Task<HttpResponseMessage> taskCase = SendRequestAsync("db/STLD", HttpMethod.Get, "");
 
                 var responses = await Task.WhenAll(taskComb, taskCase).ConfigureAwait(false);
 
                 if (!responses[0].IsSuccessStatusCode || !responses[1].IsSuccessStatusCode)
                 {
-                    Engine.Base.Compute.RecordError("Could not read the existing Cases from the Midas Civil model. The result request will be sent without the case filter.");
+                    Engine.Base.Compute.RecordError($"The existing Cases from the Midas Civil model could not be read. The result request will be sent without the case filter.");
                     return caseNames;
                 }
 
@@ -75,11 +75,10 @@ namespace BH.Adapter.MidasCivil
 
                 using (JsonDocument doc = JsonDocument.Parse(responseComb))
                 {
-
-                    var dataElement = doc.RootElement.GetProperty("LCOM-GEN");
-                    foreach (var item in dataElement.EnumerateObject())
+                    JsonElement dataElement = doc.RootElement.GetProperty("LCOM-GEN");
+                    foreach (JsonProperty item in dataElement.EnumerateObject())
                     {
-                        var name = item.Value.GetProperty("NAME").GetString();
+                        string name = item.Value.GetProperty("NAME").GetString();
                         if (requestNames.Contains(name))
                             caseNames.Add(name + "(CB)");
                     } 
@@ -87,17 +86,17 @@ namespace BH.Adapter.MidasCivil
 
                 using (JsonDocument doc = JsonDocument.Parse(responseCase))
                 {
-                    var dataElement = doc.RootElement.GetProperty("STLD");
-                    foreach (var item in dataElement.EnumerateObject())
+                    JsonElement dataElement = doc.RootElement.GetProperty("STLD");
+                    foreach (JsonProperty item in dataElement.EnumerateObject())
                     {
-                        var name = item.Value.GetProperty("NAME").GetString();
+                        string name = item.Value.GetProperty("NAME").GetString();
                         if (requestNames.Contains(name))
                             caseNames.Add(name + "(ST)");
                     }
                 }
 
                 if (caseNames.Count != requestNames.Count)
-                    Engine.Base.Compute.RecordWarning("At least one Case has been removed from the filters since a matching name could not be found in the Midas Civil model.");
+                    Engine.Base.Compute.RecordWarning($"At least one Case has been removed from the filters since a matching name could not be found in the Midas Civil model.");
                 
                 return caseNames;
             }

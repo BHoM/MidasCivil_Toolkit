@@ -48,7 +48,7 @@ namespace BH.Adapter.MidasCivil
             if (m_midasCivilVersion == "9.5.0.nx")
             {
                 List<string> loadCases = Task.Run(() => AppendCaseTypes(request)).Result.ToList();
-                results = Task.Run(() => ReadResultAPI(request.ResultType.ToString(), objectIds, loadCases)).Result.ToList();
+                results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCases)).Result.ToList();
             }
 
             else

@@ -37,7 +37,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private async Task<IEnumerable<IResult>> ReadResultAPI(string resultType, List<int> ids, List<string> loadcaseIds)
+        private async Task<IEnumerable<IResult>> ReadResult(string resultType, List<int> ids, List<string> loadcaseIds)
         {
             List<IResult> results = new List<IResult>();
 
