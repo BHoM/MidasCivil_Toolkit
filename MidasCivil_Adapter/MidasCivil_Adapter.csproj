@@ -285,6 +285,7 @@
     <Compile Include="PrivateHelpers\CombineLoads.cs" />
     <Compile Include="PrivateHelpers\CreateAssignmentString.cs" />
     <Compile Include="PrivateHelpers\GetAssignmentIds.cs" />
+    <Compile Include="PrivateHelpers\AppendCaseTypes.cs" />
     <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
     <Compile Include="PrivateHelpers\GetMaxID.cs" />
     <Compile Include="PrivateHelpers\CreateGroups.cs" />

@@ -43,12 +43,16 @@ namespace BH.Adapter.MidasCivil
         {
             List<IResult> results;
             List<int> objectIds = GetObjectIDs(request);
-            List<string> loadCases = GetLoadcaseIDs(request);
 
             if (m_midasCivilVersion == "9.5.0.nx")
+            {
+                List<string> loadCases = Task.Run(() => AppendCaseTypes(request)).Result.ToList();
                 results = Task.Run(() => ReadResultAPI(request.ResultType.ToString(), objectIds, loadCases)).Result.ToList();
+            }
             else
             {
+                List<string> loadCases = GetLoadcaseIDs(request);
+
                 switch (request.ResultType)
                 {
                     case MeshResultType.Displacements:

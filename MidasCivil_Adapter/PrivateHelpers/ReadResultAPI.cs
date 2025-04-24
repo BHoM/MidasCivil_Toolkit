@@ -162,13 +162,16 @@ namespace BH.Adapter.MidasCivil
                         dataElement = doc.RootElement.GetProperty("PlateStress(Local)").GetProperty("DATA");
                         foreach (var item in dataElement.EnumerateArray())
                         {
-                            var itemList = item.EnumerateArray().Select(x => x.ToString()).ToList();
+                            List<string> itemList = item.EnumerateArray().Select(x => x.ToString()).ToList();
 
-                            var topElement = itemList.Take(11).ToList();
+                            List<string> topElement = itemList.Take(11).ToList();
                             results.Add(Convert.ToMeshStressAPI(topElement));
 
-                            var bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
-                            results.Add(Convert.ToMeshStressAPI(bottomElement));
+                            if (itemList.Count > 11)
+                            {
+                                List<string> bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
+                                results.Add(Convert.ToMeshStressAPI(bottomElement));
+                            }
                         }
                         break;
 
@@ -176,13 +179,16 @@ namespace BH.Adapter.MidasCivil
                         dataElement = doc.RootElement.GetProperty("PlateStress(Local)").GetProperty("DATA");
                         foreach (var item in dataElement.EnumerateArray())
                         {
-                            var itemList = item.EnumerateArray().Select(x => x.ToString()).ToList();
+                            List<string> itemList = item.EnumerateArray().Select(x => x.ToString()).ToList();
 
-                            var topElement = itemList.Take(11).ToList();
+                            List<string> topElement = itemList.Take(11).ToList();
                             results.Add(Convert.ToMeshVonMisesAPI(topElement));
 
-                            var bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
-                            results.Add(Convert.ToMeshVonMisesAPI(bottomElement));
+                            if (itemList.Count > 11)
+                            {
+                                List<string> bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
+                                results.Add(Convert.ToMeshVonMisesAPI(bottomElement));
+                            }
                         }
                         break;
 

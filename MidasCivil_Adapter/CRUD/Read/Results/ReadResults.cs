@@ -136,10 +136,7 @@ namespace BH.Adapter.MidasCivil
             IList cases = request.Cases;
             List<string> caseNames = new List<string>();
             if (cases == null || cases.Count == 0)
-            {
-                if (m_midasCivilVersion == "9.5.0.nx")
-                    return caseNames;
-
+            { 
                 caseNames = GetSectionText("STLDCASE").Select(x => x.Split(',')[0].Trim()).ToList();
 
                 List<string> loadCombinationText = GetSectionText("LOADCOMB");
@@ -161,19 +158,6 @@ namespace BH.Adapter.MidasCivil
                     string caseId = thisCase as string;
                     caseNames.Add(caseId);
                 }
-            }
-
-            if (m_midasCivilVersion == "9.5.0.nx")
-            {
-                List<string> loadCombinations = new List<string>();
-                List<string> loadCombinationText = GetSectionText("LOADCOMB");
-
-                for (int i = 0; i < loadCombinationText.Count; i += 2)
-                {
-                    loadCombinations.Add(loadCombinationText[i].Split(',')[0].Split('=')[1].Trim());
-                }
-
-                caseNames = CaseNamesAPI(caseNames, GetSectionText("STLDCASE").Select(x => x.Split(',')[0].Trim()).ToList(), loadCombinations);
             }
 
             return caseNames;
@@ -226,25 +210,6 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
-
-        private List<string> CaseNamesAPI(List<string> names, List<string> loadCases, List<string> loadComb)
-        {
-            List<string> sortedNames = new List<string>();
-
-            foreach (var name in names)
-            {
-                if (loadCases.Contains(name))
-                    sortedNames.Add(name + "(ST)");
-
-                else if (loadComb.Contains(name))
-                    sortedNames.Add(name + "(CB)");
-
-                else
-                    Engine.Base.Compute.RecordWarning("Case" + name + "could not be found and was removed from the list.");
-            }
-
-            return sortedNames;
-        }
     }
 }
 
