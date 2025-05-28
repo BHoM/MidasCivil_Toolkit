@@ -48,6 +48,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                 case "9.1.0":
                 case "9.4.5":
                 case "9.5.0":
+                case "9.5.0.nx":
+
                     midasFEMeshLoad = assignedFEMesh + ", PRES, PLATE, FACE, " + FromLoadAxis(femeshLoad.Axis) + direction +
                                 ", 0, 0, 0, " + FromLoadProjection(femeshLoad.Projected) + ", " +
                                 FromVectorDirection(femeshLoad.Pressure, direction).PressureFromSI(forceUnit, lengthUnit).ToString() +

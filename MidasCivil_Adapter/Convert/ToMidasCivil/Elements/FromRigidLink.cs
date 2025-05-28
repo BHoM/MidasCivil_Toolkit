@@ -23,6 +23,8 @@
 using BH.oM.Adapters.MidasCivil;
 using BH.Engine.Adapter;
 using BH.oM.Structure.Elements;
+using BH.oM.Structure.Constraints;
+using System;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -34,6 +36,11 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         public static string FromRigidLink(this RigidLink link, string version)
         {
+            LinkConstraint con = link.Constraint;
+
+            if (con.XtoYY || con.XtoZZ || con.YtoXX || con.YtoZZ || con.ZtoXX || con.ZtoYY)
+                Engine.Base.Compute.RecordError("Imposed rotations due to translations are not supported in this Adapter.");
+
             string midasLink = "";
 
             string primaryId = link.PrimaryNode.AdapterId<string>(typeof(MidasCivilId));
@@ -44,12 +51,12 @@ namespace BH.Adapter.Adapters.MidasCivil
                 secondaryId = secondaryId + " " + secondaryNode.AdapterId<string>(typeof(MidasCivilId));
             }
 
-            string fixity = BoolToFixity(link.Constraint.XtoX) +
-                            BoolToFixity(link.Constraint.YtoY) +
-                            BoolToFixity(link.Constraint.ZtoZ) +
-                            BoolToFixity(link.Constraint.XXtoXX) +
-                            BoolToFixity(link.Constraint.YYtoYY) +
-                            BoolToFixity(link.Constraint.ZZtoZZ);
+            string fixity = BoolToFixity(con.XtoX) +
+                            BoolToFixity(con.YtoY) +
+                            BoolToFixity(con.ZtoZ) +
+                            BoolToFixity(con.XXtoXX) +
+                            BoolToFixity(con.YYtoYY) +
+                            BoolToFixity(con.ZZtoZZ);
 
             switch (version)
             {
@@ -58,6 +65,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 case "9.4.0":
                 case "9.4.5":
                 case "9.5.0":
+                case "9.5.0.nx":
                     midasLink = primaryId + "," + fixity + "," + secondaryId + "," + link.Name;
                     break;
                 default:
