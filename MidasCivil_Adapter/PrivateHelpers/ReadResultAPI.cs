@@ -31,6 +31,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Linq;
 using BH.oM.Data.Requests;
+using BH.Engine.Serialiser;
+using BH.Engine.Base;
 
 
 namespace BH.Adapter.MidasCivil
@@ -123,76 +125,80 @@ namespace BH.Adapter.MidasCivil
                 return results;
             }
 
-            using (JsonDocument doc = JsonDocument.Parse(jsonResponse)) 
+            object parsedJson = Engine.Serialiser.Convert.FromJson(jsonResponse);
+
+            switch (resultType)
             {
-                var dataElement = new JsonElement();
-                switch (resultType)
-                {
-                    case "NodeReaction":
-                        dataElement = doc.RootElement.GetProperty("Reaction(Global)").GetProperty("DATA");
-                        foreach (var item in dataElement.EnumerateArray())
-                             results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item)); 
-                        break;
+                case "NodeReaction":
+                    object data = parsedJson.PropertyValue("CustomData").PropertyValue("Reaction(Global)").PropertyValue("DATA");
+                    List<List<object>> resultItems = data as List<List<object>>;
+                    foreach (var item in resultItems)
+                        results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item)); 
+                break;
 
-                    case "NodeDisplacement":
-                        dataElement = doc.RootElement.GetProperty("Displacements(Global)").GetProperty("DATA");
-                        foreach (var item in dataElement.EnumerateArray())
+                case "NodeDisplacement":
+                    data = parsedJson.PropertyValue("CustomData").PropertyValue("Displacements(Global)").PropertyValue("DATA");
+                    resultItems = data as List<List<object>>;
+                        foreach (var item in resultItems)
                             results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
-                        break;
+                break;
 
-                    case "BarForce":
-                        dataElement = doc.RootElement.GetProperty("BeamForce").GetProperty("DATA");
-                        foreach (var item in dataElement.EnumerateArray())
-                            results.Add(Convert.ToBarForce(item));
-                        break;
+                case "BarForce":
+                    data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamForce").PropertyValue("DATA");
+                    resultItems = data as List<List<object>>;
+                    foreach (var item in resultItems)
+                        results.Add(Convert.ToBarForce(item));
+                break;
 
-                    case "BarStress":
-                        dataElement = doc.RootElement.GetProperty("BeamStress").GetProperty("DATA");
-                        foreach (var item in dataElement.EnumerateArray())
-                            results.Add(Convert.ToBarStress(item));
-                        break;
+                case "BarStress":
+                    data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamStress").PropertyValue("DATA");
+                    resultItems = data as List<List<object>>;
+                    foreach (var item in resultItems)
+                        results.Add(Convert.ToBarStress(item));
+                break;
 
-                    case "Forces":
-                        dataElement = doc.RootElement.GetProperty("PlateForce(UnitLength:Local)").GetProperty("DATA");
-                        foreach (var item in dataElement.EnumerateArray())
-                            results.Add(Convert.ToMeshForce(item));
-                        break;
+                case "Forces":
+                    data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateForce(UnitLength:Local)").PropertyValue("DATA");
+                    resultItems = data as List<List<object>>;
+                    foreach (var item in resultItems)
+                        results.Add(Convert.ToMeshForce(item));
+                break;
 
-                    case "Stresses":
-                        dataElement = doc.RootElement.GetProperty("PlateStress(Local)").GetProperty("DATA");
-                        foreach (var item in dataElement.EnumerateArray())
+                case "Stresses":
+                    data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateStress(Local)").PropertyValue("DATA");
+                    resultItems = data as List<List<object>>;
+                    foreach (var item in resultItems)
+                    {
+                        List<string> itemList = item.Select(x => x.ToString()).ToList();
+
+                        List<string> topElement = itemList.Take(11).ToList();
+                        results.Add(Convert.ToMeshStressAPI(topElement));
+
+                        if (itemList.Count > 11)
                         {
-                            List<string> itemList = item.EnumerateArray().Select(x => x.ToString()).ToList();
-
-                            List<string> topElement = itemList.Take(11).ToList();
-                            results.Add(Convert.ToMeshStressAPI(topElement));
-
-                            if (itemList.Count > 11)
-                            {
-                                List<string> bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
-                                results.Add(Convert.ToMeshStressAPI(bottomElement));
-                            }
+                            List<string> bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
+                            results.Add(Convert.ToMeshStressAPI(bottomElement));
                         }
-                        break;
+                    }
+                break;
 
-                    case "VonMises":
-                        dataElement = doc.RootElement.GetProperty("PlateStress(Local)").GetProperty("DATA");
-                        foreach (var item in dataElement.EnumerateArray())
+                case "VonMises":
+                    data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateStress(Local)").PropertyValue("DATA");
+                    resultItems = data as List<List<object>>;
+                    foreach (var item in resultItems)
+                    {
+                        List<string> itemList = item.Select(x => x.ToString()).ToList();
+
+                        List<string> topElement = itemList.Take(11).ToList();
+                        results.Add(Convert.ToMeshVonMisesAPI(topElement));
+
+                        if (itemList.Count > 11)
                         {
-                            List<string> itemList = item.EnumerateArray().Select(x => x.ToString()).ToList();
-
-                            List<string> topElement = itemList.Take(11).ToList();
-                            results.Add(Convert.ToMeshVonMisesAPI(topElement));
-
-                            if (itemList.Count > 11)
-                            {
-                                List<string> bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
-                                results.Add(Convert.ToMeshVonMisesAPI(bottomElement));
-                            }
+                            List<string> bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
+                            results.Add(Convert.ToMeshVonMisesAPI(bottomElement));
                         }
-                        break;
-
-                }
+                    }
+                break;
             }
 
             return results;

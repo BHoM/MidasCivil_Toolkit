@@ -59,7 +59,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        public static NodeDisplacement ToNodeDisplacement(JsonElement item)
+        public static NodeDisplacement ToNodeDisplacement(List<object> item)
         {
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;

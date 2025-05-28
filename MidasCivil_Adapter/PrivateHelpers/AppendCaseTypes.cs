@@ -32,6 +32,7 @@ using System.Collections;
 using BH.oM.Structure.Loads;
 using Microsoft.Office.Interop.Excel;
 using BH.oM.Analytical.Results;
+using BH.Engine.Base;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -73,27 +74,28 @@ namespace BH.Adapter.MidasCivil
                 string responseComb = await responses[0].Content.ReadAsStringAsync();
                 string responseCase = await responses[1].Content.ReadAsStringAsync();
 
-                using (JsonDocument doc = JsonDocument.Parse(responseComb))
-                {
-                    JsonElement dataElement = doc.RootElement.GetProperty("LCOM-GEN");
-                    foreach (JsonProperty item in dataElement.EnumerateObject())
-                    {
-                        string name = item.Value.GetProperty("NAME").GetString();
-                        if (requestNames.Contains(name))
-                            caseNames.Add(name + "(CB)");
-                    } 
-                }
+                object parsedJson = Engine.Serialiser.Convert.FromJson(responseComb);
+                object dataElement = parsedJson.PropertyValue("CustomData").PropertyValue("LCOM-GEN");
+                object names = dataElement.PropertyValue("CustomData");
 
-                using (JsonDocument doc = JsonDocument.Parse(responseCase))
-                {
-                    JsonElement dataElement = doc.RootElement.GetProperty("STLD");
-                    foreach (JsonProperty item in dataElement.EnumerateObject())
-                    {
-                        string name = item.Value.GetProperty("NAME").GetString();
-                        if (requestNames.Contains(name))
-                            caseNames.Add(name + "(ST)");
-                    }
-                }
+                //foreach (item in resultItem)
+                //{
+                    //string name = item.Value.GetProperty("NAME").GetString();
+                    //if (requestNames.Contains(name))
+                        //caseNames.Add(name + "(CB)");
+                //} 
+                
+
+                //using (JsonDocument doc = JsonDocument.Parse(responseCase))
+                //{
+                    //JsonElement dataElement = doc.RootElement.GetProperty("STLD");
+                    //foreach (JsonProperty item in dataElement.EnumerateObject())
+                    //{
+                        //string name = item.Value.GetProperty("NAME").GetString();
+                        //if (requestNames.Contains(name))
+                            //caseNames.Add(name + "(ST)");
+                    //}
+                //}
 
                 if (caseNames.Count != requestNames.Count)
                     Engine.Base.Compute.RecordWarning($"At least one Case has been removed from the filters since a matching name could not be found in the Midas Civil model.");

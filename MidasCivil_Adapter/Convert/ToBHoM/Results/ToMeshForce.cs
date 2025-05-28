@@ -56,7 +56,7 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
-        public static MeshForce ToMeshForce(JsonElement item)
+        public static MeshForce ToMeshForce(List<object> item)
         {
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;

@@ -67,7 +67,7 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public static BarStress ToBarStress(JsonElement item)
+        public static BarStress ToBarStress(List<object> item)
         {
             double position = GetBarResultPosition(item[3].ToString());
 
