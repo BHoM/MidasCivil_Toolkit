@@ -41,13 +41,14 @@ namespace BH.Adapter.MidasCivil
 
         public IEnumerable<IResult> ReadResults(MeshResultRequest request, ActionConfig actionConfig)
         {
-            List<IResult> results;
+            List<IResult> results = new List<IResult>();
             List<int> objectIds = GetObjectIDs(request);
 
             if (m_midasCivilVersion == "9.5.0.nx")
             {
                 List<string> loadCases = Task.Run(() => AppendCaseTypes(request)).Result.ToList();
-                results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCases)).Result.ToList();
+                if (loadCases[0] != "Disconnected")
+                    results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCases)).Result.ToList();
             }
             else
             {

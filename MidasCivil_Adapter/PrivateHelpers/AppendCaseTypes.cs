@@ -67,39 +67,50 @@ namespace BH.Adapter.MidasCivil
 
                 if (!responses[0].IsSuccessStatusCode || !responses[1].IsSuccessStatusCode)
                 {
-                    Engine.Base.Compute.RecordError($"The existing Cases from the Midas Civil model could not be read. The result request will be sent without the case filter.");
+                    Engine.Base.Compute.RecordError($"The connection to the Midas Civil model failed. Please try to reconnect.");
+                    caseNames.Add("Disconnected");
                     return caseNames;
                 }
 
                 string responseComb = await responses[0].Content.ReadAsStringAsync();
                 string responseCase = await responses[1].Content.ReadAsStringAsync();
 
-                object parsedJson = Engine.Serialiser.Convert.FromJson(responseComb);
-                object dataElement = parsedJson.PropertyValue("CustomData").PropertyValue("LCOM-GEN");
-                object names = dataElement.PropertyValue("CustomData");
+                object parsedComb = Engine.Serialiser.Convert.FromJson(responseComb);
+                Dictionary<string, object> namesCombs = parsedComb.PropertyValue("CustomData").PropertyValue("LCOM-GEN").PropertyValue("CustomData") as Dictionary<string, object>;
 
-                //foreach (item in resultItem)
-                //{
-                    //string name = item.Value.GetProperty("NAME").GetString();
-                    //if (requestNames.Contains(name))
-                        //caseNames.Add(name + "(CB)");
-                //} 
-                
+                object parsedCase = Engine.Serialiser.Convert.FromJson(responseCase);
+                Dictionary<string, object> namesCases = parsedCase.PropertyValue("CustomData").PropertyValue("STLD").PropertyValue("CustomData") as Dictionary<string, object>;
 
-                //using (JsonDocument doc = JsonDocument.Parse(responseCase))
-                //{
-                    //JsonElement dataElement = doc.RootElement.GetProperty("STLD");
-                    //foreach (JsonProperty item in dataElement.EnumerateObject())
-                    //{
-                        //string name = item.Value.GetProperty("NAME").GetString();
-                        //if (requestNames.Contains(name))
-                            //caseNames.Add(name + "(ST)");
-                    //}
-                //}
+                if (namesCombs == null || namesCases == null)
+                    Engine.Base.Compute.RecordWarning($"No static loadcase or loadcombination could be found in the model, the request will be sent without a Case filter.");
+                else
+                {
+                    if (namesCombs != null)
+                    {
+                        foreach (var item in namesCombs)
+                        {
+                            Dictionary<string, object> combData = item.Value.PropertyValue("CustomData") as Dictionary<string, object>;
+                            string name = combData["NAME"].ToString();
+                            if (requestNames.Contains(name))
+                                caseNames.Add(name + "(CB)");
+                        }
+                    }
 
-                if (caseNames.Count != requestNames.Count)
-                    Engine.Base.Compute.RecordWarning($"At least one Case has been removed from the filters since a matching name could not be found in the Midas Civil model.");
-                
+                    if (namesCases != null)
+                    {
+                        foreach (var item in namesCases)
+                        {
+                            Dictionary<string, object> caseData = item.Value.PropertyValue("CustomData") as Dictionary<string, object>;
+                            string name = caseData["NAME"].ToString();
+                            if (requestNames.Contains(name))
+                                caseNames.Add(name + "(ST)");
+                        }
+                    }
+
+                    if (caseNames.Count != requestNames.Count)
+                        Engine.Base.Compute.RecordWarning($"At least one Case has been removed from the filters since a matching name could not be found in the Midas Civil model.");
+                }
+
                 return caseNames;
             }
         }
