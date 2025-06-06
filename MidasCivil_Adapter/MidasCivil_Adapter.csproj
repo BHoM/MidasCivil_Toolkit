@@ -95,7 +95,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Serialiser_Engine">
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Serialiser_Engine.dll</HintPath>
+      <HintPath>$(ProgramData)\BHoM\Assemblies\Serialiser_Engine.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Spatial_Engine">
       <HintPath>$(ProgramData)\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
@@ -138,7 +140,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="Units_Engine, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\ProgramData\BHoM\Assemblies\Units_Engine.dll</HintPath>
+      <HintPath>$(ProgramData)\BHoM\Assemblies\Units_Engine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
