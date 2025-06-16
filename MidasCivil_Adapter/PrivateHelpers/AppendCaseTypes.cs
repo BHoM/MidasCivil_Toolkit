@@ -38,7 +38,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public async Task<List<string>> AppendCaseTypes(IResultRequest request)
+        private async Task<List<string>> AppendCaseTypes(IResultRequest request)
         {
             List<string> caseNames = new List<string>();
 
