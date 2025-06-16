@@ -127,31 +127,31 @@ namespace BH.Adapter.MidasCivil
                     object data = parsedJson.PropertyValue("CustomData").PropertyValue("Reaction(Global)").PropertyValue("DATA");
                     List<List<object>> resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
-                        results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item)); 
+                        results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item, m_forceUnit, m_lengthUnit)); 
                     break;
                 case "NodeDisplacement":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("Displacements(Global)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                         foreach (var item in resultItems)
-                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
+                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item, m_lengthUnit));
                     break;
                 case "BarForce":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamForce").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
-                        results.Add(Convert.ToBarForce(item));
+                        results.Add(Convert.ToBarForce(item, m_forceUnit, m_lengthUnit));
                     break;
                 case "BarStress":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamStress").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
-                        results.Add(Convert.ToBarStress(item));
+                        results.Add(Convert.ToBarStress(item, m_forceUnit, m_lengthUnit));
                     break;
                 case "Forces":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateForce(UnitLength:Local)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
-                        results.Add(Convert.ToMeshForce(item));
+                        results.Add(Convert.ToMeshForce(item, m_forceUnit, m_lengthUnit));
                     break;
                 case "Stresses":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateStress(Local)").PropertyValue("DATA");

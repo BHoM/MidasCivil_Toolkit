@@ -56,21 +56,21 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
-        public static MeshForce ToMeshForce(List<object> item)
+        public static MeshForce ToMeshForce(List<object> item, string forceUnit, string lengthUnit)
         {
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;
             double timeStep = 0;
             MeshForce Meshforce = new MeshForce(System.Convert.ToInt32(item[1].ToString()), item[3].ToString(), 0,
             item[2].ToString(), mode, timeStep, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.None, null,
-            System.Convert.ToDouble(item[4].ToString()),
-            System.Convert.ToDouble(item[5].ToString()),
-            System.Convert.ToDouble(item[6].ToString()),
-            System.Convert.ToDouble(item[7].ToString()),
-            System.Convert.ToDouble(item[8].ToString()),
-            System.Convert.ToDouble(item[9].ToString()),
-            System.Convert.ToDouble(item[10].ToString()),
-            System.Convert.ToDouble(item[11].ToString()));
+            System.Convert.ToDouble(item[4].ToString()).ForcePerLengthToSI(forceUnit, lengthUnit),
+            System.Convert.ToDouble(item[5].ToString()).ForcePerLengthToSI(forceUnit, lengthUnit),
+            System.Convert.ToDouble(item[6].ToString()).ForcePerLengthToSI(forceUnit, lengthUnit),
+            System.Convert.ToDouble(item[7].ToString()).MomentPerLengthToSI(forceUnit, lengthUnit),
+            System.Convert.ToDouble(item[8].ToString()).MomentPerLengthToSI(forceUnit, lengthUnit),
+            System.Convert.ToDouble(item[9].ToString()).MomentPerLengthToSI(forceUnit, lengthUnit),
+            System.Convert.ToDouble(item[10].ToString()).MomentPerLengthToSI(forceUnit, lengthUnit),
+            System.Convert.ToDouble(item[11].ToString()).MomentPerLengthToSI(forceUnit, lengthUnit));
 
             return Meshforce;
         }

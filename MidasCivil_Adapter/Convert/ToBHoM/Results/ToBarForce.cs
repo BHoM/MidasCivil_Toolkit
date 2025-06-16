@@ -62,7 +62,7 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
-        public static BarForce ToBarForce(List<object> item)
+        public static BarForce ToBarForce(List<object> item, string forceUnit, string lengthUnit)
         {
             double position = GetBarResultPosition(item[3].ToString());
             //TODO: resolve below identifiers extractable through the API
@@ -77,12 +77,12 @@ namespace BH.Adapter.MidasCivil
                 timeStep,
                 position,
                 divisions,
-                System.Convert.ToDouble(item[4].ToString()),
-                System.Convert.ToDouble(item[5].ToString()),
-                System.Convert.ToDouble(item[6].ToString()),
-                System.Convert.ToDouble(item[7].ToString()),
-                -System.Convert.ToDouble(item[8].ToString()),
-                -System.Convert.ToDouble(item[9].ToString())
+                System.Convert.ToDouble(item[4].ToString()).ForceToSI(forceUnit),
+                System.Convert.ToDouble(item[5].ToString()).ForceToSI(forceUnit),
+                System.Convert.ToDouble(item[6].ToString()).ForceToSI(forceUnit),
+                System.Convert.ToDouble(item[7].ToString()).MomentToSI(forceUnit, lengthUnit),
+                -System.Convert.ToDouble(item[8].ToString()).MomentToSI(forceUnit, lengthUnit),
+                -System.Convert.ToDouble(item[9].ToString()).MomentToSI(forceUnit, lengthUnit)
                 );
             return barforce;
         }

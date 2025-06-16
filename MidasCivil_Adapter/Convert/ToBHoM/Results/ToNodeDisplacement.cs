@@ -59,7 +59,7 @@ namespace BH.Adapter.Adapters.MidasCivil
 
         /***************************************************/
 
-        public static NodeDisplacement ToNodeDisplacement(List<object> item)
+        public static NodeDisplacement ToNodeDisplacement(List<object> item, string lengthUnit)
         {
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;
@@ -71,9 +71,9 @@ namespace BH.Adapter.Adapters.MidasCivil
                 mode,
                 timeStep,
                 oM.Geometry.Basis.XY,
-                System.Convert.ToDouble(item[3].ToString()),
-                System.Convert.ToDouble(item[4].ToString()),
-                System.Convert.ToDouble(item[5].ToString()),
+                System.Convert.ToDouble(item[3].ToString()).LengthToSI(lengthUnit),
+                System.Convert.ToDouble(item[4].ToString()).LengthToSI(lengthUnit),
+                System.Convert.ToDouble(item[5].ToString()).LengthToSI(lengthUnit),
                 System.Convert.ToDouble(item[6].ToString()),
                 System.Convert.ToDouble(item[7].ToString()),
                 System.Convert.ToDouble(item[8].ToString())

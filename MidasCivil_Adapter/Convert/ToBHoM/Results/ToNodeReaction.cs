@@ -58,7 +58,7 @@ namespace BH.Adapter.Adapters.MidasCivil
         }
 
         /***************************************************/
-        public static NodeReaction ToNodeReaction(List<object> item)
+        public static NodeReaction ToNodeReaction(List<object> item, string forceUnit, string lengthUnit)
         {
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;
@@ -70,12 +70,12 @@ namespace BH.Adapter.Adapters.MidasCivil
                 mode,
                 timeStep,
                 oM.Geometry.Basis.XY,
-                System.Convert.ToDouble(item[3].ToString()),
-                System.Convert.ToDouble(item[4].ToString()),
-                System.Convert.ToDouble(item[5].ToString()),
-                System.Convert.ToDouble(item[6].ToString()),
-                System.Convert.ToDouble(item[7].ToString()),
-                System.Convert.ToDouble(item[8].ToString())
+                System.Convert.ToDouble(item[3].ToString()).ForceToSI(forceUnit),
+                System.Convert.ToDouble(item[4].ToString()).ForceToSI(forceUnit),
+                System.Convert.ToDouble(item[5].ToString()).ForceToSI(forceUnit),
+                System.Convert.ToDouble(item[6].ToString()).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(item[7].ToString()).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(item[8].ToString()).MomentToSI(forceUnit, lengthUnit)
                 );
 
             return nodeReaction;
