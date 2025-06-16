@@ -121,7 +121,7 @@ namespace BH.Adapter.MidasCivil
 
             if (jsonResponse.StartsWith("{\"message\":"))
             {
-                Engine.Base.Compute.RecordError($"The connected model does not seem to contain any results matching the request. Please check the filters in your request.");
+                Engine.Base.Compute.RecordError($"The connected model does not contain any results matching the request. Please check the filters in your request.");
                 return results;
             }
 
