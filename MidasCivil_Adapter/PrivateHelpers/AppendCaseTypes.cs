@@ -82,7 +82,7 @@ namespace BH.Adapter.MidasCivil
                 Dictionary<string, object> namesCases = parsedCase.PropertyValue("CustomData").PropertyValue("STLD").PropertyValue("CustomData") as Dictionary<string, object>;
 
                 if (namesCombs == null || namesCases == null)
-                    Engine.Base.Compute.RecordWarning($"No static loadcase or loadcombination could be found in the model, the request will be sent without a Case filter.");
+                    Engine.Base.Compute.RecordWarning($"No Loadcase or LoadCombination could be found in the model, the request will be sent without a Case filter.");
                 else
                 {
                     if (namesCombs != null)
