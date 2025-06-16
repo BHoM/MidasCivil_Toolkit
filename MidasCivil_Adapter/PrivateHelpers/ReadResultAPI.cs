@@ -135,7 +135,6 @@ namespace BH.Adapter.MidasCivil
                     foreach (var item in resultItems)
                         results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item)); 
                 break;
-
                 case "NodeDisplacement":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("Displacements(Global)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
