@@ -29,6 +29,7 @@ using BH.oM.Adapter;
 using BH.oM.Base;
 using BH.oM.Adapter.Commands;
 using BH.oM.Structure.Loads;
+using BH.Engine.Base;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Net.Http;
@@ -215,6 +216,32 @@ namespace BH.Adapter.MidasCivil
                     string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
 
                     await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                    
+                    var unitsResponse = await SendRequestAsync("db/UNIT", HttpMethod.Get).ConfigureAwait(false);
+                    
+                    if (unitsResponse.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = await unitsResponse.Content.ReadAsStringAsync();
+                        object parsedJson = Engine.Serialiser.Convert.FromJson(jsonResponse);
+                        
+                        object unitData = parsedJson.PropertyValue("CustomData")?.PropertyValue("UNIT")?.PropertyValue("CustomData")?.PropertyValue("1")?.PropertyValue("CustomData");
+                        if (unitData != null)
+                        {
+                            m_forceUnit = unitData.PropertyValue("FORCE")?.ToString() ?? "N";
+                            m_lengthUnit = unitData.PropertyValue("DIST")?.ToString() ?? "m";
+                            m_heatUnit = unitData.PropertyValue("HEAT")?.ToString() ?? "KJ";
+                            m_temperatureUnit = unitData.PropertyValue("TEMPER")?.ToString() ?? "C";
+                        }
+                        else
+                        {
+                            Engine.Base.Compute.RecordWarning("Unable to retrieve unit information from MidasCivil, using default units.");
+                        }
+                    }
+                    else
+                    {
+                        Engine.Base.Compute.RecordWarning("Failed to retrieve unit information from MidasCivil, using default units.");
+                    }
+
                 }
 
                 else
