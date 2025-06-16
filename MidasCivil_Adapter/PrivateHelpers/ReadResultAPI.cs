@@ -68,38 +68,32 @@ namespace BH.Adapter.MidasCivil
                     tableType = "\"TABLE_TYPE\": \"REACTIONG\", ";
                     components = "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], ";
                     break;
-
                 case "NodeDisplacement":
                     tableName = "\"TABLE_NAME\": \"Displacements(Global)\", ";
                     tableType = "\"TABLE_TYPE\": \"DISPLACEMENTG\", ";
                     components = "\"COMPONENTS\": [\"Node\", \"Load\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], ";
                     break;
-
                 case "BarForce":
                     tableName = "\"TABLE_NAME\": \"BeamForce\", ";
                     tableType = "\"TABLE_TYPE\": \"BEAMFORCE\", ";
                     components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Part\", \"Axial\", \"Shear-y\", \"Shear-z\", \"Torsion\", \"Moment-y\", \"Moment-z\"], ";
                     break;
-
                 case "BarStress":
                     tableName = "\"TABLE_NAME\": \"BeamStress\", ";
                     tableType = "\"TABLE_TYPE\": \"BEAMSTRESS\", ";
                     components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Part\", \"Axial\", \"Shear-y\", \"Shear-z\", \"Bend(+y)\", \"Bend(-y)\", \"Bend(+z)\", \"Bend(-z)\", \"Cb1(-y+z)\", \"Cb2(+y+z)\", \"Cb3(+y-z)\", \"Cb4(-y-z)\"], ";
                     break;
-
                 case "Forces":
                     tableName = "\"TABLE_NAME\": \"PlateForce(UnitLength:Local)\", ";
                     tableType = "\"TABLE_TYPE\": \"PLATEFORCEUL\", ";
                     components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Fxx\", \"Fyy\", \"Fxy\", \"Mxx\", \"Myy\", \"Mxy\", \"Vxx\", \"Vyy\"], ";
                     break;
-
                 case "Stresses":
                 case "VonMises":
                     tableName = "\"TABLE_NAME\": \"PlateStress(Local)\", ";
                     tableType = "\"TABLE_TYPE\": \"PLATESTRESSL\", ";
                     components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Part\", \"Sig-xx\", \"Sig-yy\", \"Sig-xy\", \"Sig-Max\", \"Sig-Min\", \"Sig-EFF\"], ";
                     break;
-
                 default:
                     Engine.Base.Compute.RecordError($"Pulling back results of type {resultType} is not yet supported through the MidasCivil API.");
                     return results;
@@ -134,35 +128,31 @@ namespace BH.Adapter.MidasCivil
                     List<List<object>> resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
                         results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item)); 
-                break;
+                    break;
                 case "NodeDisplacement":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("Displacements(Global)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                         foreach (var item in resultItems)
                             results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
-                break;
-
+                    break;
                 case "BarForce":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamForce").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
                         results.Add(Convert.ToBarForce(item));
-                break;
-
+                    break;
                 case "BarStress":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamStress").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
                         results.Add(Convert.ToBarStress(item));
-                break;
-
+                    break;
                 case "Forces":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateForce(UnitLength:Local)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
                         results.Add(Convert.ToMeshForce(item));
-                break;
-
+                    break;
                 case "Stresses":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateStress(Local)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
@@ -179,8 +169,7 @@ namespace BH.Adapter.MidasCivil
                             results.Add(Convert.ToMeshStressAPI(bottomElement));
                         }
                     }
-                break;
-
+                    break;
                 case "VonMises":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateStress(Local)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
@@ -199,7 +188,6 @@ namespace BH.Adapter.MidasCivil
                     }
                 break;
             }
-
             return results;
         }
     }
