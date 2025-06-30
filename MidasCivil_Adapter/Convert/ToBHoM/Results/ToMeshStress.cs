@@ -60,23 +60,25 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public static MeshStress ToMeshStressAPI(List<string> item)
+        public static MeshStress ToMeshStressAPI(List<object> item, bool bottom)
         {
             double LayerPosition = 1;
             MeshResultLayer meshResultLayer = MeshResultLayer.Upper;
 
-            if (item[4].Contains("Bot"))
+            if (bottom || item[4].ToString().Contains("Bot"))
             {
                 LayerPosition = 0;
                 meshResultLayer = MeshResultLayer.Lower;
+                if (bottom)
+                    item.RemoveRange(4, 7);
             }
 
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;
             double timeStep = 0;
 
-            MeshStress Meshstress = new MeshStress(System.Convert.ToInt32(item[1]), item[3], 0,
-            item[2], mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,
+            MeshStress Meshstress = new MeshStress(System.Convert.ToInt32(item[1]), item[3].ToString(), 0,
+            item[2].ToString(), mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,
             System.Convert.ToDouble(item[5]), System.Convert.ToDouble(item[6]), 0,
             System.Convert.ToDouble(item[7]), System.Convert.ToDouble(item[7]), 
             System.Convert.ToDouble(item[8]), System.Convert.ToDouble(item[9]), 0);

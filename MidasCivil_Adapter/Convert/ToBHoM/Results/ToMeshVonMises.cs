@@ -58,16 +58,20 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public static MeshVonMises ToMeshVonMisesAPI(List<string> item)
+        public static MeshVonMises ToMeshVonMisesAPI(List<object> item, bool bottom)
         {
             double LayerPosition = 1;
             MeshResultLayer meshResultLayer = MeshResultLayer.Upper;
 
-            if (item[4].ToString().Contains("Bot"))
+            if (bottom || item[4].ToString().Contains("Bot"))
             {
                 LayerPosition = 0;
                 meshResultLayer = MeshResultLayer.Lower;
+
+                if (bottom)
+                    item.RemoveRange(4, 7);
             }
+
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;
             double timeStep = 0;

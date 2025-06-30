@@ -127,47 +127,40 @@ namespace BH.Adapter.MidasCivil
                     object data = parsedJson.PropertyValue("CustomData").PropertyValue("Reaction(Global)").PropertyValue("DATA");
                     List<List<object>> resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
-                        results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item, m_forceUnit, m_lengthUnit)); 
+                        results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item)); 
                     break;
                 case "NodeDisplacement":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("Displacements(Global)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                         foreach (var item in resultItems)
-                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item, m_lengthUnit));
+                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
                     break;
                 case "BarForce":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamForce").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
-                        results.Add(Convert.ToBarForce(item, m_forceUnit, m_lengthUnit));
+                        results.Add(Convert.ToBarForce(item));
                     break;
                 case "BarStress":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamStress").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
-                        results.Add(Convert.ToBarStress(item, m_forceUnit, m_lengthUnit));
+                        results.Add(Convert.ToBarStress(item));
                     break;
                 case "Forces":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateForce(UnitLength:Local)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
-                        results.Add(Convert.ToMeshForce(item, m_forceUnit, m_lengthUnit));
+                        results.Add(Convert.ToMeshForce(item));
                     break;
                 case "Stresses":
                     data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateStress(Local)").PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
                     {
-                        List<string> itemList = item.Select(x => x.ToString()).ToList();
-
-                        List<string> topElement = itemList.Take(11).ToList();
-                        results.Add(Convert.ToMeshStressAPI(topElement));
-
-                        if (itemList.Count > 11)
-                        {
-                            List<string> bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
-                            results.Add(Convert.ToMeshStressAPI(bottomElement));
-                        }
+                        results.Add(Convert.ToMeshStressAPI(item, false));
+                        if (item.Count > 11)
+                            results.Add(Convert.ToMeshStressAPI(item, true));
                     }
                     break;
                 case "VonMises":
@@ -175,16 +168,9 @@ namespace BH.Adapter.MidasCivil
                     resultItems = data as List<List<object>>;
                     foreach (var item in resultItems)
                     {
-                        List<string> itemList = item.Select(x => x.ToString()).ToList();
-
-                        List<string> topElement = itemList.Take(11).ToList();
-                        results.Add(Convert.ToMeshVonMisesAPI(topElement));
-
-                        if (itemList.Count > 11)
-                        {
-                            List<string> bottomElement = itemList.Take(4).Concat(itemList.Skip(11)).ToList();
-                            results.Add(Convert.ToMeshVonMisesAPI(bottomElement));
-                        }
+                        results.Add(Convert.ToMeshVonMisesAPI(item, false));
+                        if (item.Count > 11)
+                            results.Add(Convert.ToMeshVonMisesAPI(item, true));
                     }
                 break;
             }

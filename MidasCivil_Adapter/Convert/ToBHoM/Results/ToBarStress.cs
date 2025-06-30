@@ -67,15 +67,15 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public static BarStress ToBarStress(List<object> item, string forceUnit, string lengthUnit)
+        public static BarStress ToBarStress(List<object> item)
         {
             double position = GetBarResultPosition(item[3].ToString());
 
             List<double> combBends = new List<double> { 
-                System.Convert.ToDouble(item[11].ToString()).MomentToSI(forceUnit, lengthUnit), 
-                System.Convert.ToDouble(item[12].ToString()).MomentToSI(forceUnit, lengthUnit), 
-                System.Convert.ToDouble(item[13].ToString()).MomentToSI(forceUnit, lengthUnit), 
-                System.Convert.ToDouble(item[14].ToString()).MomentToSI(forceUnit, lengthUnit) 
+                System.Convert.ToDouble(item[11].ToString()), 
+                System.Convert.ToDouble(item[12].ToString()), 
+                System.Convert.ToDouble(item[13].ToString()), 
+                System.Convert.ToDouble(item[14].ToString()) 
             };
             
             double combBendPos = combBends.Max();
@@ -93,13 +93,13 @@ namespace BH.Adapter.MidasCivil
                 timeStep,
                 position,
                 divisions,
-                System.Convert.ToDouble(item[4].ToString()).ForceToSI(forceUnit),
-                System.Convert.ToDouble(item[5].ToString()).ForceToSI(forceUnit),
-                System.Convert.ToDouble(item[6].ToString()).ForceToSI(forceUnit),
-                System.Convert.ToDouble(item[8].ToString()).MomentToSI(forceUnit, lengthUnit),
-                System.Convert.ToDouble(item[7].ToString()).MomentToSI(forceUnit, lengthUnit),
-                System.Convert.ToDouble(item[10].ToString()).MomentToSI(forceUnit, lengthUnit),
-                System.Convert.ToDouble(item[9].ToString()).MomentToSI(forceUnit, lengthUnit),
+                System.Convert.ToDouble(item[4].ToString()),
+                System.Convert.ToDouble(item[5].ToString()),
+                System.Convert.ToDouble(item[6].ToString()),
+                System.Convert.ToDouble(item[8].ToString()),
+                System.Convert.ToDouble(item[7].ToString()),
+                System.Convert.ToDouble(item[10].ToString()),
+                System.Convert.ToDouble(item[9].ToString()),
                 combBendPos,
                 combBendNeg
                 );
