@@ -110,8 +110,8 @@ namespace BH.Adapter.MidasCivil
                 else if (type == "TAPERED")
                 {
                     List<string> profiles = sectionProperties[index + 1].Split(',').ToList();
-                    string shape = split[14].Trim();
-                    string interpolationOrder = Math.Max(System.Convert.ToInt32(split[15].Trim()), System.Convert.ToInt32(split[16].Trim())).ToString();
+                    string shape = split[15].Trim();
+                    string interpolationOrder = Math.Max(System.Convert.ToInt32(split[16].Trim()), System.Convert.ToInt32(split[17].Trim())).ToString();
 
                     bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(profiles, "TAPERED" + "-" + shape + "-" + interpolationOrder, m_lengthUnit);
 
