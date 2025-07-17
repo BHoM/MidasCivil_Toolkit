@@ -81,7 +81,7 @@ namespace BH.Adapter.MidasCivil
                 System.Convert.ToDouble(item[5].ToString()),
                 System.Convert.ToDouble(item[6].ToString()),
                 System.Convert.ToDouble(item[7].ToString()),
-                -System.Convert.ToDouble(item[8].ToString()),
+                -System.Convert.ToDouble(item[8].ToString()), //Moments reversed to follow structural convension 
                 -System.Convert.ToDouble(item[9].ToString())
                 );
             return barforce;

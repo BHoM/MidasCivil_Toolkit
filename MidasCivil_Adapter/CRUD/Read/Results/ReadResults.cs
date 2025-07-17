@@ -49,13 +49,15 @@ namespace BH.Adapter.MidasCivil
 
             if (ids == null || ids.Count == 0)
             {
-                if (m_midasCivilVersion == "9.5.0.nx")
+                switch (m_midasCivilVersion)
                 {
-                    List<int> emptyIds = new List<int>();
-                    return emptyIds;
+                    case "9.5.0.nx":
+                    case "9.5.5.nx":
+                        List<int> emptyIds = new List<int>();
+                        return emptyIds;
+                    default:
+                        return GetAllIds(request as dynamic);
                 }
-                else
-                    return GetAllIds(request as dynamic);
             }
             else
             {

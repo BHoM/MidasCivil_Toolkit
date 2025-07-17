@@ -20,20 +20,21 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
 using BH.Engine.Adapter;
-using BH.oM.Adapter;
-using BH.oM.Base;
-using BH.oM.Adapter.Commands;
-using BH.oM.Structure.Loads;
 using BH.Engine.Base;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+using BH.oM.Adapter;
+using BH.oM.Adapter.Commands;
+using BH.oM.Adapters.MidasCivil;
+using BH.oM.Base;
+using BH.oM.Structure.Loads;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -81,71 +82,68 @@ namespace BH.Adapter.MidasCivil
 
         public async Task<bool> RunCommand(NewModel command)
         {
-            if (m_midasCivilVersion == "9.5.0.nx")
+            switch (m_midasCivilVersion)
             {
-                string endpoint = "doc/NEW";
-                string jsonPayload = "{\"Argument\": {}}";
+                case "9.5.0.nx":
+                case "9.5.5.nx":
+                    string endpoint = "doc/NEW";
+                    string jsonPayload = "{\"Argument\": {}}";
+                    await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                    break;
+                default:
+                    string newDirectory = GetDirectoryRoot(m_directory) + "\\Untitled";
 
-                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                    bool directoryExists = Directory.Exists(newDirectory);
+
+                    int i = 1;
+
+                    while (directoryExists)
+                    {
+                        newDirectory = newDirectory + 1;
+                        directoryExists = Directory.Exists(newDirectory);
+                        i++;
+                    }
+
+                    string unitExtension = "\\TextFiles\\" + "UNIT" + ".txt";
+                    string versionExtension = "\\TextFiles\\" + "VERSION" + ".txt";
+                    string unitFile = m_directory + unitExtension;
+                    string versionFile = m_directory + versionExtension;
+
+                    Directory.CreateDirectory(newDirectory + "\\TextFiles");
+
+                    if (!File.Exists(unitFile))
+                        File.Copy(unitFile, newDirectory + unitExtension);
+                    else
+                        File.AppendAllLines(newDirectory + unitExtension, new List<string>() { "*UNIT", "N,M,KJ,C" });
+
+                    if (!File.Exists(versionFile))
+                        File.Copy(versionFile, newDirectory + versionExtension);
+                    else
+                        File.AppendAllLines(newDirectory + versionExtension, new List<string>() { "*VERSION", m_midasCivilVersion });
+
+                    m_directory = newDirectory;
+                    Directory.CreateDirectory(newDirectory + "\\Results");
+                    break;
             }
-
-            else
-            {
-                string newDirectory = GetDirectoryRoot(m_directory) + "\\Untitled";
-
-                bool directoryExists = Directory.Exists(newDirectory);
-
-                int i = 1;
-
-                while (directoryExists)
-                {
-                    newDirectory = newDirectory + 1;
-                    directoryExists = Directory.Exists(newDirectory);
-                    i++;
-                }
-
-                string unitExtension = "\\TextFiles\\" + "UNIT" + ".txt";
-                string versionExtension = "\\TextFiles\\" + "VERSION" + ".txt";
-                string unitFile = m_directory + unitExtension;
-                string versionFile = m_directory + versionExtension;
-
-                Directory.CreateDirectory(newDirectory + "\\TextFiles");
-
-                if (!File.Exists(unitFile))
-                    File.Copy(unitFile, newDirectory + unitExtension);
-                else
-                    File.AppendAllLines(newDirectory + unitExtension, new List<string>() { "*UNIT", "N,M,KJ,C" });
-
-                if (!File.Exists(versionFile))
-                    File.Copy(versionFile, newDirectory + versionExtension);
-                else
-                    File.AppendAllLines(newDirectory + versionExtension, new List<string>() { "*VERSION", m_midasCivilVersion });
-
-                m_directory = newDirectory;
-                Directory.CreateDirectory(newDirectory + "\\Results");
-            }
-
             return true;
-
         }
 
         /***************************************************/
 
         public async Task<bool> RunCommand(Save command)
         {
-            if (m_midasCivilVersion == "9.5.0.nx")
+            switch (m_midasCivilVersion)
             {
-                string endpoint = "doc/SAVE";
-                string jsonPayload = "{\"Argument\": {}}";
+                case "9.5.0.nx":
+                case "9.5.5.nx":
+                    string endpoint = "doc/SAVE";
+                    string jsonPayload = "{\"Argument\": {}}";
 
-                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
-                return true;
-            }
-
-            else
-            {
-                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter version.");
-                return false;
+                    await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                    return true;
+                default:
+                    Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter version.");
+                    return false;
             }
         }
 
@@ -161,33 +159,32 @@ namespace BH.Adapter.MidasCivil
                 Engine.Base.Compute.RecordError("File with the same name already exists, please choose another.");
                 return false;
             }
-
-            if (m_midasCivilVersion == "9.5.0.nx")
+            switch (m_midasCivilVersion)
             {
-                string filePath = newDirectory.Replace("\\", "\\\\");
+                case "9.5.0.nx":
+                case "9.5.5.nx":
+                    string filePath = newDirectory.Replace("\\", "\\\\");
 
-                string endpoint = "doc/SAVEAS";
-                string jsonPayload = "{\"Argument\": \"" + filePath + ".mcb\"}";
+                    string endpoint = "doc/SAVEAS";
+                    string jsonPayload = "{\"Argument\": \"" + filePath + ".mcb\"}";
 
-                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
-                m_directory = newDirectory;
+                    await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                    m_directory = newDirectory;
+                    break;
+                default:
+                    Directory.CreateDirectory(newDirectory);
+                    string[] mcbFiles = Directory.GetFiles(m_directory, "*.mcb");
+                    foreach (string mcbFile in mcbFiles)
+                        File.Copy(mcbFile, Path.Combine(newDirectory, fileName + ".mcb"));
+                    string[] mctFiles = Directory.GetFiles(m_directory, "*.mcb");
+                    foreach (string mctFile in mctFiles)
+                        File.Copy(mctFile, Path.Combine(newDirectory, fileName + ".mct"));
+                    CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
+                    CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
+
+                    m_directory = newDirectory;
+                    break;
             }
-
-            else
-            {
-                Directory.CreateDirectory(newDirectory);
-                string[] mcbFiles = Directory.GetFiles(m_directory, "*.mcb");
-                foreach (string mcbFile in mcbFiles)
-                    File.Copy(mcbFile, Path.Combine(newDirectory, fileName + ".mcb"));
-                string[] mctFiles = Directory.GetFiles(m_directory, "*.mcb");
-                foreach (string mctFile in mctFiles)
-                    File.Copy(mctFile, Path.Combine(newDirectory, fileName + ".mct"));
-                CopyAll(new DirectoryInfo(m_directory + "\\TextFiles"), new DirectoryInfo(newDirectory + "\\TextFiles"));
-                CopyAll(new DirectoryInfo(m_directory + "\\Results"), new DirectoryInfo(newDirectory + "\\Results"));
-
-                m_directory = newDirectory;
-            }
-
             return true;
         }
 
@@ -205,124 +202,123 @@ namespace BH.Adapter.MidasCivil
             {
                 m_directory = Path.GetDirectoryName(filePath);
 
-                if (m_midasCivilVersion == "9.5.0.nx")
+                switch (m_midasCivilVersion)
                 {
-                    if (File.Exists(filePath))
-                        filePath = filePath.Replace("\\", "\\\\");
-                    else
-                       Engine.Base.Compute.RecordError("The given file path does not exist.");
+                    case "9.5.0.nx":
+                    case "9.5.5.nx":
+                        if (File.Exists(filePath))
+                            filePath = filePath.Replace("\\", "\\\\");
+                        else
+                            Engine.Base.Compute.RecordError("The given file path does not exist.");
 
-                    string endpoint = "doc/OPEN";
-                    string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
+                        string endpoint = "doc/OPEN";
+                        string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
 
-                    await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
-                    
-                    var unitsResponse = await SendRequestAsync("db/UNIT", HttpMethod.Get).ConfigureAwait(false);
-                    
-                    if (unitsResponse.IsSuccessStatusCode)
-                    {
-                        string jsonResponse = await unitsResponse.Content.ReadAsStringAsync();
-                        object parsedJson = Engine.Serialiser.Convert.FromJson(jsonResponse);
-                        
-                        object unitData = parsedJson.PropertyValue("CustomData")?.PropertyValue("UNIT")?.PropertyValue("CustomData")?.PropertyValue("1")?.PropertyValue("CustomData");
-                        if (unitData != null)
+                        await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+
+                        var unitsResponse = await SendRequestAsync("db/UNIT", HttpMethod.Get).ConfigureAwait(false);
+
+                        if (unitsResponse.IsSuccessStatusCode)
                         {
-                            m_forceUnit = unitData.PropertyValue("FORCE")?.ToString() ?? "N";
-                            m_lengthUnit = unitData.PropertyValue("DIST")?.ToString() ?? "m";
-                            m_heatUnit = unitData.PropertyValue("HEAT")?.ToString() ?? "KJ";
-                            m_temperatureUnit = unitData.PropertyValue("TEMPER")?.ToString() ?? "C";
+                            string jsonResponse = await unitsResponse.Content.ReadAsStringAsync();
+                            object parsedJson = Engine.Serialiser.Convert.FromJson(jsonResponse);
+
+                            object unitData = parsedJson.PropertyValue("CustomData")?.PropertyValue("UNIT")?.PropertyValue("CustomData")?.PropertyValue("1")?.PropertyValue("CustomData");
+                            if (unitData != null)
+                            {
+                                m_forceUnit = unitData.PropertyValue("FORCE")?.ToString() ?? "N";
+                                m_lengthUnit = unitData.PropertyValue("DIST")?.ToString() ?? "m";
+                                m_heatUnit = unitData.PropertyValue("HEAT")?.ToString() ?? "KJ";
+                                m_temperatureUnit = unitData.PropertyValue("TEMPER")?.ToString() ?? "C";
+                            }
+                            else
+                            {
+                                Engine.Base.Compute.RecordWarning("Unable to retrieve unit information from MidasCivil, using default units.");
+                            }
                         }
                         else
                         {
-                            Engine.Base.Compute.RecordWarning("Unable to retrieve unit information from MidasCivil, using default units.");
+                            Engine.Base.Compute.RecordWarning("Failed to retrieve unit information from MidasCivil, using default units.");
                         }
-                    }
-                    else
-                    {
-                        Engine.Base.Compute.RecordWarning("Failed to retrieve unit information from MidasCivil, using default units.");
-                    }
+                        break;
+                    default:
+                        if (IsApplicationRunning())
+                        {
+                            Engine.Base.Compute.RecordWarning("MidasCivil process already running");
+                        }
+                        else
+                        {
+                            try
+                            {
+                                System.Diagnostics.Process.Start(filePath);
+                            }
+                            catch (System.ComponentModel.Win32Exception)
+                            {
+                                throw new Exception("File does not exist, please reference an .mcb file");
+                            }
+                        }
 
-                }
+                        string fileName = Path.GetFileNameWithoutExtension(filePath);
+                        string txtFile = m_directory + "\\" + fileName + ".txt";
+                        string mctFile = m_directory + "\\" + fileName + ".mct";
 
-                else
-                {
-                    if (IsApplicationRunning())
-                    {
-                        Engine.Base.Compute.RecordWarning("MidasCivil process already running");
-                    }
-                    else
-                    {
+                        if (File.Exists(txtFile))
+                        {
+                            m_midasText = File.ReadAllLines(txtFile).ToList();
+                            SetSectionText();
+                        }
+                        else if (File.Exists(mctFile))
+                        {
+                            m_midasText = File.ReadAllLines(mctFile).ToList();
+                            SetSectionText();
+                        }
+
+                        string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
+                        if (!(m_midasCivilVersion == ""))
+                        {
+                            m_midasCivilVersion = m_midasCivilVersion.Trim();
+                            if (File.Exists(versionFile))
+                            {
+                                File.Delete(versionFile);
+                                File.AppendAllLines(versionFile, new List<string>() { "*VERSION", m_midasCivilVersion });
+                                Engine.Base.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
+                            }
+
+                        }
+                        else if (File.Exists(versionFile))
+                        {
+                            List<string> versionText = GetSectionText("VERSION");
+                            m_midasCivilVersion = versionText[0].Trim();
+                        }
+                        else
+                        {
+                            m_midasCivilVersion = "9.4.0";
+                            Engine.Base.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
+                        }
+
                         try
                         {
-                            System.Diagnostics.Process.Start(filePath);
+                            List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
+                            m_forceUnit = units[0].Trim();
+                            m_lengthUnit = units[1].Trim();
+                            m_heatUnit = units[2].Trim();
+                            m_temperatureUnit = units[3].Trim();
                         }
-                        catch (System.ComponentModel.Win32Exception)
+                        catch (DirectoryNotFoundException)
                         {
-                            throw new Exception("File does not exist, please reference an .mcb file");
+                            Engine.Base.Compute.RecordWarning(
+                                "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                         }
-                    }
-
-                    string fileName = Path.GetFileNameWithoutExtension(filePath);
-                    string txtFile = m_directory + "\\" + fileName + ".txt";
-                    string mctFile = m_directory + "\\" + fileName + ".mct";
-
-                    if (File.Exists(txtFile))
-                    {
-                        m_midasText = File.ReadAllLines(txtFile).ToList();
-                        SetSectionText();
-                    }
-                    else if (File.Exists(mctFile))
-                    {
-                        m_midasText = File.ReadAllLines(mctFile).ToList();
-                        SetSectionText();
-                    }
-
-                    string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
-                    if (!(m_midasCivilVersion == ""))
-                    {
-                        m_midasCivilVersion = m_midasCivilVersion.Trim();
-                        if (File.Exists(versionFile))
+                        catch (ArgumentOutOfRangeException)
                         {
-                            File.Delete(versionFile);
-                            File.AppendAllLines(versionFile, new List<string>() { "*VERSION", m_midasCivilVersion });
-                            Engine.Base.Compute.RecordWarning("*VERSION file found, user input used to overide: version =  " + m_midasCivilVersion);
+                            Engine.Base.Compute.RecordWarning(
+                                "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
                         }
 
-                    }
-                    else if (File.Exists(versionFile))
-                    {
-                        List<string> versionText = GetSectionText("VERSION");
-                        m_midasCivilVersion = versionText[0].Trim();
-                    }
-                    else
-                    {
-                        m_midasCivilVersion = "9.4.0";
-                        Engine.Base.Compute.RecordWarning("*VERSION file not found in directory and no version specified, MidasCivil version assumed default value =  " + m_midasCivilVersion);
-                    }
-
-                    try
-                    {
-                        List<string> units = GetSectionText("UNIT")[0].Split(',').ToList();
-                        m_forceUnit = units[0].Trim();
-                        m_lengthUnit = units[1].Trim();
-                        m_heatUnit = units[2].Trim();
-                        m_temperatureUnit = units[3].Trim();
-                    }
-                    catch (DirectoryNotFoundException)
-                    {
-                        Engine.Base.Compute.RecordWarning(
-                            "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        Engine.Base.Compute.RecordWarning(
-                            "No UNIT.txt file found, MidasCivil model units assumed to be Newtons, metres, kilojoules and celcius. Therefore, no unit conversion will occur when pushing and pulling to/from MidasCivil.");
-                    }
-
-                    Directory.CreateDirectory(m_directory + "\\Results");
+                        Directory.CreateDirectory(m_directory + "\\Results");
+                        break;
                 }
             }
-
             return true;
         }
 
@@ -330,67 +326,58 @@ namespace BH.Adapter.MidasCivil
 
         public async Task<bool> RunCommand(Analyse command)
         {
-            if (m_midasCivilVersion == "9.5.0.nx")
+            switch (m_midasCivilVersion)
             {
-                string endpoint = "doc/ANAL";
-                string jsonPayload = "{}";
+                case "9.5.0.nx":
+                case "9.5.5.nx":
+                    string endpoint = "doc/ANAL";
+                    string jsonPayload = "{}";
 
-                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
-                return true;
-            }
-
-            else
-            {
-                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter version.");
-                return false;
+                    await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
+                    return true;
+                default:
+                    Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter version.");
+                    return false;
             }
         }
 
         /***************************************************/
         public async Task<bool> RunCommand(ImportFile command)
         {
-            if (m_midasCivilVersion == "9.5.0.nx")
+            switch (m_midasCivilVersion)
             {
-                string endpoint = "";
-                string filePath = command.FilePath;
+                case "9.5.0.nx":
+                case "9.5.5.nx":
+                    string endpoint = "";
+                    string filePath = command.FilePath;
 
-                if (File.Exists(filePath))
-                {
-                    string extension = Path.GetExtension(filePath).ToLower();
-
-                    if (extension == ".mct" || extension == ".mgt" || extension == ".txt")
-                        endpoint = "doc/IMPORTMXT";
-
-                    else if (extension == ".json")
-                        endpoint = "doc/IMPORT";
-
+                    if (File.Exists(filePath))
+                    {
+                        string extension = Path.GetExtension(filePath).ToLower();
+                        if (extension == ".mct" || extension == ".mgt" || extension == ".txt")
+                            endpoint = "doc/IMPORTMXT";
+                        else if (extension == ".json")
+                            endpoint = "doc/IMPORT";
+                        else
+                        {
+                            Engine.Base.Compute.RecordError("The given file type is not supported by this Adapter.");
+                            return false;
+                        }
+                    }
                     else
                     {
-                        Engine.Base.Compute.RecordError("The given file type is not supported by this Adapter.");
+                        Engine.Base.Compute.RecordError("The given file path does not exist.");
                         return false;
                     }
+                    filePath = filePath.Replace("\\", "\\\\");
+                    string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
 
-                }
+                    await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
 
-                else
-                {
+                    return true;
+                default:
                     Engine.Base.Compute.RecordError("The given file path does not exist.");
                     return false;
-                }
-
-                filePath = filePath.Replace("\\", "\\\\");
-
-                string jsonPayload = "{\"Argument\": \"" + filePath + "\"}";
-
-                await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
-
-                return true;
-            }
-
-            else
-            {
-                Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter version.");
-                return false;
             }
         }
 

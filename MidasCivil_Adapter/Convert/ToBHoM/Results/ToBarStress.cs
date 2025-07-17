@@ -96,10 +96,10 @@ namespace BH.Adapter.MidasCivil
                 System.Convert.ToDouble(item[4].ToString()),
                 System.Convert.ToDouble(item[5].ToString()),
                 System.Convert.ToDouble(item[6].ToString()),
-                System.Convert.ToDouble(item[8].ToString()),
                 System.Convert.ToDouble(item[7].ToString()),
-                System.Convert.ToDouble(item[10].ToString()),
+                System.Convert.ToDouble(item[8].ToString()),
                 System.Convert.ToDouble(item[9].ToString()),
+                System.Convert.ToDouble(item[10].ToString()),
                 combBendPos,
                 combBendNeg
                 );

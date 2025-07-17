@@ -39,7 +39,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private async Task<IEnumerable<IResult>> ReadResult(string resultType, List<int> ids, List<string> loadcaseIds)
+        private async Task<IEnumerable<IResult>> ReadResult(string resultType, List<int> ids, List<string> loadcaseIds, string locations="")
         {
             List<IResult> results = new List<IResult>();
 
@@ -100,7 +100,7 @@ namespace BH.Adapter.MidasCivil
             }
 
             jsonPayload = "{\"Argument\": {" +
-                    tableName + tableType + components + objectIds + loadCases + units + format +
+                    tableName + tableType + components + objectIds + loadCases + locations + units + format +
                     "}}";
 
             var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
@@ -115,64 +115,96 @@ namespace BH.Adapter.MidasCivil
 
             if (jsonResponse.StartsWith("{\"message\":"))
             {
-                Engine.Base.Compute.RecordError($"The connected model does not contain any results matching the request. Please check the filters in your request.");
+                Engine.Base.Compute.RecordError($"The connected model does not contain any results matching the request. Please check the ObjectId filter and only include IDs present in the model.");
                 return results;
             }
 
             object parsedJson = Engine.Serialiser.Convert.FromJson(jsonResponse);
 
+            List<List<object>> resultItems= new List<List<object>>();
+            object data = new object();
             switch (resultType)
             {
                 case "NodeReaction":
-                    object data = parsedJson.PropertyValue("CustomData").PropertyValue("Reaction(Global)").PropertyValue("DATA");
-                    List<List<object>> resultItems = data as List<List<object>>;
-                    foreach (var item in resultItems)
-                        results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item)); 
+                    if (m_midasCivilVersion=="9.5.0.nx")
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Reaction(Global)")?.PropertyValue("DATA");
+                    else
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("ReactionGlobal")?.PropertyValue("DATA");
+
+                    resultItems = data as List<List<object>>;
+                    if (resultItems.IsNullOrEmpty())
+                        Engine.Base.Compute.RecordError($"No NodeReaction could be found for the selected Node/Nodes.");
+                    else
+                        foreach (List<object> item in resultItems)
+                            results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item));
                     break;
                 case "NodeDisplacement":
-                    data = parsedJson.PropertyValue("CustomData").PropertyValue("Displacements(Global)").PropertyValue("DATA");
+                    if (m_midasCivilVersion == "9.5.0.nx")
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Displacements(Global)")?.PropertyValue("DATA");
+                    else
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("DisplacementsGlobal")?.PropertyValue("DATA");
+                    
                     resultItems = data as List<List<object>>;
-                        foreach (var item in resultItems)
-                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
+                    foreach (List<object> item in resultItems)
+                        results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
+
                     break;
                 case "BarForce":
-                    data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamForce").PropertyValue("DATA");
+                    data = parsedJson.PropertyValue("CustomData")?.PropertyValue("BeamForce")?.PropertyValue("DATA");
+                    
                     resultItems = data as List<List<object>>;
-                    foreach (var item in resultItems)
+                    foreach (List<object> item in resultItems)
                         results.Add(Convert.ToBarForce(item));
+
                     break;
                 case "BarStress":
-                    data = parsedJson.PropertyValue("CustomData").PropertyValue("BeamStress").PropertyValue("DATA");
+                    data = parsedJson.PropertyValue("CustomData")?.PropertyValue("BeamStress")?.PropertyValue("DATA");
+
                     resultItems = data as List<List<object>>;
-                    foreach (var item in resultItems)
+                    foreach (List<object> item in resultItems)
                         results.Add(Convert.ToBarStress(item));
+
                     break;
                 case "Forces":
-                    data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateForce(UnitLength:Local)").PropertyValue("DATA");
+                    if (m_midasCivilVersion == "9.5.0.nx")
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateForce(UnitLength:Local)")?.PropertyValue("DATA");
+                    else
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateForceUnitLengthLocal")?.PropertyValue("DATA");
+
                     resultItems = data as List<List<object>>;
-                    foreach (var item in resultItems)
+                    foreach (List<object> item in resultItems)
                         results.Add(Convert.ToMeshForce(item));
+
                     break;
                 case "Stresses":
-                    data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateStress(Local)").PropertyValue("DATA");
+                    if (m_midasCivilVersion == "9.5.0.nx")
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStress(Local)")?.PropertyValue("DATA");
+                    else
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStressLocal")?.PropertyValue("DATA");
+
                     resultItems = data as List<List<object>>;
-                    foreach (var item in resultItems)
+                    foreach (List<object> item in resultItems)
                     {
                         results.Add(Convert.ToMeshStressAPI(item, false));
                         if (item.Count > 11)
                             results.Add(Convert.ToMeshStressAPI(item, true));
                     }
+                   
                     break;
                 case "VonMises":
-                    data = parsedJson.PropertyValue("CustomData").PropertyValue("PlateStress(Local)").PropertyValue("DATA");
+                    if (m_midasCivilVersion == "9.5.0.nx")
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStress(Local)")?.PropertyValue("DATA");
+                    else
+                        data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStressLocal")?.PropertyValue("DATA");
+
                     resultItems = data as List<List<object>>;
-                    foreach (var item in resultItems)
+                    foreach (List<object> item in resultItems)
                     {
                         results.Add(Convert.ToMeshVonMisesAPI(item, false));
                         if (item.Count > 11)
                             results.Add(Convert.ToMeshVonMisesAPI(item, true));
                     }
-                break;
+                    break;
             }
             return results;
         }

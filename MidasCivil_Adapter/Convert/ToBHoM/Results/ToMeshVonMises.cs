@@ -50,7 +50,7 @@ namespace BH.Adapter.MidasCivil
             double timeStep = 0;
 
             MeshVonMises MeshVonMises = new MeshVonMises(System.Convert.ToInt32(delimitted[2]), delimitted[7], 0,
-            delimitted[3], mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,0,0, System.Convert.ToDouble(delimitted[15])
+            delimitted[3], mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null, System.Convert.ToDouble(delimitted[15]), 0, 0
             );
 
             return MeshVonMises;
@@ -77,7 +77,7 @@ namespace BH.Adapter.MidasCivil
             double timeStep = 0;
 
             MeshVonMises MeshVonMises = new MeshVonMises(System.Convert.ToInt32(item[1].ToString()), item[3].ToString(), 0,
-            item[2].ToString(), mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null, 0, 0, System.Convert.ToDouble(item[10].ToString())
+            item[2].ToString(), mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null, System.Convert.ToDouble(item[10].ToString()), 0, 0
             );
 
             return MeshVonMises;

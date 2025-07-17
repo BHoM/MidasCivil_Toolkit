@@ -106,12 +106,17 @@ namespace BH.Adapter.MidasCivil
                 if (midasCivilSettings != null)
                     m_midasCivilVersion = Regex.Replace(midasCivilSettings.Version, @"\s+", "").ToLower();
                 
-                if (m_midasCivilVersion == "9.5.0.nx")
+                switch (m_midasCivilVersion)
                 {
-                    if (midasCivilSettings.mApiKey != null)
-                        m_mapiKey = midasCivilSettings.mApiKey;
-                    else
-                        Engine.Base.Compute.RecordError("Please provide the active Midas mApi-key.");
+                    case "9.5.0.nx":
+                    case "9.5.5.nx":
+                        if (midasCivilSettings.mApiKey != null)
+                            m_mapiKey = midasCivilSettings.mApiKey;
+                        else
+                            Engine.Base.Compute.RecordError("Please provide the active Midas mApi-key.");
+                        break;
+                    default:
+                        break;
                 }
 
                 Execute(new Open() { FileName = filePath });

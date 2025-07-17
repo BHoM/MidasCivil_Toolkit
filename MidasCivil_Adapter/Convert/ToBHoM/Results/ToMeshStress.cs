@@ -52,7 +52,7 @@ namespace BH.Adapter.MidasCivil
             MeshStress Meshstress = new MeshStress(System.Convert.ToInt32(delimitted[2]), delimitted[7], 0,
             delimitted[3], mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,
             System.Convert.ToDouble(delimitted[9]), System.Convert.ToDouble(delimitted[10]), 0,
-            System.Convert.ToDouble(delimitted[11]), System.Convert.ToDouble(delimitted[11]), System.Convert.ToDouble(delimitted[12]),
+            0, 0, System.Convert.ToDouble(delimitted[12]),
             System.Convert.ToDouble(delimitted[13]), 0);
 
             return Meshstress;
@@ -80,7 +80,7 @@ namespace BH.Adapter.MidasCivil
             MeshStress Meshstress = new MeshStress(System.Convert.ToInt32(item[1]), item[3].ToString(), 0,
             item[2].ToString(), mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,
             System.Convert.ToDouble(item[5]), System.Convert.ToDouble(item[6]), 0,
-            System.Convert.ToDouble(item[7]), System.Convert.ToDouble(item[7]), 
+            0, 0, 
             System.Convert.ToDouble(item[8]), System.Convert.ToDouble(item[9]), 0);
                 
             return Meshstress;

@@ -45,32 +45,32 @@ namespace BH.Adapter.MidasCivil
             List<IResult> results = new List<IResult>();
             List<int> objectIds = GetObjectIDs(request);
 
-            if (m_midasCivilVersion == "9.5.0.nx")
+            switch (m_midasCivilVersion)
             {
-                List<string> loadCases = Task.Run(() => AppendCaseTypes(request)).Result;
-                if (loadCases != null)
-                    results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCases)).Result.ToList();
+                case "9.5.0.nx":
+                case "9.5.5.nx":
+                    List<string> loadCasesNX = Task.Run(() => AppendCaseTypes(request)).Result;
+                    if (loadCasesNX != null)
+                        results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCasesNX)).Result.ToList();
+                    break;
+                default:
+                    List<string> loadCases = GetLoadcaseIDs(request);
+
+                    switch (request.ResultType)
+                    {
+                        case NodeResultType.NodeReaction:
+                            results = ExtractNodeReaction(objectIds, loadCases).ToList();
+                            break;
+                        case NodeResultType.NodeDisplacement:
+                            results = ExtractNodeDisplacement(objectIds, loadCases).ToList();
+                            break;
+                        default:
+                            Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the MidasCivil_Toolkit.");
+                            results = new List<IResult>();
+                            break;
+                    }
+                    break;
             }
-
-            else
-            {
-                List<string> loadCases = GetLoadcaseIDs(request);
-
-                switch (request.ResultType)
-                {
-                    case NodeResultType.NodeReaction:
-                        results = ExtractNodeReaction(objectIds, loadCases).ToList();
-                        break;
-                    case NodeResultType.NodeDisplacement:
-                        results = ExtractNodeDisplacement(objectIds, loadCases).ToList();
-                        break;
-                    default:
-                        Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the MidasCivil_Toolkit.");
-                        results = new List<IResult>();
-                        break;
-                }
-            }
-
             results.Sort();
             return results;
         }

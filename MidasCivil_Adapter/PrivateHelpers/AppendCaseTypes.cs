@@ -63,7 +63,7 @@ namespace BH.Adapter.MidasCivil
                 caseNames.AddRange(GetCaseName(await responses[1].Content.ReadAsStringAsync(), requestNames, "STLD", "(ST)"));
 
                 if (caseNames.Count==0)
-                    Engine.Base.Compute.RecordWarning($"No matching Loadcase or Loadcombination could be found in the model, the request will be sent without a Case filter.");
+                    Engine.Base.Compute.RecordWarning($"No matching Loadcase or Loadcombination could be found in the model, the request will be sent without a Case filter. Please make sure to use the full name of each Case with the same formatting used in the Midas Civil model.");
 
                 return caseNames;
             }

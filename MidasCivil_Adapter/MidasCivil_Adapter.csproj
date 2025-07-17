@@ -140,7 +140,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="Units_Engine">
       <HintPath>$(ProgramData)\BHoM\Assemblies\Units_Engine.dll</HintPath>
-	<Private>False</Private>
+      <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
@@ -287,6 +287,7 @@
     <Compile Include="PrivateHelpers\CreateAssignmentString.cs" />
     <Compile Include="PrivateHelpers\GetAssignmentIds.cs" />
     <Compile Include="PrivateHelpers\AppendCaseTypes.cs" />
+    <Compile Include="PrivateHelpers\GetBarDivisions.cs" />
     <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
     <Compile Include="PrivateHelpers\GetMaxID.cs" />
     <Compile Include="PrivateHelpers\CreateGroups.cs" />
