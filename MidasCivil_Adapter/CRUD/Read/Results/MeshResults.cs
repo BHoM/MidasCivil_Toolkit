@@ -49,7 +49,7 @@ namespace BH.Adapter.MidasCivil
                 case "9.5.5.nx":
                     List<string> loadCasesNX = Task.Run(() => AppendCaseTypes(request)).Result;
                     if (loadCasesNX != null)
-                        results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCasesNX)).Result.ToList();
+                        results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCasesNX, "", request)).Result.ToList();
                     break;
                 default:
                     List<string> loadCases = GetLoadcaseIDs(request);

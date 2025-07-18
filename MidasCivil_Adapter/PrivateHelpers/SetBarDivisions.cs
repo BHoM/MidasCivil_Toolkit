@@ -28,7 +28,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private string GetBarDivisions(BarResultRequest request)
+        private string SetBarDivisions(BarResultRequest request)
         {
             string divisions = String.Empty;
             if (request.DivisionType == DivisionType.ExtremeValues)

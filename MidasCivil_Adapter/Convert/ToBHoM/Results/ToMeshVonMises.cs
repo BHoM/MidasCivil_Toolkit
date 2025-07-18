@@ -26,6 +26,7 @@ using System.Linq;
 using System.Collections.Generic;
 using BH.oM.Geometry;
 using System.Text.Json;
+using BH.oM.Structure.Requests;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -58,26 +59,22 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        public static MeshVonMises ToMeshVonMisesAPI(List<object> item, bool bottom)
+        public static MeshVonMises ToMeshVonMises(List<object> item, MeshResultRequest request)
         {
-            double LayerPosition = 1;
-            MeshResultLayer meshResultLayer = MeshResultLayer.Upper;
-
-            if (bottom || item[4].ToString().Contains("Bot"))
+            double LayerPosition = double.NaN;
+            if (item[4] != null)
             {
-                LayerPosition = 0;
-                meshResultLayer = MeshResultLayer.Lower;
-
-                if (bottom)
-                    item.RemoveRange(4, 7);
+                LayerPosition = 1;
+                if (item[4].ToString().Contains("Bot"))
+                    LayerPosition = 0;
             }
-
+            
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;
             double timeStep = 0;
 
             MeshVonMises MeshVonMises = new MeshVonMises(System.Convert.ToInt32(item[1].ToString()), item[3].ToString(), 0,
-            item[2].ToString(), mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null, System.Convert.ToDouble(item[10].ToString()), 0, 0
+            item[2].ToString(), mode, timeStep, request.Layer, LayerPosition, MeshResultSmoothingType.None, null, System.Convert.ToDouble(item[10].ToString()), 0, 0
             );
 
             return MeshVonMises;

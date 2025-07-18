@@ -285,9 +285,10 @@
     <Compile Include="PrivateHelpers\AssignBarRelease.cs" />
     <Compile Include="PrivateHelpers\CombineLoads.cs" />
     <Compile Include="PrivateHelpers\CreateAssignmentString.cs" />
+    <Compile Include="PrivateHelpers\FilterMeshLayer.cs" />
     <Compile Include="PrivateHelpers\GetAssignmentIds.cs" />
     <Compile Include="PrivateHelpers\AppendCaseTypes.cs" />
-    <Compile Include="PrivateHelpers\GetBarDivisions.cs" />
+    <Compile Include="PrivateHelpers\SetBarDivisions.cs" />
     <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
     <Compile Include="PrivateHelpers\GetMaxID.cs" />
     <Compile Include="PrivateHelpers\CreateGroups.cs" />
@@ -302,7 +303,7 @@
     <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="PrivateHelpers\GetSectionMaterialCombinations.cs" />
     <Compile Include="PrivateHelpers\GetStiffnessVectorModulus.cs" />
-    <Compile Include="PrivateHelpers\ReadResultAPI.cs" />
+    <Compile Include="PrivateHelpers\ReadResult.cs" />
     <Compile Include="PrivateHelpers\SetVersion.cs" />
     <Compile Include="PrivateHelpers\SetUnits.cs" />
     <Compile Include="Type\NextFreeId.cs" />
