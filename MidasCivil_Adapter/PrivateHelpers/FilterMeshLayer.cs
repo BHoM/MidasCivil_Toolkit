@@ -54,25 +54,22 @@ namespace BH.Adapter.MidasCivil
                     filteredResult.Add(lowerResult);
                     break;
                 case MeshResultLayer.Maximum:
-                    List<object> maxValues = resultItems.GetRange(0, 4);
-                    maxValues.Add(null);
+                    filteredResult.Add(resultItems.GetRange(0, 4));
+                    filteredResult[0].Add(null);
                     for (int i = 5; i < 11; i++)
-                        maxValues.Add(Math.Max(System.Convert.ToDouble(upperResult[i].ToString()), System.Convert.ToDouble(lowerResult[i].ToString())));
-                    filteredResult.Add(maxValues);
+                        filteredResult[0].Add(Math.Max(System.Convert.ToDouble(upperResult[i].ToString()), System.Convert.ToDouble(lowerResult[i].ToString())));
                     break;
                 case MeshResultLayer.Minimum:
-                    List<object> minValues = resultItems.GetRange(0, 4);
-                    minValues.Add(null); 
+                    filteredResult.Add(resultItems.GetRange(0, 4));
+                    filteredResult[0].Add(null); 
                     for (int i = 5; i < 11; i++)
-                        minValues.Add(Math.Min(System.Convert.ToDouble(upperResult[i].ToString()), System.Convert.ToDouble(lowerResult[i].ToString())));
-                    filteredResult.Add(minValues);
+                        filteredResult[0].Add(Math.Min(System.Convert.ToDouble(upperResult[i].ToString()), System.Convert.ToDouble(lowerResult[i].ToString())));
                     break;
                 case MeshResultLayer.AbsoluteMaximum:
-                    List<object> absMaxValues = resultItems.GetRange(0, 4);
-                    absMaxValues.Add(null);
+                    filteredResult.Add(resultItems.GetRange(0, 4));
+                    filteredResult[0].Add(null);
                     for (int i = 5; i < 11; i++)
-                        absMaxValues.Add(Math.Max(Math.Abs(System.Convert.ToDouble(upperResult[i].ToString())), Math.Abs(System.Convert.ToDouble(lowerResult[i].ToString()))));
-                    filteredResult.Add(absMaxValues);
+                        filteredResult[0].Add(Math.Max(Math.Abs(System.Convert.ToDouble(upperResult[i].ToString())), Math.Abs(System.Convert.ToDouble(lowerResult[i].ToString()))));
                     break;
                 case MeshResultLayer.Arbitrary:
                     switch (request.LayerPosition)

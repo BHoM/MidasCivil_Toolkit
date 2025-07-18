@@ -63,12 +63,17 @@ namespace BH.Adapter.MidasCivil
 
         public static MeshStress ToMeshStress(List<object> item, MeshResultRequest request)
         {
+            MeshResultLayer meshResultLayer = request.Layer;
             double LayerPosition = double.NaN;
             if (item[4] != null)
             {
+                meshResultLayer= MeshResultLayer.Upper;
                 LayerPosition = 1;
                 if (item[4].ToString().Contains("Bot"))
+                {
+                    meshResultLayer = MeshResultLayer.Lower;
                     LayerPosition = 0;
+                }
             }
 
             //TODO: resolve below identifiers extractable through the API
@@ -76,7 +81,7 @@ namespace BH.Adapter.MidasCivil
             double timeStep = 0;
 
             MeshStress Meshstress = new MeshStress(System.Convert.ToInt32(item[1]), item[3].ToString(), 0,
-            item[2].ToString(), mode, timeStep, request.Layer, LayerPosition, MeshResultSmoothingType.None, null,
+            item[2].ToString(), mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null,
             System.Convert.ToDouble(item[5]), System.Convert.ToDouble(item[6]), System.Convert.ToDouble(item[7]),
             0, 0, 
             System.Convert.ToDouble(item[8]), System.Convert.ToDouble(item[9]), 0);

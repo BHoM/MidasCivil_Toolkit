@@ -61,12 +61,17 @@ namespace BH.Adapter.MidasCivil
 
         public static MeshVonMises ToMeshVonMises(List<object> item, MeshResultRequest request)
         {
+            MeshResultLayer meshResultLayer = request.Layer;
             double LayerPosition = double.NaN;
             if (item[4] != null)
             {
+                meshResultLayer = MeshResultLayer.Upper;
                 LayerPosition = 1;
                 if (item[4].ToString().Contains("Bot"))
+                {
+                    meshResultLayer = MeshResultLayer.Lower;
                     LayerPosition = 0;
+                }
             }
             
             //TODO: resolve below identifiers extractable through the API
@@ -74,7 +79,7 @@ namespace BH.Adapter.MidasCivil
             double timeStep = 0;
 
             MeshVonMises MeshVonMises = new MeshVonMises(System.Convert.ToInt32(item[1].ToString()), item[3].ToString(), 0,
-            item[2].ToString(), mode, timeStep, request.Layer, LayerPosition, MeshResultSmoothingType.None, null, System.Convert.ToDouble(item[10].ToString()), 0, 0
+            item[2].ToString(), mode, timeStep, meshResultLayer, LayerPosition, MeshResultSmoothingType.None, null, System.Convert.ToDouble(item[10].ToString()), 0, 0
             );
 
             return MeshVonMises;
