@@ -49,7 +49,15 @@ namespace BH.Adapter.MidasCivil
 
             if (ids == null || ids.Count == 0)
             {
-                return GetAllIds(request as dynamic);
+                switch (m_midasCivilVersion)
+                {
+                    case "9.5.0.nx":
+                    case "9.5.5.nx":
+                        List<int> emptyIds = new List<int>();
+                        return emptyIds;
+                    default:
+                        return GetAllIds(request as dynamic);
+                }
             }
             else
             {
@@ -130,7 +138,7 @@ namespace BH.Adapter.MidasCivil
             IList cases = request.Cases;
             List<string> caseNames = new List<string>();
             if (cases == null || cases.Count == 0)
-            {
+            { 
                 caseNames = GetSectionText("STLDCASE").Select(x => x.Split(',')[0].Trim()).ToList();
 
                 List<string> loadCombinationText = GetSectionText("LOADCOMB");
@@ -139,19 +147,21 @@ namespace BH.Adapter.MidasCivil
                     caseNames.Add(loadCombinationText[i].Split(',')[0].Split('=')[1].Trim());
                 }
             }
-                foreach (object thisCase in cases)
+
+            foreach (object thisCase in cases)
+            {
+                if (thisCase is ICase)
                 {
-                    if (thisCase is ICase)
-                    {
-                        ICase bhCase = thisCase as ICase;
-                        caseNames.Add(bhCase.Name.ToString());
-                    }
-                    else if (thisCase is string)
-                    {
-                        string caseId = thisCase as string;
-                        caseNames.Add(caseId);
-                    }
+                    ICase bhCase = thisCase as ICase;
+                    caseNames.Add(bhCase.Name.ToString());
                 }
+                else if (thisCase is string)
+                {
+                    string caseId = thisCase as string;
+                    caseNames.Add(caseId);
+                }
+            }
+
             return caseNames;
         }
 
@@ -172,7 +182,7 @@ namespace BH.Adapter.MidasCivil
                     Application excel = new Application();
                     Workbook xlsFile = excel.Workbooks.Open(path);
                     Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)xlsFile.Sheets[1];
-                                   
+
                     sheet.SaveAs(
                         csvPath,
                         Microsoft.Office.Interop.Excel.XlFileFormat.xlCSV,
@@ -202,7 +212,6 @@ namespace BH.Adapter.MidasCivil
         }
 
         /***************************************************/
-
     }
 }
 

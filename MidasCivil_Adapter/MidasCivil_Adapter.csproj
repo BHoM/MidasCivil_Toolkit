@@ -94,6 +94,11 @@
       <HintPath>$(ProgramData)\BHoM\Assemblies\Physical_oM.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Serialiser_Engine">
+      <HintPath>$(ProgramData)\BHoM\Assemblies\Serialiser_Engine.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Spatial_Engine">
       <HintPath>$(ProgramData)\BHoM\Assemblies\Spatial_Engine.dll</HintPath>
       <Private>False</Private>
@@ -121,6 +126,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Text.Json, Version=8.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(ProgramData)\BHoM\Assemblies\System.Text.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp">
@@ -276,7 +285,10 @@
     <Compile Include="PrivateHelpers\AssignBarRelease.cs" />
     <Compile Include="PrivateHelpers\CombineLoads.cs" />
     <Compile Include="PrivateHelpers\CreateAssignmentString.cs" />
+    <Compile Include="PrivateHelpers\FilterMeshLayer.cs" />
     <Compile Include="PrivateHelpers\GetAssignmentIds.cs" />
+    <Compile Include="PrivateHelpers\AppendCaseTypes.cs" />
+    <Compile Include="PrivateHelpers\SetBarDivisions.cs" />
     <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
     <Compile Include="PrivateHelpers\GetMaxID.cs" />
     <Compile Include="PrivateHelpers\CreateGroups.cs" />
@@ -291,6 +303,7 @@
     <Compile Include="CRUD\Delete\Delete.cs" />
     <Compile Include="PrivateHelpers\GetSectionMaterialCombinations.cs" />
     <Compile Include="PrivateHelpers\GetStiffnessVectorModulus.cs" />
+    <Compile Include="PrivateHelpers\ReadResult.cs" />
     <Compile Include="PrivateHelpers\SetVersion.cs" />
     <Compile Include="PrivateHelpers\SetUnits.cs" />
     <Compile Include="Type\NextFreeId.cs" />

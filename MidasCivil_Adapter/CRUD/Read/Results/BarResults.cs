@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -40,27 +41,40 @@ namespace BH.Adapter.MidasCivil
 
         public IEnumerable<IResult> ReadResults(BarResultRequest request, ActionConfig actionConfig)
         {
-            List<IResult> results;
+            List<IResult> results = new List<IResult>();
             List<int> objectIds = GetObjectIDs(request);
-            List<string> loadCases = GetLoadcaseIDs(request);
 
-            switch (request.ResultType)
+            switch (m_midasCivilVersion)
             {
-                case BarResultType.BarForce:
-                    results = ExtractBarForce(objectIds, loadCases).ToList();
-                    break;
-                case BarResultType.BarStrain:
-                    results = ExtractBarStrain(objectIds, loadCases).ToList();
-                    break;
-                case BarResultType.BarStress:
-                    results = ExtractBarStress(objectIds, loadCases).ToList();
-                    break;
-                case BarResultType.BarDisplacement:
-                    results = ExtractBarDisplacement(objectIds, loadCases).ToList();
+                case "9.5.0.nx":
+                case "9.5.5.nx":
+                    List<string> loadCasesNX = Task.Run(() => AppendCaseTypes(request)).Result;
+                    string divisions = SetBarDivisions(request);
+
+                    if (loadCasesNX != null)
+                        results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCasesNX, divisions)).Result.ToList();
                     break;
                 default:
-                    Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the MidasCivil_Toolkit.");
-                    results = new List<IResult>();
+                    List<string> loadCases = GetLoadcaseIDs(request);
+                    switch (request.ResultType)
+                    {
+                        case BarResultType.BarForce:
+                            results = ExtractBarForce(objectIds, loadCases).ToList();
+                            break;
+                        case BarResultType.BarStrain:
+                            results = ExtractBarStrain(objectIds, loadCases).ToList();
+                            break;
+                        case BarResultType.BarStress:
+                            results = ExtractBarStress(objectIds, loadCases).ToList();
+                            break;
+                        case BarResultType.BarDisplacement:
+                            results = ExtractBarDisplacement(objectIds, loadCases).ToList();
+                            break;
+                        default:
+                            Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the MidasCivil_Toolkit.");
+                            results = new List<IResult>();
+                            break;
+                    }
                     break;
             }
             results.Sort();

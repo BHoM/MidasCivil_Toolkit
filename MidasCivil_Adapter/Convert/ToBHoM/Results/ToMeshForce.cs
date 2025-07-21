@@ -26,6 +26,7 @@ using System.Linq;
 using System.Collections.Generic;
 using BH.oM.Geometry;
 using BH.Adapter.Adapters.MidasCivil;
+using System.Text.Json;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -51,6 +52,26 @@ namespace BH.Adapter.MidasCivil
             System.Convert.ToDouble(delimitted[21]).MomentPerLengthToSI(forceUnit, lengthUnit),
             System.Convert.ToDouble(delimitted[22]).MomentPerLengthToSI(forceUnit, lengthUnit));
 			
+            return Meshforce;
+        }
+
+        /***************************************************/
+        public static MeshForce ToMeshForce(List<object> item)
+        {
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+            MeshForce Meshforce = new MeshForce(System.Convert.ToInt32(item[1].ToString()), item[3].ToString(), 0,
+            item[2].ToString(), mode, timeStep, MeshResultLayer.Middle, 0.5, MeshResultSmoothingType.None, null,
+            System.Convert.ToDouble(item[4].ToString()),
+            System.Convert.ToDouble(item[5].ToString()),
+            System.Convert.ToDouble(item[6].ToString()),
+            System.Convert.ToDouble(item[7].ToString()),
+            System.Convert.ToDouble(item[8].ToString()),
+            System.Convert.ToDouble(item[9].ToString()),
+            System.Convert.ToDouble(item[10].ToString()),
+            System.Convert.ToDouble(item[11].ToString()));
+
             return Meshforce;
         }
 
