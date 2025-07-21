@@ -65,7 +65,7 @@ namespace BH.Adapter.Adapters.MidasCivil
                 {
                     midasSectionProperty.Add(sectionProperty.AdapterId<string>(typeof(MidasCivilId)) + ",TAPERED," +
                         new string(sectionProperty.DescriptionOrName().Replace(",", "").Take(sectionPropertyCharacterLimit).ToArray()) +
-                        ",CC, 0,0,0,0,0,0,0,0,YES,NO," + GetSectionShapeCode(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) +
+                        ",CC, 0,0,0,0,0,0,0,0,YES,NO,NO," + GetSectionShapeCode(sectionProperty) + "," + GetInterpolationOrder(sectionProperty) +
                         "," + GetInterpolationOrder(sectionProperty) + ",USER");
                     midasSectionProperty.Add(CreateProfile(sectionProperty.SectionProfile as dynamic, lengthUnit));
                 }

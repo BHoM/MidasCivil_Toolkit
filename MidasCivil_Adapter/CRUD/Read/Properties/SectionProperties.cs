@@ -51,7 +51,7 @@ namespace BH.Adapter.MidasCivil
             for (int i = 0; i < sectionProperties.Count; i++)
             {
                 string line = sectionProperties[i];
-                if(!(line.Length < 2))
+                if (!(line.Length < 2))
                 {
                     if (types.Any(x => x == sectionProperties[i].Split(',')[1].Trim()))
                         indexes.Add(i);
@@ -89,7 +89,7 @@ namespace BH.Adapter.MidasCivil
                     if (numberColumns == 16)
                     {
                         // delimitted[15] is the database name of the section
-                        bhomSectionProperty = (ISectionProperty)Engine.Library.Query.Match("Structure\\SectionProperties",split[15]);
+                        bhomSectionProperty = (ISectionProperty)Engine.Library.Query.Match("Structure\\SectionProperties", split[15]);
                         if (bhomSectionProperty == null)
                             Engine.Base.Compute.RecordWarning("The database section " + split[2] + " could not be found in the BHoM datasets - a null value has been assigned.");
                         else
@@ -110,8 +110,8 @@ namespace BH.Adapter.MidasCivil
                 else if (type == "TAPERED")
                 {
                     List<string> profiles = sectionProperties[index + 1].Split(',').ToList();
-                    string shape = split[14].Trim();
-                    string interpolationOrder = Math.Max(System.Convert.ToInt32(split[15].Trim()), System.Convert.ToInt32(split[16].Trim())).ToString();
+                    string shape = split[15].Trim();
+                    string interpolationOrder = Math.Max(System.Convert.ToInt32(split[16].Trim()), System.Convert.ToInt32(split[17].Trim())).ToString();
 
                     bhomSectionProperty = Adapters.MidasCivil.Convert.ToSectionProperty(profiles, "TAPERED" + "-" + shape + "-" + interpolationOrder, m_lengthUnit);
 
@@ -166,7 +166,7 @@ namespace BH.Adapter.MidasCivil
                         // Inner polylines always follow outer, find the start of the next IPOLY otherwise it's the end of the PSC Section
                         int iPolyStart = iOPolyEnd + 1;
                         int iPolyEnd = -2;
-                        if(!(iPolyStart + 1 > pscSectionProperty.Count - 1))
+                        if (!(iPolyStart + 1 > pscSectionProperty.Count - 1))
                             iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY")) - 1;
 
                         // This is the case where IPOLY is contained on a single line (i.e. three points)
@@ -181,18 +181,18 @@ namespace BH.Adapter.MidasCivil
                             // Get indexes for next polyline, IF statement to avoid out of index if there is a single IPOLY
                             iPolyStart = iPolyEnd + 1;
                             //This is the last IPOLY
-                            if(iPolyStart > pscSectionProperty.Count() -1)
+                            if (iPolyStart > pscSectionProperty.Count() - 1)
                                 iPolyEnd = -2;
                             else
                                 iPolyEnd = pscSectionProperty.FindIndex(iPolyStart + 1, x => x.Contains("IPOLY")) - 1;
                         }
 
                         // For the final inner polyline contained on a single line
-                        if (iPolyStart == pscSectionProperty.Count -1 && iPolyEnd == -2)
+                        if (iPolyStart == pscSectionProperty.Count - 1 && iPolyEnd == -2)
                         {
                             iPolyEnd = pscSectionProperty.Count - 1;
                             polys.Add(new Polyline() { ControlPoints = ParsePoints(pscSectionProperty, iPolyStart, iPolyEnd, "IPOLY") });
-                        }    
+                        }
 
                     }
 
