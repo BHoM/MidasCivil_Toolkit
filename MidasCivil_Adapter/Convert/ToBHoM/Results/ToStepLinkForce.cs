@@ -1,0 +1,64 @@
+﻿/*
+ * This file is part of the Buildings and Habitats object Model (BHoM)
+ * Copyright (c) 2015 - 2025, the respective contributors. All rights reserved.
+ *
+ * Each contributor holds copyright over their respective contributions.
+ * The project versioning (Git) records all such contribution source information.
+ *                                           
+ *                                                                              
+ * The BHoM is free software: you can redistribute it and/or modify         
+ * it under the terms of the GNU Lesser General Public License as published by  
+ * the Free Software Foundation, either version 3.0 of the License, or          
+ * (at your option) any later version.                                          
+ *                                                                              
+ * The BHoM is distributed in the hope that it will be useful,              
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of               
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                 
+ * GNU Lesser General Public License for more details.                          
+ *                                                                            
+ * You should have received a copy of the GNU Lesser General Public License     
+ * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
+ */
+
+using BH.oM.Structure.Loads;
+using BH.oM.Structure.Results;
+using System.Linq;
+using System.Collections.Generic;
+using BH.Adapter.Adapters.MidasCivil;
+using System.Text.Json;
+using System;
+
+namespace BH.Adapter.MidasCivil
+{
+    public static partial class Convert
+    {
+        /***************************************************/
+        /**** Public Methods                            ****/
+        /***************************************************/
+
+        public static TimeHistoryResult ToStepLinkForce(KeyValuePair<(object, object, object), List<List<object>>> dataGroup)
+        {
+            int id = System.Convert.ToInt32(dataGroup.Key.Item1);
+            IComparable loadCase= dataGroup.Key.Item1.ToString();
+            int mode = -1;
+            string position = dataGroup.Key.Item3.ToString();
+
+            List<StepLinkForce> stepLinkForces = new List<StepLinkForce>();
+            foreach (List<object> item in dataGroup.Value) 
+                stepLinkForces.Add(ToStepLinkForce(item));
+
+            TimeHistoryResult stepLinkForce = new TimeHistoryResult(id, loadCase, mode, position,stepLinkForces);
+            
+            return stepLinkForce;
+        }
+
+        public static StepLinkForce ToStepLinkForce(List<object> dataItem)
+        {
+            StepLinkForce stepLinkForce = new StepLinkForce(System.Convert.ToDouble(dataItem[3].ToString()), System.Convert.ToDouble(dataItem[5].ToString()),
+                System.Convert.ToDouble(dataItem[6].ToString()), System.Convert.ToDouble(dataItem[7].ToString()), System.Convert.ToDouble(dataItem[8].ToString()),
+                System.Convert.ToDouble(dataItem[9].ToString()), System.Convert.ToDouble(dataItem[10].ToString()));
+
+            return stepLinkForce;
+        }
+    }
+}

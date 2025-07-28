@@ -40,11 +40,11 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private async Task<IEnumerable<IResult>> ReadResult(string resultType, List<int> ids, List<string> loadcaseIds, string locations="", MeshResultRequest meshRequest=null)
+        private async Task<IEnumerable<IResult>> ReadResult(string resultType, List<int> ids, List<string> loadcaseIds, string locations="", string timeSpan ="", MeshResultRequest meshRequest=null)
         {
             List<IResult> results = new List<IResult>();
 
-            const string endpoint = "post/TABLE";
+            string endpoint = "post/TABLE";
 
             string jsonPayload = "";
             string tableName = "";
@@ -95,13 +95,21 @@ namespace BH.Adapter.MidasCivil
                     tableType = "\"TABLE_TYPE\": \"PLATESTRESSL\", ";
                     components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Part\", \"Sig-xx\", \"Sig-yy\", \"Sig-xy\", \"Sig-Max\", \"Sig-Min\", \"Sig-EFF\"], ";
                     break;
+                case "StepLinkForce":
+                    endpoint = "post/TEXT";
+                    loadCases = loadcaseIds.Count > 0
+                    ? $" \"TH_CASE_NAME\": [{string.Join(", ", loadcaseIds.Select(id => $"\"{id}\""))}],"
+                    : string.Empty;
+                    tableType = "\"TEXT_TYPE\": \"TH_GLINKFORCE\", ";
+                    components = "\"COMPONENTS\": [\"Key\", \"Load\", \"Time/Step\", \"Part\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], ";
+                    break;
                 default:
                     Engine.Base.Compute.RecordError($"Pulling back results of type {resultType} is not yet supported through the MidasCivil API.");
                     return results;
             }
 
             jsonPayload = "{\"Argument\": {" +
-                    tableName + tableType + components + objectIds + loadCases + locations + units + format +
+                    tableName + tableType + components + objectIds + loadCases + locations + timeSpan + units + format +
                     "}}";
 
             var response = await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
@@ -218,6 +226,14 @@ namespace BH.Adapter.MidasCivil
                         foreach (List<object> meshStress in meshVonMises)
                             results.Add(Convert.ToMeshVonMises(meshStress, meshRequest));
                     }
+                    break;
+                case "StepLinkForce":
+                    data = parsedJson.PropertyValue("CustomData")?.PropertyValue("TH_GLINKFORCE")?.PropertyValue("DATA");
+                    resultItems = data as List<List<object>>;
+                    Dictionary<(object, object, object), List<List<object>>> sortedData = GroupTHResult(resultItems);
+
+                    foreach (KeyValuePair<(object, object, object), List<List<object>>> item in sortedData)
+                        results.Add(Convert.ToStepLinkForce(item));
                     break;
             }
             return results;

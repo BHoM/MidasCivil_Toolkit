@@ -177,6 +177,7 @@
     <Compile Include="Convert\ToBHoM\Results\ToMeshForce.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToNodeDisplacement.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToNodeReaction.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToStepLinkForce.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromBar.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromFEMesh.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromNode.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="CRUD\Read\Results\NodeResults.cs" />
     <Compile Include="CRUD\Read\Results\ReadResults.cs" />
     <Compile Include="CRUD\Read\Properties\ReadMetadata.cs" />
+    <Compile Include="CRUD\Read\Results\StepResults.cs" />
     <Compile Include="PrivateHelpers\APIClient.cs" />
     <Compile Include="PrivateHelpers\AssignBarRelease.cs" />
     <Compile Include="PrivateHelpers\CombineLoads.cs" />
@@ -288,6 +290,7 @@
     <Compile Include="PrivateHelpers\FilterMeshLayer.cs" />
     <Compile Include="PrivateHelpers\GetAssignmentIds.cs" />
     <Compile Include="PrivateHelpers\AppendCaseTypes.cs" />
+    <Compile Include="PrivateHelpers\GroupTHResult.cs" />
     <Compile Include="PrivateHelpers\SetBarDivisions.cs" />
     <Compile Include="PrivateHelpers\GetGroupAssignments.cs" />
     <Compile Include="PrivateHelpers\GetMaxID.cs" />
