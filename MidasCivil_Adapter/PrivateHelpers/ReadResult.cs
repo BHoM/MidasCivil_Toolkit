@@ -103,6 +103,14 @@ namespace BH.Adapter.MidasCivil
                     tableType = "\"TEXT_TYPE\": \"TH_GLINKFORCE\", ";
                     components = "\"COMPONENTS\": [\"Key\", \"Load\", \"Time/Step\", \"Part\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], ";
                     break;
+                case "StepLinkDeformation":
+                    endpoint = "post/TEXT";
+                    loadCases = loadcaseIds.Count > 0
+                    ? $" \"TH_CASE_NAME\": [{string.Join(", ", loadcaseIds.Select(id => $"\"{id}\""))}],"
+                    : string.Empty;
+                    tableType = "\"TEXT_TYPE\": \"TH_GLINKDEFORM\", ";
+                    components = "\"COMPONENTS\": [\"Key\", \"Load\", \"Time/Step\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], ";
+                    break;
                 default:
                     Engine.Base.Compute.RecordError($"Pulling back results of type {resultType} is not yet supported through the MidasCivil API.");
                     return results;
@@ -230,10 +238,16 @@ namespace BH.Adapter.MidasCivil
                 case "StepLinkForce":
                     data = parsedJson.PropertyValue("CustomData")?.PropertyValue("TH_GLINKFORCE")?.PropertyValue("DATA");
                     resultItems = data as List<List<object>>;
-                    Dictionary<(object, object, object), List<List<object>>> sortedData = GroupTHResult(resultItems);
-
-                    foreach (KeyValuePair<(object, object, object), List<List<object>>> item in sortedData)
+                    Dictionary<(int, string, string), List<List<string>>> sortedForces = GroupTHResult(resultItems, true);
+                    foreach (KeyValuePair<(int, string, string), List<List<string>>> item in sortedForces)
                         results.Add(Convert.ToStepLinkForce(item));
+                    break;
+                case "StepLinkDeformation":
+                    data = parsedJson.PropertyValue("CustomData")?.PropertyValue("TH_GLINKDEFORM")?.PropertyValue("DATA");
+                    resultItems = data as List<List<object>>;
+                    Dictionary<(int, string, string), List<List<string>>> sortedDeform = GroupTHResult(resultItems, false);
+                    foreach (KeyValuePair<(int, string, string), List<List<string>>> item in sortedDeform)
+                        results.Add(Convert.ToStepLinkDeformation(item));
                     break;
             }
             return results;

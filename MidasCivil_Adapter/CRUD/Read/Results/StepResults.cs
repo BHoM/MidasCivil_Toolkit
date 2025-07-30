@@ -50,13 +50,20 @@ namespace BH.Adapter.MidasCivil
                     List<string> loadCases = new List<string>();
                     if (request.Cases!=null || request.Cases.Count!=0)
                         loadCases = GetLoadcaseIDs(request);
-                    string timeSpan = $" \"STEP\": {{\"FROM\": {request.Start.ToString()}, \"TO\": {request.End.ToString()}, \"STEPS\": 1}}, ";
-
+                    string timeSpan = "";
+                    if (request.Start<request.End)
+                        timeSpan = $" \"STEP\": {{\"FROM\": {request.Start}, \"TO\": {request.End}, \"STEPS\": 1}}, ";
+                    else
+                    {
+                        Engine.Base.Compute.RecordError($"The Start value must be less than the End value to construct a valid timerange.");
+                        break;
+                    }
+                        
                     if (loadCases != null)
-                        results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCases, "",timeSpan)).Result.ToList();
+                        results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCases, "", timeSpan)).Result.ToList();
                     break;
                 default:
-                    Engine.Base.Compute.RecordError($"StepResults are not yet supported in this version of Midas Civil");
+                    Engine.Base.Compute.RecordError($"StepResults are not yet supported in this version of Midas Civil.");
                     break;
             }
             results.Sort();

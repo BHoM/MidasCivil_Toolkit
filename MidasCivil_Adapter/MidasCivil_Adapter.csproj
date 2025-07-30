@@ -177,6 +177,7 @@
     <Compile Include="Convert\ToBHoM\Results\ToMeshForce.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToNodeDisplacement.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToNodeReaction.cs" />
+    <Compile Include="Convert\ToBHoM\Results\ToStepLinkDeformation.cs" />
     <Compile Include="Convert\ToBHoM\Results\ToStepLinkForce.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromBar.cs" />
     <Compile Include="Convert\ToMidasCivil\Elements\FromFEMesh.cs" />

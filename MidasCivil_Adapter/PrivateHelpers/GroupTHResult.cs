@@ -23,30 +23,43 @@
 using BH.Engine.Base;
 using BH.oM.Structure.Requests;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
 
-        private static Dictionary<(object Id, object Case, object Position), List<List<object>>> GroupTHResult(List<List<object>> data)
+        private static Dictionary<(int Id, string Case, string Position), List<List<string>>> GroupTHResult(List<List<object>> data, bool usePosition)
         {
-            var groupedData = new Dictionary<(object, object, object), List<List<object>>>();
+            var groupedData = new ConcurrentDictionary<(int, string, string), List<List<string>>>();
 
-            foreach (var item in data)
+            Parallel.ForEach(data, item =>
             {
-                var key = (item[1], item[2], item[4]); // Grouping by Id, Case, and Position
+                int id = int.TryParse(item[1]?.ToString(), out var parsedId) ? parsedId : -1;
+                string caseVal = item[2]?.ToString() ?? "";
+                string position = usePosition ? item[4]?.ToString() ?? "" : "";
 
-                if (!groupedData.ContainsKey(key))
-                {
-                    groupedData[key] = new List<List<object>>();
-                }
+                var key = (id, caseVal, position);
+                var stringRow = item.Select(x => x?.ToString() ?? "").ToList();
 
-                groupedData[key].Add(item);
-            }
+                groupedData.AddOrUpdate(
+                    key,
+                    _ => new List<List<string>> { stringRow },
+                    (_, existingList) =>
+                    {
+                        lock (existingList)
+                        {
+                            existingList.Add(stringRow);
+                            return existingList;
+                        }
+                    });
+            });
 
-            return groupedData;
+            return new Dictionary<(int, string, string), List<List<string>>>(groupedData);
         }
     }
 }

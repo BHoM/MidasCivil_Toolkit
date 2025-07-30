@@ -36,33 +36,33 @@ namespace BH.Adapter.MidasCivil
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        public static TimeHistoryLinkForce ToStepLinkForce(KeyValuePair<(int Id, string Case, string Position), List<List<string>>> dataGroup)
+        public static TimeHistoryLinkDeformation ToStepLinkDeformation(KeyValuePair<(int Id, string Case, string Position), List<List<string>>> dataGroup)
         {
             int id = dataGroup.Key.Id;
+            IComparable loadCase = dataGroup.Key.Case;
+            int mode = -1;
             string position = dataGroup.Key.Position;
-            IComparable loadCase = dataGroup.Key.Case; 
-            int mode = -1; 
 
-            var stepLinkForces = dataGroup.Value
+            List<StepLinkDeformation> stepLinkForces = dataGroup.Value
                 .AsParallel()
-                .Select(ToStepLinkForce)
+                .Select(ToStepLinkDeformation)
                 .ToList();
 
-            return new TimeHistoryLinkForce(id, loadCase, mode, position, stepLinkForces);
+            return new TimeHistoryLinkDeformation(id, loadCase, mode, position, stepLinkForces);
         }
 
-        public static StepLinkForce ToStepLinkForce(List<string> dataItem)
+        public static StepLinkDeformation ToStepLinkDeformation(List<string> dataItem)
         {
             double ParseDouble(string s) => double.TryParse(s, out var result) ? result : 0.0;
 
-            return new StepLinkForce(
+            return new StepLinkDeformation(
                 ParseDouble(dataItem[3]),
+                ParseDouble(dataItem[4]),
                 ParseDouble(dataItem[5]),
                 ParseDouble(dataItem[6]),
                 ParseDouble(dataItem[7]),
                 ParseDouble(dataItem[8]),
-                ParseDouble(dataItem[9]),
-                ParseDouble(dataItem[10])
+                ParseDouble(dataItem[9])
             );
         }
 
