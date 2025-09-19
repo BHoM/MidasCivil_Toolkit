@@ -91,6 +91,8 @@ namespace BH.Adapter.MidasCivil
                 CompareLoadGroup(midasLoadGroup, loadGroupPath);
                 RemoveEndOfDataString(barLoadPath);
                 File.AppendAllLines(barLoadPath, midasBarLoads);
+
+                Compute.RecordWarning("MidasCivil only supports parametric distances with BarPointLoads.");
             }
 
             return true;
