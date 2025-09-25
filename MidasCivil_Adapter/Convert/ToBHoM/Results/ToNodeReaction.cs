@@ -24,6 +24,7 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.Results;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
@@ -51,6 +52,30 @@ namespace BH.Adapter.Adapters.MidasCivil
                 System.Convert.ToDouble(delimitted[10]).MomentToSI(forceUnit, lengthUnit),
                 System.Convert.ToDouble(delimitted[11]).MomentToSI(forceUnit, lengthUnit),
                 System.Convert.ToDouble(delimitted[12]).MomentToSI(forceUnit, lengthUnit)
+                );
+
+            return nodeReaction;
+        }
+
+        /***************************************************/
+        public static NodeReaction ToNodeReaction(List<object> item)
+        {
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
+            double timeStep = 0;
+
+            NodeReaction nodeReaction = new NodeReaction(
+                System.Convert.ToInt32(item[1].ToString()),
+                item[2].ToString(),
+                mode,
+                timeStep,
+                oM.Geometry.Basis.XY,
+                System.Convert.ToDouble(item[3].ToString()),
+                System.Convert.ToDouble(item[4].ToString()),
+                System.Convert.ToDouble(item[5].ToString()),
+                System.Convert.ToDouble(item[6].ToString()),
+                System.Convert.ToDouble(item[7].ToString()),
+                System.Convert.ToDouble(item[8].ToString())
                 );
 
             return nodeReaction;

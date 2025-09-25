@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -41,21 +42,33 @@ namespace BH.Adapter.MidasCivil
 
         public IEnumerable<IResult> ReadResults(NodeResultRequest request, ActionConfig actionConfig)
         {
-            List<IResult> results;
+            List<IResult> results = new List<IResult>();
             List<int> objectIds = GetObjectIDs(request);
-            List<string> loadCases = GetLoadcaseIDs(request);
 
-            switch (request.ResultType)
+            switch (m_midasCivilVersion)
             {
-                case NodeResultType.NodeReaction:
-                    results = ExtractNodeReaction(objectIds, loadCases).ToList();
-                    break;
-                case NodeResultType.NodeDisplacement:
-                    results = ExtractNodeDisplacement(objectIds, loadCases).ToList();
+                case "9.5.0.nx":
+                case "9.5.5.nx":
+                    List<string> loadCasesNX = Task.Run(() => AppendCaseTypes(request)).Result;
+                    if (loadCasesNX != null)
+                        results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCasesNX)).Result.ToList();
                     break;
                 default:
-                    Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the MidasCivil_Toolkit.");
-                    results = new List<IResult>();
+                    List<string> loadCases = GetLoadcaseIDs(request);
+
+                    switch (request.ResultType)
+                    {
+                        case NodeResultType.NodeReaction:
+                            results = ExtractNodeReaction(objectIds, loadCases).ToList();
+                            break;
+                        case NodeResultType.NodeDisplacement:
+                            results = ExtractNodeDisplacement(objectIds, loadCases).ToList();
+                            break;
+                        default:
+                            Engine.Base.Compute.RecordError($"Result of type {request.ResultType} is not yet supported in the MidasCivil_Toolkit.");
+                            results = new List<IResult>();
+                            break;
+                    }
                     break;
             }
             results.Sort();
