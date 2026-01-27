@@ -228,20 +228,38 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
-        private async Task<IEnumerable<IResult>> ReadResultTimeHistory(string resultType, List<int> ids, List<string> loadcaseNames, List<double> endTimes)
+        private async Task<IEnumerable<IResult>> ReadResultTimeHistory(string resultType, List<int> ids, List<string> loadcaseNames)
         {
             List<IResult> results = new List<IResult>();
-            //TODO: slove export path 
-            string exportPath = "\"EXPORT_PATH\": \"C:\\\\Temp\\\\TH_GlinkDeform_Out.JSON\",";
+
+            string exportPath = "";
+            if (m_outputFolder != null)
+            {
+                exportPath = "\"EXPORT_PATH\": \"" + m_outputFolder.Replace("\\", "\\\\") + "\\\\TH_GlinkDeform_Out.JSON\","; 
+            }
+            else
+            {
+                Engine.Base.Compute.RecordError("Time history request failed. Ensure a output folder is defined in the midas civil settings for the adapter."); // defualt path??
+            }
             
             string thComponents = "";
             string thTableType = "";
             string propertyName = "";
             string thEndpoint = "post/TEXT";
+            string objectIds = "";
 
-            string objectIds = ids.Count > 0
-             ? $"\"NODE_ELEMS\": {{ \"KEYS\": [{string.Join(", ", ids)}] }},"
-             : string.Empty; // can not be empty
+            if (ids.Count > 0)
+            {
+                 objectIds = $"\"NODE_ELEMS\": {{ \"KEYS\": [{string.Join(", ", ids)}] }},";
+            }
+            else
+            {
+                Engine.Base.Compute.RecordError("Time history request failed. Ensure object ids are defined."); 
+            }
+
+            string loadCaseName = loadcaseNames.Count > 0
+            ? $"\"TH_CASE_NAME\": [{string.Join(", ", loadcaseNames.Select(id => $"\"{id}\""))}],"
+            : string.Empty;
 
             if (resultType == "LinkDisplacement")
             {
@@ -256,73 +274,60 @@ namespace BH.Adapter.MidasCivil
                 propertyName = "TH_GLINKFORCE";
             }
 
-            for (int i = 0; i < loadcaseNames.Count; i++)
+            string payload = "{"
+                + "\"Argument\": {"
+                + thTableType
+                + exportPath
+                + "\"UNIT\": {\"FORCE\": \"KN\", \"DIST\": \"M\"},"
+                + "\"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 6},"
+                + thComponents
+                + objectIds
+                + loadCaseName
+                + $"\"STEP\": {{\"FROM\": 0, \"TO\": 0, \"STEPS\": 1}}"
+                + "}"
+                + "}";
+
+            var responseTH = await SendRequestAsync(thEndpoint, HttpMethod.Post, payload);
+
+            if (!responseTH.IsSuccessStatusCode)
             {
-                string loadCaseName = loadcaseNames[i];
-                double endTime = endTimes[i];
+                Engine.Base.Compute.RecordError($"Time history request failed for loadcase {loadCaseName}. Ensure the model is solved.");
+            }
 
-                string payload = "{"
-                    + "\"Argument\": {"
-                    + thTableType
-                    + exportPath
-                    + "\"UNIT\": {\"FORCE\": \"KN\", \"DIST\": \"M\"},"
-                    + "\"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 6},"
-                    + thComponents
-                    + objectIds
-                    + $"\"TH_CASE_NAME\": [\"{loadCaseName}\"],"
-                    + $"\"STEP\": {{\"FROM\": 0, \"TO\": {endTime}, \"STEPS\": 1}}"
-                    + "}"
-                    + "}";
+            string jsonTHResponse = await responseTH.Content.ReadAsStringAsync();
 
-                var responseTH = await SendRequestAsync(thEndpoint, HttpMethod.Post, payload);
+            if (jsonTHResponse.StartsWith("{\"message\":"))
+            {
+                Engine.Base.Compute.RecordError($"No time history results found for loadcase {loadCaseName}.");
+            }
 
-                if (!responseTH.IsSuccessStatusCode)
+            object parsedTHJson = Engine.Serialiser.Convert.FromJson(jsonTHResponse);
+            object thData = parsedTHJson.PropertyValue("CustomData")?.PropertyValue(propertyName)?.PropertyValue("DATA");
+
+            if (thData == null)
+            {
+                Engine.Base.Compute.RecordError($"Could not extract time history data for loadcase {loadCaseName}.");
+            }
+
+            List<List<object>> thResultItems = thData as List<List<object>>;
+
+            if (thResultItems == null || thResultItems.Count == 0)
+            {
+                Engine.Base.Compute.RecordError($"No time history data items found for loadcase {loadCaseName}.");
+            }
+
+            foreach (List<object> item in thResultItems)
+            {
+                if (resultType == "LinkDisplacement")
                 {
-                    Engine.Base.Compute.RecordError($"Time history request failed for loadcase {loadCaseName}. Ensure the model is solved.");
-                    continue;
+                    results.Add(Convert.ToLinkDisplacement(item));
                 }
-
-                string jsonTHResponse = await responseTH.Content.ReadAsStringAsync();
-
-                if (jsonTHResponse.StartsWith("{\"message\":"))
+                else // LinkForce
                 {
-                    Engine.Base.Compute.RecordError($"No time history results found for loadcase {loadCaseName}.");
-                    continue;
-                }
-
-                object parsedTHJson = Engine.Serialiser.Convert.FromJson(jsonTHResponse);
-                object thData = parsedTHJson.PropertyValue("CustomData")?.PropertyValue(propertyName)?.PropertyValue("DATA");
-
-                if (thData == null)
-                {
-                    Engine.Base.Compute.RecordError($"Could not extract time history data for loadcase {loadCaseName}.");
-                    continue;
-                }
-
-                List<List<object>> thResultItems = thData as List<List<object>>;
-
-                if (thResultItems == null || thResultItems.Count == 0)
-                {
-                    Engine.Base.Compute.RecordError($"No time history data items found for loadcase {loadCaseName}.");
-                    continue;
-                }
-
-                int takeCount = thResultItems.Count;
-
-                for (int j = 0; j < takeCount; j++)
-                {
-                    var item = thResultItems[j];
-
-                    if (resultType == "LinkDisplacement")
-                    {
-                        results.Add(Convert.ToLinkDisplacement(item));
-                    }
-                    else // LinkForce
-                    {
-                        results.Add(Convert.ToLinkForce(item));
-                    }
+                    results.Add(Convert.ToLinkForce(item));
                 }
             }
+            
             return results;  
         }
         /***************************************************/

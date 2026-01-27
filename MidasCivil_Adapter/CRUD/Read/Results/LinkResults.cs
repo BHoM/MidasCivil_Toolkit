@@ -61,21 +61,18 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
-                    List<TimeHistoryLoadcase> thLoadcases =
-                        Task.Run(() => ReadTimeHistoryLoadcases(loadcaseIds)).Result;
+                    List<TimeHistoryLoadcase> thLoadcases = Task.Run(() => ReadTimeHistoryLoadcases(loadcaseIds)).Result;
 
                     if (thLoadcases != null)
                     {
                         List<string> loadcaseNames = new List<string>();
-                        List<double> endTimes = new List<double>();
 
                         foreach (var th in thLoadcases)
                         {
                             loadcaseNames.Add(th.Name);
-                            endTimes.Add(th.EndTime);
                         }
 
-                        results = Task.Run(() => ReadResultTimeHistory(request.ResultType.ToString(),objectIds,loadcaseNames,endTimes)).Result.ToList();
+                        results = Task.Run(() => ReadResultTimeHistory(request.ResultType.ToString(),objectIds,loadcaseNames)).Result.ToList();
                     }
                     break;
 
