@@ -40,7 +40,7 @@ namespace BH.Adapter.MidasCivil
 
             var request = new HttpRequestMessage(method, endpoint);
 
-            if (method == HttpMethod.Post || method == HttpMethod.Put || method == HttpMethod.Delete)
+            if (method == HttpMethod.Post || method == HttpMethod.Put || method == HttpMethod.Delete || method == HttpMethod.Get)
             {
                 request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
             }

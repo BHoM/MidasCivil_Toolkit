@@ -26,7 +26,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace BH.Adapter.Adapters.MidasCivil
+namespace BH.Adapter.MidasCivil
 {
     public static partial class Convert
     {
@@ -34,55 +34,27 @@ namespace BH.Adapter.Adapters.MidasCivil
         /**** Public Methods                            ****/
         /***************************************************/
 
-        public static NodeDisplacement ToNodeDisplacement(this List<string> delimitted, string lengthUnit)
+        public static LinkDisplacement ToLinkDisplacement(List<object> item)
         {
             //TODO: resolve below identifiers extractable through the API
             int mode = -1;
-            double timeStep = 0;
 
-            NodeDisplacement nodeDisplacement = new NodeDisplacement(
-                System.Convert.ToInt32(delimitted[2]),
-                delimitted[3],
+            LinkDisplacement linkDisplacement = new LinkDisplacement(
+                System.Convert.ToInt32(item[1].ToString()),     // Key, 2 for node 1, 3 for node 2,
+                item[4].ToString(),                             // Loadcase
                 mode,
-                timeStep,
-                oM.Geometry.Basis.XY,
-                System.Convert.ToDouble(delimitted[7]).LengthToSI(lengthUnit),
-                System.Convert.ToDouble(delimitted[8]).LengthToSI(lengthUnit),
-                System.Convert.ToDouble(delimitted[9]).LengthToSI(lengthUnit),
-                System.Convert.ToDouble(delimitted[10]),
-                System.Convert.ToDouble(delimitted[11]),
-                System.Convert.ToDouble(delimitted[12])
+                System.Convert.ToDouble(item[5].ToString()),    // Time/Step
+                System.Convert.ToDouble(item[6].ToString()),    // Dx
+                System.Convert.ToDouble(item[7].ToString()),    // Dy
+                System.Convert.ToDouble(item[8].ToString()),    // Dz
+                System.Convert.ToDouble(item[9].ToString()),    // Rx
+                System.Convert.ToDouble(item[10].ToString()),   // Ry
+                System.Convert.ToDouble(item[11].ToString())    // Rz
                 );
-
-            return nodeDisplacement;
+            return linkDisplacement;
         }
 
-        /***************************************************/
-
-        public static NodeDisplacement ToNodeDisplacement(List<object> item)
-        {
-            //TODO: resolve below identifiers extractable through the API
-            int mode = -1;
-            double timeStep = 0;
-
-            NodeDisplacement nodeDisplacement = new NodeDisplacement(
-                System.Convert.ToInt32(item[1].ToString()),
-                item[2].ToString(),
-                mode,
-                timeStep,
-                oM.Geometry.Basis.XY,
-                System.Convert.ToDouble(item[3].ToString()),
-                System.Convert.ToDouble(item[4].ToString()),
-                System.Convert.ToDouble(item[5].ToString()),
-                System.Convert.ToDouble(item[6].ToString()),
-                System.Convert.ToDouble(item[7].ToString()),
-                System.Convert.ToDouble(item[8].ToString())
-                );
-
-            return nodeDisplacement;
-        }
-        /***************************************************/
-    }   
+    }
 }
 
 

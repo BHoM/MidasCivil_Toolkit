@@ -71,6 +71,9 @@ namespace BH.Adapter.MidasCivil
                 case "BarDifferentialTemperatureLoad":
                     readLoads = ReadBarDifferentialTemperatureLoads(ids as dynamic);
                     break;
+                case "TransientTimeHistoryLoad":
+                    readLoads = ReadTimeHistoryLoadcases(ids as dynamic);
+                    break;
             }
 
             return readLoads;

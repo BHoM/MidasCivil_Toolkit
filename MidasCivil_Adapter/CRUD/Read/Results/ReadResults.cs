@@ -103,6 +103,21 @@ namespace BH.Adapter.MidasCivil
 
         /***************************************************/
 
+        private List<int> GetAllIds(LinkResultRequest request)
+        {
+            int maxIndex = GetMaxId("NODE");
+
+            List<int> ids = new List<int>();
+            for (int i = 1; i < maxIndex + 1; i++)
+            {
+                ids.Add(i);
+            }
+
+            return ids;
+        }
+
+        /***************************************************/
+
         private List<int> GetAllIds(BarResultRequest request)
         {
             int maxIndex = GetMaxId("ELEMENT");
