@@ -20,13 +20,14 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using BH.Engine.Base;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Reflection;
+using System.Threading.Tasks;
+using BH.Engine.Base;
 using BH.oM.Structure.Loads;
 
 namespace BH.Adapter.MidasCivil
@@ -40,7 +41,7 @@ namespace BH.Adapter.MidasCivil
             var response = await SendRequestAsync("db/THIS", HttpMethod.Get, "").ConfigureAwait(false);
             if (!response.IsSuccessStatusCode)
             {
-                Engine.Base.Compute.RecordError("Unable to read time history loadcases, please ensure the connected model is solved and check for errors in the MidasCivil window.");
+                Compute.RecordError("Unable to read time history loadcases, please ensure the connected model is solved and check for errors in the MidasCivil window.");
                 return bhomLoadCases;
             }
 
@@ -59,10 +60,10 @@ namespace BH.Adapter.MidasCivil
             var thisDict = thisObj.PropertyValue("CustomData") as Dictionary<string, object>;
             if (thisDict == null)
             {
-                Engine.Base.Compute.RecordError("Unable to read time history loadcases. Ensure that time history loadcases are defined in the model.");
+                Compute.RecordError("Unable to read time history loadcases. Ensure that time history loadcases are defined in the model.");
                 return bhomLoadCases;
             }
-
+            var foundLoadcases = new HashSet<string>();
             foreach (var entry in thisDict)
             {
                 if (!int.TryParse(entry.Key, out int key))
@@ -74,16 +75,14 @@ namespace BH.Adapter.MidasCivil
                     continue;
 
                 string name = common.TryGetValue("NAME", out object nameObj) ? nameObj?.ToString() : "Unnamed";
-
+                foundLoadcases.Add(name);
                 bool hasRequestedList = loadcaseIds != null && loadcaseIds.Count > 0;
                 bool isRequested = hasRequestedList && loadcaseIds.Contains(name);
                 bool notTimeHistory = !common.ContainsKey("ENDTIME");
 
                 if (isRequested && notTimeHistory)
                 {
-                    Engine.Base.Compute.RecordNote(
-                        $"Skipping '{name}' loadcase because it is not defined as a time history loadcase with timesteps."
-                    );
+                    Compute.RecordNote($"Skipping '{name}' loadcase because it is not defined as a time history loadcase with timesteps.");
                     continue;
                 }
 
@@ -91,6 +90,15 @@ namespace BH.Adapter.MidasCivil
                     continue;
 
                 bhomLoadCases.Add(Adapters.MidasCivil.Convert.ToTimeHistoryLoadcase(key, common));
+            }
+
+            if (loadcaseIds != null && loadcaseIds.Count > 0)
+            {
+                var missingLoadcases = loadcaseIds.Except(foundLoadcases).ToList();
+                foreach (var missing in missingLoadcases)
+                {
+                    Compute.RecordNote($"Loadcase '{missing}' was not found in the model definition.");
+                }
             }
 
             return bhomLoadCases;

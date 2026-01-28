@@ -20,16 +20,17 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Analytical.Results;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using BH.oM.Adapter;
+using BH.oM.Analytical.Results;
+using BH.oM.Structure.Loads;
 using BH.oM.Structure.Requests;
 using BH.oM.Structure.Results;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using BH.oM.Structure.Loads;
+using Microsoft.Office.Interop.Excel;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -45,9 +46,19 @@ namespace BH.Adapter.MidasCivil
             List<IResult> results = new List<IResult>();
             List<int> objectIds = GetObjectIDs(request);
 
+            if (objectIds.Count < 1)
+            {
+                Engine.Base.Compute.RecordError("Ensure you have specified object id/object ids for the link result request.");
+                return null;
+            }
             List<string> loadcaseIds = new List<string>();
 
-            if (request.Cases != null)
+            if (request.Cases == null)
+            {
+                Engine.Base.Compute.RecordError("Ensure you have specified loadcase/loadcases for the link result request.");
+                return null;
+            }
+            else
             {
                 foreach (object thisCase in request.Cases)
                 {
@@ -63,16 +74,19 @@ namespace BH.Adapter.MidasCivil
                 case "9.5.5.nx":
                     List<TimeHistoryLoadcase> thLoadcases = Task.Run(() => ReadTimeHistoryLoadcases(loadcaseIds)).Result;
 
-                    if (thLoadcases != null)
+                    if (thLoadcases.Count > 0)
                     {
                         List<string> loadcaseNames = new List<string>();
-
                         foreach (var th in thLoadcases)
                         {
                             loadcaseNames.Add(th.Name);
                         }
-
                         results = Task.Run(() => ReadResultTimeHistory(request.ResultType.ToString(),objectIds,loadcaseNames)).Result.ToList();
+                    }
+                    else
+                    {
+                        Engine.Base.Compute.RecordError("Loadcases are not defined in the model or not a time history load case with timesteps.");
+                        return null;
                     }
                     break;
 
