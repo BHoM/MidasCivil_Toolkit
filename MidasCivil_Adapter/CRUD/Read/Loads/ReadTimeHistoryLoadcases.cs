@@ -20,12 +20,9 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading.Tasks;
 using BH.Engine.Base;
 using BH.oM.Structure.Loads;
@@ -34,55 +31,47 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public async Task<List<TimeHistoryLoadcase>> ReadTimeHistoryLoadcases(List<string> loadcaseIds = null)
+        public async Task<List<ICase>> ReadTimeHistoryLoadcases(List<string> loadcaseIds = null)
         {
-            var bhomLoadCases = new List<TimeHistoryLoadcase>();
-
+            List<ICase> bhomLoadCases = new List<ICase>();
             var response = await SendRequestAsync("db/THIS", HttpMethod.Get, "").ConfigureAwait(false);
+
             if (!response.IsSuccessStatusCode)
-            {
-                Compute.RecordError("Unable to read time history loadcases, please ensure the connected model is solved and check for errors in the MidasCivil window.");
                 return bhomLoadCases;
-            }
 
             string json = await response.Content.ReadAsStringAsync();
             if (json.StartsWith("{\"message\":"))
-                return bhomLoadCases;   
-
-            var rootData = Engine.Serialiser.Convert.FromJson(json)
-                .PropertyValue("CustomData") as Dictionary<string, object>;
-
-            if (!(rootData?.TryGetValue("THIS", out object thisObj) ?? false))
-            {
                 return bhomLoadCases;
-            }
 
-            var thisDict = thisObj.PropertyValue("CustomData") as Dictionary<string, object>;
+            var thisDict = Engine.Serialiser.Convert.FromJson(json)?.PropertyValue("CustomData")?.PropertyValue("THIS")?.PropertyValue("CustomData") as Dictionary<string, object>;
+
             if (thisDict == null)
             {
-                Compute.RecordError("Unable to read time history loadcases. Ensure that time history loadcases are defined in the model.");
+                Compute.RecordError("Unable to read time history loadcases. Ensure time history loadcases are defined in the model.");
                 return bhomLoadCases;
             }
+
             var foundLoadcases = new HashSet<string>();
+            bool hasRequestedList = loadcaseIds != null && loadcaseIds.Count > 0;
+
             foreach (var entry in thisDict)
             {
                 if (!int.TryParse(entry.Key, out int key))
                     continue;
 
-                var common = entry.Value.PropertyValue("CustomData")?.PropertyValue("COMMON")?.PropertyValue("CustomData") as Dictionary<string, object>;
+                var common = entry.Value?.PropertyValue("CustomData")?.PropertyValue("COMMON")?.PropertyValue("CustomData") as Dictionary<string, object>;
 
                 if (common == null)
                     continue;
 
                 string name = common.TryGetValue("NAME", out object nameObj) ? nameObj?.ToString() : "Unnamed";
                 foundLoadcases.Add(name);
-                bool hasRequestedList = loadcaseIds != null && loadcaseIds.Count > 0;
                 bool isRequested = hasRequestedList && loadcaseIds.Contains(name);
                 bool notTimeHistory = !common.ContainsKey("ENDTIME");
 
                 if (isRequested && notTimeHistory)
                 {
-                    Compute.RecordNote($"Skipping '{name}' loadcase because it is not defined as a time history loadcase with timesteps.");
+                    Compute.RecordWarning($"Skipping '{name}' loadcase because it is a static time history loadcase with no time steps.");
                     continue;
                 }
 
@@ -92,17 +81,15 @@ namespace BH.Adapter.MidasCivil
                 bhomLoadCases.Add(Adapters.MidasCivil.Convert.ToTimeHistoryLoadcase(key, common));
             }
 
-            if (loadcaseIds != null && loadcaseIds.Count > 0)
+            if (hasRequestedList)
             {
-                var missingLoadcases = loadcaseIds.Except(foundLoadcases).ToList();
-                foreach (var missing in missingLoadcases)
+                foreach (var missing in loadcaseIds.Except(foundLoadcases))
                 {
-                    Compute.RecordNote($"Loadcase '{missing}' was not found in the model definition.");
+                    Compute.RecordWarning($"Loadcase '{missing}' was not found in the model definition.");
                 }
             }
 
             return bhomLoadCases;
         }
-
     }
 }

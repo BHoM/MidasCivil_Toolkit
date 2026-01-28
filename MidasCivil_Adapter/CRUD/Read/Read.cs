@@ -21,19 +21,21 @@
  */
 
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BH.oM.Adapter;
+using BH.oM.Adapters.MidasCivil;
 using BH.oM.Analytical.Results;
 using BH.oM.Base;
+using BH.oM.Structure.Constraints;
 using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
+using BH.oM.Structure.MaterialFragments;
+using BH.oM.Structure.Results;
 using BH.oM.Structure.SectionProperties;
 using BH.oM.Structure.SurfaceProperties;
-using BH.oM.Structure.Constraints;
-using BH.oM.Structure.MaterialFragments;
-using BH.oM.Structure.Loads;
-using BH.oM.Structure.Results;
-using BH.oM.Adapters.MidasCivil;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -69,7 +71,7 @@ namespace BH.Adapter.MidasCivil
             else if (type == typeof(Loadcase))
                 return ReadLoadcases(ids as dynamic);
             else if (type == typeof(TimeHistoryLoadcase))
-                return ReadTimeHistoryLoadcases(ids as dynamic);
+                return Task.Run(() => ReadTimeHistoryLoadcases((List<string>)ids)).Result;
             else if (type == typeof(LoadCombination))
                 return ReadLoadCombinations(ids as dynamic);
             else if (typeof(ILoad).IsAssignableFrom(type))

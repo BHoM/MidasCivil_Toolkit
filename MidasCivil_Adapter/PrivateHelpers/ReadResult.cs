@@ -233,25 +233,22 @@ namespace BH.Adapter.MidasCivil
             List<IResult> results = new List<IResult>();
 
             string exportPath = "";
+            string thComponents = "";
+            string thTableType = "";
+            string propertyName = "";
+            string thEndpoint = "post/TEXT";
+
             if (m_outputFolder != null)
             {
                 exportPath = "\"EXPORT_PATH\": \"" + m_outputFolder.Replace("\\", "\\\\") + "\\\\TH_GlinkDeform_Out.JSON\",";
             }
             else
             {
-                Engine.Base.Compute.RecordError("Time history request failed. Ensure a output folder is defined in the midas civil settings for the adapter."); 
+                Engine.Base.Compute.RecordError("Time history request failed. Ensure a output folder is defined in the midas civil settings for the adapter.");
+                return results;
             }
 
-            string thComponents = "";
-            string thTableType = "";
-            string propertyName = "";
-            string thEndpoint = "post/TEXT";
-
-            ids = ids.Distinct().ToList();
-
-            string loadCaseName = loadcaseNames.Count > 0
-            ? $"\"TH_CASE_NAME\": [{string.Join(", ", loadcaseNames.Select(id => $"\"{id}\""))}],"
-            : string.Empty;
+            string loadCaseName =  $"\"TH_CASE_NAME\": [{string.Join(", ", loadcaseNames.Select(id => $"\"{id}\""))}],";
 
             if (resultType == "LinkDisplacement")
             {
@@ -268,7 +265,6 @@ namespace BH.Adapter.MidasCivil
 
             foreach (int id in ids)
             {
-
                 string payload = "{"
                     + "\"Argument\": {"
                     + thTableType
@@ -281,26 +277,16 @@ namespace BH.Adapter.MidasCivil
                     + $"\"STEP\": {{\"FROM\": 0, \"TO\": 0, \"STEPS\": 1}}"
                     + "}"
                     + "}";
-
                 var responseTH = await SendRequestAsync(thEndpoint, HttpMethod.Post, payload);
-
-                if (!responseTH.IsSuccessStatusCode)
-                {
-                    Engine.Base.Compute.RecordError($"Time history request failed. Ensure the model is solved.");
-                }
-
                 string jsonTHResponse = await responseTH.Content.ReadAsStringAsync();
 
-                if (jsonTHResponse.StartsWith("{\"message\":"))
+                if (!responseTH.IsSuccessStatusCode || jsonTHResponse.StartsWith("{\"message\":"))
                 {
-                    Engine.Base.Compute.RecordError($"No time history results found.");
-                    return null;
+                    Engine.Base.Compute.RecordError($"Time history request failed or no results found. Ensure the model is solved.");
+                    return results;
                 }
 
-                object parsedTHJson = Engine.Serialiser.Convert.FromJson(jsonTHResponse);
-                object thData = parsedTHJson.PropertyValue("CustomData")?.PropertyValue(propertyName)?.PropertyValue("DATA");
-
-                List<List<object>> thResultItems = thData as List<List<object>>;
+                var thResultItems = Engine.Serialiser.Convert.FromJson(jsonTHResponse)?.PropertyValue("CustomData")?.PropertyValue(propertyName)?.PropertyValue("DATA") as List<List<object>>;
 
                 foreach (List<object> item in thResultItems)
                 {
@@ -317,7 +303,6 @@ namespace BH.Adapter.MidasCivil
 
             return results;  
         }
-        /***************************************************/
     }
 }
 
