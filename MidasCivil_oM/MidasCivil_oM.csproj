@@ -50,9 +50,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum\DynamicLoadType.cs" />
+    <Compile Include="Enum\LinearType.cs" />
+    <Compile Include="Enum\IntegrationMethod.cs" />
+    <Compile Include="Enum\TimeHistoryType.cs" />
+    <Compile Include="Enum\DampingMethod.cs" />
     <Compile Include="Enum\ForceUnit.cs" />
     <Compile Include="Enum\HeatUnit.cs" />
     <Compile Include="Enum\LengthUnit.cs" />
+    <Compile Include="Fragments\TimeHistorySettings.cs" />
     <Compile Include="Settings\Metadata.cs" />
     <Compile Include="Settings\MidasCivilSettings.cs" />
     <Compile Include="Settings\Review.cs" />

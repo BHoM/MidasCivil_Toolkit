@@ -25,6 +25,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BH.Engine.Base;
+using BH.oM.Adapters.MidasCivil;
+using BH.oM.Base;
 using BH.oM.Structure.Loads;
 
 namespace BH.Adapter.MidasCivil
@@ -78,7 +80,11 @@ namespace BH.Adapter.MidasCivil
                 if ((hasRequestedList && !isRequested) || notTimeHistory)
                     continue;
 
-                bhomLoadCases.Add(Adapters.MidasCivil.Convert.ToTimeHistoryLoadcase(key, common));
+                
+                IFragment timeHistorySettings = Adapters.MidasCivil.Convert.ToTimeHistorySettings(common);
+                ICase bhomLoadCase = Adapters.MidasCivil.Convert.ToTimeHistoryLoadcase(key, common);
+                bhomLoadCase.Fragments.Add(timeHistorySettings);
+                bhomLoadCases.Add(bhomLoadCase);
             }
 
             if (hasRequestedList)
