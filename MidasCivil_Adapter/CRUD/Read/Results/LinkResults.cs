@@ -70,7 +70,7 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
-                    List<int> objectIds = Task.Run(() => getGeneralLink(GetObjectIDs(request))).Result;
+                    List<int> objectIds = Task.Run(() => GetGeneralLink(GetObjectIDs(request))).Result;
                     List<ICase> thLoadcases = Task.Run(() => ReadTimeHistoryLoadcases(loadcaseIds)).Result;
                     
                     if (thLoadcases.Count > 0 && objectIds.Count > 0)

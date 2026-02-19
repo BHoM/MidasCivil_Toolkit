@@ -31,7 +31,7 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public async Task<List<int>> getGeneralLink(List<int> objectIds = null)
+        public async Task<List<int>> GetGeneralLink(List<int> objectIds = null)
         {
             List<int> ids = new List<int>();
             var response = await SendRequestAsync("db/NLNK", HttpMethod.Get, "").ConfigureAwait(false);

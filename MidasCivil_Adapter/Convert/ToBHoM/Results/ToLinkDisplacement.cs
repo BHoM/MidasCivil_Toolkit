@@ -40,16 +40,16 @@ namespace BH.Adapter.MidasCivil
             int mode = -1;
 
             LinkDisplacement linkDisplacement = new LinkDisplacement(
-                System.Convert.ToInt32(item[1].ToString()),     // Key, 2 for node 1, 3 for node 2,
-                item[4].ToString(),                             // Loadcase
+                System.Convert.ToInt32(item[1].ToString()),     
+                item[4].ToString(),                             
                 mode,
-                System.Convert.ToDouble(item[5].ToString()),    // Time/Step
-                System.Convert.ToDouble(item[6].ToString()),    // Dx
-                System.Convert.ToDouble(item[7].ToString()),    // Dy
-                System.Convert.ToDouble(item[8].ToString()),    // Dz
-                System.Convert.ToDouble(item[9].ToString()),    // Rx
-                System.Convert.ToDouble(item[10].ToString()),   // Ry
-                System.Convert.ToDouble(item[11].ToString())    // Rz
+                System.Convert.ToDouble(item[5].ToString()),    
+                System.Convert.ToDouble(item[6].ToString()),    
+                System.Convert.ToDouble(item[7].ToString()),    
+                System.Convert.ToDouble(item[8].ToString()),    
+                System.Convert.ToDouble(item[9].ToString()),    
+                System.Convert.ToDouble(item[10].ToString()),   
+                System.Convert.ToDouble(item[11].ToString())    
                 );
             return linkDisplacement;
         }
