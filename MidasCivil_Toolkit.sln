@@ -1,17 +1,17 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 14 for Windows Desktop
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidasCivil_Adapter", "MidasCivil_Adapter\MidasCivil_Adapter.csproj", "{8C94BF09-84E2-4300-A13F-8A3A1552FB71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidasCivil_Adapter", "MidasCivil_Adapter\MidasCivil_Adapter.csproj", "{8C94BF09-84E2-4300-A13F-8A3A1552FB71}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EC91E4D3-1FCE-4547-8482-B78DF69F56A8} = {EC91E4D3-1FCE-4547-8482-B78DF69F56A8}
 		{BC0A8EFF-4277-49E9-BBDC-66FFA11E5258} = {BC0A8EFF-4277-49E9-BBDC-66FFA11E5258}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidasCivil_oM", "MidasCivil_oM\MidasCivil_oM.csproj", "{EC91E4D3-1FCE-4547-8482-B78DF69F56A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidasCivil_oM", "MidasCivil_oM\MidasCivil_oM.csproj", "{EC91E4D3-1FCE-4547-8482-B78DF69F56A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidasCivil_Engine", "MidasCivil_Engine\MidasCivil_Engine.csproj", "{BC0A8EFF-4277-49E9-BBDC-66FFA11E5258}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MidasCivil_Engine", "MidasCivil_Engine\MidasCivil_Engine.csproj", "{BC0A8EFF-4277-49E9-BBDC-66FFA11E5258}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EC91E4D3-1FCE-4547-8482-B78DF69F56A8} = {EC91E4D3-1FCE-4547-8482-B78DF69F56A8}
 	EndProjectSection
