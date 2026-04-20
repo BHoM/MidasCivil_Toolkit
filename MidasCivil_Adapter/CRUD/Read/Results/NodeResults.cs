@@ -51,7 +51,23 @@ namespace BH.Adapter.MidasCivil
                 case "9.5.5.nx":
                     List<string> loadCasesNX = Task.Run(() => AppendCaseTypes(request)).Result;
                     if (loadCasesNX != null)
-                        results = Task.Run(() => ReadResult(request.ResultType.ToString(), objectIds, loadCasesNX)).Result.ToList();
+                    {
+                        results = Task.Run(() => ReadResult(request.ResultType.ToString() + request.Axis.ToString(), objectIds, loadCasesNX)).Result.ToList();
+
+                        if (request.Axis == LoadAxis.Local)
+                        {
+                            List<IResult> resultsGlobal = Task.Run(() => ReadResult(request.ResultType.ToString() + LoadAxis.Global.ToString(), objectIds, loadCasesNX)).Result.ToList();
+                            foreach (IResult resultLocal in results)
+                            {
+                                int globalIndex = resultsGlobal.FindIndex(x => ((NodeResult)x).ObjectId.CompareTo(((NodeResult)resultLocal).ObjectId) == 0);
+                                if (globalIndex >= 0)
+                                {
+                                    resultsGlobal[globalIndex] = resultLocal;
+                                }
+                            }
+                            results = resultsGlobal;
+                        }
+                    }
                     break;
                 default:
                     List<string> loadCases = GetLoadcaseIDs(request);

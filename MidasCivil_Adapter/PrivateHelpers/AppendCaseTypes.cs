@@ -84,7 +84,7 @@ namespace BH.Adapter.MidasCivil
                     string name = combData["NAME"].ToString();
                     if (filters.Contains(name))
                     {
-                        if (combData.ContainsKey("bCB") && combData["bCB"].ToString() == "True" && ending == "(CB)")
+                        if (combData.ContainsKey("bCB") && combData["bCB"].ToString() == "True" && ending == "(CB)") // Checks whether the LoadCombination represents an envelope
                             filteredNames.AddRange(new List<string> { name + "(CB:all)", name + "(CB:max)", name + "(CB:min)" });
                         else
                             filteredNames.Add(name + ending);

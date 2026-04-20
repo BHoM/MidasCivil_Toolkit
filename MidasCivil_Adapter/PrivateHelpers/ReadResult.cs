@@ -65,13 +65,25 @@ namespace BH.Adapter.MidasCivil
             switch (resultType)
             {
                 case "NodeReaction":
+                case "NodeReactionGlobal":
                     tableName = "\"TABLE_NAME\": \"Reaction(Global)\", ";
                     tableType = "\"TABLE_TYPE\": \"REACTIONG\", ";
                     components = "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], ";
                     break;
                 case "NodeDisplacement":
+                case "NodeDisplacementGlobal":
                     tableName = "\"TABLE_NAME\": \"Displacements(Global)\", ";
                     tableType = "\"TABLE_TYPE\": \"DISPLACEMENTG\", ";
+                    components = "\"COMPONENTS\": [\"Node\", \"Load\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], ";
+                    break;
+                case "NodeReactionLocal":
+                    tableName = "\"TABLE_NAME\": \"Reaction(Local)\", ";
+                    tableType = "\"TABLE_TYPE\": \"REACTIONL\", ";
+                    components = "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], ";
+                    break;
+                case "NodeDisplacementLocal":
+                    tableName = "\"TABLE_NAME\": \"Displacements(Local)\", ";
+                    tableType = "\"TABLE_TYPE\": \"DISPLACEMENTL\", ";
                     components = "\"COMPONENTS\": [\"Node\", \"Load\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], ";
                     break;
                 case "BarForce":
@@ -127,6 +139,7 @@ namespace BH.Adapter.MidasCivil
             switch (resultType)
             {
                 case "NodeReaction":
+                case "NodeReactionGlobal":
                     switch (m_midasCivilVersion)
                     {
                         case "9.5.0.nx":
@@ -144,6 +157,7 @@ namespace BH.Adapter.MidasCivil
                             results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item));
                     break;
                 case "NodeDisplacement":
+                case "NodeDisplacementGlobal":
                     switch (m_midasCivilVersion)
                     {
                         case "9.5.0.nx":
@@ -154,8 +168,45 @@ namespace BH.Adapter.MidasCivil
                             break;
                     }
                     resultItems = data as List<List<object>>;
-                    foreach (List<object> item in resultItems)
+                    if (resultItems.IsNullOrEmpty())
+                        Engine.Base.Compute.RecordError($"No NodeDisplacement could be found for the selected Node/Nodes.");
+                    else
+                        foreach (List<object> item in resultItems)
                         results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
+                    break;
+                case "NodeReactionLocal":
+                    switch (m_midasCivilVersion)
+                    {
+                        case "9.5.0.nx":
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Reaction(Local)")?.PropertyValue("DATA");
+                            break;
+                        default:
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("ReactionLocal")?.PropertyValue("DATA");
+                            break;
+                    }
+                    resultItems = data as List<List<object>>;
+                    if (resultItems.IsNullOrEmpty())
+                        Engine.Base.Compute.RecordError($"No NodeReaction could be found for the selected Node/Nodes.");
+                    else
+                        foreach (List<object> item in resultItems)
+                            results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item));
+                    break;
+                case "NodeDisplacementLocal":
+                    switch (m_midasCivilVersion)
+                    {
+                        case "9.5.0.nx":
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Displacements(Local)")?.PropertyValue("DATA");
+                            break;
+                        default:
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("DisplacementsLocal")?.PropertyValue("DATA");
+                            break;
+                    }
+                    resultItems = data as List<List<object>>;
+                    if (resultItems.IsNullOrEmpty())
+                        Engine.Base.Compute.RecordError($"No NodeDisplacement could be found for the selected Node/Nodes.");
+                    else 
+                        foreach (List<object> item in resultItems)
+                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
                     break;
                 case "BarForce":
                     data = parsedJson.PropertyValue("CustomData")?.PropertyValue("BeamForce")?.PropertyValue("DATA");
