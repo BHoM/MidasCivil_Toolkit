@@ -26,7 +26,6 @@ using System.Linq;
 using System.Collections.Generic;
 using BH.oM.Geometry;
 using BH.Adapter.Adapters.MidasCivil;
-using System.Text.Json;
 
 namespace BH.Adapter.MidasCivil
 {
