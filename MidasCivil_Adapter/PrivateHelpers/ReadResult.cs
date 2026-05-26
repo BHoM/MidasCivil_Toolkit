@@ -28,7 +28,6 @@ using System.Net;
 using BH.oM.Analytical.Results;
 using BH.oM.Structure.Results;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Linq;
 using BH.oM.Data.Requests;
 using BH.Engine.Serialiser;

@@ -7,9 +7,9 @@
     <AssemblyTitle>MidasCivil_Engine</AssemblyTitle>
     <Description>https://github.com/BHoM/MidasCivil_Toolkit</Description>
     <Product>MidasCivil_Engine</Product>
-    <Copyright>Copyright © https://github.com/BHoM</Copyright>
+    <Copyright>Copyright ï¿½ https://github.com/BHoM</Copyright>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
-    <FileVersion>9.1.0.0</FileVersion>
+    <FileVersion>9.2.0.0</FileVersion>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y" />
@@ -77,7 +77,7 @@
     </Reference>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="16.0.18925.20022" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MidasCivil_oM\MidasCivil_oM.csproj" />

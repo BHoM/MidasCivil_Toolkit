@@ -25,7 +25,6 @@ using BH.oM.Structure.Results;
 using System.Linq;
 using System.Collections.Generic;
 using BH.oM.Geometry;
-using System.Text.Json;
 using BH.oM.Structure.Requests;
 
 namespace BH.Adapter.MidasCivil

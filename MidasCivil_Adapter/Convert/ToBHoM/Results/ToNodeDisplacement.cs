@@ -24,7 +24,6 @@ using BH.oM.Structure.Loads;
 using BH.oM.Structure.Results;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace BH.Adapter.Adapters.MidasCivil
 {
