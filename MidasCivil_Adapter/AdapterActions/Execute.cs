@@ -86,6 +86,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string endpoint = "doc/NEW";
                     string jsonPayload = "{\"Argument\": {}}";
                     await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
@@ -136,6 +138,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string endpoint = "doc/SAVE";
                     string jsonPayload = "{\"Argument\": {}}";
 
@@ -163,6 +167,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string filePath = newDirectory.Replace("\\", "\\\\");
 
                     string endpoint = "doc/SAVEAS";
@@ -206,6 +212,8 @@ namespace BH.Adapter.MidasCivil
                 {
                     case "9.5.0.nx":
                     case "9.5.5.nx":
+                    case "9.6.0.nx":
+                    case "9.7.5.nx":
                         if (File.Exists(filePath))
                             filePath = filePath.Replace("\\", "\\\\");
                         else
@@ -330,6 +338,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string endpoint = "doc/ANAL";
                     string jsonPayload = "{}";
 
@@ -348,6 +358,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string endpoint = "";
                     string filePath = command.FilePath;
 
@@ -414,7 +426,6 @@ namespace BH.Adapter.MidasCivil
         private string GetDirectoryRoot(string directory)
         {
             List<string> directoryRoot = m_directory.Split('\\').ToList();
-            directoryRoot.RemoveAt(directoryRoot.Count - 1);
 
             return String.Join("\\", directoryRoot.ToArray());
         }

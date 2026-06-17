@@ -110,6 +110,8 @@ namespace BH.Adapter.MidasCivil
                 {
                     case "9.5.0.nx":
                     case "9.5.5.nx":
+                    case "9.6.0.nx":
+                    case "9.7.5.nx":
                         if (midasCivilSettings.mApiKey != null)
                             m_mapiKey = midasCivilSettings.mApiKey;
                         else
