@@ -93,7 +93,7 @@ namespace BH.Adapter.MidasCivil
                     await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
                     break;
                 default:
-                    string newDirectory = GetDirectoryRoot(m_directory) + "\\Untitled";
+                    string newDirectory = m_directory + "\\Untitled";
 
                     bool directoryExists = Directory.Exists(newDirectory);
 
@@ -156,7 +156,7 @@ namespace BH.Adapter.MidasCivil
         public async Task<bool> RunCommand(SaveAs command)
         {
             string fileName = command.FileName;
-            string newDirectory = GetDirectoryRoot(m_directory) + "\\" + fileName;
+            string newDirectory = m_directory + "\\" + fileName;
 
             if (Directory.Exists(newDirectory))
             {
@@ -418,16 +418,6 @@ namespace BH.Adapter.MidasCivil
         {
             Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
             return false;
-        }
-
-        /***************************************************/
-        /**** Private helper methods                    ****/
-        /***************************************************/
-        private string GetDirectoryRoot(string directory)
-        {
-            List<string> directoryRoot = m_directory.Split('\\').ToList();
-
-            return String.Join("\\", directoryRoot.ToArray());
         }
 
         private static void CopyAll(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory)
