@@ -9,16 +9,12 @@
     <Product>MidasCivil_Adapter</Product>
     <Copyright>Copyright � https://github.com/BHoM</Copyright>
     <AssemblyVersion>9.0.0.0</AssemblyVersion>
-    <FileVersion>9.1.0.0</FileVersion>
+    <FileVersion>9.2.0.0</FileVersion>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot;  &quot;C:\ProgramData\BHoM\Assemblies&quot; /Y" />
   </Target>
   <ItemGroup>
-    <Reference Include="System.Text.Json, Version=8.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(ProgramData)\BHoM\Assemblies\System.Text.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Adapter_Engine">
       <HintPath>$(ProgramData)\BHoM\Assemblies\Adapter_Engine.dll</HintPath>
       <Private>False</Private>
@@ -116,9 +112,8 @@
     </Reference>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="16.0.18925.20022" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Text.Json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MidasCivil_Engine\MidasCivil_Engine.csproj" />
