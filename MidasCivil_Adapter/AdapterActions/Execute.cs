@@ -266,21 +266,6 @@ namespace BH.Adapter.MidasCivil
                             }
                         }
 
-                        string fileName = Path.GetFileNameWithoutExtension(filePath);
-                        string txtFile = m_directory + "\\" + fileName + ".txt";
-                        string mctFile = m_directory + "\\" + fileName + ".mct";
-
-                        if (File.Exists(txtFile))
-                        {
-                            m_midasText = File.ReadAllLines(txtFile).ToList();
-                            SetSectionText();
-                        }
-                        else if (File.Exists(mctFile))
-                        {
-                            m_midasText = File.ReadAllLines(mctFile).ToList();
-                            SetSectionText();
-                        }
-
                         string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
                         if (!(m_midasCivilVersion == ""))
                         {
@@ -325,6 +310,20 @@ namespace BH.Adapter.MidasCivil
 
                         Directory.CreateDirectory(m_directory + "\\Results");
                         break;
+                }
+                string fileName = Path.GetFileNameWithoutExtension(filePath);
+                string txtFile = m_directory + "\\" + fileName + ".txt";
+                string mctFile = m_directory + "\\" + fileName + ".mct";
+
+                if (File.Exists(txtFile))
+                {
+                    m_midasText = File.ReadAllLines(txtFile).ToList();
+                    SetSectionText();
+                }
+                else if (File.Exists(mctFile))
+                {
+                    m_midasText = File.ReadAllLines(mctFile).ToList();
+                SetSectionText();
                 }
             }
             return true;
