@@ -20,28 +20,43 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapter;
-using System.ComponentModel;
+using BH.oM.Structure.Results;
+using System.Collections.Generic;
 
-namespace BH.oM.Adapters.MidasCivil
+namespace BH.Adapter.MidasCivil
 {
-    public class MidasCivilSettings : AdapterSettings
+    public static partial class Convert
     {
         /***************************************************/
-        /****            Public Properties              ****/
+        /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("The version of MidasCivil to be used by the adapter.")]
-        public virtual string Version { get; set; } = "";
+        public static LinkForce ToLinkForce(List<object> item)
+        {
+            //TODO: resolve below identifiers extractable through the API
+            int mode = -1;
 
-        [Description("The active mApi-key when using a version of Midas Civil with API connection available. Found under Apps - API Settings. Make sure Midas is connected to the API before running the adapter.")]
-        public virtual string mApiKey { get; set; } = "";
+            LinkForce linkForce = new LinkForce(
+                System.Convert.ToInt32(item[1].ToString()),     
+                item[4].ToString(),                             
+                mode,
+                System.Convert.ToDouble(item[5].ToString()),    
+                System.Convert.ToDouble(item[6].ToString()),    
+                System.Convert.ToDouble(item[7].ToString()),    
+                System.Convert.ToDouble(item[8].ToString()),    
+                System.Convert.ToDouble(item[9].ToString()),    
+                - System.Convert.ToDouble(item[10].ToString()),   //Moments reversed to follow structural convension
+                - System.Convert.ToDouble(item[11].ToString())    
+                );
+            return linkForce;
+        }
 
-        [Description("Output folder when pulling text results, e.g time history results.")]
-        public virtual string OutputFolder { get; set; } = "";
-
-        /***************************************************/
     }
 }
+
+
+
+
+
 
 

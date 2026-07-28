@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
@@ -20,47 +20,58 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
-using System;
-using System.Text;
 using System.Threading.Tasks;
-using System.Net;
+using BH.Engine.Base;
+using BH.oM.Structure.Loads;
 
 namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        public async Task<HttpResponseMessage> SendRequestAsync(string endpoint, HttpMethod method, string jsonPayload = "")
+        public async Task<List<int>> GetGeneralLink(List<int> objectIds = null)
         {
-            HttpClient client = new HttpClient
-            {
-                BaseAddress = new Uri("https://moa-engineers.midasit.com:443/civil/")
-            };
-            client.DefaultRequestHeaders.Add("mapi-key", m_mapiKey);
+            List<int> ids = new List<int>();
+            var response = await SendRequestAsync("db/NLNK", HttpMethod.Get, "").ConfigureAwait(false);
 
-            var request = new HttpRequestMessage(method, endpoint);
+            if (!response.IsSuccessStatusCode)
+                return ids;
 
-            if (method == HttpMethod.Post || method == HttpMethod.Put || method == HttpMethod.Delete || method == HttpMethod.Get)
+            string json = await response.Content.ReadAsStringAsync();
+            if (json.StartsWith("{\"message\":"))
+                return ids;
+
+            var thisDict = Engine.Serialiser.Convert.FromJson(json)?.PropertyValue("CustomData")?.PropertyValue("NLNK")?.PropertyValue("CustomData") as Dictionary<string, object>;
+
+            if (thisDict == null)
             {
-                request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                Compute.RecordError("Unable to read general links. Ensure that general links are defined in the model.");
+                return ids;
             }
-            try
-            {
-                var response = await client.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-                return response;
-            }
 
-            catch (HttpRequestException e)
-            {
-                Engine.Base.Compute.RecordError("Something went wrong with the request. Make sure the API is active and the mapikey is correct, you might have to disconnect and reconnect to the API in Midas Civil. If this does not solve the issue, try using the MCT command shell by remvoing NX from the MidasCivil version.");
+            bool filterId = objectIds != null && objectIds.Count > 0;
 
-                return new HttpResponseMessage(HttpStatusCode.BadRequest)
+            foreach (var entry in thisDict)
+            {
+                if (int.TryParse(entry.Key, out int key))
                 {
-                    Content = new StringContent($"Error: {e.Message}")
-                };
+                    if (!filterId || objectIds.Contains(key))
+                        ids.Add(key);
+                }
             }
+
+            if (filterId)
+            {
+                var missing = objectIds.Except(ids).ToList();
+                foreach (var id in missing)
+                {
+                    Compute.RecordWarning($"General link '{id}' was not found in the model definition.");
+                }
+            }
+
+            return ids;
         }
     }
 }
-

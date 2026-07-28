@@ -39,6 +39,7 @@ using System.IO;
 using BH.oM.Base.Attributes;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using BH.Engine.Base;
 
 namespace BH.Adapter.MidasCivil
 {
@@ -114,6 +115,8 @@ namespace BH.Adapter.MidasCivil
                             m_mapiKey = midasCivilSettings.mApiKey;
                         else
                             Engine.Base.Compute.RecordError("Please provide the active Midas mApi-key.");
+                        if (midasCivilSettings.OutputFolder != "")
+                            m_outputFolder = midasCivilSettings.OutputFolder;
                         break;
                     default:
                         break;
@@ -143,8 +146,8 @@ namespace BH.Adapter.MidasCivil
         private readonly int m_sectionPropertyCharacterLimit = 28;
         private readonly int m_materialCharacterLimit = 15;
         private Dictionary<Type, Dictionary<int, HashSet<string>>> m_tags = new Dictionary<Type, Dictionary<int, HashSet<string>>>();
-
         public string m_mapiKey { get; protected set; } = "";
+        public string m_outputFolder { get; protected set; } = "";
         /***************************************************/
     }
 }
