@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
@@ -20,28 +20,36 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapter;
+using BH.oM.Base;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace BH.oM.Adapters.MidasCivil
 {
-    public class MidasCivilSettings : AdapterSettings
+    public class TimeHistorySettings : BHoMObject, IFragment
     {
         /***************************************************/
-        /****            Public Properties              ****/
+        /**** Public Properties                         ****/
         /***************************************************/
 
-        [Description("The version of MidasCivil to be used by the adapter.")]
-        public virtual string Version { get; set; } = "";
-
-        [Description("The active mApi-key when using a version of Midas Civil with API connection available. Found under Apps - API Settings. Make sure Midas is connected to the API before running the adapter.")]
-        public virtual string mApiKey { get; set; } = "";
-
-        [Description("Output folder when pulling text results, e.g time history results.")]
-        public virtual string OutputFolder { get; set; } = "";
+        [Description("Indicates whether the time history analysis is performed linear or nonlinear.")]
+        public virtual LinearType LinearType { get; set; }
+        [Description("Indicates how Midas performs the time history calculation.")]
+        public virtual IntegrationMethod IntegrationMethod { get; set; }
+        [Description("Specifies how the damping matrix is calculated in the analysis.")]
+        public virtual DampingMethod DampingMethod { get; set; }
+        [Description("Describes the type of time‑dependent loading used in the analysis.")]
+        public virtual TimeHistoryType TimeHistoryType { get; set; }
+        [Description("Defines how the starting state for the time history analysis is determined. \n" +
+                    "It can either begin from the model’s initial, unloaded state (InitialLoad) \n" +
+                    "or continue from the final state of another load case (SequentialOrder).")]
+        public virtual DynamicLoadType DynamicLoadType { get; set; }
 
         /***************************************************/
     }
 }
+
+
+
 
 

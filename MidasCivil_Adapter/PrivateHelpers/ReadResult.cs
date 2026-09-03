@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
@@ -39,13 +39,13 @@ namespace BH.Adapter.MidasCivil
 {
     public partial class MidasCivilAdapter
     {
-        private async Task<IEnumerable<IResult>> ReadResult(string resultType, List<int> ids, List<string> loadcaseIds, string locations="", MeshResultRequest meshRequest=null)
+        private async Task<IEnumerable<IResult>> ReadResult(string resultType, List<int> ids, List<string> loadcaseIds, string locations = "", MeshResultRequest meshRequest = null)
         {
             List<IResult> results = new List<IResult>();
 
-            const string endpoint = "post/TABLE";
-
             string jsonPayload = "";
+            string endpoint = "post/TABLE";
+
             string tableName = "";
             string tableType = "";
             string components = "";
@@ -58,19 +58,31 @@ namespace BH.Adapter.MidasCivil
              : string.Empty;
 
             string loadCases = loadcaseIds.Count > 0
-             ? $"\"LOAD_CASE_NAMES\": [{string.Join(", ", loadcaseIds.Select(id => $"\"{id}\""))}],"
-             : string.Empty;
+            ? $"\"LOAD_CASE_NAMES\": [{string.Join(", ", loadcaseIds.Select(id => $"\"{id}\""))}],"
+            : string.Empty;
 
             switch (resultType)
             {
                 case "NodeReaction":
+                case "NodeReactionGlobal":
                     tableName = "\"TABLE_NAME\": \"Reaction(Global)\", ";
                     tableType = "\"TABLE_TYPE\": \"REACTIONG\", ";
                     components = "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], ";
                     break;
                 case "NodeDisplacement":
+                case "NodeDisplacementGlobal":
                     tableName = "\"TABLE_NAME\": \"Displacements(Global)\", ";
                     tableType = "\"TABLE_TYPE\": \"DISPLACEMENTG\", ";
+                    components = "\"COMPONENTS\": [\"Node\", \"Load\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], ";
+                    break;
+                case "NodeReactionLocal":
+                    tableName = "\"TABLE_NAME\": \"Reaction(Local)\", ";
+                    tableType = "\"TABLE_TYPE\": \"REACTIONL\", ";
+                    components = "\"COMPONENTS\": [\"Node\", \"Load\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], ";
+                    break;
+                case "NodeDisplacementLocal":
+                    tableName = "\"TABLE_NAME\": \"Displacements(Local)\", ";
+                    tableType = "\"TABLE_TYPE\": \"DISPLACEMENTL\", ";
                     components = "\"COMPONENTS\": [\"Node\", \"Load\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], ";
                     break;
                 case "BarForce":
@@ -93,6 +105,8 @@ namespace BH.Adapter.MidasCivil
                     tableName = "\"TABLE_NAME\": \"PlateStress(Local)\", ";
                     tableType = "\"TABLE_TYPE\": \"PLATESTRESSL\", ";
                     components = "\"COMPONENTS\": [\"Elem\", \"Load\", \"Node\", \"Part\", \"Sig-xx\", \"Sig-yy\", \"Sig-xy\", \"Sig-Max\", \"Sig-Min\", \"Sig-EFF\"], ";
+                    break;
+                case "NodeDeformationTimeHistory":
                     break;
                 default:
                     Engine.Base.Compute.RecordError($"Pulling back results of type {resultType} is not yet supported through the MidasCivil API.");
@@ -121,11 +135,12 @@ namespace BH.Adapter.MidasCivil
 
             object parsedJson = Engine.Serialiser.Convert.FromJson(jsonResponse);
 
-            List<List<object>> resultItems= new List<List<object>>();
+            List<List<object>> resultItems = new List<List<object>>();
             object data = new object();
             switch (resultType)
             {
                 case "NodeReaction":
+                case "NodeReactionGlobal":
                     switch (m_midasCivilVersion)
                     {
                         case "9.5.5.nx":
@@ -146,6 +161,7 @@ namespace BH.Adapter.MidasCivil
                             results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item));
                     break;
                 case "NodeDisplacement":
+                case "NodeDisplacementGlobal":
                     switch (m_midasCivilVersion)
                     {
                         case "9.5.5.nx":
@@ -159,8 +175,45 @@ namespace BH.Adapter.MidasCivil
                             break;
                     }
                     resultItems = data as List<List<object>>;
-                    foreach (List<object> item in resultItems)
+                    if (resultItems.IsNullOrEmpty())
+                        Engine.Base.Compute.RecordError($"No NodeDisplacement could be found for the selected Node/Nodes.");
+                    else
+                        foreach (List<object> item in resultItems)
                         results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
+                    break;
+                case "NodeReactionLocal":
+                    switch (m_midasCivilVersion)
+                    {
+                        case "9.5.0.nx":
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Reaction(Local)")?.PropertyValue("DATA");
+                            break;
+                        default:
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("ReactionLocal")?.PropertyValue("DATA");
+                            break;
+                    }
+                    resultItems = data as List<List<object>>;
+                    if (resultItems.IsNullOrEmpty())
+                        Engine.Base.Compute.RecordError($"No NodeReaction could be found for the selected Node/Nodes.");
+                    else
+                        foreach (List<object> item in resultItems)
+                            results.Add(Adapters.MidasCivil.Convert.ToNodeReaction(item));
+                    break;
+                case "NodeDisplacementLocal":
+                    switch (m_midasCivilVersion)
+                    {
+                        case "9.5.0.nx":
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Displacements(Local)")?.PropertyValue("DATA");
+                            break;
+                        default:
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("DisplacementsLocal")?.PropertyValue("DATA");
+                            break;
+                    }
+                    resultItems = data as List<List<object>>;
+                    if (resultItems.IsNullOrEmpty())
+                        Engine.Base.Compute.RecordError($"No NodeDisplacement could be found for the selected Node/Nodes.");
+                    else 
+                        foreach (List<object> item in resultItems)
+                            results.Add(Adapters.MidasCivil.Convert.ToNodeDisplacement(item));
                     break;
                 case "BarForce":
                     data = parsedJson.PropertyValue("CustomData")?.PropertyValue("BeamForce")?.PropertyValue("DATA");
@@ -233,8 +286,87 @@ namespace BH.Adapter.MidasCivil
                             results.Add(Convert.ToMeshVonMises(meshStress, meshRequest));
                     }
                     break;
+
             }
             return results;
+        }
+
+        /***************************************************/
+
+        private async Task<IEnumerable<IResult>> ReadResultTimeHistory(string resultType, List<int> ids, List<string> loadcaseNames)
+        {
+            List<IResult> results = new List<IResult>();
+
+            string exportPath = "";
+            string thComponents = "";
+            string thTableType = "";
+            string propertyName = "";
+            string thEndpoint = "post/TEXT";
+
+            if (m_outputFolder != null)
+            {
+                exportPath = "\"EXPORT_PATH\": \"" + m_outputFolder.Replace("\\", "\\\\") + "\\\\TH_GlinkDeform_Out.JSON\",";
+            }
+            else
+            {
+                Engine.Base.Compute.RecordError("Time history request failed. Ensure a output folder is defined in the midas civil settings for the adapter.");
+                return results;
+            }
+
+            string loadCaseName =  $"\"TH_CASE_NAME\": [{string.Join(", ", loadcaseNames.Select(id => $"\"{id}\""))}],";
+
+            if (resultType == "LinkDisplacement")
+            {
+                thTableType = "\"TEXT_TYPE\": \"TH_GLINKDEFORM\", ";
+                thComponents = "\"COMPONENTS\": [\"Key\", \"Node1\", \"Node2\", \"Load\", \"Time/Step\", \"DX\", \"DY\", \"DZ\", \"RX\", \"RY\", \"RZ\"], ";
+                propertyName = "TH_GLINKDEFORM";
+            }
+            else // LinkForce
+            {
+                thTableType = "\"TEXT_TYPE\": \"TH_GLINKFORCE\", ";
+                thComponents = "\"COMPONENTS\": [\"Key\", \"Node1\", \"Node2\", \"Load\", \"Time/Step\", \"FX\", \"FY\", \"FZ\", \"MX\", \"MY\", \"MZ\"], ";
+                propertyName = "TH_GLINKFORCE";
+            }
+
+            foreach (int id in ids)
+            {
+                string payload = "{"
+                    + "\"Argument\": {"
+                    + thTableType
+                    + exportPath
+                    + "\"UNIT\": {\"FORCE\": \"KN\", \"DIST\": \"M\"},"
+                    + "\"STYLES\": {\"FORMAT\": \"Fixed\", \"PLACE\": 6},"
+                    + thComponents
+                    + $"\"NODE_ELEMS\": {{ \"KEYS\": [{id}] }},"
+                    + loadCaseName
+                    + $"\"STEP\": {{\"FROM\": 0, \"TO\": 0, \"STEPS\": 1}}"
+                    + "}"
+                    + "}";
+                var responseTH = await SendRequestAsync(thEndpoint, HttpMethod.Post, payload);
+                string jsonTHResponse = await responseTH.Content.ReadAsStringAsync();
+
+                if (!responseTH.IsSuccessStatusCode || jsonTHResponse.StartsWith("{\"message\":"))
+                {
+                    Engine.Base.Compute.RecordError($"Time history request failed or no results found. Ensure the model is solved.");
+                    return results;
+                }
+
+                var thResultItems = Engine.Serialiser.Convert.FromJson(jsonTHResponse)?.PropertyValue("CustomData")?.PropertyValue(propertyName)?.PropertyValue("DATA") as List<List<object>>;
+
+                foreach (List<object> item in thResultItems)
+                {
+                    if (resultType == "LinkDisplacement")
+                    {
+                        results.Add(Convert.ToLinkDisplacement(item));
+                    }
+                    else // LinkForce
+                    {
+                        results.Add(Convert.ToLinkForce(item));
+                    }
+                }
+            }
+
+            return results;  
         }
     }
 }
