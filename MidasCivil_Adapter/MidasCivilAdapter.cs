@@ -106,11 +106,13 @@ namespace BH.Adapter.MidasCivil
 
                 if (midasCivilSettings != null)
                     m_midasCivilVersion = Regex.Replace(midasCivilSettings.Version, @"\s+", "").ToLower();
-                
+
                 switch (m_midasCivilVersion)
                 {
                     case "9.5.0.nx":
                     case "9.5.5.nx":
+                    case "9.6.0.nx":
+                    case "9.7.5.nx":
                         if (midasCivilSettings.mApiKey != null)
                             m_mapiKey = midasCivilSettings.mApiKey;
                         else

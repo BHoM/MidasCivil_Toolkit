@@ -143,11 +143,14 @@ namespace BH.Adapter.MidasCivil
                 case "NodeReactionGlobal":
                     switch (m_midasCivilVersion)
                     {
-                        case "9.5.0.nx":
-                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Reaction(Global)")?.PropertyValue("DATA");
-                            break;
-                        default:
+                        case "9.5.5.nx":
                             data = parsedJson.PropertyValue("CustomData")?.PropertyValue("ReactionGlobal")?.PropertyValue("DATA");
+                            break;
+                        case "9.5.0.nx":
+                        case "9.6.0.nx":
+                        case "9.7.5.nx":
+                        default:
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Reaction(Global)")?.PropertyValue("DATA");
                             break;
                     }
                     resultItems = data as List<List<object>>;
@@ -161,11 +164,14 @@ namespace BH.Adapter.MidasCivil
                 case "NodeDisplacementGlobal":
                     switch (m_midasCivilVersion)
                     {
-                        case "9.5.0.nx":
-                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Displacements(Global)")?.PropertyValue("DATA");
-                            break;
-                        default:
+                        case "9.5.5.nx":
                             data = parsedJson.PropertyValue("CustomData")?.PropertyValue("DisplacementsGlobal")?.PropertyValue("DATA");
+                            break;
+                        case "9.5.0.nx":
+                        case "9.6.0.nx":
+                        case "9.7.5.nx":
+                        default:
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("Displacements(Global)")?.PropertyValue("DATA");
                             break;
                     }
                     resultItems = data as List<List<object>>;
@@ -224,11 +230,14 @@ namespace BH.Adapter.MidasCivil
                 case "Forces":
                     switch (m_midasCivilVersion)
                     {
-                        case "9.5.0.nx":
-                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateForce(UnitLength:Local)")?.PropertyValue("DATA");
-                            break;
-                        default:
+                        case "9.5.5.nx":
                             data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateForceUnitLengthLocal")?.PropertyValue("DATA");
+                            break;
+                        case "9.5.0.nx":
+                        case "9.6.0.nx":
+                        case "9.7.5.nx":
+                        default:
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateForce(UnitLength:Local)")?.PropertyValue("DATA");
                             break;
                     }
                     resultItems = data as List<List<object>>;
@@ -238,11 +247,14 @@ namespace BH.Adapter.MidasCivil
                 case "Stresses":
                     switch (m_midasCivilVersion)
                     {
-                        case "9.5.0.nx":
-                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStress(Local)")?.PropertyValue("DATA");
-                            break;
-                        default:
+                        case "9.5.5.nx":
                             data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStressLocal")?.PropertyValue("DATA");
+                            break;
+                        case "9.5.0.nx":
+                        case "9.6.0.nx":
+                        case "9.7.5.nx":
+                        default:
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStress(Local)")?.PropertyValue("DATA");
                             break;
                     }
                     resultItems = data as List<List<object>>;
@@ -256,11 +268,14 @@ namespace BH.Adapter.MidasCivil
                 case "VonMises":
                     switch (m_midasCivilVersion)
                     {
-                        case "9.5.0.nx":
-                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStress(Local)")?.PropertyValue("DATA");
-                            break;
-                        default:
+                        case "9.5.5.nx":
                             data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStressLocal")?.PropertyValue("DATA");
+                            break;
+                        case "9.5.0.nx":
+                        case "9.6.0.nx":
+                        case "9.7.5.nx":
+                        default:
+                            data = parsedJson.PropertyValue("CustomData")?.PropertyValue("PlateStress(Local)")?.PropertyValue("DATA");
                             break;
                     }
                     resultItems = data as List<List<object>>;
