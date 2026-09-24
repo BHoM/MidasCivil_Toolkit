@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of the Buildings and Habitats object Model (BHoM)
  * Copyright (c) 2015 - 2026, the respective contributors. All rights reserved.
  *
@@ -20,28 +20,37 @@
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
 
-using BH.oM.Adapter;
-using System.ComponentModel;
+using System;
+using System.Collections.Generic;
+using BH.Engine.Adapter;
+using BH.oM.Adapters.MidasCivil;
+using BH.oM.Base;
+using BH.oM.Geometry;
+using BH.oM.Structure.Elements;
+using BH.oM.Structure.Loads;
 
-namespace BH.oM.Adapters.MidasCivil
+namespace BH.Adapter.Adapters.MidasCivil
 {
-    public class MidasCivilSettings : AdapterSettings
+    public static partial class Convert
     {
         /***************************************************/
-        /****            Public Properties              ****/
+        /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("The version of MidasCivil to be used by the adapter.")]
-        public virtual string Version { get; set; } = "";
+        public static TimeHistoryLoadcase ToTimeHistoryLoadcase(int key, Dictionary<string, object> common)
+        {
+            TimeHistoryLoadcase timeHistoryLoadcase = new TimeHistoryLoadcase
+            {
+                Name = common["NAME"]?.ToString(),
+                Number = key,
+                StartTime = 0,
+                EndTime = System.Convert.ToDouble(common["ENDTIME"]),
+                TimeStep = System.Convert.ToDouble(common["INC"]) * System.Convert.ToDouble(common["iOUT"]),
+            };
 
-        [Description("The active mApi-key when using a version of Midas Civil with API connection available. Found under Apps - API Settings. Make sure Midas is connected to the API before running the adapter.")]
-        public virtual string mApiKey { get; set; } = "";
+            return timeHistoryLoadcase;
 
-        [Description("Output folder when pulling text results, e.g time history results.")]
-        public virtual string OutputFolder { get; set; } = "";
-
-        /***************************************************/
+        }
     }
 }
-
 

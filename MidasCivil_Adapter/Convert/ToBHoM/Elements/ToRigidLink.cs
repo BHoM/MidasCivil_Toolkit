@@ -56,6 +56,8 @@ namespace BH.Adapter.Adapters.MidasCivil
                 case "9.5.0":
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     primaryId = delimitted[0].Trim();
                     fixity = delimitted[1].Replace(" ", "");
                     secondaryIds = delimitted[2].Split(' ').Where(m => !string.IsNullOrWhiteSpace(m)).ToList();

@@ -43,10 +43,25 @@ namespace BH.Adapter.MidasCivil
                 .Select(x => x.index)
                 .ToList();
 
-            List<int> loadcaseEnds = m_midasText.Select((value, index) => new { value, index })
-                .Where(x => x.ToString().Contains("; End of data for load case"))
-                .Select(x => x.index)
-                .ToList();
+            List<int> loadcaseEnds = new List<int>();
+            switch (m_midasCivilVersion)
+            {
+                case "9.5.0.nx":
+                case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
+                    loadcaseEnds = m_midasText.Select((value, index) => new { value, index })
+                        .Where(x => x.ToString().Contains("] -------------------------"))
+                        .Select(x => x.index)
+                        .ToList();
+                    break;
+                default:
+                    loadcaseEnds = m_midasText.Select((value, index) => new { value, index })
+                        .Where(x => x.ToString().Contains("; End of data for load case"))
+                        .Select(x => x.index)
+                        .ToList();
+                    break;
+            }
 
             List<int> loadcaseRange = new List<int>();
 

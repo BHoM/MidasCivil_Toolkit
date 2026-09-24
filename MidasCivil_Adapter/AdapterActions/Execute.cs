@@ -86,12 +86,14 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string endpoint = "doc/NEW";
                     string jsonPayload = "{\"Argument\": {}}";
                     await SendRequestAsync(endpoint, HttpMethod.Post, jsonPayload).ConfigureAwait(false);
                     break;
                 default:
-                    string newDirectory = GetDirectoryRoot(m_directory) + "\\Untitled";
+                    string newDirectory = m_directory + "\\Untitled";
 
                     bool directoryExists = Directory.Exists(newDirectory);
 
@@ -136,6 +138,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string endpoint = "doc/SAVE";
                     string jsonPayload = "{\"Argument\": {}}";
 
@@ -152,7 +156,7 @@ namespace BH.Adapter.MidasCivil
         public async Task<bool> RunCommand(SaveAs command)
         {
             string fileName = command.FileName;
-            string newDirectory = GetDirectoryRoot(m_directory) + "\\" + fileName;
+            string newDirectory = m_directory + "\\" + fileName;
 
             if (Directory.Exists(newDirectory))
             {
@@ -163,6 +167,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string filePath = newDirectory.Replace("\\", "\\\\");
 
                     string endpoint = "doc/SAVEAS";
@@ -206,6 +212,8 @@ namespace BH.Adapter.MidasCivil
                 {
                     case "9.5.0.nx":
                     case "9.5.5.nx":
+                    case "9.6.0.nx":
+                    case "9.7.5.nx":
                         if (File.Exists(filePath))
                             filePath = filePath.Replace("\\", "\\\\");
                         else
@@ -258,21 +266,6 @@ namespace BH.Adapter.MidasCivil
                             }
                         }
 
-                        string fileName = Path.GetFileNameWithoutExtension(filePath);
-                        string txtFile = m_directory + "\\" + fileName + ".txt";
-                        string mctFile = m_directory + "\\" + fileName + ".mct";
-
-                        if (File.Exists(txtFile))
-                        {
-                            m_midasText = File.ReadAllLines(txtFile).ToList();
-                            SetSectionText();
-                        }
-                        else if (File.Exists(mctFile))
-                        {
-                            m_midasText = File.ReadAllLines(mctFile).ToList();
-                            SetSectionText();
-                        }
-
                         string versionFile = m_directory + "\\TextFiles\\" + "VERSION" + ".txt";
                         if (!(m_midasCivilVersion == ""))
                         {
@@ -318,6 +311,20 @@ namespace BH.Adapter.MidasCivil
                         Directory.CreateDirectory(m_directory + "\\Results");
                         break;
                 }
+                string fileName = Path.GetFileNameWithoutExtension(filePath);
+                string txtFile = m_directory + "\\" + fileName + ".txt";
+                string mctFile = m_directory + "\\" + fileName + ".mct";
+
+                if (File.Exists(txtFile))
+                {
+                    m_midasText = File.ReadAllLines(txtFile).ToList();
+                    SetSectionText();
+                }
+                else if (File.Exists(mctFile))
+                {
+                    m_midasText = File.ReadAllLines(mctFile).ToList();
+                SetSectionText();
+                }
             }
             return true;
         }
@@ -330,6 +337,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string endpoint = "doc/ANAL";
                     string jsonPayload = "{}";
 
@@ -348,6 +357,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     string endpoint = "";
                     string filePath = command.FilePath;
 
@@ -406,17 +417,6 @@ namespace BH.Adapter.MidasCivil
         {
             Engine.Base.Compute.RecordWarning($"The command {command.GetType().Name} is not supported by this Adapter.");
             return false;
-        }
-
-        /***************************************************/
-        /**** Private helper methods                    ****/
-        /***************************************************/
-        private string GetDirectoryRoot(string directory)
-        {
-            List<string> directoryRoot = m_directory.Split('\\').ToList();
-            directoryRoot.RemoveAt(directoryRoot.Count - 1);
-
-            return String.Join("\\", directoryRoot.ToArray());
         }
 
         private static void CopyAll(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory)

@@ -42,9 +42,9 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             if (int.TryParse(assignment, out constraint))
             {
-                foreach (char freedom in assignment)
+                for (int i = 0; i < 6; i++)
                 {
-                    int freedoms = int.Parse(freedom.ToString());
+                    int freedoms = int.Parse(assignment[i].ToString());
                     if (freedoms == 1)
                     {
                         fixity.Add(true);

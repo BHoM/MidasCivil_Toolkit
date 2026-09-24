@@ -82,7 +82,12 @@ namespace BH.Adapter.MidasCivil
                     Dictionary<string, object> combData = item.Value.PropertyValue("CustomData") as Dictionary<string, object>;
                     string name = combData["NAME"].ToString();
                     if (filters.Contains(name))
-                        filteredNames.Add(name + ending);
+                    {
+                        if (combData.ContainsKey("bCB") && combData["bCB"].ToString() == "True" && ending == "(CB)") // Checks whether the LoadCombination represents an envelope
+                            filteredNames.AddRange(new List<string> { name + "(CB:all)", name + "(CB:max)", name + "(CB:min)" });
+                        else
+                            filteredNames.Add(name + ending);
+                    }
                 }
             }
             return filteredNames;

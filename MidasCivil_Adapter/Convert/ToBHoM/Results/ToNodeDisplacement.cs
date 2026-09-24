@@ -80,9 +80,8 @@ namespace BH.Adapter.Adapters.MidasCivil
 
             return nodeDisplacement;
         }
-
         /***************************************************/
-    }
+    }   
 }
 
 

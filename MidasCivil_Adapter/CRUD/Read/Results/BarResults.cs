@@ -48,6 +48,8 @@ namespace BH.Adapter.MidasCivil
             {
                 case "9.5.0.nx":
                 case "9.5.5.nx":
+                case "9.6.0.nx":
+                case "9.7.5.nx":
                     List<string> loadCasesNX = Task.Run(() => AppendCaseTypes(request)).Result;
                     string divisions = SetBarDivisions(request);
 
